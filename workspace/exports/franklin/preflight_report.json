@@ -1,0 +1,222 @@
+{
+  "project_id": "franklin",
+  "score": 93.75,
+  "local_ready": true,
+  "autonomous_ready": false,
+  "critical_failed": 0,
+  "major_failed": 1,
+  "checks": [
+    {
+      "key": "python",
+      "title": "Python Runtime",
+      "passed": true,
+      "level": "critical",
+      "detail": "CPython 3.13.5",
+      "fix": "Install Python 3.10+ and run start_os.bat again."
+    },
+    {
+      "key": "sqlite",
+      "title": "Project Brain SQLite",
+      "passed": true,
+      "level": "critical",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/atlas_zero_enterprise.sqlite3",
+      "fix": "Run the production pipeline once to initialize the database."
+    },
+    {
+      "key": "project_dir",
+      "title": "Franklin project folder",
+      "passed": true,
+      "level": "critical",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin",
+      "fix": "Restore workspace/projects/franklin."
+    },
+    {
+      "key": "folder_01_Audio",
+      "title": "Project folder 01_Audio",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio",
+      "fix": "Create folder 01_Audio."
+    },
+    {
+      "key": "folder_02_Images",
+      "title": "Project folder 02_Images",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images",
+      "fix": "Create folder 02_Images."
+    },
+    {
+      "key": "folder_03_Video",
+      "title": "Project folder 03_Video",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video",
+      "fix": "Create folder 03_Video."
+    },
+    {
+      "key": "folder_04_CapCut",
+      "title": "Project folder 04_CapCut",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/04_CapCut",
+      "fix": "Create folder 04_CapCut."
+    },
+    {
+      "key": "folder_05_Music",
+      "title": "Project folder 05_Music",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/05_Music",
+      "fix": "Create folder 05_Music."
+    },
+    {
+      "key": "folder_06_Export",
+      "title": "Project folder 06_Export",
+      "passed": true,
+      "level": "major",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/06_Export",
+      "fix": "Create folder 06_Export."
+    },
+    {
+      "key": "exports",
+      "title": "Export folder writable",
+      "passed": true,
+      "level": "critical",
+      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/exports/franklin",
+      "fix": "Check folder permissions."
+    },
+    {
+      "key": "ffmpeg",
+      "title": "FFmpeg installed",
+      "passed": true,
+      "level": "major",
+      "detail": "/usr/bin/ffmpeg",
+      "fix": "Install FFmpeg and add it to PATH for media probing and future renders."
+    },
+    {
+      "key": "ffprobe",
+      "title": "FFprobe installed",
+      "passed": true,
+      "level": "major",
+      "detail": "/usr/bin/ffprobe",
+      "fix": "Install FFmpeg package including ffprobe."
+    },
+    {
+      "key": "assets_indexed",
+      "title": "Assets indexed",
+      "passed": true,
+      "level": "critical",
+      "detail": "13 assets",
+      "fix": "Run Scan Assets / pipeline."
+    },
+    {
+      "key": "shots_built",
+      "title": "Shots built",
+      "passed": true,
+      "level": "critical",
+      "detail": "165 shots",
+      "fix": "Run Build Film / pipeline."
+    },
+    {
+      "key": "coverage_local",
+      "title": "Franklin local coverage",
+      "passed": true,
+      "level": "major",
+      "detail": "71/165 assigned",
+      "fix": "Add missing assets or run generation queue."
+    },
+    {
+      "key": "integrations_minimum",
+      "title": "Minimum live integrations configured",
+      "passed": false,
+      "level": "major",
+      "detail": "0/9 configured",
+      "fix": "Configure at least OpenAI, Leonardo, ElevenLabs/YouTube credentials for RC1 live mode."
+    }
+  ],
+  "integrations": [
+    {
+      "service": "leonardo",
+      "env_key": "LEONARDO_API_KEY",
+      "configured": false,
+      "capabilities": [
+        "image_generation",
+        "image_to_video_queue"
+      ]
+    },
+    {
+      "service": "elevenlabs",
+      "env_key": "ELEVENLABS_API_KEY",
+      "configured": false,
+      "capabilities": [
+        "voice_generation"
+      ]
+    },
+    {
+      "service": "openai",
+      "env_key": "OPENAI_API_KEY",
+      "configured": false,
+      "capabilities": [
+        "director_ai",
+        "vision",
+        "script_analysis"
+      ]
+    },
+    {
+      "service": "youtube",
+      "env_key": "YOUTUBE_OAUTH_CLIENT",
+      "configured": false,
+      "capabilities": [
+        "analytics",
+        "publishing_metadata"
+      ]
+    },
+    {
+      "service": "suno",
+      "env_key": "SUNO_API_KEY",
+      "configured": false,
+      "capabilities": [
+        "music_generation"
+      ]
+    },
+    {
+      "service": "canva",
+      "env_key": "CANVA_API_KEY",
+      "configured": false,
+      "capabilities": [
+        "graphics_templates"
+      ]
+    },
+    {
+      "service": "capcut",
+      "env_key": "CAPCUT_PROJECT_PATH",
+      "configured": false,
+      "capabilities": [
+        "handoff",
+        "guide_export"
+      ]
+    },
+    {
+      "service": "davinci",
+      "env_key": "DAVINCI_PROJECT_PATH",
+      "configured": false,
+      "capabilities": [
+        "fcpxml",
+        "edl"
+      ]
+    },
+    {
+      "service": "premiere",
+      "env_key": "PREMIERE_PROJECT_PATH",
+      "configured": false,
+      "capabilities": [
+        "xml",
+        "edl"
+      ]
+    }
+  ],
+  "next_actions": [
+    "Configure at least OpenAI, Leonardo, ElevenLabs/YouTube credentials for RC1 live mode."
+  ]
+}

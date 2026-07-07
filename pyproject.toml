@@ -1,0 +1,8 @@
+[project]
+name = "atlas-zero-enterprise"
+version = "0.4.0a"
+description = "ATLAS ZERO Enterprise RC1 Alpha"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

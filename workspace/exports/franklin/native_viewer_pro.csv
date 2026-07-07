@@ -1,0 +1,166 @@
+﻿idx,start_sec,end_sec,block,visual_need,status,filename,media_type,cv_grade,faces,scenes,objects
+1,0.0,6.237,B01,ice detail,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+2,6.237,12.474,B01,artifact close,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+3,12.474,18.71,B01,note close,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+4,18.71,24.947,B01,arctic wide,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+5,24.947,31.184,B01,ice detail,assigned,S01_SH06_Deck_Detail.jpg,image,0.98,4,0,"[""люди/лица"", ""палуба""]"
+6,31.184,37.421,B01,artifact close,assigned,S01_SH02_Erebus_Terror_Master.jpg,image,0.98,0,0,"[""корабль"", ""холодная палитра""]"
+7,37.421,43.034,B01,ship ice wide,assigned,S01_SH02_Erebus_Terror_Master.jpg,image,0.98,0,0,"[""корабль"", ""холодная палитра""]"
+8,43.034,48.647,B01,ship ice video,assigned,S01_SH02_Erebus_Terror_Master.jpg,image,0.98,0,0,"[""корабль"", ""холодная палитра""]"
+9,48.647,54.261,B01,drone arctic,assigned,S01_SH02_Erebus_Terror_Master.jpg,image,0.98,0,0,"[""корабль"", ""холодная палитра""]"
+10,54.261,59.874,B01,hull ice,assigned,franklin_video_01.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+11,59.874,65.487,B01,ship ice wide,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+12,65.487,71.1,B01,ship ice video,assigned,franklin_video_01.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+13,71.1,76.713,B01,drone arctic,assigned,franklin_video_01.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+14,76.713,82.327,B01,hull ice,assigned,franklin_video_01.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+15,82.327,87.94,B01,ship ice wide,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+16,87.94,93.553,B01,ship ice video,assigned,franklin_video_02.mp4,video,0.9,7,1,"[""люди/лица"", ""холодная палитра""]"
+17,93.553,99.15,B01,crew captain deck,assigned,franklin_video_02.mp4,video,0.9,7,1,"[""люди/лица"", ""холодная палитра""]"
+18,99.15,104.747,B01,crew working,assigned,S01_SH05_Crew_Working.jpg,image,0.97,7,0,"[""люди/лица"", ""экипаж""]"
+19,104.747,110.345,B01,rigging ice,assigned,franklin_video_02.mp4,video,0.9,7,1,"[""люди/лица"", ""холодная палитра""]"
+20,110.345,115.942,B01,deck detail,assigned,S01_SH06_Deck_Detail.jpg,image,0.98,4,0,"[""люди/лица"", ""палуба""]"
+21,115.942,121.539,B01,crew captain deck,assigned,franklin_video_02.mp4,video,0.9,7,1,"[""люди/лица"", ""холодная палитра""]"
+22,121.539,127.136,B01,crew working,assigned,S01_SH05_Crew_Working.jpg,image,0.97,7,0,"[""люди/лица"", ""экипаж""]"
+23,127.136,132.734,B01,rigging ice,assigned,franklin_video_03.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+24,132.734,138.331,B01,deck detail,assigned,S01_SH06_Deck_Detail.jpg,image,0.98,4,0,"[""люди/лица"", ""палуба""]"
+25,138.331,143.928,B01,crew captain deck,assigned,franklin_video_03.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+26,143.928,149.505,B02,archive document,assigned,franklin_video_03.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+27,149.505,155.083,B02,map search,assigned,franklin_video_03.mp4,video,0.9,1,1,"[""люди/лица"", ""холодная палитра""]"
+28,155.083,160.66,B02,ship ice wide,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+29,160.66,166.237,B02,journal close,assigned,S01_SH04_Crew_Commander.jpg,image,0.98,3,0,"[""капитан"", ""люди/лица"", ""экипаж""]"
+30,166.237,171.814,B02,archive document,assigned,S01_SH04_Crew_Commander.jpg,image,0.98,3,0,"[""капитан"", ""люди/лица"", ""экипаж""]"
+31,171.814,177.392,B02,map search,assigned,S01_SH04_Crew_Commander.jpg,image,0.98,3,0,"[""капитан"", ""люди/лица"", ""экипаж""]"
+32,177.392,182.969,B02,ship ice wide,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+33,182.969,188.546,B02,journal close,assigned,S01_SH04_Crew_Commander.jpg,image,0.98,3,0,"[""капитан"", ""люди/лица"", ""экипаж""]"
+34,188.546,194.123,B02,archive portrait,assigned,S01_SH05_Crew_Working.jpg,image,0.97,7,0,"[""люди/лица"", ""экипаж""]"
+35,194.123,199.701,B02,letter document,assigned,S01_SH05_Crew_Working.jpg,image,0.97,7,0,"[""люди/лица"", ""экипаж""]"
+36,199.701,205.278,B02,map routes,assigned,S01_SH06_Deck_Detail.jpg,image,0.98,4,0,"[""люди/лица"", ""палуба""]"
+37,205.278,210.855,B02,search ship,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+38,210.855,216.432,B02,archive portrait,missing,,,,,,
+39,216.432,222.01,B02,letter document,missing,,,,,,
+40,222.01,227.587,B02,map routes,missing,,,,,,
+41,227.587,233.164,B02,search ship,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+42,233.164,239.721,B02,ice camp grave,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+43,239.721,246.277,B02,grave marker,missing,,,,,,
+44,246.277,252.834,B02,can archive,missing,,,,,,
+45,252.834,259.391,B02,arctic coast,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+46,259.391,265.947,B02,ice camp grave,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+47,265.947,272.504,B02,grave marker,missing,,,,,,
+48,272.504,279.061,B02,can archive,missing,,,,,,
+49,279.061,285.617,B02,arctic coast,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+50,285.617,292.174,B02,ice camp grave,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+51,292.174,297.787,B03,document note close,missing,,,,,,
+52,297.787,303.4,B03,stone cairn,missing,,,,,,
+53,303.4,309.014,B03,metal cylinder,missing,,,,,,
+54,309.014,314.627,B03,paper reveal,missing,,,,,,
+55,314.627,320.24,B03,document note close,missing,,,,,,
+56,320.24,325.853,B03,stone cairn,missing,,,,,,
+57,325.853,331.466,B03,metal cylinder,missing,,,,,,
+58,331.466,337.08,B03,paper reveal,missing,,,,,,
+59,337.08,342.693,B03,document note close,missing,,,,,,
+60,342.693,348.306,B03,stone cairn,missing,,,,,,
+61,348.306,355.023,B03,document note map,missing,,,,,,
+62,355.023,361.739,B03,document text,missing,,,,,,
+63,361.739,368.456,B03,map route,missing,,,,,,
+64,368.456,375.173,B03,ship trapped,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+65,375.173,381.889,B03,document note map,missing,,,,,,
+66,381.889,388.606,B03,document text,missing,,,,,,
+67,388.606,395.323,B03,map route,missing,,,,,,
+68,395.323,402.039,B03,ship trapped,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+69,402.039,408.756,B03,document note map,missing,,,,,,
+70,408.756,414.353,B03,people snow trail,missing,,,,,,
+71,414.353,419.95,B03,footprints snow,missing,,,,,,
+72,419.95,425.548,B03,white horizon,missing,,,,,,
+73,425.548,431.145,B03,sled silhouette,missing,,,,,,
+74,431.145,436.742,B03,people snow trail,missing,,,,,,
+75,436.742,442.339,B03,footprints snow,missing,,,,,,
+76,442.339,447.937,B03,white horizon,missing,,,,,,
+77,447.937,453.534,B03,sled silhouette,missing,,,,,,
+78,453.534,459.131,B03,people snow trail,missing,,,,,,
+79,459.131,465.048,B04,boat sled ice,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+80,465.048,470.965,B04,arctic coast,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+81,470.965,476.882,B04,wood runners,missing,,,,,,
+82,476.882,482.799,B04,boat interior,missing,,,,,,
+83,482.799,488.716,B04,boat sled ice,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+84,488.716,494.633,B04,arctic coast,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+85,494.633,500.55,B04,wood runners,missing,,,,,,
+86,500.55,506.467,B04,boat interior,missing,,,,,,
+87,506.467,512.384,B04,boat sled ice,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+88,512.384,517.981,B04,silver spoon,missing,,,,,,
+89,517.981,523.578,B04,object close,missing,,,,,,
+90,523.578,529.176,B04,book archive,missing,,,,,,
+91,529.176,534.773,B04,rifle detail,missing,,,,,,
+92,534.773,540.37,B04,silver spoon,missing,,,,,,
+93,540.37,545.967,B04,object close,missing,,,,,,
+94,545.967,551.565,B04,book archive,missing,,,,,,
+95,551.565,557.162,B04,rifle detail,missing,,,,,,
+96,557.162,562.759,B04,silver spoon,missing,,,,,,
+97,562.759,568.372,B04,bones archive lab,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+98,568.372,573.985,B04,bone close,missing,,,,,,
+99,573.985,579.599,B04,lab table,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+100,579.599,585.212,B04,archive folder,missing,,,,,,
+101,585.212,590.825,B04,bones archive lab,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+102,590.825,596.438,B04,bone close,missing,,,,,,
+103,596.438,602.051,B04,lab table,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+104,602.051,607.665,B04,archive folder,missing,,,,,,
+105,607.665,613.278,B04,bones archive lab,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+106,613.278,618.891,B04,bone close,missing,,,,,,
+107,618.891,624.792,B05,lab archive,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+108,624.792,630.693,B05,beechy camp,missing,,,,,,
+109,630.693,636.594,B05,forensic dig,missing,,,,,,
+110,636.594,642.495,B05,wood coffin,missing,,,,,,
+111,642.495,648.396,B05,lab archive,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+112,648.396,654.297,B05,beechy camp,missing,,,,,,
+113,654.297,660.198,B05,forensic dig,missing,,,,,,
+114,660.198,666.099,B05,wood coffin,missing,,,,,,
+115,666.099,672.0,B05,lab archive,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+116,672.0,677.901,B05,beechy camp,missing,,,,,,
+117,677.901,683.498,B05,archive portrait,missing,,,,,,
+118,683.498,689.095,B05,medical notes,missing,,,,,,
+119,689.095,694.693,B05,clothing detail,missing,,,,,,
+120,694.693,700.29,B05,lab hands,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+121,700.29,705.887,B05,archive portrait,missing,,,,,,
+122,705.887,711.484,B05,medical notes,missing,,,,,,
+123,711.484,717.082,B05,clothing detail,missing,,,,,,
+124,717.082,722.679,B05,lab hands,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+125,722.679,728.276,B05,archive portrait,missing,,,,,,
+126,728.276,733.889,B05,lead can archive,missing,,,,,,
+127,733.889,739.502,B05,lab analysis,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+128,739.502,745.116,B05,newspaper archive,missing,,,,,,
+129,745.116,750.729,B05,medical record,missing,,,,,,
+130,750.729,756.342,B05,lead can archive,missing,,,,,,
+131,756.342,761.955,B05,lab analysis,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+132,761.955,767.568,B05,newspaper archive,missing,,,,,,
+133,767.568,773.182,B05,medical record,missing,,,,,,
+134,773.182,778.795,B05,lead can archive,missing,,,,,,
+135,778.795,784.408,B05,lab analysis,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+136,784.408,790.021,B06,sonar screen,missing,,,,,,
+137,790.021,795.634,B06,research vessel,missing,,,,,,
+138,795.634,801.248,B06,satellite map,missing,,,,,,
+139,801.248,806.861,B06,underwater robot,missing,,,,,,
+140,806.861,812.474,B06,sonar screen,missing,,,,,,
+141,812.474,818.087,B06,research vessel,missing,,,,,,
+142,818.087,823.7,B06,satellite map,missing,,,,,,
+143,823.7,829.314,B06,underwater robot,missing,,,,,,
+144,829.314,834.927,B06,sonar screen,missing,,,,,,
+145,834.927,840.54,B06,research vessel,missing,,,,,,
+146,840.54,846.729,B06,underwater ship,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+147,846.729,852.918,B06,shipwreck hull,missing,,,,,,
+148,852.918,859.107,B06,closed hatch,missing,,,,,,
+149,859.107,865.296,B06,interior cabin,missing,,,,,,
+150,865.296,871.484,B06,underwater ship,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+151,871.484,877.673,B06,shipwreck hull,missing,,,,,,
+152,877.673,883.862,B06,closed hatch,missing,,,,,,
+153,883.862,890.051,B06,interior cabin,missing,,,,,,
+154,890.051,896.24,B06,underwater ship,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+155,896.24,902.429,B06,shipwreck hull,missing,,,,,,
+156,902.429,908.186,B06,ice wide finale,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+157,908.186,913.943,B06,empty horizon,missing,,,,,,
+158,913.943,919.7,B06,ship memory,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+159,919.7,925.457,B06,atlas logo,missing,,,,,,
+160,925.457,931.214,B06,ice wide finale,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+161,931.214,936.972,B06,empty horizon,missing,,,,,,
+162,936.972,942.729,B06,ship memory,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+163,942.729,948.486,B06,atlas logo,missing,,,,,,
+164,948.486,954.243,B06,ice wide finale,assigned,S01_SH01_Arctic_Aerial_Master.jpg,image,0.98,0,0,"[""арктика"", ""холодная палитра""]"
+165,954.243,960.0,B06,empty horizon,missing,,,,,,

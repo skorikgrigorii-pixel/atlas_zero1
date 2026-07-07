@@ -1,0 +1,23 @@
+{
+  "project_id": "franklin",
+  "score": 85.76,
+  "local_e2e_ready": true,
+  "assets": 13,
+  "shots": 165,
+  "assigned": 71,
+  "missing": 94,
+  "cv_assets": 8,
+  "cv_avg_grade": 0.949,
+  "api_jobs": 2581,
+  "artifacts": {
+    "story_engine_runtime.html": true,
+    "native_viewer_pro.html": true,
+    "pipeline_graph.html": true,
+    "pipeline_run_report.html": true,
+    "capcut_operator_bridge.html": true,
+    "FINAL_ASSEMBLY_PACK/index.html": true
+  },
+  "next_actions": [
+    "Закрыть 94 недостающих шотов через генерацию или подбор материалов."
+  ]
+}

@@ -1,0 +1,2390 @@
+{
+  "duration_sec": 960.0,
+  "tracks": {
+    "video": [
+      {
+        "idx": 1,
+        "start_sec": 0.0,
+        "end_sec": 6.237,
+        "block": "B01",
+        "visual_need": "ice detail",
+        "status": "assigned",
+        "camera_motion": "slow push-in",
+        "transition": "fade from black",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 2,
+        "start_sec": 6.237,
+        "end_sec": 12.474,
+        "block": "B01",
+        "visual_need": "artifact close",
+        "status": "assigned",
+        "camera_motion": "macro drift",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 3,
+        "start_sec": 12.474,
+        "end_sec": 18.71,
+        "block": "B01",
+        "visual_need": "note close",
+        "status": "assigned",
+        "camera_motion": "fade from black",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 4,
+        "start_sec": 18.71,
+        "end_sec": 24.947,
+        "block": "B01",
+        "visual_need": "arctic wide",
+        "status": "assigned",
+        "camera_motion": "slow push-in",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 5,
+        "start_sec": 24.947,
+        "end_sec": 31.184,
+        "block": "B01",
+        "visual_need": "ice detail",
+        "status": "assigned",
+        "camera_motion": "macro drift",
+        "transition": "cut",
+        "asset": "S01_SH06_Deck_Detail.jpg"
+      },
+      {
+        "idx": 6,
+        "start_sec": 31.184,
+        "end_sec": 37.421,
+        "block": "B01",
+        "visual_need": "artifact close",
+        "status": "assigned",
+        "camera_motion": "fade from black",
+        "transition": "soft dissolve",
+        "asset": "S01_SH02_Erebus_Terror_Master.jpg"
+      },
+      {
+        "idx": 7,
+        "start_sec": 37.421,
+        "end_sec": 43.034,
+        "block": "B01",
+        "visual_need": "ship ice wide",
+        "status": "assigned",
+        "camera_motion": "slow drone",
+        "transition": "dissolve",
+        "asset": "S01_SH02_Erebus_Terror_Master.jpg"
+      },
+      {
+        "idx": 8,
+        "start_sec": 43.034,
+        "end_sec": 48.647,
+        "block": "B01",
+        "visual_need": "ship ice video",
+        "status": "assigned",
+        "camera_motion": "dolly forward",
+        "transition": "cut",
+        "asset": "S01_SH02_Erebus_Terror_Master.jpg"
+      },
+      {
+        "idx": 9,
+        "start_sec": 48.647,
+        "end_sec": 54.261,
+        "block": "B01",
+        "visual_need": "drone arctic",
+        "status": "assigned",
+        "camera_motion": "slow pan",
+        "transition": "cut",
+        "asset": "S01_SH02_Erebus_Terror_Master.jpg"
+      },
+      {
+        "idx": 10,
+        "start_sec": 54.261,
+        "end_sec": 59.874,
+        "block": "B01",
+        "visual_need": "hull ice",
+        "status": "assigned",
+        "camera_motion": "slow drone",
+        "transition": "cut",
+        "asset": "franklin_video_01.mp4"
+      },
+      {
+        "idx": 11,
+        "start_sec": 59.874,
+        "end_sec": 65.487,
+        "block": "B01",
+        "visual_need": "ship ice wide",
+        "status": "assigned",
+        "camera_motion": "dolly forward",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 12,
+        "start_sec": 65.487,
+        "end_sec": 71.1,
+        "block": "B01",
+        "visual_need": "ship ice video",
+        "status": "assigned",
+        "camera_motion": "slow pan",
+        "transition": "cut",
+        "asset": "franklin_video_01.mp4"
+      },
+      {
+        "idx": 13,
+        "start_sec": 71.1,
+        "end_sec": 76.713,
+        "block": "B01",
+        "visual_need": "drone arctic",
+        "status": "assigned",
+        "camera_motion": "slow drone",
+        "transition": "cut",
+        "asset": "franklin_video_01.mp4"
+      },
+      {
+        "idx": 14,
+        "start_sec": 76.713,
+        "end_sec": 82.327,
+        "block": "B01",
+        "visual_need": "hull ice",
+        "status": "assigned",
+        "camera_motion": "dolly forward",
+        "transition": "cut",
+        "asset": "franklin_video_01.mp4"
+      },
+      {
+        "idx": 15,
+        "start_sec": 82.327,
+        "end_sec": 87.94,
+        "block": "B01",
+        "visual_need": "ship ice wide",
+        "status": "assigned",
+        "camera_motion": "slow pan",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 16,
+        "start_sec": 87.94,
+        "end_sec": 93.553,
+        "block": "B01",
+        "visual_need": "ship ice video",
+        "status": "assigned",
+        "camera_motion": "slow drone",
+        "transition": "soft dissolve",
+        "asset": "franklin_video_02.mp4"
+      },
+      {
+        "idx": 17,
+        "start_sec": 93.553,
+        "end_sec": 99.15,
+        "block": "B01",
+        "visual_need": "crew captain deck",
+        "status": "assigned",
+        "camera_motion": "slow track",
+        "transition": "dissolve",
+        "asset": "franklin_video_02.mp4"
+      },
+      {
+        "idx": 18,
+        "start_sec": 99.15,
+        "end_sec": 104.747,
+        "block": "B01",
+        "visual_need": "crew working",
+        "status": "assigned",
+        "camera_motion": "handheld subtle",
+        "transition": "cut",
+        "asset": "S01_SH05_Crew_Working.jpg"
+      },
+      {
+        "idx": 19,
+        "start_sec": 104.747,
+        "end_sec": 110.345,
+        "block": "B01",
+        "visual_need": "rigging ice",
+        "status": "assigned",
+        "camera_motion": "push-in",
+        "transition": "cut",
+        "asset": "franklin_video_02.mp4"
+      },
+      {
+        "idx": 20,
+        "start_sec": 110.345,
+        "end_sec": 115.942,
+        "block": "B01",
+        "visual_need": "deck detail",
+        "status": "assigned",
+        "camera_motion": "slow track",
+        "transition": "cut",
+        "asset": "S01_SH06_Deck_Detail.jpg"
+      },
+      {
+        "idx": 21,
+        "start_sec": 115.942,
+        "end_sec": 121.539,
+        "block": "B01",
+        "visual_need": "crew captain deck",
+        "status": "assigned",
+        "camera_motion": "handheld subtle",
+        "transition": "cut",
+        "asset": "franklin_video_02.mp4"
+      },
+      {
+        "idx": 22,
+        "start_sec": 121.539,
+        "end_sec": 127.136,
+        "block": "B01",
+        "visual_need": "crew working",
+        "status": "assigned",
+        "camera_motion": "push-in",
+        "transition": "cut",
+        "asset": "S01_SH05_Crew_Working.jpg"
+      },
+      {
+        "idx": 23,
+        "start_sec": 127.136,
+        "end_sec": 132.734,
+        "block": "B01",
+        "visual_need": "rigging ice",
+        "status": "assigned",
+        "camera_motion": "slow track",
+        "transition": "cut",
+        "asset": "franklin_video_03.mp4"
+      },
+      {
+        "idx": 24,
+        "start_sec": 132.734,
+        "end_sec": 138.331,
+        "block": "B01",
+        "visual_need": "deck detail",
+        "status": "assigned",
+        "camera_motion": "handheld subtle",
+        "transition": "cut",
+        "asset": "S01_SH06_Deck_Detail.jpg"
+      },
+      {
+        "idx": 25,
+        "start_sec": 138.331,
+        "end_sec": 143.928,
+        "block": "B01",
+        "visual_need": "crew captain deck",
+        "status": "assigned",
+        "camera_motion": "push-in",
+        "transition": "soft dissolve",
+        "asset": "franklin_video_03.mp4"
+      },
+      {
+        "idx": 26,
+        "start_sec": 143.928,
+        "end_sec": 149.505,
+        "block": "B02",
+        "visual_need": "archive document",
+        "status": "assigned",
+        "camera_motion": "paper reveal",
+        "transition": "dissolve",
+        "asset": "franklin_video_03.mp4"
+      },
+      {
+        "idx": 27,
+        "start_sec": 149.505,
+        "end_sec": 155.083,
+        "block": "B02",
+        "visual_need": "map search",
+        "status": "assigned",
+        "camera_motion": "map pan",
+        "transition": "cut",
+        "asset": "franklin_video_03.mp4"
+      },
+      {
+        "idx": 28,
+        "start_sec": 155.083,
+        "end_sec": 160.66,
+        "block": "B02",
+        "visual_need": "ship ice wide",
+        "status": "assigned",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 29,
+        "start_sec": 160.66,
+        "end_sec": 166.237,
+        "block": "B02",
+        "visual_need": "journal close",
+        "status": "assigned",
+        "camera_motion": "paper reveal",
+        "transition": "cut",
+        "asset": "S01_SH04_Crew_Commander.jpg"
+      },
+      {
+        "idx": 30,
+        "start_sec": 166.237,
+        "end_sec": 171.814,
+        "block": "B02",
+        "visual_need": "archive document",
+        "status": "assigned",
+        "camera_motion": "map pan",
+        "transition": "cut",
+        "asset": "S01_SH04_Crew_Commander.jpg"
+      },
+      {
+        "idx": 31,
+        "start_sec": 171.814,
+        "end_sec": 177.392,
+        "block": "B02",
+        "visual_need": "map search",
+        "status": "assigned",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": "S01_SH04_Crew_Commander.jpg"
+      },
+      {
+        "idx": 32,
+        "start_sec": 177.392,
+        "end_sec": 182.969,
+        "block": "B02",
+        "visual_need": "ship ice wide",
+        "status": "assigned",
+        "camera_motion": "paper reveal",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 33,
+        "start_sec": 182.969,
+        "end_sec": 188.546,
+        "block": "B02",
+        "visual_need": "journal close",
+        "status": "assigned",
+        "camera_motion": "map pan",
+        "transition": "soft dissolve",
+        "asset": "S01_SH04_Crew_Commander.jpg"
+      },
+      {
+        "idx": 34,
+        "start_sec": 188.546,
+        "end_sec": 194.123,
+        "block": "B02",
+        "visual_need": "archive portrait",
+        "status": "assigned",
+        "camera_motion": "slow push-in",
+        "transition": "dissolve",
+        "asset": "S01_SH05_Crew_Working.jpg"
+      },
+      {
+        "idx": 35,
+        "start_sec": 194.123,
+        "end_sec": 199.701,
+        "block": "B02",
+        "visual_need": "letter document",
+        "status": "assigned",
+        "camera_motion": "map trace",
+        "transition": "cut",
+        "asset": "S01_SH05_Crew_Working.jpg"
+      },
+      {
+        "idx": 36,
+        "start_sec": 199.701,
+        "end_sec": 205.278,
+        "block": "B02",
+        "visual_need": "map routes",
+        "status": "assigned",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": "S01_SH06_Deck_Detail.jpg"
+      },
+      {
+        "idx": 37,
+        "start_sec": 205.278,
+        "end_sec": 210.855,
+        "block": "B02",
+        "visual_need": "search ship",
+        "status": "assigned",
+        "camera_motion": "slow push-in",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 38,
+        "start_sec": 210.855,
+        "end_sec": 216.432,
+        "block": "B02",
+        "visual_need": "archive portrait",
+        "status": "missing",
+        "camera_motion": "map trace",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 39,
+        "start_sec": 216.432,
+        "end_sec": 222.01,
+        "block": "B02",
+        "visual_need": "letter document",
+        "status": "missing",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 40,
+        "start_sec": 222.01,
+        "end_sec": 227.587,
+        "block": "B02",
+        "visual_need": "map routes",
+        "status": "missing",
+        "camera_motion": "slow push-in",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 41,
+        "start_sec": 227.587,
+        "end_sec": 233.164,
+        "block": "B02",
+        "visual_need": "search ship",
+        "status": "assigned",
+        "camera_motion": "map trace",
+        "transition": "soft dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 42,
+        "start_sec": 233.164,
+        "end_sec": 239.721,
+        "block": "B02",
+        "visual_need": "ice camp grave",
+        "status": "assigned",
+        "camera_motion": "slow pullback",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 43,
+        "start_sec": 239.721,
+        "end_sec": 246.277,
+        "block": "B02",
+        "visual_need": "grave marker",
+        "status": "missing",
+        "camera_motion": "static hold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 44,
+        "start_sec": 246.277,
+        "end_sec": 252.834,
+        "block": "B02",
+        "visual_need": "can archive",
+        "status": "missing",
+        "camera_motion": "cold dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 45,
+        "start_sec": 252.834,
+        "end_sec": 259.391,
+        "block": "B02",
+        "visual_need": "arctic coast",
+        "status": "assigned",
+        "camera_motion": "slow pullback",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 46,
+        "start_sec": 259.391,
+        "end_sec": 265.947,
+        "block": "B02",
+        "visual_need": "ice camp grave",
+        "status": "assigned",
+        "camera_motion": "static hold",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 47,
+        "start_sec": 265.947,
+        "end_sec": 272.504,
+        "block": "B02",
+        "visual_need": "grave marker",
+        "status": "missing",
+        "camera_motion": "cold dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 48,
+        "start_sec": 272.504,
+        "end_sec": 279.061,
+        "block": "B02",
+        "visual_need": "can archive",
+        "status": "missing",
+        "camera_motion": "slow pullback",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 49,
+        "start_sec": 279.061,
+        "end_sec": 285.617,
+        "block": "B02",
+        "visual_need": "arctic coast",
+        "status": "assigned",
+        "camera_motion": "static hold",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 50,
+        "start_sec": 285.617,
+        "end_sec": 292.174,
+        "block": "B02",
+        "visual_need": "ice camp grave",
+        "status": "assigned",
+        "camera_motion": "cold dissolve",
+        "transition": "soft dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 51,
+        "start_sec": 292.174,
+        "end_sec": 297.787,
+        "block": "B03",
+        "visual_need": "document note close",
+        "status": "missing",
+        "camera_motion": "macro push",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 52,
+        "start_sec": 297.787,
+        "end_sec": 303.4,
+        "block": "B03",
+        "visual_need": "stone cairn",
+        "status": "missing",
+        "camera_motion": "paper unfold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 53,
+        "start_sec": 303.4,
+        "end_sec": 309.014,
+        "block": "B03",
+        "visual_need": "metal cylinder",
+        "status": "missing",
+        "camera_motion": "hold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 54,
+        "start_sec": 309.014,
+        "end_sec": 314.627,
+        "block": "B03",
+        "visual_need": "paper reveal",
+        "status": "missing",
+        "camera_motion": "macro push",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 55,
+        "start_sec": 314.627,
+        "end_sec": 320.24,
+        "block": "B03",
+        "visual_need": "document note close",
+        "status": "missing",
+        "camera_motion": "paper unfold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 56,
+        "start_sec": 320.24,
+        "end_sec": 325.853,
+        "block": "B03",
+        "visual_need": "stone cairn",
+        "status": "missing",
+        "camera_motion": "hold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 57,
+        "start_sec": 325.853,
+        "end_sec": 331.466,
+        "block": "B03",
+        "visual_need": "metal cylinder",
+        "status": "missing",
+        "camera_motion": "macro push",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 58,
+        "start_sec": 331.466,
+        "end_sec": 337.08,
+        "block": "B03",
+        "visual_need": "paper reveal",
+        "status": "missing",
+        "camera_motion": "paper unfold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 59,
+        "start_sec": 337.08,
+        "end_sec": 342.693,
+        "block": "B03",
+        "visual_need": "document note close",
+        "status": "missing",
+        "camera_motion": "hold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 60,
+        "start_sec": 342.693,
+        "end_sec": 348.306,
+        "block": "B03",
+        "visual_need": "stone cairn",
+        "status": "missing",
+        "camera_motion": "macro push",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 61,
+        "start_sec": 348.306,
+        "end_sec": 355.023,
+        "block": "B03",
+        "visual_need": "document note map",
+        "status": "missing",
+        "camera_motion": "slow scan",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 62,
+        "start_sec": 355.023,
+        "end_sec": 361.739,
+        "block": "B03",
+        "visual_need": "document text",
+        "status": "missing",
+        "camera_motion": "date reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 63,
+        "start_sec": 361.739,
+        "end_sec": 368.456,
+        "block": "B03",
+        "visual_need": "map route",
+        "status": "missing",
+        "camera_motion": "map move",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 64,
+        "start_sec": 368.456,
+        "end_sec": 375.173,
+        "block": "B03",
+        "visual_need": "ship trapped",
+        "status": "assigned",
+        "camera_motion": "slow scan",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 65,
+        "start_sec": 375.173,
+        "end_sec": 381.889,
+        "block": "B03",
+        "visual_need": "document note map",
+        "status": "missing",
+        "camera_motion": "date reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 66,
+        "start_sec": 381.889,
+        "end_sec": 388.606,
+        "block": "B03",
+        "visual_need": "document text",
+        "status": "missing",
+        "camera_motion": "map move",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 67,
+        "start_sec": 388.606,
+        "end_sec": 395.323,
+        "block": "B03",
+        "visual_need": "map route",
+        "status": "missing",
+        "camera_motion": "slow scan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 68,
+        "start_sec": 395.323,
+        "end_sec": 402.039,
+        "block": "B03",
+        "visual_need": "ship trapped",
+        "status": "assigned",
+        "camera_motion": "date reveal",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 69,
+        "start_sec": 402.039,
+        "end_sec": 408.756,
+        "block": "B03",
+        "visual_need": "document note map",
+        "status": "missing",
+        "camera_motion": "map move",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 70,
+        "start_sec": 408.756,
+        "end_sec": 414.353,
+        "block": "B03",
+        "visual_need": "people snow trail",
+        "status": "missing",
+        "camera_motion": "slow fade",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 71,
+        "start_sec": 414.353,
+        "end_sec": 419.95,
+        "block": "B03",
+        "visual_need": "footprints snow",
+        "status": "missing",
+        "camera_motion": "long lens",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 72,
+        "start_sec": 419.95,
+        "end_sec": 425.548,
+        "block": "B03",
+        "visual_need": "white horizon",
+        "status": "missing",
+        "camera_motion": "snow drift",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 73,
+        "start_sec": 425.548,
+        "end_sec": 431.145,
+        "block": "B03",
+        "visual_need": "sled silhouette",
+        "status": "missing",
+        "camera_motion": "slow fade",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 74,
+        "start_sec": 431.145,
+        "end_sec": 436.742,
+        "block": "B03",
+        "visual_need": "people snow trail",
+        "status": "missing",
+        "camera_motion": "long lens",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 75,
+        "start_sec": 436.742,
+        "end_sec": 442.339,
+        "block": "B03",
+        "visual_need": "footprints snow",
+        "status": "missing",
+        "camera_motion": "snow drift",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 76,
+        "start_sec": 442.339,
+        "end_sec": 447.937,
+        "block": "B03",
+        "visual_need": "white horizon",
+        "status": "missing",
+        "camera_motion": "slow fade",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 77,
+        "start_sec": 447.937,
+        "end_sec": 453.534,
+        "block": "B03",
+        "visual_need": "sled silhouette",
+        "status": "missing",
+        "camera_motion": "long lens",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 78,
+        "start_sec": 453.534,
+        "end_sec": 459.131,
+        "block": "B03",
+        "visual_need": "people snow trail",
+        "status": "missing",
+        "camera_motion": "snow drift",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 79,
+        "start_sec": 459.131,
+        "end_sec": 465.048,
+        "block": "B04",
+        "visual_need": "boat sled ice",
+        "status": "assigned",
+        "camera_motion": "slow reveal",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 80,
+        "start_sec": 465.048,
+        "end_sec": 470.965,
+        "block": "B04",
+        "visual_need": "arctic coast",
+        "status": "assigned",
+        "camera_motion": "side track",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 81,
+        "start_sec": 470.965,
+        "end_sec": 476.882,
+        "block": "B04",
+        "visual_need": "wood runners",
+        "status": "missing",
+        "camera_motion": "static hold",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 82,
+        "start_sec": 476.882,
+        "end_sec": 482.799,
+        "block": "B04",
+        "visual_need": "boat interior",
+        "status": "missing",
+        "camera_motion": "slow reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 83,
+        "start_sec": 482.799,
+        "end_sec": 488.716,
+        "block": "B04",
+        "visual_need": "boat sled ice",
+        "status": "assigned",
+        "camera_motion": "side track",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 84,
+        "start_sec": 488.716,
+        "end_sec": 494.633,
+        "block": "B04",
+        "visual_need": "arctic coast",
+        "status": "assigned",
+        "camera_motion": "static hold",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 85,
+        "start_sec": 494.633,
+        "end_sec": 500.55,
+        "block": "B04",
+        "visual_need": "wood runners",
+        "status": "missing",
+        "camera_motion": "slow reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 86,
+        "start_sec": 500.55,
+        "end_sec": 506.467,
+        "block": "B04",
+        "visual_need": "boat interior",
+        "status": "missing",
+        "camera_motion": "side track",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 87,
+        "start_sec": 506.467,
+        "end_sec": 512.384,
+        "block": "B04",
+        "visual_need": "boat sled ice",
+        "status": "assigned",
+        "camera_motion": "static hold",
+        "transition": "soft dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 88,
+        "start_sec": 512.384,
+        "end_sec": 517.981,
+        "block": "B04",
+        "visual_need": "silver spoon",
+        "status": "missing",
+        "camera_motion": "macro slide",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 89,
+        "start_sec": 517.981,
+        "end_sec": 523.578,
+        "block": "B04",
+        "visual_need": "object close",
+        "status": "missing",
+        "camera_motion": "tabletop pan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 90,
+        "start_sec": 523.578,
+        "end_sec": 529.176,
+        "block": "B04",
+        "visual_need": "book archive",
+        "status": "missing",
+        "camera_motion": "hard cut",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 91,
+        "start_sec": 529.176,
+        "end_sec": 534.773,
+        "block": "B04",
+        "visual_need": "rifle detail",
+        "status": "missing",
+        "camera_motion": "macro slide",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 92,
+        "start_sec": 534.773,
+        "end_sec": 540.37,
+        "block": "B04",
+        "visual_need": "silver spoon",
+        "status": "missing",
+        "camera_motion": "tabletop pan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 93,
+        "start_sec": 540.37,
+        "end_sec": 545.967,
+        "block": "B04",
+        "visual_need": "object close",
+        "status": "missing",
+        "camera_motion": "hard cut",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 94,
+        "start_sec": 545.967,
+        "end_sec": 551.565,
+        "block": "B04",
+        "visual_need": "book archive",
+        "status": "missing",
+        "camera_motion": "macro slide",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 95,
+        "start_sec": 551.565,
+        "end_sec": 557.162,
+        "block": "B04",
+        "visual_need": "rifle detail",
+        "status": "missing",
+        "camera_motion": "tabletop pan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 96,
+        "start_sec": 557.162,
+        "end_sec": 562.759,
+        "block": "B04",
+        "visual_need": "silver spoon",
+        "status": "missing",
+        "camera_motion": "hard cut",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 97,
+        "start_sec": 562.759,
+        "end_sec": 568.372,
+        "block": "B04",
+        "visual_need": "bones archive lab",
+        "status": "assigned",
+        "camera_motion": "static macro",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 98,
+        "start_sec": 568.372,
+        "end_sec": 573.985,
+        "block": "B04",
+        "visual_need": "bone close",
+        "status": "missing",
+        "camera_motion": "slow tilt",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 99,
+        "start_sec": 573.985,
+        "end_sec": 579.599,
+        "block": "B04",
+        "visual_need": "lab table",
+        "status": "assigned",
+        "camera_motion": "folder close",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 100,
+        "start_sec": 579.599,
+        "end_sec": 585.212,
+        "block": "B04",
+        "visual_need": "archive folder",
+        "status": "missing",
+        "camera_motion": "static macro",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 101,
+        "start_sec": 585.212,
+        "end_sec": 590.825,
+        "block": "B04",
+        "visual_need": "bones archive lab",
+        "status": "assigned",
+        "camera_motion": "slow tilt",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 102,
+        "start_sec": 590.825,
+        "end_sec": 596.438,
+        "block": "B04",
+        "visual_need": "bone close",
+        "status": "missing",
+        "camera_motion": "folder close",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 103,
+        "start_sec": 596.438,
+        "end_sec": 602.051,
+        "block": "B04",
+        "visual_need": "lab table",
+        "status": "assigned",
+        "camera_motion": "static macro",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 104,
+        "start_sec": 602.051,
+        "end_sec": 607.665,
+        "block": "B04",
+        "visual_need": "archive folder",
+        "status": "missing",
+        "camera_motion": "slow tilt",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 105,
+        "start_sec": 607.665,
+        "end_sec": 613.278,
+        "block": "B04",
+        "visual_need": "bones archive lab",
+        "status": "assigned",
+        "camera_motion": "folder close",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 106,
+        "start_sec": 613.278,
+        "end_sec": 618.891,
+        "block": "B04",
+        "visual_need": "bone close",
+        "status": "missing",
+        "camera_motion": "static macro",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 107,
+        "start_sec": 618.891,
+        "end_sec": 624.792,
+        "block": "B05",
+        "visual_need": "lab archive",
+        "status": "assigned",
+        "camera_motion": "documentary handheld",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 108,
+        "start_sec": 624.792,
+        "end_sec": 630.693,
+        "block": "B05",
+        "visual_need": "beechy camp",
+        "status": "missing",
+        "camera_motion": "slow reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 109,
+        "start_sec": 630.693,
+        "end_sec": 636.594,
+        "block": "B05",
+        "visual_need": "forensic dig",
+        "status": "missing",
+        "camera_motion": "cutaway",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 110,
+        "start_sec": 636.594,
+        "end_sec": 642.495,
+        "block": "B05",
+        "visual_need": "wood coffin",
+        "status": "missing",
+        "camera_motion": "documentary handheld",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 111,
+        "start_sec": 642.495,
+        "end_sec": 648.396,
+        "block": "B05",
+        "visual_need": "lab archive",
+        "status": "assigned",
+        "camera_motion": "slow reveal",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 112,
+        "start_sec": 648.396,
+        "end_sec": 654.297,
+        "block": "B05",
+        "visual_need": "beechy camp",
+        "status": "missing",
+        "camera_motion": "cutaway",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 113,
+        "start_sec": 654.297,
+        "end_sec": 660.198,
+        "block": "B05",
+        "visual_need": "forensic dig",
+        "status": "missing",
+        "camera_motion": "documentary handheld",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 114,
+        "start_sec": 660.198,
+        "end_sec": 666.099,
+        "block": "B05",
+        "visual_need": "wood coffin",
+        "status": "missing",
+        "camera_motion": "slow reveal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 115,
+        "start_sec": 666.099,
+        "end_sec": 672.0,
+        "block": "B05",
+        "visual_need": "lab archive",
+        "status": "assigned",
+        "camera_motion": "cutaway",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 116,
+        "start_sec": 672.0,
+        "end_sec": 677.901,
+        "block": "B05",
+        "visual_need": "beechy camp",
+        "status": "missing",
+        "camera_motion": "documentary handheld",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 117,
+        "start_sec": 677.901,
+        "end_sec": 683.498,
+        "block": "B05",
+        "visual_need": "archive portrait",
+        "status": "missing",
+        "camera_motion": "slow push",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 118,
+        "start_sec": 683.498,
+        "end_sec": 689.095,
+        "block": "B05",
+        "visual_need": "medical notes",
+        "status": "missing",
+        "camera_motion": "macro detail",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 119,
+        "start_sec": 689.095,
+        "end_sec": 694.693,
+        "block": "B05",
+        "visual_need": "clothing detail",
+        "status": "missing",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 120,
+        "start_sec": 694.693,
+        "end_sec": 700.29,
+        "block": "B05",
+        "visual_need": "lab hands",
+        "status": "assigned",
+        "camera_motion": "slow push",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 121,
+        "start_sec": 700.29,
+        "end_sec": 705.887,
+        "block": "B05",
+        "visual_need": "archive portrait",
+        "status": "missing",
+        "camera_motion": "macro detail",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 122,
+        "start_sec": 705.887,
+        "end_sec": 711.484,
+        "block": "B05",
+        "visual_need": "medical notes",
+        "status": "missing",
+        "camera_motion": "dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 123,
+        "start_sec": 711.484,
+        "end_sec": 717.082,
+        "block": "B05",
+        "visual_need": "clothing detail",
+        "status": "missing",
+        "camera_motion": "slow push",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 124,
+        "start_sec": 717.082,
+        "end_sec": 722.679,
+        "block": "B05",
+        "visual_need": "lab hands",
+        "status": "assigned",
+        "camera_motion": "macro detail",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 125,
+        "start_sec": 722.679,
+        "end_sec": 728.276,
+        "block": "B05",
+        "visual_need": "archive portrait",
+        "status": "missing",
+        "camera_motion": "dissolve",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 126,
+        "start_sec": 728.276,
+        "end_sec": 733.889,
+        "block": "B05",
+        "visual_need": "lead can archive",
+        "status": "missing",
+        "camera_motion": "macro metal",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 127,
+        "start_sec": 733.889,
+        "end_sec": 739.502,
+        "block": "B05",
+        "visual_need": "lab analysis",
+        "status": "assigned",
+        "camera_motion": "paper montage",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 128,
+        "start_sec": 739.502,
+        "end_sec": 745.116,
+        "block": "B05",
+        "visual_need": "newspaper archive",
+        "status": "missing",
+        "camera_motion": "lab pan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 129,
+        "start_sec": 745.116,
+        "end_sec": 750.729,
+        "block": "B05",
+        "visual_need": "medical record",
+        "status": "missing",
+        "camera_motion": "macro metal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 130,
+        "start_sec": 750.729,
+        "end_sec": 756.342,
+        "block": "B05",
+        "visual_need": "lead can archive",
+        "status": "missing",
+        "camera_motion": "paper montage",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 131,
+        "start_sec": 756.342,
+        "end_sec": 761.955,
+        "block": "B05",
+        "visual_need": "lab analysis",
+        "status": "assigned",
+        "camera_motion": "lab pan",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 132,
+        "start_sec": 761.955,
+        "end_sec": 767.568,
+        "block": "B05",
+        "visual_need": "newspaper archive",
+        "status": "missing",
+        "camera_motion": "macro metal",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 133,
+        "start_sec": 767.568,
+        "end_sec": 773.182,
+        "block": "B05",
+        "visual_need": "medical record",
+        "status": "missing",
+        "camera_motion": "paper montage",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 134,
+        "start_sec": 773.182,
+        "end_sec": 778.795,
+        "block": "B05",
+        "visual_need": "lead can archive",
+        "status": "missing",
+        "camera_motion": "lab pan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 135,
+        "start_sec": 778.795,
+        "end_sec": 784.408,
+        "block": "B05",
+        "visual_need": "lab analysis",
+        "status": "assigned",
+        "camera_motion": "macro metal",
+        "transition": "soft dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 136,
+        "start_sec": 784.408,
+        "end_sec": 790.021,
+        "block": "B06",
+        "visual_need": "sonar screen",
+        "status": "missing",
+        "camera_motion": "screen scan",
+        "transition": "dissolve",
+        "asset": null
+      },
+      {
+        "idx": 137,
+        "start_sec": 790.021,
+        "end_sec": 795.634,
+        "block": "B06",
+        "visual_need": "research vessel",
+        "status": "missing",
+        "camera_motion": "drone coast",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 138,
+        "start_sec": 795.634,
+        "end_sec": 801.248,
+        "block": "B06",
+        "visual_need": "satellite map",
+        "status": "missing",
+        "camera_motion": "map overlay",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 139,
+        "start_sec": 801.248,
+        "end_sec": 806.861,
+        "block": "B06",
+        "visual_need": "underwater robot",
+        "status": "missing",
+        "camera_motion": "screen scan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 140,
+        "start_sec": 806.861,
+        "end_sec": 812.474,
+        "block": "B06",
+        "visual_need": "sonar screen",
+        "status": "missing",
+        "camera_motion": "drone coast",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 141,
+        "start_sec": 812.474,
+        "end_sec": 818.087,
+        "block": "B06",
+        "visual_need": "research vessel",
+        "status": "missing",
+        "camera_motion": "map overlay",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 142,
+        "start_sec": 818.087,
+        "end_sec": 823.7,
+        "block": "B06",
+        "visual_need": "satellite map",
+        "status": "missing",
+        "camera_motion": "screen scan",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 143,
+        "start_sec": 823.7,
+        "end_sec": 829.314,
+        "block": "B06",
+        "visual_need": "underwater robot",
+        "status": "missing",
+        "camera_motion": "drone coast",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 144,
+        "start_sec": 829.314,
+        "end_sec": 834.927,
+        "block": "B06",
+        "visual_need": "sonar screen",
+        "status": "missing",
+        "camera_motion": "map overlay",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 145,
+        "start_sec": 834.927,
+        "end_sec": 840.54,
+        "block": "B06",
+        "visual_need": "research vessel",
+        "status": "missing",
+        "camera_motion": "screen scan",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 146,
+        "start_sec": 840.54,
+        "end_sec": 846.729,
+        "block": "B06",
+        "visual_need": "underwater ship",
+        "status": "assigned",
+        "camera_motion": "rov glide",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 147,
+        "start_sec": 846.729,
+        "end_sec": 852.918,
+        "block": "B06",
+        "visual_need": "shipwreck hull",
+        "status": "missing",
+        "camera_motion": "slow track",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 148,
+        "start_sec": 852.918,
+        "end_sec": 859.107,
+        "block": "B06",
+        "visual_need": "closed hatch",
+        "status": "missing",
+        "camera_motion": "dark dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 149,
+        "start_sec": 859.107,
+        "end_sec": 865.296,
+        "block": "B06",
+        "visual_need": "interior cabin",
+        "status": "missing",
+        "camera_motion": "rov glide",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 150,
+        "start_sec": 865.296,
+        "end_sec": 871.484,
+        "block": "B06",
+        "visual_need": "underwater ship",
+        "status": "assigned",
+        "camera_motion": "slow track",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 151,
+        "start_sec": 871.484,
+        "end_sec": 877.673,
+        "block": "B06",
+        "visual_need": "shipwreck hull",
+        "status": "missing",
+        "camera_motion": "dark dissolve",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 152,
+        "start_sec": 877.673,
+        "end_sec": 883.862,
+        "block": "B06",
+        "visual_need": "closed hatch",
+        "status": "missing",
+        "camera_motion": "rov glide",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 153,
+        "start_sec": 883.862,
+        "end_sec": 890.051,
+        "block": "B06",
+        "visual_need": "interior cabin",
+        "status": "missing",
+        "camera_motion": "slow track",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 154,
+        "start_sec": 890.051,
+        "end_sec": 896.24,
+        "block": "B06",
+        "visual_need": "underwater ship",
+        "status": "assigned",
+        "camera_motion": "dark dissolve",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 155,
+        "start_sec": 896.24,
+        "end_sec": 902.429,
+        "block": "B06",
+        "visual_need": "shipwreck hull",
+        "status": "missing",
+        "camera_motion": "rov glide",
+        "transition": "soft dissolve",
+        "asset": null
+      },
+      {
+        "idx": 156,
+        "start_sec": 902.429,
+        "end_sec": 908.186,
+        "block": "B06",
+        "visual_need": "ice wide finale",
+        "status": "assigned",
+        "camera_motion": "slow pullback",
+        "transition": "dissolve",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 157,
+        "start_sec": 908.186,
+        "end_sec": 913.943,
+        "block": "B06",
+        "visual_need": "empty horizon",
+        "status": "missing",
+        "camera_motion": "fade out",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 158,
+        "start_sec": 913.943,
+        "end_sec": 919.7,
+        "block": "B06",
+        "visual_need": "ship memory",
+        "status": "assigned",
+        "camera_motion": "snow increase",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 159,
+        "start_sec": 919.7,
+        "end_sec": 925.457,
+        "block": "B06",
+        "visual_need": "atlas logo",
+        "status": "missing",
+        "camera_motion": "slow pullback",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 160,
+        "start_sec": 925.457,
+        "end_sec": 931.214,
+        "block": "B06",
+        "visual_need": "ice wide finale",
+        "status": "assigned",
+        "camera_motion": "fade out",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 161,
+        "start_sec": 931.214,
+        "end_sec": 936.972,
+        "block": "B06",
+        "visual_need": "empty horizon",
+        "status": "missing",
+        "camera_motion": "snow increase",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 162,
+        "start_sec": 936.972,
+        "end_sec": 942.729,
+        "block": "B06",
+        "visual_need": "ship memory",
+        "status": "assigned",
+        "camera_motion": "slow pullback",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 163,
+        "start_sec": 942.729,
+        "end_sec": 948.486,
+        "block": "B06",
+        "visual_need": "atlas logo",
+        "status": "missing",
+        "camera_motion": "fade out",
+        "transition": "cut",
+        "asset": null
+      },
+      {
+        "idx": 164,
+        "start_sec": 948.486,
+        "end_sec": 954.243,
+        "block": "B06",
+        "visual_need": "ice wide finale",
+        "status": "assigned",
+        "camera_motion": "snow increase",
+        "transition": "cut",
+        "asset": "S01_SH01_Arctic_Aerial_Master.jpg"
+      },
+      {
+        "idx": 165,
+        "start_sec": 954.243,
+        "end_sec": 960.0,
+        "block": "B06",
+        "visual_need": "empty horizon",
+        "status": "missing",
+        "camera_motion": "slow pullback",
+        "transition": "soft dissolve",
+        "asset": null
+      }
+    ],
+    "voice": [],
+    "text": [],
+    "qc": [
+      {
+        "idx": 38,
+        "start_sec": 210.855,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 39,
+        "start_sec": 216.432,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 40,
+        "start_sec": 222.01,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 43,
+        "start_sec": 239.721,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 44,
+        "start_sec": 246.277,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 47,
+        "start_sec": 265.947,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 48,
+        "start_sec": 272.504,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 51,
+        "start_sec": 292.174,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 52,
+        "start_sec": 297.787,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 53,
+        "start_sec": 303.4,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 54,
+        "start_sec": 309.014,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 55,
+        "start_sec": 314.627,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 56,
+        "start_sec": 320.24,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 57,
+        "start_sec": 325.853,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 58,
+        "start_sec": 331.466,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 59,
+        "start_sec": 337.08,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 60,
+        "start_sec": 342.693,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 61,
+        "start_sec": 348.306,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 62,
+        "start_sec": 355.023,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 63,
+        "start_sec": 361.739,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 65,
+        "start_sec": 375.173,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 66,
+        "start_sec": 381.889,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 67,
+        "start_sec": 388.606,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 69,
+        "start_sec": 402.039,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 70,
+        "start_sec": 408.756,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 71,
+        "start_sec": 414.353,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 72,
+        "start_sec": 419.95,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 73,
+        "start_sec": 425.548,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 74,
+        "start_sec": 431.145,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 75,
+        "start_sec": 436.742,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 76,
+        "start_sec": 442.339,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 77,
+        "start_sec": 447.937,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 78,
+        "start_sec": 453.534,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 81,
+        "start_sec": 470.965,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 82,
+        "start_sec": 476.882,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 85,
+        "start_sec": 494.633,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 86,
+        "start_sec": 500.55,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 88,
+        "start_sec": 512.384,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 89,
+        "start_sec": 517.981,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 90,
+        "start_sec": 523.578,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 91,
+        "start_sec": 529.176,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 92,
+        "start_sec": 534.773,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 93,
+        "start_sec": 540.37,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 94,
+        "start_sec": 545.967,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 95,
+        "start_sec": 551.565,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 96,
+        "start_sec": 557.162,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 98,
+        "start_sec": 568.372,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 100,
+        "start_sec": 579.599,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 102,
+        "start_sec": 590.825,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 104,
+        "start_sec": 602.051,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 106,
+        "start_sec": 613.278,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 108,
+        "start_sec": 624.792,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 109,
+        "start_sec": 630.693,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 110,
+        "start_sec": 636.594,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 112,
+        "start_sec": 648.396,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 113,
+        "start_sec": 654.297,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 114,
+        "start_sec": 660.198,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 116,
+        "start_sec": 672.0,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 117,
+        "start_sec": 677.901,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 118,
+        "start_sec": 683.498,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 119,
+        "start_sec": 689.095,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 121,
+        "start_sec": 700.29,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 122,
+        "start_sec": 705.887,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 123,
+        "start_sec": 711.484,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 125,
+        "start_sec": 722.679,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 126,
+        "start_sec": 728.276,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 128,
+        "start_sec": 739.502,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 129,
+        "start_sec": 745.116,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 130,
+        "start_sec": 750.729,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 132,
+        "start_sec": 761.955,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 133,
+        "start_sec": 767.568,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 134,
+        "start_sec": 773.182,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 136,
+        "start_sec": 784.408,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 137,
+        "start_sec": 790.021,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 138,
+        "start_sec": 795.634,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 139,
+        "start_sec": 801.248,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 140,
+        "start_sec": 806.861,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 141,
+        "start_sec": 812.474,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 142,
+        "start_sec": 818.087,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 143,
+        "start_sec": 823.7,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 144,
+        "start_sec": 829.314,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 145,
+        "start_sec": 834.927,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 147,
+        "start_sec": 846.729,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 148,
+        "start_sec": 852.918,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 149,
+        "start_sec": 859.107,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 151,
+        "start_sec": 871.484,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 152,
+        "start_sec": 877.673,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 153,
+        "start_sec": 883.862,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 155,
+        "start_sec": 896.24,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 157,
+        "start_sec": 908.186,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 159,
+        "start_sec": 919.7,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 161,
+        "start_sec": 931.214,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 163,
+        "start_sec": 942.729,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      },
+      {
+        "idx": 165,
+        "start_sec": 954.243,
+        "type": "missing_asset",
+        "message": "Нужно создать материал"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+﻿Bin,Файл,Тип,Категория,Эмоция,Качество,Путь
+audio / general,#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 2.mp3,audio,general,neutral,0.55,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio/#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 2.mp3
+audio / general,#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 3.mp3,audio,general,neutral,0.55,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio/#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 3.mp3
+audio / general,#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 4.mp3,audio,general,neutral,0.55,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio/#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 4.mp3
+audio / general,#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 5.mp3,audio,general,neutral,0.55,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio/#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 5.mp3
+audio / general,#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 6.mp3,audio,general,neutral,0.55,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio/#U041e#U0437#U0432#U0443#U0447#U043a#U0430 #U0431#U043b#U043e#U043a 6.mp3
+image / crew,S01_SH04_Crew_Commander.jpg,image,crew,human,0.63,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH04_Crew_Commander.jpg
+image / crew,S01_SH05_Crew_Working.jpg,image,crew,human,0.63,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH05_Crew_Working.jpg
+image / ice,S01_SH01_Arctic_Aerial_Master.jpg,image,ice,isolation,0.87,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg
+image / ship,S01_SH02_Erebus_Terror_Master.jpg,image,ship,neutral,0.71,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH02_Erebus_Terror_Master.jpg
+image / ship,S01_SH06_Deck_Detail.jpg,image,ship,neutral,0.63,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH06_Deck_Detail.jpg
+video / crew,franklin_video_01.mp4,video,crew,neutral,0.71,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_01.mp4
+video / crew,franklin_video_02.mp4,video,crew,neutral,0.71,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_02.mp4
+video / crew,franklin_video_03.mp4,video,crew,neutral,0.71,/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_03.mp4

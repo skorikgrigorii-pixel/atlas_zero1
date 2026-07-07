@@ -1,0 +1,56 @@
+[
+  {
+    "service": "canva",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"CANVA_API_KEY\", \"endpoint\": \"https://api.canva.com/rest/v1\", \"capabilities\": [\"graphics_templates\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "capcut",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"CAPCUT_PROJECT_PATH\", \"endpoint\": \"local_exchange\", \"capabilities\": [\"handoff\", \"guide_export\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "davinci",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"DAVINCI_PROJECT_PATH\", \"endpoint\": \"local_exchange\", \"capabilities\": [\"fcpxml\", \"edl\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "elevenlabs",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"ELEVENLABS_API_KEY\", \"endpoint\": \"https://api.elevenlabs.io/v1\", \"capabilities\": [\"voice_generation\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "leonardo",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"LEONARDO_API_KEY\", \"endpoint\": \"https://cloud.leonardo.ai/api/rest/v1\", \"capabilities\": [\"image_generation\", \"image_to_video_queue\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "openai",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"OPENAI_API_KEY\", \"endpoint\": \"https://api.openai.com/v1\", \"capabilities\": [\"director_ai\", \"vision\", \"script_analysis\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "premiere",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"PREMIERE_PROJECT_PATH\", \"endpoint\": \"local_exchange\", \"capabilities\": [\"xml\", \"edl\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "suno",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"SUNO_API_KEY\", \"endpoint\": \"provider_specific\", \"capabilities\": [\"music_generation\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  },
+  {
+    "service": "youtube",
+    "status": "missing",
+    "detail_json": "{\"env_key\": \"YOUTUBE_OAUTH_CLIENT\", \"endpoint\": \"https://www.googleapis.com/youtube/v3\", \"capabilities\": [\"analytics\", \"publishing_metadata\"], \"live_enabled\": false}",
+    "created_at": "2026-07-06 22:57:01"
+  }
+]

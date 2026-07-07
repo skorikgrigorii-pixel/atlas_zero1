@@ -1,0 +1,7 @@
+﻿priority,area,task,acceptance,owner
+1,Live API,"Подключить минимум Leonardo, ElevenLabs, OpenAI через ENV-ключи и пройти safe-live handshake",integration_health показывает connected/live-ready без ошибок,operator
+1,Материалы,Закрыть 25 missing-шотов через пакет capcut_missing_generation_batch.md,после повторного конвейера missing=0 или закрыты deliberate placeholders,operator
+2,Quality,Поднять QC readiness до 90%+,working_state_audit показывает local_production_ready=True и QC>=90,operator
+2,Timeline,Проверить capcut_operator_bridge.html и собрать первые 60 секунд в CapCut,CapCut draft содержит первые 60 секунд с правильными таймкодами,operator
+3,Release,Сформировать publish package после чернового монтажа,"release center содержит название, описание, главы, теги, thumbnail brief",operator
+3,YouTube,Подключить YouTube Analytics после публикации тестового ролика,получены retention/CTR/AVD и сохранены в Project Brain,operator

@@ -1,0 +1,2096 @@
+[
+  {
+    "criterion": "Project Brain memory",
+    "score": 0.88,
+    "passed": 1,
+    "comment": "Граф проекта, события, решения и SQLite работают."
+  },
+  {
+    "criterion": "Workflow Engine",
+    "score": 0.84,
+    "passed": 1,
+    "comment": "Конвейер выполняет основные этапы и пишет workflow-события."
+  },
+  {
+    "criterion": "Director AI",
+    "score": 0.68,
+    "passed": 1,
+    "comment": "Explainable подбор ассетов работает; нужен финальный просмотрщик решений."
+  },
+  {
+    "criterion": "Visual Intelligence",
+    "score": 0.62,
+    "passed": 1,
+    "comment": "Создано визуальных профилей: 8. Это локальный анализ, не финальная CV-модель."
+  },
+  {
+    "criterion": "Live API integrations",
+    "score": 0.38,
+    "passed": 0,
+    "comment": "Live-safe слой и Credential Vault готовы; реальные платные вызовы заблокированы до настройки ключей и AZ_ENABLE_LIVE_CALLS=1."
+  },
+  {
+    "criterion": "Enterprise UI",
+    "score": 0.63,
+    "passed": 0,
+    "comment": "Компактный UI работает; финальный viewer/timeline ещё не production-grade."
+  },
+  {
+    "criterion": "Franklin pipeline",
+    "score": 0.8384999999999999,
+    "passed": 0,
+    "comment": "Готовность Franklin 83.85%."
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 75.75757575757575,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 87.39393939393939,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Материалы проиндексированы",
+    "score": 52.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Монтажный лист построен",
+    "score": 100.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Дефицит кадров допустимый",
+    "score": 8.848484848484844,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Визуальный анализ выполнен",
+    "score": 61.53846153846154,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Проверка визуальной схожести",
+    "score": 45.0,
+    "passed": 1,
+    "comment": "OK"
+  },
+  {
+    "criterion": "Интеграции настроены",
+    "score": 50.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "API Gateway готов",
+    "score": 65.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Live API разрешены",
+    "score": 35.0,
+    "passed": 0,
+    "comment": "Требует доработки"
+  },
+  {
+    "criterion": "Финальный viewer/timeline",
+    "score": 90.0,
+    "passed": 1,
+    "comment": "OK"
+  }
+]

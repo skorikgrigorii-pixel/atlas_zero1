@@ -1,0 +1,47 @@
+{
+  "mode": "dry_safe",
+  "configured": 0,
+  "reachable": 0,
+  "services_total": 6,
+  "paid_calls_allowed": false,
+  "rows": [
+    {
+      "service": "OpenAI",
+      "status": "not_configured",
+      "env": "OPENAI_API_KEY",
+      "detail": "ключ отсутствует"
+    },
+    {
+      "service": "ElevenLabs",
+      "status": "not_configured",
+      "env": "ELEVENLABS_API_KEY",
+      "detail": "ключ отсутствует"
+    },
+    {
+      "service": "YouTube",
+      "status": "not_configured",
+      "env": "YOUTUBE_API_KEY",
+      "detail": "ключ отсутствует"
+    },
+    {
+      "service": "Leonardo",
+      "status": "not_configured",
+      "env": "LEONARDO_API_KEY",
+      "detail": "ключ отсутствует"
+    },
+    {
+      "service": "Suno",
+      "status": "not_configured",
+      "env": "SUNO_API_KEY",
+      "detail": "ключ отсутствует"
+    },
+    {
+      "service": "Canva",
+      "status": "not_configured",
+      "env": "CANVA_API_KEY",
+      "detail": "ключ отсутствует"
+    }
+  ],
+  "ready_for_live_generation": false,
+  "note": "Платные операции не запускаются без AZ_ALLOW_PAID_CALLS=1."
+}
