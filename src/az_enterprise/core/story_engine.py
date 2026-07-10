@@ -127,20 +127,22 @@ class StoryEngine:
         return sum(bp.duration_sec for bp in SCENE_BLUEPRINTS)
 
     def _allocate_shots(self, target_count: int) -> list[int]:
-        total = self._blueprint_duration()
-        raw = [max(4, round(target_count * bp.duration_sec / total)) for bp in SCENE_BLUEPRINTS]
-        diff = target_count - sum(raw)
-        order = sorted(range(len(raw)), key=lambda i: SCENE_BLUEPRINTS[i].duration_sec, reverse=True)
-        cursor = 0
-        while diff != 0 and order:
-            i = order[cursor % len(order)]
-            if diff > 0:
-                raw[i] += 1
-                diff -= 1
-            elif raw[i] > 4:
-                raw[i] -= 1
-                diff += 1
-            cursor += 1
+        target_count = max(0, int(target_count))
+        raw = [0] * len(SCENE_BLUEPRINTS)
+        if target_count <= 0:
+            return raw
+
+        for i in range(min(target_count, len(raw))):
+            raw[i] = 1
+
+        remaining = target_count - sum(raw)
+        if remaining <= 0:
+            return raw
+
+        weights = [bp.duration_sec for bp in SCENE_BLUEPRINTS]
+        for _ in range(remaining):
+            idx = max(range(len(raw)), key=lambda i: (weights[i] / (raw[i] + 1), i))
+            raw[idx] += 1
         return raw
 
     def _transition_for(self, scene_idx: int, local_idx: int, count: int) -> str:

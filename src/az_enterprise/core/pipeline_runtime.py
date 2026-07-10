@@ -159,7 +159,7 @@ class PipelineRunManager:
             ("cv_model", "CV Runtime: OpenCV/Pillow анализ изображений", self._step_cv_model),
             ("visual_intelligence", "Visual Intelligence: профиль стиля", self._step_visual_intelligence),
             ("build_shots", "Story Engine: построение монтажной структуры", self._step_build_shots),
-            ("director_ai", "Director AI: подбор материалов и объяснение выбора", self._step_director_ai),
+            ("director_ai", "Director AI 2.5: подбор материалов, проверка полноты и задачи", self._step_director_ai),
             ("story_runtime", "Story Engine 2.3: сцены и монтажный лист", self._step_story_runtime),
             ("director_ai_2_4", "Director AI 2.4: качество, решения, задачи", self._step_director_ai_runtime),
             ("live_api_test", "Live API: проверка ключей и read-only endpoints", self._step_live_api_test),

@@ -1,9 +1,11 @@
-# RC1 Alpha 1.6 status
+# RC1 Alpha 2.5 status
 
 ## Готово
 
 - Franklin локально проходит production workflow.
 - Director AI назначает материалы и объясняет выбор.
+- Director AI 2.5 интегрирован со Story Engine и автоматически анализирует полноту проекта.
+- Недостающие материалы порождают production/operator tasks и видны в dashboard/pipeline.
 - CV Model 1.5 расширена CV Review Board 1.6.
 - Native Viewer RC расширен Timeline Viewer 2.
 - Safe live layer расширен Live API Test Suite 1.6.

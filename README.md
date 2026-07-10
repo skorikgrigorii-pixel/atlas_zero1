@@ -1,8 +1,16 @@
-# ATLAS ZERO Enterprise RC1 Alpha 2.4 — Director AI
+# ATLAS ZERO Enterprise RC1 Alpha 2.5 — Director AI
 
 Эта версия продолжает развитие текущей ОС, не начинает новый проект.
 
-## Главное в Alpha 2.4
+## Главное в Alpha 2.5
+
+- **Director AI 2.5**
+  - интеграция с Story Engine;
+  - автоматический анализ полноты проекта по сценам и шотам;
+  - обнаружение недостающих материалов;
+  - автоматическое создание production tasks и operator tasks;
+  - связь с существующим dashboard и pipeline;
+  - сохранение обратной совместимости с текущей архитектурой.
 
 - **Director AI Runtime 2.4**
   - анализ качества проекта;
