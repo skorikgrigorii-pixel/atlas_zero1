@@ -1,0 +1,181 @@
+from __future__ import annotations
+
+import json
+import os
+from contextlib import contextmanager
+from dataclasses import dataclass
+from typing import Any, Callable
+
+from .asset_engine_rc2 import AssetEngineRC2
+from .assignment_engine_rc2 import AssignmentEngineRC2
+from .database import Database
+from .production_state_rc2 import ProductionStateRC2, ProductionStateStoreRC2
+from .project_config_rc2 import ProjectConfigRC2
+from .quality_gate_rc2 import QualityGateRC2
+from .render_engine_rc2 import RenderEngineRC2
+from .runtime_governance_rc2 import governance_report
+from .timeline_engine_rc2 import TimelineEngineRC2
+
+
+ProgressCallback = Callable[[dict[str, Any]], None]
+
+
+@dataclass(frozen=True)
+class StageDefinition:
+    name: str
+    resumable: bool = True
+
+
+class DirectorCoreRC2:
+    """The sole canonical orchestration authority for RC2."""
+
+    STAGES = (
+        StageDefinition("assets"),
+        StageDefinition("assignment"),
+        StageDefinition("timeline"),
+        StageDefinition("render", resumable=False),
+        StageDefinition("quality", resumable=False),
+    )
+
+    def __init__(
+        self,
+        project_id: str,
+        *,
+        root_dir=None,
+        progress: ProgressCallback | None = None,
+    ) -> None:
+        kwargs = {"project_id": project_id}
+        if root_dir is not None:
+            kwargs["root_dir"] = root_dir
+        self.config = ProjectConfigRC2(**kwargs)
+        self.progress = progress or self._default_progress
+        self.db = Database()
+        self.db.init()
+        self.store = ProductionStateStoreRC2(self.config.state_path, project_id=project_id)
+
+    @staticmethod
+    def _default_progress(payload: dict[str, Any]) -> None:
+        stage = payload.get("stage", "INFO")
+        rest = " ".join(f"{key}={value}" for key, value in payload.items() if key != "stage")
+        print(f"[RC2 {stage}] {rest}".rstrip(), flush=True)
+
+    def plan(self) -> dict[str, Any]:
+        state = self.store.load()
+        return {
+            "project_id": self.config.project_id,
+            "canonical_orchestrator": "DirectorCoreRC2",
+            "stages": [item.name for item in self.STAGES],
+            "current_state": state.status,
+            "resume_from": self._first_incomplete_stage(state),
+            "governance": governance_report(),
+        }
+
+    def _first_incomplete_stage(self, state: ProductionStateRC2) -> str | None:
+        for definition in self.STAGES:
+            stage = state.stages.get(definition.name)
+            if stage is None or stage.status != "COMPLETED":
+                return definition.name
+        return None
+
+    @contextmanager
+    def _exclusive_run(self):
+        self.config.run_lock_path.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            fd = os.open(
+                self.config.run_lock_path,
+                os.O_CREAT | os.O_EXCL | os.O_WRONLY,
+            )
+        except FileExistsError as exc:
+            raise RuntimeError(
+                f"Another DirectorCoreRC2 run is active: {self.config.run_lock_path}"
+            ) from exc
+        try:
+            os.write(fd, str(os.getpid()).encode("ascii"))
+            os.close(fd)
+            yield
+        finally:
+            self.config.run_lock_path.unlink(missing_ok=True)
+
+    def _run_stage(self, state: ProductionStateRC2, name: str, callable_) -> dict[str, Any]:
+        self.store.start_stage(state, name)
+        self.progress({"stage": name.upper(), "status": "RUNNING"})
+        try:
+            result = callable_()
+        except Exception as exc:
+            self.store.fail_stage(state, name, str(exc))
+            self.progress({"stage": name.upper(), "status": "FAILED", "error": str(exc)})
+            raise
+        self.store.complete_stage(state, name, result)
+        self.progress({"stage": name.upper(), "status": "COMPLETED"})
+        return result
+
+    def run(self, *, resume: bool = True, force: bool = False) -> dict[str, Any]:
+        with self._exclusive_run():
+            self.config.governance_path.parent.mkdir(parents=True, exist_ok=True)
+            self.config.governance_path.write_text(
+                json.dumps(governance_report(), ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            state = self.store.load()
+            self.store.reset_for_run(state, force=force)
+
+            stage_services = {
+                "assets": lambda: AssetEngineRC2(self.db, self.config).run(),
+                "assignment": lambda: AssignmentEngineRC2(self.db, self.config).run(),
+                "timeline": lambda: TimelineEngineRC2(self.db, self.config).run(),
+                "render": lambda: RenderEngineRC2(self.config, progress=self.progress).run(),
+                "quality": lambda: QualityGateRC2(self.config).run(),
+            }
+            results: dict[str, Any] = {}
+            try:
+                for definition in self.STAGES:
+                    existing = state.stages.get(definition.name)
+                    can_skip = (
+                        resume
+                        and not force
+                        and definition.resumable
+                        and existing is not None
+                        and existing.status == "COMPLETED"
+                    )
+                    if can_skip:
+                        results[definition.name] = existing.details
+                        self.progress(
+                            {"stage": definition.name.upper(), "status": "SKIPPED_COMPLETED"}
+                        )
+                        continue
+                    results[definition.name] = self._run_stage(
+                        state,
+                        definition.name,
+                        stage_services[definition.name],
+                    )
+
+                quality = results["quality"]
+                if quality.get("state") != "PASSED":
+                    raise RuntimeError("Quality Gate RC2 blocked release")
+
+                state.status = "COMPLETED"
+                state.current_stage = None
+                state.artifacts.update(
+                    {
+                        "timeline": str(self.config.timeline_path),
+                        "render": str(self.config.canonical_render_path),
+                        "quality_report": str(self.config.quality_report_path),
+                        "governance": str(self.config.governance_path),
+                    }
+                )
+                state.quality = quality
+                state.release_authorized = True
+                self.store.save(state)
+                return {
+                    "state": "COMPLETED",
+                    "project_id": self.config.project_id,
+                    "run_id": state.run_id,
+                    "results": results,
+                    "production_state": str(self.config.state_path),
+                }
+            except Exception as exc:
+                state.status = "FAILED"
+                state.error = str(exc)
+                state.release_authorized = False
+                self.store.save(state)
+                raise
