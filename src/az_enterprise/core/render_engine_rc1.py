@@ -308,6 +308,17 @@ class RenderEngineRC1:
         if not audio_dir.exists():
             return None
 
+        # Always prefer the complete narration assembled from all blocks.
+        preferred = [
+            audio_dir / "voice_master.m4a",
+            audio_dir / "voice_master.wav",
+            audio_dir / "voice_master.mp3",
+        ]
+
+        for path in preferred:
+            if path.exists() and path.is_file():
+                return path
+
         candidates = [
             path
             for path in sorted(audio_dir.rglob("*"))
@@ -339,10 +350,25 @@ class RenderEngineRC1:
 
     @staticmethod
     def _run_ffmpeg(cmd: list[str], step: str) -> None:
-        proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        # FFmpeg must never inherit the parent process stdin.
+        # This is especially important when Python itself is started
+        # through a PowerShell pipeline.
+        if "-nostdin" not in cmd:
+            cmd = [cmd[0], "-nostdin", *cmd[1:]]
+
+        proc = subprocess.run(
+            cmd,
+            stdin=subprocess.DEVNULL,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
         if proc.returncode != 0:
-            stderr_tail = "\n".join(proc.stderr.splitlines()[-10:])
-            raise RuntimeError(f"ffmpeg failed during {step}: {stderr_tail}")
+            stderr_tail = "\n".join(proc.stderr.splitlines()[-20:])
+            raise RuntimeError(
+                f"ffmpeg failed during {step}: {stderr_tail}"
+            )
 
     def _write_json_outputs(self, report: dict[str, Any], manifest: dict[str, Any]) -> None:
         self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -3,13 +3,13 @@
   "local_finishable": true,
   "assets": 13,
   "shots": 165,
-  "assigned": 71,
-  "missing": 94,
-  "coverage_pct": 43.0,
+  "assigned": 8,
+  "missing": 157,
+  "coverage_pct": 4.8,
   "critical_actions": [
     {
       "title": "Создать недостающие материалы",
-      "count": 94,
+      "count": 157,
       "file": "capcut_missing_generation_batch.md"
     },
     {

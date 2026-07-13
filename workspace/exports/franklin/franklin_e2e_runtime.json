@@ -1,14 +1,14 @@
 {
   "project_id": "franklin",
-  "score": 85.76,
+  "score": 76.21,
   "local_e2e_ready": true,
   "assets": 13,
   "shots": 165,
-  "assigned": 71,
-  "missing": 94,
+  "assigned": 8,
+  "missing": 157,
   "cv_assets": 8,
-  "cv_avg_grade": 0.949,
-  "api_jobs": 2581,
+  "cv_avg_grade": 0.188,
+  "api_jobs": 4721,
   "artifacts": {
     "story_engine_runtime.html": true,
     "native_viewer_pro.html": true,
@@ -18,6 +18,6 @@
     "FINAL_ASSEMBLY_PACK/index.html": true
   },
   "next_actions": [
-    "Закрыть 94 недостающих шотов через генерацию или подбор материалов."
+    "Закрыть 157 недостающих шотов через генерацию или подбор материалов."
   ]
 }

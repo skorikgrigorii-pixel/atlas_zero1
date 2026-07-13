@@ -1,26 +1,26 @@
 {
   "project": "franklin",
-  "local_production_ready": true,
+  "local_production_ready": false,
   "full_autonomous_ready": false,
   "assets": 13,
   "shots": 165,
-  "assigned_shots": 71,
-  "coverage_pct": 43.0,
+  "assigned_shots": 8,
+  "coverage_pct": 4.8,
   "exports": [
     {
       "file": "монтажный_лист.csv",
       "exists": true,
-      "size": 43029
+      "size": 41153
     },
     {
       "file": "capcut_пакет.csv",
-      "exists": true,
-      "size": 49238
+      "exists": false,
+      "size": 0
     },
     {
       "file": "capcut_guide_ru.md",
       "exists": true,
-      "size": 17358
+      "size": 18653
     },
     {
       "file": "timeline_operator_view.html",
@@ -30,16 +30,16 @@
     {
       "file": "franklin_acceptance.html",
       "exists": true,
-      "size": 2232
+      "size": 2239
     },
     {
       "file": "operator_console.html",
       "exists": true,
-      "size": 1822
+      "size": 1870
     }
   ],
   "live_api_ready": false,
-  "expert_status": "Franklin можно вести локально до монтажного handoff. Полная автономная работа заблокирована live API и финальной CV-моделью.",
+  "expert_status": "Требуется локальная доводка.",
   "next_actions": [
     "Открыть timeline_operator_view.html и проверить дефицитные шоты.",
     "Сгенерировать недостающие материалы из missing_prioritized.csv.",

@@ -183,8 +183,42 @@ class MovieRuntimeRC1:
         }
 
     def _build_scene_and_shots(self, script: dict[str, Any]) -> dict[str, Any]:
-        target_shots = min(220, max(24, int(script["line_count"] * 1.6)))
-        duration_sec = max(180.0, float(script["estimated_duration_sec"]))
+        # RC1 shot-generation mode.
+        # The approved production script defines the narrative structure,
+        # while the number of montage shots is calculated from film duration.
+        shot_mode = "production_script"
+
+        duration_sec = max(
+            180.0,
+            float(script["estimated_duration_sec"]),
+        )
+
+        if shot_mode == "production_script":
+            # Documentary pacing: approximately one montage shot
+            # every 6.5 seconds.
+            average_shot_duration_sec = 6.5
+
+            target_shots = round(
+                duration_sec / average_shot_duration_sec
+            )
+
+            # Safety limits for an RC1 documentary film.
+            target_shots = min(
+                180,
+                max(120, target_shots),
+            )
+
+        elif shot_mode == "auto_storyboard":
+            target_shots = min(
+                220,
+                max(24, int(script["line_count"] * 1.6)),
+            )
+
+        else:
+            raise ValueError(
+                f"Unknown shot mode: {shot_mode}. "
+                "Expected production_script or auto_storyboard."
+            )
         result = StoryEngine(self.db, self.project_id).build_shots(
             target_count=target_shots,
             duration_sec=duration_sec,

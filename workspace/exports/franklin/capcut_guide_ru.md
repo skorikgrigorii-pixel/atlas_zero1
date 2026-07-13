@@ -2,168 +2,152 @@
 
 Импортируйте материалы в CapCut и укладывайте по этому порядку.
 
-- 001 | 0.00–6.24 | S01_SH01_Arctic_Aerial_Master.jpg | slow push-in | fade from black | ice detail
-- 002 | 6.24–12.47 | S01_SH01_Arctic_Aerial_Master.jpg | macro drift | cut | artifact close
-- 003 | 12.47–18.71 | S01_SH01_Arctic_Aerial_Master.jpg | fade from black | cut | note close
-- 004 | 18.71–24.95 | S01_SH01_Arctic_Aerial_Master.jpg | slow push-in | cut | arctic wide
-- 005 | 24.95–31.18 | S01_SH06_Deck_Detail.jpg | macro drift | cut | ice detail
-- 006 | 31.18–37.42 | S01_SH02_Erebus_Terror_Master.jpg | fade from black | soft dissolve | artifact close
-- 007 | 37.42–43.03 | S01_SH02_Erebus_Terror_Master.jpg | slow drone | dissolve | ship ice wide
-- 008 | 43.03–48.65 | S01_SH02_Erebus_Terror_Master.jpg | dolly forward | cut | ship ice video
-- 009 | 48.65–54.26 | S01_SH02_Erebus_Terror_Master.jpg | slow pan | cut | drone arctic
-- 010 | 54.26–59.87 | franklin_video_01.mp4 | slow drone | cut | hull ice
-- 011 | 59.87–65.49 | S01_SH01_Arctic_Aerial_Master.jpg | dolly forward | cut | ship ice wide
-- 012 | 65.49–71.10 | franklin_video_01.mp4 | slow pan | cut | ship ice video
-- 013 | 71.10–76.71 | franklin_video_01.mp4 | slow drone | cut | drone arctic
-- 014 | 76.71–82.33 | franklin_video_01.mp4 | dolly forward | cut | hull ice
-- 015 | 82.33–87.94 | S01_SH01_Arctic_Aerial_Master.jpg | slow pan | cut | ship ice wide
-- 016 | 87.94–93.55 | franklin_video_02.mp4 | slow drone | soft dissolve | ship ice video
-- 017 | 93.55–99.15 | franklin_video_02.mp4 | slow track | dissolve | crew captain deck
-- 018 | 99.15–104.75 | S01_SH05_Crew_Working.jpg | handheld subtle | cut | crew working
-- 019 | 104.75–110.34 | franklin_video_02.mp4 | push-in | cut | rigging ice
-- 020 | 110.34–115.94 | S01_SH06_Deck_Detail.jpg | slow track | cut | deck detail
-- 021 | 115.94–121.54 | franklin_video_02.mp4 | handheld subtle | cut | crew captain deck
-- 022 | 121.54–127.14 | S01_SH05_Crew_Working.jpg | push-in | cut | crew working
-- 023 | 127.14–132.73 | franklin_video_03.mp4 | slow track | cut | rigging ice
-- 024 | 132.73–138.33 | S01_SH06_Deck_Detail.jpg | handheld subtle | cut | deck detail
-- 025 | 138.33–143.93 | franklin_video_03.mp4 | push-in | soft dissolve | crew captain deck
-- 026 | 143.93–149.50 | franklin_video_03.mp4 | paper reveal | dissolve | archive document
-- 027 | 149.50–155.08 | franklin_video_03.mp4 | map pan | cut | map search
-- 028 | 155.08–160.66 | S01_SH01_Arctic_Aerial_Master.jpg | dissolve | cut | ship ice wide
-- 029 | 160.66–166.24 | S01_SH04_Crew_Commander.jpg | paper reveal | cut | journal close
-- 030 | 166.24–171.81 | S01_SH04_Crew_Commander.jpg | map pan | cut | archive document
-- 031 | 171.81–177.39 | S01_SH04_Crew_Commander.jpg | dissolve | cut | map search
-- 032 | 177.39–182.97 | S01_SH01_Arctic_Aerial_Master.jpg | paper reveal | cut | ship ice wide
-- 033 | 182.97–188.55 | S01_SH04_Crew_Commander.jpg | map pan | soft dissolve | journal close
-- 034 | 188.55–194.12 | S01_SH05_Crew_Working.jpg | slow push-in | dissolve | archive portrait
-- 035 | 194.12–199.70 | S01_SH05_Crew_Working.jpg | map trace | cut | letter document
-- 036 | 199.70–205.28 | S01_SH06_Deck_Detail.jpg | dissolve | cut | map routes
-- 037 | 205.28–210.85 | S01_SH01_Arctic_Aerial_Master.jpg | slow push-in | cut | search ship
-- 038 | 210.85–216.43 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map trace | cut | archive portrait
-- 039 | 216.43–222.01 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dissolve | cut | letter document
-- 040 | 222.01–227.59 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow push-in | cut | map routes
-- 041 | 227.59–233.16 | S01_SH01_Arctic_Aerial_Master.jpg | map trace | soft dissolve | search ship
-- 042 | 233.16–239.72 | S01_SH01_Arctic_Aerial_Master.jpg | slow pullback | dissolve | ice camp grave
-- 043 | 239.72–246.28 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | static hold | cut | grave marker
-- 044 | 246.28–252.83 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | cold dissolve | cut | can archive
-- 045 | 252.83–259.39 | S01_SH01_Arctic_Aerial_Master.jpg | slow pullback | cut | arctic coast
-- 046 | 259.39–265.95 | S01_SH01_Arctic_Aerial_Master.jpg | static hold | cut | ice camp grave
-- 047 | 265.95–272.50 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | cold dissolve | cut | grave marker
-- 048 | 272.50–279.06 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow pullback | cut | can archive
-- 049 | 279.06–285.62 | S01_SH01_Arctic_Aerial_Master.jpg | static hold | cut | arctic coast
-- 050 | 285.62–292.17 | S01_SH01_Arctic_Aerial_Master.jpg | cold dissolve | soft dissolve | ice camp grave
-- 051 | 292.17–297.79 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro push | dissolve | document note close
-- 052 | 297.79–303.40 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | paper unfold | cut | stone cairn
-- 053 | 303.40–309.01 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hold | cut | metal cylinder
-- 054 | 309.01–314.63 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro push | cut | paper reveal
-- 055 | 314.63–320.24 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | paper unfold | cut | document note close
-- 056 | 320.24–325.85 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hold | cut | stone cairn
-- 057 | 325.85–331.47 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro push | cut | metal cylinder
-- 058 | 331.47–337.08 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | paper unfold | cut | paper reveal
-- 059 | 337.08–342.69 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hold | cut | document note close
-- 060 | 342.69–348.31 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro push | soft dissolve | stone cairn
-- 061 | 348.31–355.02 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow scan | dissolve | document note map
-- 062 | 355.02–361.74 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | date reveal | cut | document text
-- 063 | 361.74–368.46 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map move | cut | map route
-- 064 | 368.46–375.17 | S01_SH01_Arctic_Aerial_Master.jpg | slow scan | cut | ship trapped
-- 065 | 375.17–381.89 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | date reveal | cut | document note map
-- 066 | 381.89–388.61 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map move | cut | document text
-- 067 | 388.61–395.32 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow scan | cut | map route
-- 068 | 395.32–402.04 | S01_SH01_Arctic_Aerial_Master.jpg | date reveal | cut | ship trapped
-- 069 | 402.04–408.76 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map move | soft dissolve | document note map
-- 070 | 408.76–414.35 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow fade | dissolve | people snow trail
-- 071 | 414.35–419.95 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | long lens | cut | footprints snow
-- 072 | 419.95–425.55 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | snow drift | cut | white horizon
-- 073 | 425.55–431.14 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow fade | cut | sled silhouette
-- 074 | 431.14–436.74 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | long lens | cut | people snow trail
-- 075 | 436.74–442.34 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | snow drift | cut | footprints snow
-- 076 | 442.34–447.94 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow fade | cut | white horizon
-- 077 | 447.94–453.53 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | long lens | cut | sled silhouette
-- 078 | 453.53–459.13 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | snow drift | soft dissolve | people snow trail
-- 079 | 459.13–465.05 | S01_SH01_Arctic_Aerial_Master.jpg | slow reveal | dissolve | boat sled ice
-- 080 | 465.05–470.96 | S01_SH01_Arctic_Aerial_Master.jpg | side track | cut | arctic coast
-- 081 | 470.96–476.88 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | static hold | cut | wood runners
-- 082 | 476.88–482.80 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow reveal | cut | boat interior
-- 083 | 482.80–488.72 | S01_SH01_Arctic_Aerial_Master.jpg | side track | cut | boat sled ice
-- 084 | 488.72–494.63 | S01_SH01_Arctic_Aerial_Master.jpg | static hold | cut | arctic coast
-- 085 | 494.63–500.55 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow reveal | cut | wood runners
-- 086 | 500.55–506.47 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | side track | cut | boat interior
-- 087 | 506.47–512.38 | S01_SH01_Arctic_Aerial_Master.jpg | static hold | soft dissolve | boat sled ice
-- 088 | 512.38–517.98 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro slide | dissolve | silver spoon
-- 089 | 517.98–523.58 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | tabletop pan | cut | object close
-- 090 | 523.58–529.18 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hard cut | cut | book archive
-- 091 | 529.18–534.77 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro slide | cut | rifle detail
-- 092 | 534.77–540.37 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | tabletop pan | cut | silver spoon
-- 093 | 540.37–545.97 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hard cut | cut | object close
-- 094 | 545.97–551.57 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro slide | cut | book archive
-- 095 | 551.57–557.16 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | tabletop pan | cut | rifle detail
-- 096 | 557.16–562.76 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | hard cut | soft dissolve | silver spoon
-- 097 | 562.76–568.37 | S01_SH01_Arctic_Aerial_Master.jpg | static macro | dissolve | bones archive lab
-- 098 | 568.37–573.99 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow tilt | cut | bone close
-- 099 | 573.99–579.60 | S01_SH01_Arctic_Aerial_Master.jpg | folder close | cut | lab table
-- 100 | 579.60–585.21 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | static macro | cut | archive folder
-- 101 | 585.21–590.83 | S01_SH01_Arctic_Aerial_Master.jpg | slow tilt | cut | bones archive lab
-- 102 | 590.83–596.44 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | folder close | cut | bone close
-- 103 | 596.44–602.05 | S01_SH01_Arctic_Aerial_Master.jpg | static macro | cut | lab table
-- 104 | 602.05–607.66 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow tilt | cut | archive folder
-- 105 | 607.66–613.28 | S01_SH01_Arctic_Aerial_Master.jpg | folder close | cut | bones archive lab
-- 106 | 613.28–618.89 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | static macro | soft dissolve | bone close
-- 107 | 618.89–624.79 | S01_SH01_Arctic_Aerial_Master.jpg | documentary handheld | dissolve | lab archive
-- 108 | 624.79–630.69 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow reveal | cut | beechy camp
-- 109 | 630.69–636.59 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | cutaway | cut | forensic dig
-- 110 | 636.59–642.50 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | documentary handheld | cut | wood coffin
-- 111 | 642.50–648.40 | S01_SH01_Arctic_Aerial_Master.jpg | slow reveal | cut | lab archive
-- 112 | 648.40–654.30 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | cutaway | cut | beechy camp
-- 113 | 654.30–660.20 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | documentary handheld | cut | forensic dig
-- 114 | 660.20–666.10 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow reveal | cut | wood coffin
-- 115 | 666.10–672.00 | S01_SH01_Arctic_Aerial_Master.jpg | cutaway | cut | lab archive
-- 116 | 672.00–677.90 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | documentary handheld | soft dissolve | beechy camp
-- 117 | 677.90–683.50 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow push | dissolve | archive portrait
-- 118 | 683.50–689.10 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro detail | cut | medical notes
-- 119 | 689.10–694.69 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dissolve | cut | clothing detail
-- 120 | 694.69–700.29 | S01_SH01_Arctic_Aerial_Master.jpg | slow push | cut | lab hands
-- 121 | 700.29–705.89 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro detail | cut | archive portrait
-- 122 | 705.89–711.48 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dissolve | cut | medical notes
-- 123 | 711.48–717.08 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow push | cut | clothing detail
-- 124 | 717.08–722.68 | S01_SH01_Arctic_Aerial_Master.jpg | macro detail | cut | lab hands
-- 125 | 722.68–728.28 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dissolve | soft dissolve | archive portrait
-- 126 | 728.28–733.89 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro metal | dissolve | lead can archive
-- 127 | 733.89–739.50 | S01_SH01_Arctic_Aerial_Master.jpg | paper montage | cut | lab analysis
-- 128 | 739.50–745.12 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | lab pan | cut | newspaper archive
-- 129 | 745.12–750.73 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro metal | cut | medical record
-- 130 | 750.73–756.34 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | paper montage | cut | lead can archive
-- 131 | 756.34–761.96 | S01_SH01_Arctic_Aerial_Master.jpg | lab pan | cut | lab analysis
-- 132 | 761.96–767.57 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | macro metal | cut | newspaper archive
-- 133 | 767.57–773.18 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | paper montage | cut | medical record
-- 134 | 773.18–778.79 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | lab pan | cut | lead can archive
-- 135 | 778.79–784.41 | S01_SH01_Arctic_Aerial_Master.jpg | macro metal | soft dissolve | lab analysis
-- 136 | 784.41–790.02 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | screen scan | dissolve | sonar screen
-- 137 | 790.02–795.63 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | drone coast | cut | research vessel
-- 138 | 795.63–801.25 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map overlay | cut | satellite map
-- 139 | 801.25–806.86 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | screen scan | cut | underwater robot
-- 140 | 806.86–812.47 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | drone coast | cut | sonar screen
-- 141 | 812.47–818.09 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map overlay | cut | research vessel
-- 142 | 818.09–823.70 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | screen scan | cut | satellite map
-- 143 | 823.70–829.31 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | drone coast | cut | underwater robot
-- 144 | 829.31–834.93 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | map overlay | cut | sonar screen
-- 145 | 834.93–840.54 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | screen scan | soft dissolve | research vessel
-- 146 | 840.54–846.73 | S01_SH01_Arctic_Aerial_Master.jpg | rov glide | dissolve | underwater ship
-- 147 | 846.73–852.92 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow track | cut | shipwreck hull
-- 148 | 852.92–859.11 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dark dissolve | cut | closed hatch
-- 149 | 859.11–865.30 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | rov glide | cut | interior cabin
-- 150 | 865.30–871.48 | S01_SH01_Arctic_Aerial_Master.jpg | slow track | cut | underwater ship
-- 151 | 871.48–877.67 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | dark dissolve | cut | shipwreck hull
-- 152 | 877.67–883.86 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | rov glide | cut | closed hatch
-- 153 | 883.86–890.05 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow track | cut | interior cabin
-- 154 | 890.05–896.24 | S01_SH01_Arctic_Aerial_Master.jpg | dark dissolve | cut | underwater ship
-- 155 | 896.24–902.43 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | rov glide | soft dissolve | shipwreck hull
-- 156 | 902.43–908.19 | S01_SH01_Arctic_Aerial_Master.jpg | slow pullback | dissolve | ice wide finale
-- 157 | 908.19–913.94 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | fade out | cut | empty horizon
-- 158 | 913.94–919.70 | S01_SH01_Arctic_Aerial_Master.jpg | snow increase | cut | ship memory
-- 159 | 919.70–925.46 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow pullback | cut | atlas logo
-- 160 | 925.46–931.21 | S01_SH01_Arctic_Aerial_Master.jpg | fade out | cut | ice wide finale
-- 161 | 931.21–936.97 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | snow increase | cut | empty horizon
-- 162 | 936.97–942.73 | S01_SH01_Arctic_Aerial_Master.jpg | slow pullback | cut | ship memory
-- 163 | 942.73–948.49 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | fade out | cut | atlas logo
-- 164 | 948.49–954.24 | S01_SH01_Arctic_Aerial_Master.jpg | snow increase | cut | ice wide finale
-- 165 | 954.24–960.00 | СОЗДАТЬ/ЗАМЕНИТЬ МАТЕРИАЛ | slow pullback | soft dissolve | empty horizon
+- 001 | 0.00–7.56 | franklin_video_01.mp4 | slow push-in | fade from black | ice detail
+- 002 | 7.56–15.12 | S01_SH01_Arctic_Aerial_Master.jpg | macro drift | cut | artifact close
+- 003 | 15.12–22.68 | ChatGPT Image 10 июл. 2026 г., 20_56_43.png | fade from black | cut | note close
+- 004 | 22.68–30.24 | S01_SH04_Crew_Commander.jpg | slow push-in | cut | arctic wide
+- 005 | 30.24–37.80 | franklin_video_03.mp4 | macro drift | soft dissolve | ice detail
+- 006 | 37.80–44.10 | ChatGPT Image 11 июл. 2026 г., 00_38_32.png | slow drone | dissolve | ship ice wide
+- 007 | 44.10–50.40 | P5_hull_ice.jpg | dolly forward | cut | ship ice video
+- 008 | 50.40–56.70 | S01_SH05_Crew_Working.jpg | slow pan | cut | drone arctic
+- 009 | 56.70–63.01 | franklin_video_02.mp4 | slow drone | cut | hull ice
+- 010 | 63.01–69.31 | S01_SH06_Deck_Detail.jpg | dolly forward | cut | ship ice wide
+- 011 | 69.31–75.61 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | slow pan | cut | ship ice video
+- 012 | 75.61–81.91 | lucid-origin_Ultra_photorealistic_cinematic_aerial_view_of_the_Canadian_Arctic_in_1845._Endle-2.jpg | slow drone | cut | drone arctic
+- 013 | 81.91–88.21 | franklin_video_01.mp4 | dolly forward | cut | hull ice
+- 014 | 88.21–94.51 | ChatGPT Image 11 июл. 2026 г., 00_38_50.png | slow pan | soft dissolve | ship ice wide
+- 015 | 94.51–100.87 | SC01_002_Drone_Closer.jpg | slow track | dissolve | crew captain deck
+- 016 | 100.87–107.23 | S01_SH05_Crew_Working.jpg | handheld subtle | cut | crew working
+- 017 | 107.23–113.59 | franklin_video_03.mp4 | push-in | cut | rigging ice
+- 018 | 113.59–119.95 | SC01_003_Medium.jpg | slow track | cut | deck detail
+- 019 | 119.95–126.31 | S01_SH02_Erebus_Terror_Master.jpg | handheld subtle | cut | crew captain deck
+- 020 | 126.31–132.68 | P5_ship_ice_video.jpg | push-in | cut | crew working
+- 021 | 132.68–139.04 | franklin_video_02.mp4 | slow track | cut | rigging ice
+- 022 | 139.04–145.40 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-0.jpg | handheld subtle | soft dissolve | deck detail
+- 023 | 145.40–151.84 | ChatGPT Image 11 июл. 2026 г., 20_42_54.png | paper reveal | dissolve | archive document
+- 024 | 151.84–158.28 | ChatGPT Image 11 июл. 2026 г., 20_42_34.png | map pan | cut | map search
+- 025 | 158.28–164.71 | franklin_video_01.mp4 | dissolve | cut | ship ice wide
+- 026 | 164.71–171.15 | ChatGPT Image 11 июл. 2026 г., 20_41_05.png | paper reveal | cut | journal close
+- 027 | 171.15–177.59 | ChatGPT Image 11 июл. 2026 г., 20_42_16.png | map pan | cut | archive document
+- 028 | 177.59–184.03 | ChatGPT Image 11 июл. 2026 г., 20_40_47.png | dissolve | cut | map search
+- 029 | 184.03–190.47 | franklin_video_03.mp4 | paper reveal | soft dissolve | ship ice wide
+- 030 | 190.47–196.91 | ChatGPT Image 11 июл. 2026 г., 20_41_20.png | slow push-in | dissolve | archive portrait
+- 031 | 196.91–203.35 | ChatGPT Image 11 июл. 2026 г., 20_40_32.png | map trace | cut | letter document
+- 032 | 203.35–209.79 | ChatGPT Image 10 июл. 2026 г., 21_01_15.png | dissolve | cut | map routes
+- 033 | 209.79–216.23 | franklin_video_02.mp4 | slow push-in | cut | search ship
+- 034 | 216.23–222.66 | ChatGPT Image 11 июл. 2026 г., 20_41_35.png | map trace | cut | archive portrait
+- 035 | 222.66–229.10 | ChatGPT Image 11 июл. 2026 г., 20_43_34.png | dissolve | cut | letter document
+- 036 | 229.10–235.54 | ChatGPT Image 11 июл. 2026 г., 20_42_34.png | slow push-in | soft dissolve | map routes
+- 037 | 235.54–242.17 | SC01_001_Drone_Wide.jpg | slow pullback | dissolve | ice camp grave
+- 038 | 242.17–248.79 | ChatGPT Image 11 июл. 2026 г., 20_39_16.png | static hold | cut | grave marker
+- 039 | 248.79–255.41 | ChatGPT Image 11 июл. 2026 г., 20_41_56.png | cold dissolve | cut | can archive
+- 040 | 255.41–262.04 | SC01_008_CloseIc.jpg | slow pullback | cut | arctic coast
+- 041 | 262.04–268.66 | SC01_006_Rigging.jpg | static hold | cut | ice camp grave
+- 042 | 268.66–275.29 | S01_SH01_Arctic_Aerial_Master.jpg | cold dissolve | cut | grave marker
+- 043 | 275.29–281.91 | ChatGPT Image 11 июл. 2026 г., 20_43_10.png | slow pullback | cut | can archive
+- 044 | 281.91–288.53 | SC01_004_Bow.jpg | static hold | cut | arctic coast
+- 045 | 288.53–295.16 | ChatGPT Image 11 июл. 2026 г., 00_38_13.png | cold dissolve | soft dissolve | ice camp grave
+- 046 | 295.16–301.46 | ChatGPT Image 11 июл. 2026 г., 20_40_09.png | macro push | dissolve | document note close
+- 047 | 301.46–307.76 | ChatGPT Image 11 июл. 2026 г., 20_38_47.png | paper unfold | cut | stone cairn
+- 048 | 307.76–314.06 | S01_SH04_Crew_Commander.jpg | hold | cut | metal cylinder
+- 049 | 314.06–320.36 | S01_SH06_Deck_Detail.jpg | macro push | cut | paper reveal
+- 050 | 320.36–326.66 | ChatGPT Image 10 июл. 2026 г., 20_56_43.png | paper unfold | cut | document note close
+- 051 | 326.66–332.96 | S01_SH01_Arctic_Aerial_Master.jpg | hold | cut | stone cairn
+- 052 | 332.96–339.26 | S01_SH05_Crew_Working.jpg | macro push | cut | metal cylinder
+- 053 | 339.26–345.56 | ChatGPT Image 11 июл. 2026 г., 20_41_05.png | paper unfold | cut | paper reveal
+- 054 | 345.56–351.86 | ChatGPT Image 11 июл. 2026 г., 20_40_32.png | hold | soft dissolve | document note close
+- 055 | 351.86–358.65 | ChatGPT Image 11 июл. 2026 г., 20_42_34.png | slow scan | dissolve | document note map
+- 056 | 358.65–365.43 | ChatGPT Image 11 июл. 2026 г., 20_40_47.png | date reveal | cut | document text
+- 057 | 365.43–372.22 | ChatGPT Image 11 июл. 2026 г., 20_41_20.png | map move | cut | map route
+- 058 | 372.22–379.00 | ChatGPT Image 11 июл. 2026 г., 00_38_32.png | slow scan | cut | ship trapped
+- 059 | 379.00–385.79 | ChatGPT Image 10 июл. 2026 г., 20_56_43.png | date reveal | cut | document note map
+- 060 | 385.79–392.57 | ChatGPT Image 11 июл. 2026 г., 20_42_54.png | map move | cut | document text
+- 061 | 392.57–399.36 | ChatGPT Image 11 июл. 2026 г., 20_41_05.png | slow scan | cut | map route
+- 062 | 399.36–406.14 | lucid-origin_Ultra_photorealistic_cinematic_aerial_view_of_the_Canadian_Arctic_in_1845._Endle-2.jpg | date reveal | cut | ship trapped
+- 063 | 406.14–412.93 | ChatGPT Image 11 июл. 2026 г., 20_40_32.png | map move | soft dissolve | document note map
+- 064 | 412.93–419.29 | S01_SH01_Arctic_Aerial_Master.jpg | slow fade | dissolve | people snow trail
+- 065 | 419.29–425.65 | S01_SH04_Crew_Commander.jpg | long lens | cut | footprints snow
+- 066 | 425.65–432.01 | S01_SH06_Deck_Detail.jpg | snow drift | cut | white horizon
+- 067 | 432.01–438.37 | P5_hull_ice.jpg | slow fade | cut | sled silhouette
+- 068 | 438.37–444.73 | P5_ship_ice_video.jpg | long lens | cut | people snow trail
+- 069 | 444.73–451.10 | S01_SH02_Erebus_Terror_Master.jpg | snow drift | cut | footprints snow
+- 070 | 451.10–457.46 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | slow fade | cut | white horizon
+- 071 | 457.46–463.82 | S01_SH05_Crew_Working.jpg | long lens | soft dissolve | sled silhouette
+- 072 | 463.82–470.54 | SC01_003_Medium.jpg | slow reveal | dissolve | boat sled ice
+- 073 | 470.54–477.27 | ChatGPT Image 11 июл. 2026 г., 00_38_50.png | side track | cut | arctic coast
+- 074 | 477.27–483.99 | SC01_001_Drone_Wide.jpg | static hold | cut | wood runners
+- 075 | 483.99–490.72 | SC01_008_CloseIc.jpg | slow reveal | cut | boat interior
+- 076 | 490.72–497.44 | S01_SH04_Crew_Commander.jpg | side track | cut | boat sled ice
+- 077 | 497.44–504.17 | S01_SH06_Deck_Detail.jpg | static hold | cut | arctic coast
+- 078 | 504.17–510.89 | ChatGPT Image 11 июл. 2026 г., 20_39_16.png | slow reveal | cut | wood runners
+- 079 | 510.89–517.61 | SC01_004_Bow.jpg | side track | soft dissolve | boat interior
+- 080 | 517.61–523.98 | SC01_006_Rigging.jpg | macro slide | dissolve | silver spoon
+- 081 | 523.98–530.34 | ChatGPT Image 11 июл. 2026 г., 00_38_32.png | tabletop pan | cut | object close
+- 082 | 530.34–536.70 | ChatGPT Image 11 июл. 2026 г., 20_42_16.png | hard cut | cut | book archive
+- 083 | 536.70–543.06 | SC01_002_Drone_Closer.jpg | macro slide | cut | rifle detail
+- 084 | 543.06–549.42 | ChatGPT Image 11 июл. 2026 г., 20_43_34.png | tabletop pan | cut | silver spoon
+- 085 | 549.42–555.78 | lucid-origin_Ultra_photorealistic_cinematic_aerial_view_of_the_Canadian_Arctic_in_1845._Endle-2.jpg | hard cut | cut | object close
+- 086 | 555.78–562.14 | ChatGPT Image 11 июл. 2026 г., 20_41_35.png | macro slide | cut | book archive
+- 087 | 562.14–568.50 | P5_hull_ice.jpg | tabletop pan | soft dissolve | rifle detail
+- 088 | 568.50–574.80 | ChatGPT Image 11 июл. 2026 г., 20_40_09.png | static macro | dissolve | bones archive lab
+- 089 | 574.80–581.10 | ChatGPT Image 11 июл. 2026 г., 00_38_13.png | slow tilt | cut | bone close
+- 090 | 581.10–587.40 | ChatGPT Image 11 июл. 2026 г., 20_43_10.png | folder close | cut | lab table
+- 091 | 587.40–593.71 | ChatGPT Image 11 июл. 2026 г., 20_41_56.png | static macro | cut | archive folder
+- 092 | 593.71–600.01 | ChatGPT Image 10 июл. 2026 г., 21_01_15.png | slow tilt | cut | bones archive lab
+- 093 | 600.01–606.31 | ChatGPT Image 11 июл. 2026 г., 00_38_50.png | folder close | cut | bone close
+- 094 | 606.31–612.61 | S01_SH02_Erebus_Terror_Master.jpg | static macro | cut | lab table
+- 095 | 612.61–618.91 | ChatGPT Image 11 июл. 2026 г., 20_42_54.png | slow tilt | cut | archive folder
+- 096 | 618.91–625.21 | ChatGPT Image 11 июл. 2026 г., 20_40_09.png | folder close | soft dissolve | bones archive lab
+- 097 | 625.21–631.83 | ChatGPT Image 11 июл. 2026 г., 20_42_16.png | documentary handheld | dissolve | lab archive
+- 098 | 631.83–638.46 | SC01_001_Drone_Wide.jpg | slow reveal | cut | beechy camp
+- 099 | 638.46–645.08 | P5_ship_ice_video.jpg | cutaway | cut | forensic dig
+- 100 | 645.08–651.70 | ChatGPT Image 11 июл. 2026 г., 20_40_47.png | documentary handheld | cut | wood coffin
+- 101 | 651.70–658.33 | ChatGPT Image 11 июл. 2026 г., 20_41_35.png | slow reveal | cut | lab archive
+- 102 | 658.33–664.95 | SC01_008_CloseIc.jpg | cutaway | cut | beechy camp
+- 103 | 664.95–671.57 | ChatGPT Image 11 июл. 2026 г., 20_38_47.png | documentary handheld | cut | forensic dig
+- 104 | 671.57–678.20 | ChatGPT Image 11 июл. 2026 г., 00_38_32.png | slow reveal | cut | wood coffin
+- 105 | 678.20–684.82 | ChatGPT Image 11 июл. 2026 г., 20_41_20.png | cutaway | soft dissolve | lab archive
+- 106 | 684.82–691.18 | ChatGPT Image 11 июл. 2026 г., 20_41_56.png | slow push | dissolve | archive portrait
+- 107 | 691.18–697.54 | ChatGPT Image 11 июл. 2026 г., 20_43_34.png | macro detail | cut | medical notes
+- 108 | 697.54–703.90 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | dissolve | cut | clothing detail
+- 109 | 703.90–710.26 | SC01_006_Rigging.jpg | slow push | cut | lab hands
+- 110 | 710.26–716.63 | ChatGPT Image 11 июл. 2026 г., 20_43_10.png | macro detail | cut | archive portrait
+- 111 | 716.63–722.99 | ChatGPT Image 10 июл. 2026 г., 21_01_15.png | dissolve | cut | medical notes
+- 112 | 722.99–729.35 | SC01_004_Bow.jpg | slow push | cut | clothing detail
+- 113 | 729.35–735.71 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-0.jpg | macro detail | soft dissolve | lab hands
+- 114 | 735.71–742.01 | lucid-origin_Ultra_photorealistic_cinematic_aerial_view_of_the_Canadian_Arctic_in_1845._Endle-2.jpg | macro metal | dissolve | lead can archive
+- 115 | 742.01–748.31 | P5_hull_ice.jpg | paper montage | cut | lab analysis
+- 116 | 748.31–754.61 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | lab pan | cut | newspaper archive
+- 117 | 754.61–760.91 | SC01_002_Drone_Closer.jpg | macro metal | cut | medical record
+- 118 | 760.91–767.21 | ChatGPT Image 11 июл. 2026 г., 00_38_50.png | paper montage | cut | lead can archive
+- 119 | 767.21–773.51 | ChatGPT Image 11 июл. 2026 г., 20_39_16.png | lab pan | cut | lab analysis
+- 120 | 773.51–779.81 | ChatGPT Image 11 июл. 2026 г., 00_38_13.png | macro metal | cut | newspaper archive
+- 121 | 779.81–786.11 | S01_SH02_Erebus_Terror_Master.jpg | paper montage | cut | medical record
+- 122 | 786.11–792.41 | SC01_003_Medium.jpg | lab pan | soft dissolve | lead can archive
+- 123 | 792.41–798.72 | ChatGPT Image 11 июл. 2026 г., 20_39_52.png | screen scan | dissolve | sonar screen
+- 124 | 798.72–805.02 | SC01_001_Drone_Wide.jpg | drone coast | cut | research vessel
+- 125 | 805.02–811.32 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-0.jpg | map overlay | cut | satellite map
+- 126 | 811.32–817.62 | ChatGPT Image 11 июл. 2026 г., 20_39_36.png | screen scan | cut | underwater robot
+- 127 | 817.62–823.92 | ChatGPT Image 11 июл. 2026 г., 20_39_52.png | drone coast | cut | sonar screen
+- 128 | 823.92–830.22 | P5_ship_ice_video.jpg | map overlay | cut | research vessel
+- 129 | 830.22–836.52 | SC01_008_CloseIc.jpg | screen scan | cut | satellite map
+- 130 | 836.52–842.82 | ChatGPT Image 11 июл. 2026 г., 20_38_47.png | drone coast | cut | underwater robot
+- 131 | 842.82–849.12 | ChatGPT Image 11 июл. 2026 г., 20_39_52.png | map overlay | soft dissolve | sonar screen
+- 132 | 849.12–856.07 | SC01_004_Bow.jpg | rov glide | dissolve | underwater ship
+- 133 | 856.07–863.01 | SC01_006_Rigging.jpg | slow track | cut | shipwreck hull
+- 134 | 863.01–869.96 | S01_SH02_Erebus_Terror_Master.jpg | dark dissolve | cut | closed hatch
+- 135 | 869.96–876.91 | ChatGPT Image 11 июл. 2026 г., 00_38_32.png | rov glide | cut | interior cabin
+- 136 | 876.91–883.85 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | slow track | cut | underwater ship
+- 137 | 883.85–890.80 | SC01_002_Drone_Closer.jpg | dark dissolve | cut | shipwreck hull
+- 138 | 890.80–897.75 | P5_hull_ice.jpg | rov glide | cut | closed hatch
+- 139 | 897.75–904.69 | ChatGPT Image 11 июл. 2026 г., 00_38_13.png | slow track | cut | interior cabin
+- 140 | 904.69–911.64 | lucid-origin_Ultra_photorealistic_cinematic_aerial_view_of_the_Canadian_Arctic_in_1845._Endle-2.jpg | dark dissolve | soft dissolve | underwater ship
+- 141 | 911.64–918.10 | SC01_003_Medium.jpg | slow pullback | dissolve | ice wide finale
+- 142 | 918.10–924.57 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-0.jpg | fade out | cut | empty horizon
+- 143 | 924.57–931.03 | ChatGPT Image 11 июл. 2026 г., 00_38_50.png | snow increase | cut | ship memory
+- 144 | 931.03–937.49 | lucid-origin_Ultra_photorealistic_extreme_close-up_of_thick_Arctic_pressure_ice_pressing_agai-3.jpg | slow pullback | cut | atlas logo
+- 145 | 937.49–943.95 | SC01_001_Drone_Wide.jpg | fade out | cut | ice wide finale
+- 146 | 943.95–950.41 | P5_ship_ice_video.jpg | snow increase | cut | empty horizon
+- 147 | 950.41–956.88 | SC01_002_Drone_Closer.jpg | slow pullback | cut | ship memory
+- 148 | 956.88–963.34 | SC01_008_CloseIc.jpg | fade out | cut | atlas logo
+- 149 | 963.34–969.80 | SC01_003_Medium.jpg | snow increase | soft dissolve | ice wide finale

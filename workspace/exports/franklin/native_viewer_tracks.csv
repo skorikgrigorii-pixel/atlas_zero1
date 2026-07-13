@@ -1,166 +1,166 @@
 ﻿Трек,№,Старт,Конец,Длительность,Блок,Статус,Медиа,Название
 Видео,1,0.0,6.237,6.24,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,2,6.237,12.474,6.24,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,3,12.474,18.71,6.24,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,4,18.71,24.947,6.24,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,2,6.237,12.474,6.24,B01,assigned,image,S01_SH02_Erebus_Terror_Master.jpg
+Видео,3,12.474,18.71,6.24,B01,assigned,video,franklin_video_01.mp4
+Видео,4,18.71,24.947,6.24,B01,assigned,video,franklin_video_02.mp4
 Видео,5,24.947,31.184,6.24,B01,assigned,image,S01_SH06_Deck_Detail.jpg
-Видео,6,31.184,37.421,6.24,B01,assigned,image,S01_SH02_Erebus_Terror_Master.jpg
-Видео,7,37.421,43.034,5.61,B01,assigned,image,S01_SH02_Erebus_Terror_Master.jpg
-Видео,8,43.034,48.647,5.61,B01,assigned,image,S01_SH02_Erebus_Terror_Master.jpg
-Видео,9,48.647,54.261,5.61,B01,assigned,image,S01_SH02_Erebus_Terror_Master.jpg
-Видео,10,54.261,59.874,5.61,B01,assigned,video,franklin_video_01.mp4
-Видео,11,59.874,65.487,5.61,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,12,65.487,71.1,5.61,B01,assigned,video,franklin_video_01.mp4
-Видео,13,71.1,76.713,5.61,B01,assigned,video,franklin_video_01.mp4
-Видео,14,76.713,82.327,5.61,B01,assigned,video,franklin_video_01.mp4
-Видео,15,82.327,87.94,5.61,B01,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,16,87.94,93.553,5.61,B01,assigned,video,franklin_video_02.mp4
-Видео,17,93.553,99.15,5.6,B01,assigned,video,franklin_video_02.mp4
-Видео,18,99.15,104.747,5.6,B01,assigned,image,S01_SH05_Crew_Working.jpg
-Видео,19,104.747,110.345,5.6,B01,assigned,video,franklin_video_02.mp4
-Видео,20,110.345,115.942,5.6,B01,assigned,image,S01_SH06_Deck_Detail.jpg
-Видео,21,115.942,121.539,5.6,B01,assigned,video,franklin_video_02.mp4
-Видео,22,121.539,127.136,5.6,B01,assigned,image,S01_SH05_Crew_Working.jpg
-Видео,23,127.136,132.734,5.6,B01,assigned,video,franklin_video_03.mp4
-Видео,24,132.734,138.331,5.6,B01,assigned,image,S01_SH06_Deck_Detail.jpg
-Видео,25,138.331,143.928,5.6,B01,assigned,video,franklin_video_03.mp4
-Видео,26,143.928,149.505,5.58,B02,assigned,video,franklin_video_03.mp4
-Видео,27,149.505,155.083,5.58,B02,assigned,video,franklin_video_03.mp4
-Видео,28,155.083,160.66,5.58,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,29,160.66,166.237,5.58,B02,assigned,image,S01_SH04_Crew_Commander.jpg
-Видео,30,166.237,171.814,5.58,B02,assigned,image,S01_SH04_Crew_Commander.jpg
-Видео,31,171.814,177.392,5.58,B02,assigned,image,S01_SH04_Crew_Commander.jpg
-Видео,32,177.392,182.969,5.58,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,33,182.969,188.546,5.58,B02,assigned,image,S01_SH04_Crew_Commander.jpg
-Видео,34,188.546,194.123,5.58,B02,assigned,image,S01_SH05_Crew_Working.jpg
-Видео,35,194.123,199.701,5.58,B02,assigned,image,S01_SH05_Crew_Working.jpg
-Видео,36,199.701,205.278,5.58,B02,assigned,image,S01_SH06_Deck_Detail.jpg
-Видео,37,205.278,210.855,5.58,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,38,210.855,216.432,5.58,B02,missing,missing,archive portrait
-Видео,39,216.432,222.01,5.58,B02,missing,missing,letter document
-Видео,40,222.01,227.587,5.58,B02,missing,missing,map routes
-Видео,41,227.587,233.164,5.58,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,42,233.164,239.721,6.56,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,43,239.721,246.277,6.56,B02,missing,missing,grave marker
-Видео,44,246.277,252.834,6.56,B02,missing,missing,can archive
-Видео,45,252.834,259.391,6.56,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,46,259.391,265.947,6.56,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,47,265.947,272.504,6.56,B02,missing,missing,grave marker
-Видео,48,272.504,279.061,6.56,B02,missing,missing,can archive
-Видео,49,279.061,285.617,6.56,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,50,285.617,292.174,6.56,B02,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,51,292.174,297.787,5.61,B03,missing,missing,document note close
-Видео,52,297.787,303.4,5.61,B03,missing,missing,stone cairn
-Видео,53,303.4,309.014,5.61,B03,missing,missing,metal cylinder
-Видео,54,309.014,314.627,5.61,B03,missing,missing,paper reveal
-Видео,55,314.627,320.24,5.61,B03,missing,missing,document note close
-Видео,56,320.24,325.853,5.61,B03,missing,missing,stone cairn
-Видео,57,325.853,331.466,5.61,B03,missing,missing,metal cylinder
-Видео,58,331.466,337.08,5.61,B03,missing,missing,paper reveal
-Видео,59,337.08,342.693,5.61,B03,missing,missing,document note close
-Видео,60,342.693,348.306,5.61,B03,missing,missing,stone cairn
-Видео,61,348.306,355.023,6.72,B03,missing,missing,document note map
-Видео,62,355.023,361.739,6.72,B03,missing,missing,document text
-Видео,63,361.739,368.456,6.72,B03,missing,missing,map route
-Видео,64,368.456,375.173,6.72,B03,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,65,375.173,381.889,6.72,B03,missing,missing,document note map
-Видео,66,381.889,388.606,6.72,B03,missing,missing,document text
-Видео,67,388.606,395.323,6.72,B03,missing,missing,map route
-Видео,68,395.323,402.039,6.72,B03,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,69,402.039,408.756,6.72,B03,missing,missing,document note map
-Видео,70,408.756,414.353,5.6,B03,missing,missing,people snow trail
-Видео,71,414.353,419.95,5.6,B03,missing,missing,footprints snow
-Видео,72,419.95,425.548,5.6,B03,missing,missing,white horizon
-Видео,73,425.548,431.145,5.6,B03,missing,missing,sled silhouette
-Видео,74,431.145,436.742,5.6,B03,missing,missing,people snow trail
-Видео,75,436.742,442.339,5.6,B03,missing,missing,footprints snow
-Видео,76,442.339,447.937,5.6,B03,missing,missing,white horizon
-Видео,77,447.937,453.534,5.6,B03,missing,missing,sled silhouette
-Видео,78,453.534,459.131,5.6,B03,missing,missing,people snow trail
-Видео,79,459.131,465.048,5.92,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,80,465.048,470.965,5.92,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,81,470.965,476.882,5.92,B04,missing,missing,wood runners
-Видео,82,476.882,482.799,5.92,B04,missing,missing,boat interior
-Видео,83,482.799,488.716,5.92,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,84,488.716,494.633,5.92,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,85,494.633,500.55,5.92,B04,missing,missing,wood runners
-Видео,86,500.55,506.467,5.92,B04,missing,missing,boat interior
-Видео,87,506.467,512.384,5.92,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,88,512.384,517.981,5.6,B04,missing,missing,silver spoon
-Видео,89,517.981,523.578,5.6,B04,missing,missing,object close
-Видео,90,523.578,529.176,5.6,B04,missing,missing,book archive
-Видео,91,529.176,534.773,5.6,B04,missing,missing,rifle detail
-Видео,92,534.773,540.37,5.6,B04,missing,missing,silver spoon
-Видео,93,540.37,545.967,5.6,B04,missing,missing,object close
-Видео,94,545.967,551.565,5.6,B04,missing,missing,book archive
-Видео,95,551.565,557.162,5.6,B04,missing,missing,rifle detail
-Видео,96,557.162,562.759,5.6,B04,missing,missing,silver spoon
-Видео,97,562.759,568.372,5.61,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,98,568.372,573.985,5.61,B04,missing,missing,bone close
-Видео,99,573.985,579.599,5.61,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,100,579.599,585.212,5.61,B04,missing,missing,archive folder
-Видео,101,585.212,590.825,5.61,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,102,590.825,596.438,5.61,B04,missing,missing,bone close
-Видео,103,596.438,602.051,5.61,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,104,602.051,607.665,5.61,B04,missing,missing,archive folder
-Видео,105,607.665,613.278,5.61,B04,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,106,613.278,618.891,5.61,B04,missing,missing,bone close
-Видео,107,618.891,624.792,5.9,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,108,624.792,630.693,5.9,B05,missing,missing,beechy camp
-Видео,109,630.693,636.594,5.9,B05,missing,missing,forensic dig
-Видео,110,636.594,642.495,5.9,B05,missing,missing,wood coffin
-Видео,111,642.495,648.396,5.9,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,112,648.396,654.297,5.9,B05,missing,missing,beechy camp
-Видео,113,654.297,660.198,5.9,B05,missing,missing,forensic dig
-Видео,114,660.198,666.099,5.9,B05,missing,missing,wood coffin
-Видео,115,666.099,672.0,5.9,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,116,672.0,677.901,5.9,B05,missing,missing,beechy camp
-Видео,117,677.901,683.498,5.6,B05,missing,missing,archive portrait
-Видео,118,683.498,689.095,5.6,B05,missing,missing,medical notes
-Видео,119,689.095,694.693,5.6,B05,missing,missing,clothing detail
-Видео,120,694.693,700.29,5.6,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,121,700.29,705.887,5.6,B05,missing,missing,archive portrait
-Видео,122,705.887,711.484,5.6,B05,missing,missing,medical notes
-Видео,123,711.484,717.082,5.6,B05,missing,missing,clothing detail
-Видео,124,717.082,722.679,5.6,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,125,722.679,728.276,5.6,B05,missing,missing,archive portrait
-Видео,126,728.276,733.889,5.61,B05,missing,missing,lead can archive
-Видео,127,733.889,739.502,5.61,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,128,739.502,745.116,5.61,B05,missing,missing,newspaper archive
-Видео,129,745.116,750.729,5.61,B05,missing,missing,medical record
-Видео,130,750.729,756.342,5.61,B05,missing,missing,lead can archive
-Видео,131,756.342,761.955,5.61,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,132,761.955,767.568,5.61,B05,missing,missing,newspaper archive
-Видео,133,767.568,773.182,5.61,B05,missing,missing,medical record
-Видео,134,773.182,778.795,5.61,B05,missing,missing,lead can archive
-Видео,135,778.795,784.408,5.61,B05,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,136,784.408,790.021,5.61,B06,missing,missing,sonar screen
-Видео,137,790.021,795.634,5.61,B06,missing,missing,research vessel
-Видео,138,795.634,801.248,5.61,B06,missing,missing,satellite map
-Видео,139,801.248,806.861,5.61,B06,missing,missing,underwater robot
-Видео,140,806.861,812.474,5.61,B06,missing,missing,sonar screen
-Видео,141,812.474,818.087,5.61,B06,missing,missing,research vessel
-Видео,142,818.087,823.7,5.61,B06,missing,missing,satellite map
-Видео,143,823.7,829.314,5.61,B06,missing,missing,underwater robot
-Видео,144,829.314,834.927,5.61,B06,missing,missing,sonar screen
-Видео,145,834.927,840.54,5.61,B06,missing,missing,research vessel
-Видео,146,840.54,846.729,6.19,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,147,846.729,852.918,6.19,B06,missing,missing,shipwreck hull
-Видео,148,852.918,859.107,6.19,B06,missing,missing,closed hatch
-Видео,149,859.107,865.296,6.19,B06,missing,missing,interior cabin
-Видео,150,865.296,871.484,6.19,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,151,871.484,877.673,6.19,B06,missing,missing,shipwreck hull
-Видео,152,877.673,883.862,6.19,B06,missing,missing,closed hatch
-Видео,153,883.862,890.051,6.19,B06,missing,missing,interior cabin
-Видео,154,890.051,896.24,6.19,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
-Видео,155,896.24,902.429,6.19,B06,missing,missing,shipwreck hull
-Видео,156,902.429,908.186,5.76,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,6,31.184,37.421,6.24,B01,assigned,video,franklin_video_03.mp4
+Видео,7,37.421,43.034,5.61,B01,assigned,image,S01_SH04_Crew_Commander.jpg
+Видео,8,43.034,48.647,5.61,B01,assigned,image,S01_SH05_Crew_Working.jpg
+Видео,9,48.647,54.261,5.61,B01,missing,missing,drone arctic
+Видео,10,54.261,59.874,5.61,B01,missing,missing,hull ice
+Видео,11,59.874,65.487,5.61,B01,missing,missing,ship ice wide
+Видео,12,65.487,71.1,5.61,B01,missing,missing,ship ice video
+Видео,13,71.1,76.713,5.61,B01,missing,missing,drone arctic
+Видео,14,76.713,82.327,5.61,B01,missing,missing,hull ice
+Видео,15,82.327,87.94,5.61,B01,missing,missing,ship ice wide
+Видео,16,87.94,93.553,5.61,B01,missing,missing,ship ice video
+Видео,17,93.553,99.85,6.3,B01,missing,missing,crew captain deck
+Видео,18,99.85,106.147,6.3,B01,missing,missing,crew working
+Видео,19,106.147,112.444,6.3,B01,missing,missing,rigging ice
+Видео,20,112.444,118.74,6.3,B01,missing,missing,deck detail
+Видео,21,118.74,125.037,6.3,B01,missing,missing,crew captain deck
+Видео,22,125.037,131.334,6.3,B01,missing,missing,crew working
+Видео,23,131.334,137.631,6.3,B01,missing,missing,rigging ice
+Видео,24,137.631,143.928,6.3,B01,missing,missing,deck detail
+Видео,25,143.928,150.302,6.37,B02,missing,missing,archive document
+Видео,26,150.302,156.676,6.37,B02,missing,missing,map search
+Видео,27,156.676,163.05,6.37,B02,missing,missing,ship ice wide
+Видео,28,163.05,169.424,6.37,B02,missing,missing,journal close
+Видео,29,169.424,175.798,6.37,B02,missing,missing,archive document
+Видео,30,175.798,182.172,6.37,B02,missing,missing,map search
+Видео,31,182.172,188.546,6.37,B02,missing,missing,ship ice wide
+Видео,32,188.546,194.92,6.37,B02,missing,missing,archive portrait
+Видео,33,194.92,201.294,6.37,B02,missing,missing,letter document
+Видео,34,201.294,207.668,6.37,B02,missing,missing,map routes
+Видео,35,207.668,214.042,6.37,B02,missing,missing,search ship
+Видео,36,214.042,220.416,6.37,B02,missing,missing,archive portrait
+Видео,37,220.416,226.79,6.37,B02,missing,missing,letter document
+Видео,38,226.79,233.164,6.37,B02,missing,missing,map routes
+Видео,39,233.164,239.065,5.9,B02,missing,missing,ice camp grave
+Видео,40,239.065,244.966,5.9,B02,missing,missing,grave marker
+Видео,41,244.966,250.867,5.9,B02,missing,missing,can archive
+Видео,42,250.867,256.768,5.9,B02,missing,missing,arctic coast
+Видео,43,256.768,262.669,5.9,B02,missing,missing,ice camp grave
+Видео,44,262.669,268.57,5.9,B02,missing,missing,grave marker
+Видео,45,268.57,274.471,5.9,B02,missing,missing,can archive
+Видео,46,274.471,280.372,5.9,B02,missing,missing,arctic coast
+Видео,47,280.372,286.273,5.9,B02,missing,missing,ice camp grave
+Видео,48,286.273,292.174,5.9,B02,missing,missing,grave marker
+Видео,49,292.174,297.787,5.61,B03,missing,missing,document note close
+Видео,50,297.787,303.4,5.61,B03,missing,missing,stone cairn
+Видео,51,303.4,309.014,5.61,B03,missing,missing,metal cylinder
+Видео,52,309.014,314.627,5.61,B03,missing,missing,paper reveal
+Видео,53,314.627,320.24,5.61,B03,missing,missing,document note close
+Видео,54,320.24,325.853,5.61,B03,missing,missing,stone cairn
+Видео,55,325.853,331.466,5.61,B03,missing,missing,metal cylinder
+Видео,56,331.466,337.08,5.61,B03,missing,missing,paper reveal
+Видео,57,337.08,342.693,5.61,B03,missing,missing,document note close
+Видео,58,342.693,348.306,5.61,B03,missing,missing,stone cairn
+Видео,59,348.306,354.351,6.05,B03,missing,missing,document note map
+Видео,60,354.351,360.396,6.05,B03,missing,missing,document text
+Видео,61,360.396,366.441,6.04,B03,missing,missing,map route
+Видео,62,366.441,372.486,6.05,B03,missing,missing,ship trapped
+Видео,63,372.486,378.531,6.05,B03,missing,missing,document note map
+Видео,64,378.531,384.576,6.05,B03,missing,missing,document text
+Видео,65,384.576,390.621,6.04,B03,missing,missing,map route
+Видео,66,390.621,396.666,6.05,B03,missing,missing,ship trapped
+Видео,67,396.666,402.711,6.05,B03,missing,missing,document note map
+Видео,68,402.711,408.756,6.04,B03,missing,missing,document text
+Видео,69,408.756,414.353,5.6,B03,missing,missing,people snow trail
+Видео,70,414.353,419.95,5.6,B03,missing,missing,footprints snow
+Видео,71,419.95,425.548,5.6,B03,missing,missing,white horizon
+Видео,72,425.548,431.145,5.6,B03,missing,missing,sled silhouette
+Видео,73,431.145,436.742,5.6,B03,missing,missing,people snow trail
+Видео,74,436.742,442.339,5.6,B03,missing,missing,footprints snow
+Видео,75,442.339,447.937,5.6,B03,missing,missing,white horizon
+Видео,76,447.937,453.534,5.6,B03,missing,missing,sled silhouette
+Видео,77,453.534,459.131,5.6,B03,missing,missing,people snow trail
+Видео,78,459.131,465.048,5.92,B04,missing,missing,boat sled ice
+Видео,79,465.048,470.965,5.92,B04,missing,missing,arctic coast
+Видео,80,470.965,476.882,5.92,B04,missing,missing,wood runners
+Видео,81,476.882,482.799,5.92,B04,missing,missing,boat interior
+Видео,82,482.799,488.716,5.92,B04,missing,missing,boat sled ice
+Видео,83,488.716,494.633,5.92,B04,missing,missing,arctic coast
+Видео,84,494.633,500.55,5.92,B04,missing,missing,wood runners
+Видео,85,500.55,506.467,5.92,B04,missing,missing,boat interior
+Видео,86,506.467,512.384,5.92,B04,missing,missing,boat sled ice
+Видео,87,512.384,517.981,5.6,B04,missing,missing,silver spoon
+Видео,88,517.981,523.578,5.6,B04,missing,missing,object close
+Видео,89,523.578,529.176,5.6,B04,missing,missing,book archive
+Видео,90,529.176,534.773,5.6,B04,missing,missing,rifle detail
+Видео,91,534.773,540.37,5.6,B04,missing,missing,silver spoon
+Видео,92,540.37,545.967,5.6,B04,missing,missing,object close
+Видео,93,545.967,551.565,5.6,B04,missing,missing,book archive
+Видео,94,551.565,557.162,5.6,B04,missing,missing,rifle detail
+Видео,95,557.162,562.759,5.6,B04,missing,missing,silver spoon
+Видео,96,562.759,568.372,5.61,B04,missing,missing,bones archive lab
+Видео,97,568.372,573.985,5.61,B04,missing,missing,bone close
+Видео,98,573.985,579.599,5.61,B04,missing,missing,lab table
+Видео,99,579.599,585.212,5.61,B04,missing,missing,archive folder
+Видео,100,585.212,590.825,5.61,B04,missing,missing,bones archive lab
+Видео,101,590.825,596.438,5.61,B04,missing,missing,bone close
+Видео,102,596.438,602.051,5.61,B04,missing,missing,lab table
+Видео,103,602.051,607.665,5.61,B04,missing,missing,archive folder
+Видео,104,607.665,613.278,5.61,B04,missing,missing,bones archive lab
+Видео,105,613.278,618.891,5.61,B04,missing,missing,bone close
+Видео,106,618.891,624.792,5.9,B05,missing,missing,lab archive
+Видео,107,624.792,630.693,5.9,B05,missing,missing,beechy camp
+Видео,108,630.693,636.594,5.9,B05,missing,missing,forensic dig
+Видео,109,636.594,642.495,5.9,B05,missing,missing,wood coffin
+Видео,110,642.495,648.396,5.9,B05,missing,missing,lab archive
+Видео,111,648.396,654.297,5.9,B05,missing,missing,beechy camp
+Видео,112,654.297,660.198,5.9,B05,missing,missing,forensic dig
+Видео,113,660.198,666.099,5.9,B05,missing,missing,wood coffin
+Видео,114,666.099,672.0,5.9,B05,missing,missing,lab archive
+Видео,115,672.0,677.901,5.9,B05,missing,missing,beechy camp
+Видео,116,677.901,683.498,5.6,B05,missing,missing,archive portrait
+Видео,117,683.498,689.095,5.6,B05,missing,missing,medical notes
+Видео,118,689.095,694.693,5.6,B05,missing,missing,clothing detail
+Видео,119,694.693,700.29,5.6,B05,missing,missing,lab hands
+Видео,120,700.29,705.887,5.6,B05,missing,missing,archive portrait
+Видео,121,705.887,711.484,5.6,B05,missing,missing,medical notes
+Видео,122,711.484,717.082,5.6,B05,missing,missing,clothing detail
+Видео,123,717.082,722.679,5.6,B05,missing,missing,lab hands
+Видео,124,722.679,728.276,5.6,B05,missing,missing,archive portrait
+Видео,125,728.276,733.889,5.61,B05,missing,missing,lead can archive
+Видео,126,733.889,739.502,5.61,B05,missing,missing,lab analysis
+Видео,127,739.502,745.116,5.61,B05,missing,missing,newspaper archive
+Видео,128,745.116,750.729,5.61,B05,missing,missing,medical record
+Видео,129,750.729,756.342,5.61,B05,missing,missing,lead can archive
+Видео,130,756.342,761.955,5.61,B05,missing,missing,lab analysis
+Видео,131,761.955,767.568,5.61,B05,missing,missing,newspaper archive
+Видео,132,767.568,773.182,5.61,B05,missing,missing,medical record
+Видео,133,773.182,778.795,5.61,B05,missing,missing,lead can archive
+Видео,134,778.795,784.408,5.61,B05,missing,missing,lab analysis
+Видео,135,784.408,790.021,5.61,B06,missing,missing,sonar screen
+Видео,136,790.021,795.634,5.61,B06,missing,missing,research vessel
+Видео,137,795.634,801.248,5.61,B06,missing,missing,satellite map
+Видео,138,801.248,806.861,5.61,B06,missing,missing,underwater robot
+Видео,139,806.861,812.474,5.61,B06,missing,missing,sonar screen
+Видео,140,812.474,818.087,5.61,B06,missing,missing,research vessel
+Видео,141,818.087,823.7,5.61,B06,missing,missing,satellite map
+Видео,142,823.7,829.314,5.61,B06,missing,missing,underwater robot
+Видео,143,829.314,834.927,5.61,B06,missing,missing,sonar screen
+Видео,144,834.927,840.54,5.61,B06,missing,missing,research vessel
+Видео,145,840.54,846.166,5.63,B06,missing,missing,underwater ship
+Видео,146,846.166,851.793,5.63,B06,missing,missing,shipwreck hull
+Видео,147,851.793,857.419,5.63,B06,missing,missing,closed hatch
+Видео,148,857.419,863.045,5.63,B06,missing,missing,interior cabin
+Видео,149,863.045,868.671,5.63,B06,missing,missing,underwater ship
+Видео,150,868.671,874.298,5.63,B06,missing,missing,shipwreck hull
+Видео,151,874.298,879.924,5.63,B06,missing,missing,closed hatch
+Видео,152,879.924,885.55,5.63,B06,missing,missing,interior cabin
+Видео,153,885.55,891.176,5.63,B06,missing,missing,underwater ship
+Видео,154,891.176,896.803,5.63,B06,missing,missing,shipwreck hull
+Видео,155,896.803,902.429,5.63,B06,missing,missing,closed hatch
+Видео,156,902.429,908.186,5.76,B06,missing,missing,ice wide finale
 Видео,157,908.186,913.943,5.76,B06,missing,missing,empty horizon
-Видео,158,913.943,919.7,5.76,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,158,913.943,919.7,5.76,B06,missing,missing,ship memory
 Видео,159,919.7,925.457,5.76,B06,missing,missing,atlas logo
-Видео,160,925.457,931.214,5.76,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,160,925.457,931.214,5.76,B06,missing,missing,ice wide finale
 Видео,161,931.214,936.972,5.76,B06,missing,missing,empty horizon
-Видео,162,936.972,942.729,5.76,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,162,936.972,942.729,5.76,B06,missing,missing,ship memory
 Видео,163,942.729,948.486,5.76,B06,missing,missing,atlas logo
-Видео,164,948.486,954.243,5.76,B06,assigned,image,S01_SH01_Arctic_Aerial_Master.jpg
+Видео,164,948.486,954.243,5.76,B06,missing,missing,ice wide finale
 Видео,165,954.243,960.0,5.76,B06,missing,missing,empty horizon

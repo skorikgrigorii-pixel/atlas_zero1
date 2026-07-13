@@ -13,7 +13,7 @@
         "label": "S01_SH01_Arctic_Aerial_Master.jpg",
         "status": "assigned",
         "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images\\S01_SH01_Arctic_Aerial_Master.jpg",
         "camera": "slow push-in",
         "transition": "fade from black"
       },
@@ -24,10 +24,10 @@
         "end": 12.474,
         "duration": 6.24,
         "block": "B01",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "S01_SH02_Erebus_Terror_Master.jpg",
         "status": "assigned",
         "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images\\S01_SH02_Erebus_Terror_Master.jpg",
         "camera": "macro drift",
         "transition": "cut"
       },
@@ -38,10 +38,10 @@
         "end": 18.71,
         "duration": 6.24,
         "block": "B01",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "franklin_video_01.mp4",
         "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "media_type": "video",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\03_Video\\franklin_video_01.mp4",
         "camera": "fade from black",
         "transition": "cut"
       },
@@ -52,10 +52,10 @@
         "end": 24.947,
         "duration": 6.24,
         "block": "B01",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "franklin_video_02.mp4",
         "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "media_type": "video",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\03_Video\\franklin_video_02.mp4",
         "camera": "slow push-in",
         "transition": "cut"
       },
@@ -69,7 +69,7 @@
         "label": "S01_SH06_Deck_Detail.jpg",
         "status": "assigned",
         "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH06_Deck_Detail.jpg",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images\\S01_SH06_Deck_Detail.jpg",
         "camera": "macro drift",
         "transition": "cut"
       },
@@ -80,10 +80,10 @@
         "end": 37.421,
         "duration": 6.24,
         "block": "B01",
-        "label": "S01_SH02_Erebus_Terror_Master.jpg",
+        "label": "franklin_video_03.mp4",
         "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH02_Erebus_Terror_Master.jpg",
+        "media_type": "video",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\03_Video\\franklin_video_03.mp4",
         "camera": "fade from black",
         "transition": "soft dissolve"
       },
@@ -94,10 +94,10 @@
         "end": 43.034,
         "duration": 5.61,
         "block": "B01",
-        "label": "S01_SH02_Erebus_Terror_Master.jpg",
+        "label": "S01_SH04_Crew_Commander.jpg",
         "status": "assigned",
         "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH02_Erebus_Terror_Master.jpg",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images\\S01_SH04_Crew_Commander.jpg",
         "camera": "slow drone",
         "transition": "dissolve"
       },
@@ -108,10 +108,10 @@
         "end": 48.647,
         "duration": 5.61,
         "block": "B01",
-        "label": "S01_SH02_Erebus_Terror_Master.jpg",
+        "label": "S01_SH05_Crew_Working.jpg",
         "status": "assigned",
         "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH02_Erebus_Terror_Master.jpg",
+        "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images\\S01_SH05_Crew_Working.jpg",
         "camera": "dolly forward",
         "transition": "cut"
       },
@@ -122,10 +122,10 @@
         "end": 54.261,
         "duration": 5.61,
         "block": "B01",
-        "label": "S01_SH02_Erebus_Terror_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH02_Erebus_Terror_Master.jpg",
+        "label": "drone arctic",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pan",
         "transition": "cut"
       },
@@ -136,10 +136,10 @@
         "end": 59.874,
         "duration": 5.61,
         "block": "B01",
-        "label": "franklin_video_01.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_01.mp4",
+        "label": "hull ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow drone",
         "transition": "cut"
       },
@@ -150,10 +150,10 @@
         "end": 65.487,
         "duration": 5.61,
         "block": "B01",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ship ice wide",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "dolly forward",
         "transition": "cut"
       },
@@ -164,10 +164,10 @@
         "end": 71.1,
         "duration": 5.61,
         "block": "B01",
-        "label": "franklin_video_01.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_01.mp4",
+        "label": "ship ice video",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pan",
         "transition": "cut"
       },
@@ -178,10 +178,10 @@
         "end": 76.713,
         "duration": 5.61,
         "block": "B01",
-        "label": "franklin_video_01.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_01.mp4",
+        "label": "drone arctic",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow drone",
         "transition": "cut"
       },
@@ -192,10 +192,10 @@
         "end": 82.327,
         "duration": 5.61,
         "block": "B01",
-        "label": "franklin_video_01.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_01.mp4",
+        "label": "hull ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "dolly forward",
         "transition": "cut"
       },
@@ -206,10 +206,10 @@
         "end": 87.94,
         "duration": 5.61,
         "block": "B01",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ship ice wide",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pan",
         "transition": "cut"
       },
@@ -220,10 +220,10 @@
         "end": 93.553,
         "duration": 5.61,
         "block": "B01",
-        "label": "franklin_video_02.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_02.mp4",
+        "label": "ship ice video",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow drone",
         "transition": "soft dissolve"
       },
@@ -231,302 +231,274 @@
         "shot_id": "shot_0017",
         "idx": 17,
         "start": 93.553,
-        "end": 99.15,
-        "duration": 5.6,
+        "end": 99.85,
+        "duration": 6.3,
         "block": "B01",
-        "label": "franklin_video_02.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_02.mp4",
+        "label": "crew captain deck",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow track",
         "transition": "dissolve"
       },
       {
         "shot_id": "shot_0018",
         "idx": 18,
-        "start": 99.15,
-        "end": 104.747,
-        "duration": 5.6,
+        "start": 99.85,
+        "end": 106.147,
+        "duration": 6.3,
         "block": "B01",
-        "label": "S01_SH05_Crew_Working.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH05_Crew_Working.jpg",
+        "label": "crew working",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "handheld subtle",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0019",
         "idx": 19,
-        "start": 104.747,
-        "end": 110.345,
-        "duration": 5.6,
+        "start": 106.147,
+        "end": 112.444,
+        "duration": 6.3,
         "block": "B01",
-        "label": "franklin_video_02.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_02.mp4",
+        "label": "rigging ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "push-in",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0020",
         "idx": 20,
-        "start": 110.345,
-        "end": 115.942,
-        "duration": 5.6,
+        "start": 112.444,
+        "end": 118.74,
+        "duration": 6.3,
         "block": "B01",
-        "label": "S01_SH06_Deck_Detail.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH06_Deck_Detail.jpg",
+        "label": "deck detail",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow track",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0021",
         "idx": 21,
-        "start": 115.942,
-        "end": 121.539,
-        "duration": 5.6,
+        "start": 118.74,
+        "end": 125.037,
+        "duration": 6.3,
         "block": "B01",
-        "label": "franklin_video_02.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_02.mp4",
+        "label": "crew captain deck",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "handheld subtle",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0022",
         "idx": 22,
-        "start": 121.539,
-        "end": 127.136,
-        "duration": 5.6,
+        "start": 125.037,
+        "end": 131.334,
+        "duration": 6.3,
         "block": "B01",
-        "label": "S01_SH05_Crew_Working.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH05_Crew_Working.jpg",
+        "label": "crew working",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "push-in",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0023",
         "idx": 23,
-        "start": 127.136,
-        "end": 132.734,
-        "duration": 5.6,
+        "start": 131.334,
+        "end": 137.631,
+        "duration": 6.3,
         "block": "B01",
-        "label": "franklin_video_03.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_03.mp4",
+        "label": "rigging ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow track",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0024",
         "idx": 24,
-        "start": 132.734,
-        "end": 138.331,
-        "duration": 5.6,
+        "start": 137.631,
+        "end": 143.928,
+        "duration": 6.3,
         "block": "B01",
-        "label": "S01_SH06_Deck_Detail.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH06_Deck_Detail.jpg",
+        "label": "deck detail",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "handheld subtle",
-        "transition": "cut"
+        "transition": "soft dissolve"
       },
       {
         "shot_id": "shot_0025",
         "idx": 25,
-        "start": 138.331,
-        "end": 143.928,
-        "duration": 5.6,
-        "block": "B01",
-        "label": "franklin_video_03.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_03.mp4",
-        "camera": "push-in",
-        "transition": "soft dissolve"
-      },
-      {
-        "shot_id": "shot_0026",
-        "idx": 26,
         "start": 143.928,
-        "end": 149.505,
-        "duration": 5.58,
+        "end": 150.302,
+        "duration": 6.37,
         "block": "B02",
-        "label": "franklin_video_03.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_03.mp4",
+        "label": "archive document",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "paper reveal",
         "transition": "dissolve"
       },
       {
+        "shot_id": "shot_0026",
+        "idx": 26,
+        "start": 150.302,
+        "end": 156.676,
+        "duration": 6.37,
+        "block": "B02",
+        "label": "map search",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "map pan",
+        "transition": "cut"
+      },
+      {
         "shot_id": "shot_0027",
         "idx": 27,
-        "start": 149.505,
-        "end": 155.083,
-        "duration": 5.58,
+        "start": 156.676,
+        "end": 163.05,
+        "duration": 6.37,
         "block": "B02",
-        "label": "franklin_video_03.mp4",
-        "status": "assigned",
-        "media_type": "video",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video/franklin_video_03.mp4",
-        "camera": "map pan",
+        "label": "ship ice wide",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "dissolve",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0028",
         "idx": 28,
-        "start": 155.083,
-        "end": 160.66,
-        "duration": 5.58,
+        "start": 163.05,
+        "end": 169.424,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "dissolve",
+        "label": "journal close",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "paper reveal",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0029",
         "idx": 29,
-        "start": 160.66,
-        "end": 166.237,
-        "duration": 5.58,
+        "start": 169.424,
+        "end": 175.798,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH04_Crew_Commander.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH04_Crew_Commander.jpg",
-        "camera": "paper reveal",
+        "label": "archive document",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "map pan",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0030",
         "idx": 30,
-        "start": 166.237,
-        "end": 171.814,
-        "duration": 5.58,
+        "start": 175.798,
+        "end": 182.172,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH04_Crew_Commander.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH04_Crew_Commander.jpg",
-        "camera": "map pan",
+        "label": "map search",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "dissolve",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0031",
         "idx": 31,
-        "start": 171.814,
-        "end": 177.392,
-        "duration": 5.58,
+        "start": 182.172,
+        "end": 188.546,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH04_Crew_Commander.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH04_Crew_Commander.jpg",
-        "camera": "dissolve",
-        "transition": "cut"
+        "label": "ship ice wide",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "paper reveal",
+        "transition": "soft dissolve"
       },
       {
         "shot_id": "shot_0032",
         "idx": 32,
-        "start": 177.392,
-        "end": 182.969,
-        "duration": 5.58,
-        "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "paper reveal",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0033",
-        "idx": 33,
-        "start": 182.969,
-        "end": 188.546,
-        "duration": 5.58,
-        "block": "B02",
-        "label": "S01_SH04_Crew_Commander.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH04_Crew_Commander.jpg",
-        "camera": "map pan",
-        "transition": "soft dissolve"
-      },
-      {
-        "shot_id": "shot_0034",
-        "idx": 34,
         "start": 188.546,
-        "end": 194.123,
-        "duration": 5.58,
+        "end": 194.92,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH05_Crew_Working.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH05_Crew_Working.jpg",
+        "label": "archive portrait",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow push-in",
         "transition": "dissolve"
       },
       {
+        "shot_id": "shot_0033",
+        "idx": 33,
+        "start": 194.92,
+        "end": 201.294,
+        "duration": 6.37,
+        "block": "B02",
+        "label": "letter document",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "map trace",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0034",
+        "idx": 34,
+        "start": 201.294,
+        "end": 207.668,
+        "duration": 6.37,
+        "block": "B02",
+        "label": "map routes",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "dissolve",
+        "transition": "cut"
+      },
+      {
         "shot_id": "shot_0035",
         "idx": 35,
-        "start": 194.123,
-        "end": 199.701,
-        "duration": 5.58,
+        "start": 207.668,
+        "end": 214.042,
+        "duration": 6.37,
         "block": "B02",
-        "label": "S01_SH05_Crew_Working.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH05_Crew_Working.jpg",
-        "camera": "map trace",
+        "label": "search ship",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow push-in",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0036",
         "idx": 36,
-        "start": 199.701,
-        "end": 205.278,
-        "duration": 5.58,
-        "block": "B02",
-        "label": "S01_SH06_Deck_Detail.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH06_Deck_Detail.jpg",
-        "camera": "dissolve",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0037",
-        "idx": 37,
-        "start": 205.278,
-        "end": 210.855,
-        "duration": 5.58,
-        "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "slow push-in",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0038",
-        "idx": 38,
-        "start": 210.855,
-        "end": 216.432,
-        "duration": 5.58,
+        "start": 214.042,
+        "end": 220.416,
+        "duration": 6.37,
         "block": "B02",
         "label": "archive portrait",
         "status": "missing",
@@ -536,11 +508,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0039",
-        "idx": 39,
-        "start": 216.432,
-        "end": 222.01,
-        "duration": 5.58,
+        "shot_id": "shot_0037",
+        "idx": 37,
+        "start": 220.416,
+        "end": 226.79,
+        "duration": 6.37,
         "block": "B02",
         "label": "letter document",
         "status": "missing",
@@ -550,55 +522,83 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0040",
-        "idx": 40,
-        "start": 222.01,
-        "end": 227.587,
-        "duration": 5.58,
+        "shot_id": "shot_0038",
+        "idx": 38,
+        "start": 226.79,
+        "end": 233.164,
+        "duration": 6.37,
         "block": "B02",
         "label": "map routes",
         "status": "missing",
         "media_type": "missing",
         "path": "",
         "camera": "slow push-in",
+        "transition": "soft dissolve"
+      },
+      {
+        "shot_id": "shot_0039",
+        "idx": 39,
+        "start": 233.164,
+        "end": 239.065,
+        "duration": 5.9,
+        "block": "B02",
+        "label": "ice camp grave",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow pullback",
+        "transition": "dissolve"
+      },
+      {
+        "shot_id": "shot_0040",
+        "idx": 40,
+        "start": 239.065,
+        "end": 244.966,
+        "duration": 5.9,
+        "block": "B02",
+        "label": "grave marker",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "static hold",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0041",
         "idx": 41,
-        "start": 227.587,
-        "end": 233.164,
-        "duration": 5.58,
+        "start": 244.966,
+        "end": 250.867,
+        "duration": 5.9,
         "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "map trace",
-        "transition": "soft dissolve"
+        "label": "can archive",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "cold dissolve",
+        "transition": "cut"
       },
       {
         "shot_id": "shot_0042",
         "idx": 42,
-        "start": 233.164,
-        "end": 239.721,
-        "duration": 6.56,
+        "start": 250.867,
+        "end": 256.768,
+        "duration": 5.9,
         "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "arctic coast",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pullback",
-        "transition": "dissolve"
+        "transition": "cut"
       },
       {
         "shot_id": "shot_0043",
         "idx": 43,
-        "start": 239.721,
-        "end": 246.277,
-        "duration": 6.56,
+        "start": 256.768,
+        "end": 262.669,
+        "duration": 5.9,
         "block": "B02",
-        "label": "grave marker",
+        "label": "ice camp grave",
         "status": "missing",
         "media_type": "missing",
         "path": "",
@@ -608,51 +608,9 @@
       {
         "shot_id": "shot_0044",
         "idx": 44,
-        "start": 246.277,
-        "end": 252.834,
-        "duration": 6.56,
-        "block": "B02",
-        "label": "can archive",
-        "status": "missing",
-        "media_type": "missing",
-        "path": "",
-        "camera": "cold dissolve",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0045",
-        "idx": 45,
-        "start": 252.834,
-        "end": 259.391,
-        "duration": 6.56,
-        "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "slow pullback",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0046",
-        "idx": 46,
-        "start": 259.391,
-        "end": 265.947,
-        "duration": 6.56,
-        "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "static hold",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0047",
-        "idx": 47,
-        "start": 265.947,
-        "end": 272.504,
-        "duration": 6.56,
+        "start": 262.669,
+        "end": 268.57,
+        "duration": 5.9,
         "block": "B02",
         "label": "grave marker",
         "status": "missing",
@@ -662,11 +620,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0048",
-        "idx": 48,
-        "start": 272.504,
-        "end": 279.061,
-        "duration": 6.56,
+        "shot_id": "shot_0045",
+        "idx": 45,
+        "start": 268.57,
+        "end": 274.471,
+        "duration": 5.9,
         "block": "B02",
         "label": "can archive",
         "status": "missing",
@@ -676,36 +634,50 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0049",
-        "idx": 49,
-        "start": 279.061,
-        "end": 285.617,
-        "duration": 6.56,
+        "shot_id": "shot_0046",
+        "idx": 46,
+        "start": 274.471,
+        "end": 280.372,
+        "duration": 5.9,
         "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "arctic coast",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "static hold",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0050",
-        "idx": 50,
-        "start": 285.617,
-        "end": 292.174,
-        "duration": 6.56,
+        "shot_id": "shot_0047",
+        "idx": 47,
+        "start": 280.372,
+        "end": 286.273,
+        "duration": 5.9,
         "block": "B02",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ice camp grave",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "cold dissolve",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0048",
+        "idx": 48,
+        "start": 286.273,
+        "end": 292.174,
+        "duration": 5.9,
+        "block": "B02",
+        "label": "grave marker",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow pullback",
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0051",
-        "idx": 51,
+        "shot_id": "shot_0049",
+        "idx": 49,
         "start": 292.174,
         "end": 297.787,
         "duration": 5.61,
@@ -718,8 +690,8 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0052",
-        "idx": 52,
+        "shot_id": "shot_0050",
+        "idx": 50,
         "start": 297.787,
         "end": 303.4,
         "duration": 5.61,
@@ -732,8 +704,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0053",
-        "idx": 53,
+        "shot_id": "shot_0051",
+        "idx": 51,
         "start": 303.4,
         "end": 309.014,
         "duration": 5.61,
@@ -746,8 +718,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0054",
-        "idx": 54,
+        "shot_id": "shot_0052",
+        "idx": 52,
         "start": 309.014,
         "end": 314.627,
         "duration": 5.61,
@@ -760,8 +732,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0055",
-        "idx": 55,
+        "shot_id": "shot_0053",
+        "idx": 53,
         "start": 314.627,
         "end": 320.24,
         "duration": 5.61,
@@ -774,8 +746,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0056",
-        "idx": 56,
+        "shot_id": "shot_0054",
+        "idx": 54,
         "start": 320.24,
         "end": 325.853,
         "duration": 5.61,
@@ -788,8 +760,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0057",
-        "idx": 57,
+        "shot_id": "shot_0055",
+        "idx": 55,
         "start": 325.853,
         "end": 331.466,
         "duration": 5.61,
@@ -802,8 +774,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0058",
-        "idx": 58,
+        "shot_id": "shot_0056",
+        "idx": 56,
         "start": 331.466,
         "end": 337.08,
         "duration": 5.61,
@@ -816,8 +788,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0059",
-        "idx": 59,
+        "shot_id": "shot_0057",
+        "idx": 57,
         "start": 337.08,
         "end": 342.693,
         "duration": 5.61,
@@ -830,8 +802,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0060",
-        "idx": 60,
+        "shot_id": "shot_0058",
+        "idx": 58,
         "start": 342.693,
         "end": 348.306,
         "duration": 5.61,
@@ -844,11 +816,11 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0061",
-        "idx": 61,
+        "shot_id": "shot_0059",
+        "idx": 59,
         "start": 348.306,
-        "end": 355.023,
-        "duration": 6.72,
+        "end": 354.351,
+        "duration": 6.05,
         "block": "B03",
         "label": "document note map",
         "status": "missing",
@@ -858,53 +830,53 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0062",
-        "idx": 62,
-        "start": 355.023,
-        "end": 361.739,
-        "duration": 6.72,
+        "shot_id": "shot_0060",
+        "idx": 60,
+        "start": 354.351,
+        "end": 360.396,
+        "duration": 6.05,
         "block": "B03",
         "label": "document text",
         "status": "missing",
         "media_type": "missing",
         "path": "",
         "camera": "date reveal",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0061",
+        "idx": 61,
+        "start": 360.396,
+        "end": 366.441,
+        "duration": 6.04,
+        "block": "B03",
+        "label": "map route",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "map move",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0062",
+        "idx": 62,
+        "start": 366.441,
+        "end": 372.486,
+        "duration": 6.05,
+        "block": "B03",
+        "label": "ship trapped",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow scan",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0063",
         "idx": 63,
-        "start": 361.739,
-        "end": 368.456,
-        "duration": 6.72,
-        "block": "B03",
-        "label": "map route",
-        "status": "missing",
-        "media_type": "missing",
-        "path": "",
-        "camera": "map move",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0064",
-        "idx": 64,
-        "start": 368.456,
-        "end": 375.173,
-        "duration": 6.72,
-        "block": "B03",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "slow scan",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0065",
-        "idx": 65,
-        "start": 375.173,
-        "end": 381.889,
-        "duration": 6.72,
+        "start": 372.486,
+        "end": 378.531,
+        "duration": 6.05,
         "block": "B03",
         "label": "document note map",
         "status": "missing",
@@ -914,11 +886,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0066",
-        "idx": 66,
-        "start": 381.889,
-        "end": 388.606,
-        "duration": 6.72,
+        "shot_id": "shot_0064",
+        "idx": 64,
+        "start": 378.531,
+        "end": 384.576,
+        "duration": 6.05,
         "block": "B03",
         "label": "document text",
         "status": "missing",
@@ -928,11 +900,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0067",
-        "idx": 67,
-        "start": 388.606,
-        "end": 395.323,
-        "duration": 6.72,
+        "shot_id": "shot_0065",
+        "idx": 65,
+        "start": 384.576,
+        "end": 390.621,
+        "duration": 6.04,
         "block": "B03",
         "label": "map route",
         "status": "missing",
@@ -942,36 +914,50 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0068",
-        "idx": 68,
-        "start": 395.323,
-        "end": 402.039,
-        "duration": 6.72,
+        "shot_id": "shot_0066",
+        "idx": 66,
+        "start": 390.621,
+        "end": 396.666,
+        "duration": 6.05,
         "block": "B03",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ship trapped",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "date reveal",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0069",
-        "idx": 69,
-        "start": 402.039,
-        "end": 408.756,
-        "duration": 6.72,
+        "shot_id": "shot_0067",
+        "idx": 67,
+        "start": 396.666,
+        "end": 402.711,
+        "duration": 6.05,
         "block": "B03",
         "label": "document note map",
         "status": "missing",
         "media_type": "missing",
         "path": "",
         "camera": "map move",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0068",
+        "idx": 68,
+        "start": 402.711,
+        "end": 408.756,
+        "duration": 6.04,
+        "block": "B03",
+        "label": "document text",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow scan",
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0070",
-        "idx": 70,
+        "shot_id": "shot_0069",
+        "idx": 69,
         "start": 408.756,
         "end": 414.353,
         "duration": 5.6,
@@ -984,8 +970,8 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0071",
-        "idx": 71,
+        "shot_id": "shot_0070",
+        "idx": 70,
         "start": 414.353,
         "end": 419.95,
         "duration": 5.6,
@@ -998,8 +984,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0072",
-        "idx": 72,
+        "shot_id": "shot_0071",
+        "idx": 71,
         "start": 419.95,
         "end": 425.548,
         "duration": 5.6,
@@ -1012,8 +998,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0073",
-        "idx": 73,
+        "shot_id": "shot_0072",
+        "idx": 72,
         "start": 425.548,
         "end": 431.145,
         "duration": 5.6,
@@ -1026,8 +1012,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0074",
-        "idx": 74,
+        "shot_id": "shot_0073",
+        "idx": 73,
         "start": 431.145,
         "end": 436.742,
         "duration": 5.6,
@@ -1040,8 +1026,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0075",
-        "idx": 75,
+        "shot_id": "shot_0074",
+        "idx": 74,
         "start": 436.742,
         "end": 442.339,
         "duration": 5.6,
@@ -1054,8 +1040,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0076",
-        "idx": 76,
+        "shot_id": "shot_0075",
+        "idx": 75,
         "start": 442.339,
         "end": 447.937,
         "duration": 5.6,
@@ -1068,8 +1054,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0077",
-        "idx": 77,
+        "shot_id": "shot_0076",
+        "idx": 76,
         "start": 447.937,
         "end": 453.534,
         "duration": 5.6,
@@ -1082,8 +1068,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0078",
-        "idx": 78,
+        "shot_id": "shot_0077",
+        "idx": 77,
         "start": 453.534,
         "end": 459.131,
         "duration": 5.6,
@@ -1096,36 +1082,36 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0079",
-        "idx": 79,
+        "shot_id": "shot_0078",
+        "idx": 78,
         "start": 459.131,
         "end": 465.048,
         "duration": 5.92,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "boat sled ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow reveal",
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0080",
-        "idx": 80,
+        "shot_id": "shot_0079",
+        "idx": 79,
         "start": 465.048,
         "end": 470.965,
         "duration": 5.92,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "arctic coast",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "side track",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0081",
-        "idx": 81,
+        "shot_id": "shot_0080",
+        "idx": 80,
         "start": 470.965,
         "end": 476.882,
         "duration": 5.92,
@@ -1138,8 +1124,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0082",
-        "idx": 82,
+        "shot_id": "shot_0081",
+        "idx": 81,
         "start": 476.882,
         "end": 482.799,
         "duration": 5.92,
@@ -1152,36 +1138,36 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0083",
-        "idx": 83,
+        "shot_id": "shot_0082",
+        "idx": 82,
         "start": 482.799,
         "end": 488.716,
         "duration": 5.92,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "boat sled ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "side track",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0083",
+        "idx": 83,
+        "start": 488.716,
+        "end": 494.633,
+        "duration": 5.92,
+        "block": "B04",
+        "label": "arctic coast",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "static hold",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0084",
         "idx": 84,
-        "start": 488.716,
-        "end": 494.633,
-        "duration": 5.92,
-        "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "static hold",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0085",
-        "idx": 85,
         "start": 494.633,
         "end": 500.55,
         "duration": 5.92,
@@ -1194,8 +1180,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0086",
-        "idx": 86,
+        "shot_id": "shot_0085",
+        "idx": 85,
         "start": 500.55,
         "end": 506.467,
         "duration": 5.92,
@@ -1208,22 +1194,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0087",
-        "idx": 87,
+        "shot_id": "shot_0086",
+        "idx": 86,
         "start": 506.467,
         "end": 512.384,
         "duration": 5.92,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "boat sled ice",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "static hold",
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0088",
-        "idx": 88,
+        "shot_id": "shot_0087",
+        "idx": 87,
         "start": 512.384,
         "end": 517.981,
         "duration": 5.6,
@@ -1236,8 +1222,8 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0089",
-        "idx": 89,
+        "shot_id": "shot_0088",
+        "idx": 88,
         "start": 517.981,
         "end": 523.578,
         "duration": 5.6,
@@ -1250,8 +1236,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0090",
-        "idx": 90,
+        "shot_id": "shot_0089",
+        "idx": 89,
         "start": 523.578,
         "end": 529.176,
         "duration": 5.6,
@@ -1264,8 +1250,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0091",
-        "idx": 91,
+        "shot_id": "shot_0090",
+        "idx": 90,
         "start": 529.176,
         "end": 534.773,
         "duration": 5.6,
@@ -1278,8 +1264,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0092",
-        "idx": 92,
+        "shot_id": "shot_0091",
+        "idx": 91,
         "start": 534.773,
         "end": 540.37,
         "duration": 5.6,
@@ -1292,8 +1278,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0093",
-        "idx": 93,
+        "shot_id": "shot_0092",
+        "idx": 92,
         "start": 540.37,
         "end": 545.967,
         "duration": 5.6,
@@ -1306,8 +1292,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0094",
-        "idx": 94,
+        "shot_id": "shot_0093",
+        "idx": 93,
         "start": 545.967,
         "end": 551.565,
         "duration": 5.6,
@@ -1320,8 +1306,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0095",
-        "idx": 95,
+        "shot_id": "shot_0094",
+        "idx": 94,
         "start": 551.565,
         "end": 557.162,
         "duration": 5.6,
@@ -1334,8 +1320,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0096",
-        "idx": 96,
+        "shot_id": "shot_0095",
+        "idx": 95,
         "start": 557.162,
         "end": 562.759,
         "duration": 5.6,
@@ -1348,22 +1334,22 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0097",
-        "idx": 97,
+        "shot_id": "shot_0096",
+        "idx": 96,
         "start": 562.759,
         "end": 568.372,
         "duration": 5.61,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "bones archive lab",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "static macro",
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0098",
-        "idx": 98,
+        "shot_id": "shot_0097",
+        "idx": 97,
         "start": 568.372,
         "end": 573.985,
         "duration": 5.61,
@@ -1376,22 +1362,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0099",
-        "idx": 99,
+        "shot_id": "shot_0098",
+        "idx": 98,
         "start": 573.985,
         "end": 579.599,
         "duration": 5.61,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab table",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "folder close",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0100",
-        "idx": 100,
+        "shot_id": "shot_0099",
+        "idx": 99,
         "start": 579.599,
         "end": 585.212,
         "duration": 5.61,
@@ -1404,22 +1390,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0101",
-        "idx": 101,
+        "shot_id": "shot_0100",
+        "idx": 100,
         "start": 585.212,
         "end": 590.825,
         "duration": 5.61,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "bones archive lab",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow tilt",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0102",
-        "idx": 102,
+        "shot_id": "shot_0101",
+        "idx": 101,
         "start": 590.825,
         "end": 596.438,
         "duration": 5.61,
@@ -1432,22 +1418,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0103",
-        "idx": 103,
+        "shot_id": "shot_0102",
+        "idx": 102,
         "start": 596.438,
         "end": 602.051,
         "duration": 5.61,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab table",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "static macro",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0104",
-        "idx": 104,
+        "shot_id": "shot_0103",
+        "idx": 103,
         "start": 602.051,
         "end": 607.665,
         "duration": 5.61,
@@ -1460,22 +1446,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0105",
-        "idx": 105,
+        "shot_id": "shot_0104",
+        "idx": 104,
         "start": 607.665,
         "end": 613.278,
         "duration": 5.61,
         "block": "B04",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "bones archive lab",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "folder close",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0106",
-        "idx": 106,
+        "shot_id": "shot_0105",
+        "idx": 105,
         "start": 613.278,
         "end": 618.891,
         "duration": 5.61,
@@ -1488,22 +1474,22 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0107",
-        "idx": 107,
+        "shot_id": "shot_0106",
+        "idx": 106,
         "start": 618.891,
         "end": 624.792,
         "duration": 5.9,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab archive",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "documentary handheld",
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0108",
-        "idx": 108,
+        "shot_id": "shot_0107",
+        "idx": 107,
         "start": 624.792,
         "end": 630.693,
         "duration": 5.9,
@@ -1516,8 +1502,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0109",
-        "idx": 109,
+        "shot_id": "shot_0108",
+        "idx": 108,
         "start": 630.693,
         "end": 636.594,
         "duration": 5.9,
@@ -1530,8 +1516,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0110",
-        "idx": 110,
+        "shot_id": "shot_0109",
+        "idx": 109,
         "start": 636.594,
         "end": 642.495,
         "duration": 5.9,
@@ -1544,22 +1530,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0111",
-        "idx": 111,
+        "shot_id": "shot_0110",
+        "idx": 110,
         "start": 642.495,
         "end": 648.396,
         "duration": 5.9,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab archive",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow reveal",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0112",
-        "idx": 112,
+        "shot_id": "shot_0111",
+        "idx": 111,
         "start": 648.396,
         "end": 654.297,
         "duration": 5.9,
@@ -1572,8 +1558,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0113",
-        "idx": 113,
+        "shot_id": "shot_0112",
+        "idx": 112,
         "start": 654.297,
         "end": 660.198,
         "duration": 5.9,
@@ -1586,8 +1572,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0114",
-        "idx": 114,
+        "shot_id": "shot_0113",
+        "idx": 113,
         "start": 660.198,
         "end": 666.099,
         "duration": 5.9,
@@ -1600,22 +1586,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0115",
-        "idx": 115,
+        "shot_id": "shot_0114",
+        "idx": 114,
         "start": 666.099,
         "end": 672.0,
         "duration": 5.9,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab archive",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "cutaway",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0116",
-        "idx": 116,
+        "shot_id": "shot_0115",
+        "idx": 115,
         "start": 672.0,
         "end": 677.901,
         "duration": 5.9,
@@ -1628,8 +1614,8 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0117",
-        "idx": 117,
+        "shot_id": "shot_0116",
+        "idx": 116,
         "start": 677.901,
         "end": 683.498,
         "duration": 5.6,
@@ -1642,8 +1628,8 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0118",
-        "idx": 118,
+        "shot_id": "shot_0117",
+        "idx": 117,
         "start": 683.498,
         "end": 689.095,
         "duration": 5.6,
@@ -1656,8 +1642,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0119",
-        "idx": 119,
+        "shot_id": "shot_0118",
+        "idx": 118,
         "start": 689.095,
         "end": 694.693,
         "duration": 5.6,
@@ -1670,22 +1656,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0120",
-        "idx": 120,
+        "shot_id": "shot_0119",
+        "idx": 119,
         "start": 694.693,
         "end": 700.29,
         "duration": 5.6,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab hands",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow push",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0121",
-        "idx": 121,
+        "shot_id": "shot_0120",
+        "idx": 120,
         "start": 700.29,
         "end": 705.887,
         "duration": 5.6,
@@ -1698,8 +1684,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0122",
-        "idx": 122,
+        "shot_id": "shot_0121",
+        "idx": 121,
         "start": 705.887,
         "end": 711.484,
         "duration": 5.6,
@@ -1712,8 +1698,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0123",
-        "idx": 123,
+        "shot_id": "shot_0122",
+        "idx": 122,
         "start": 711.484,
         "end": 717.082,
         "duration": 5.6,
@@ -1726,22 +1712,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0124",
-        "idx": 124,
+        "shot_id": "shot_0123",
+        "idx": 123,
         "start": 717.082,
         "end": 722.679,
         "duration": 5.6,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab hands",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "macro detail",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0125",
-        "idx": 125,
+        "shot_id": "shot_0124",
+        "idx": 124,
         "start": 722.679,
         "end": 728.276,
         "duration": 5.6,
@@ -1754,8 +1740,8 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0126",
-        "idx": 126,
+        "shot_id": "shot_0125",
+        "idx": 125,
         "start": 728.276,
         "end": 733.889,
         "duration": 5.61,
@@ -1768,22 +1754,22 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0127",
-        "idx": 127,
+        "shot_id": "shot_0126",
+        "idx": 126,
         "start": 733.889,
         "end": 739.502,
         "duration": 5.61,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab analysis",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "paper montage",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0128",
-        "idx": 128,
+        "shot_id": "shot_0127",
+        "idx": 127,
         "start": 739.502,
         "end": 745.116,
         "duration": 5.61,
@@ -1796,8 +1782,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0129",
-        "idx": 129,
+        "shot_id": "shot_0128",
+        "idx": 128,
         "start": 745.116,
         "end": 750.729,
         "duration": 5.61,
@@ -1810,8 +1796,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0130",
-        "idx": 130,
+        "shot_id": "shot_0129",
+        "idx": 129,
         "start": 750.729,
         "end": 756.342,
         "duration": 5.61,
@@ -1824,22 +1810,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0131",
-        "idx": 131,
+        "shot_id": "shot_0130",
+        "idx": 130,
         "start": 756.342,
         "end": 761.955,
         "duration": 5.61,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab analysis",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "lab pan",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0132",
-        "idx": 132,
+        "shot_id": "shot_0131",
+        "idx": 131,
         "start": 761.955,
         "end": 767.568,
         "duration": 5.61,
@@ -1852,8 +1838,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0133",
-        "idx": 133,
+        "shot_id": "shot_0132",
+        "idx": 132,
         "start": 767.568,
         "end": 773.182,
         "duration": 5.61,
@@ -1866,8 +1852,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0134",
-        "idx": 134,
+        "shot_id": "shot_0133",
+        "idx": 133,
         "start": 773.182,
         "end": 778.795,
         "duration": 5.61,
@@ -1880,22 +1866,22 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0135",
-        "idx": 135,
+        "shot_id": "shot_0134",
+        "idx": 134,
         "start": 778.795,
         "end": 784.408,
         "duration": 5.61,
         "block": "B05",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "lab analysis",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "macro metal",
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0136",
-        "idx": 136,
+        "shot_id": "shot_0135",
+        "idx": 135,
         "start": 784.408,
         "end": 790.021,
         "duration": 5.61,
@@ -1908,8 +1894,8 @@
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0137",
-        "idx": 137,
+        "shot_id": "shot_0136",
+        "idx": 136,
         "start": 790.021,
         "end": 795.634,
         "duration": 5.61,
@@ -1922,8 +1908,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0138",
-        "idx": 138,
+        "shot_id": "shot_0137",
+        "idx": 137,
         "start": 795.634,
         "end": 801.248,
         "duration": 5.61,
@@ -1936,8 +1922,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0139",
-        "idx": 139,
+        "shot_id": "shot_0138",
+        "idx": 138,
         "start": 801.248,
         "end": 806.861,
         "duration": 5.61,
@@ -1950,8 +1936,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0140",
-        "idx": 140,
+        "shot_id": "shot_0139",
+        "idx": 139,
         "start": 806.861,
         "end": 812.474,
         "duration": 5.61,
@@ -1964,8 +1950,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0141",
-        "idx": 141,
+        "shot_id": "shot_0140",
+        "idx": 140,
         "start": 812.474,
         "end": 818.087,
         "duration": 5.61,
@@ -1978,8 +1964,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0142",
-        "idx": 142,
+        "shot_id": "shot_0141",
+        "idx": 141,
         "start": 818.087,
         "end": 823.7,
         "duration": 5.61,
@@ -1992,8 +1978,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0143",
-        "idx": 143,
+        "shot_id": "shot_0142",
+        "idx": 142,
         "start": 823.7,
         "end": 829.314,
         "duration": 5.61,
@@ -2006,8 +1992,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0144",
-        "idx": 144,
+        "shot_id": "shot_0143",
+        "idx": 143,
         "start": 829.314,
         "end": 834.927,
         "duration": 5.61,
@@ -2020,8 +2006,8 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0145",
-        "idx": 145,
+        "shot_id": "shot_0144",
+        "idx": 144,
         "start": 834.927,
         "end": 840.54,
         "duration": 5.61,
@@ -2034,81 +2020,81 @@
         "transition": "soft dissolve"
       },
       {
-        "shot_id": "shot_0146",
-        "idx": 146,
+        "shot_id": "shot_0145",
+        "idx": 145,
         "start": 840.54,
-        "end": 846.729,
-        "duration": 6.19,
+        "end": 846.166,
+        "duration": 5.63,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "underwater ship",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "rov glide",
         "transition": "dissolve"
       },
       {
-        "shot_id": "shot_0147",
-        "idx": 147,
-        "start": 846.729,
-        "end": 852.918,
-        "duration": 6.19,
+        "shot_id": "shot_0146",
+        "idx": 146,
+        "start": 846.166,
+        "end": 851.793,
+        "duration": 5.63,
         "block": "B06",
         "label": "shipwreck hull",
         "status": "missing",
         "media_type": "missing",
         "path": "",
         "camera": "slow track",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0147",
+        "idx": 147,
+        "start": 851.793,
+        "end": 857.419,
+        "duration": 5.63,
+        "block": "B06",
+        "label": "closed hatch",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "dark dissolve",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0148",
         "idx": 148,
-        "start": 852.918,
-        "end": 859.107,
-        "duration": 6.19,
+        "start": 857.419,
+        "end": 863.045,
+        "duration": 5.63,
         "block": "B06",
-        "label": "closed hatch",
+        "label": "interior cabin",
         "status": "missing",
         "media_type": "missing",
         "path": "",
-        "camera": "dark dissolve",
+        "camera": "rov glide",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0149",
         "idx": 149,
-        "start": 859.107,
-        "end": 865.296,
-        "duration": 6.19,
+        "start": 863.045,
+        "end": 868.671,
+        "duration": 5.63,
         "block": "B06",
-        "label": "interior cabin",
+        "label": "underwater ship",
         "status": "missing",
         "media_type": "missing",
         "path": "",
-        "camera": "rov glide",
+        "camera": "slow track",
         "transition": "cut"
       },
       {
         "shot_id": "shot_0150",
         "idx": 150,
-        "start": 865.296,
-        "end": 871.484,
-        "duration": 6.19,
-        "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
-        "camera": "slow track",
-        "transition": "cut"
-      },
-      {
-        "shot_id": "shot_0151",
-        "idx": 151,
-        "start": 871.484,
-        "end": 877.673,
-        "duration": 6.19,
+        "start": 868.671,
+        "end": 874.298,
+        "duration": 5.63,
         "block": "B06",
         "label": "shipwreck hull",
         "status": "missing",
@@ -2118,11 +2104,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0152",
-        "idx": 152,
-        "start": 877.673,
-        "end": 883.862,
-        "duration": 6.19,
+        "shot_id": "shot_0151",
+        "idx": 151,
+        "start": 874.298,
+        "end": 879.924,
+        "duration": 5.63,
         "block": "B06",
         "label": "closed hatch",
         "status": "missing",
@@ -2132,11 +2118,11 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0153",
-        "idx": 153,
-        "start": 883.862,
-        "end": 890.051,
-        "duration": 6.19,
+        "shot_id": "shot_0152",
+        "idx": 152,
+        "start": 879.924,
+        "end": 885.55,
+        "duration": 5.63,
         "block": "B06",
         "label": "interior cabin",
         "status": "missing",
@@ -2146,31 +2132,45 @@
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0154",
-        "idx": 154,
-        "start": 890.051,
-        "end": 896.24,
-        "duration": 6.19,
+        "shot_id": "shot_0153",
+        "idx": 153,
+        "start": 885.55,
+        "end": 891.176,
+        "duration": 5.63,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "underwater ship",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "dark dissolve",
         "transition": "cut"
       },
       {
-        "shot_id": "shot_0155",
-        "idx": 155,
-        "start": 896.24,
-        "end": 902.429,
-        "duration": 6.19,
+        "shot_id": "shot_0154",
+        "idx": 154,
+        "start": 891.176,
+        "end": 896.803,
+        "duration": 5.63,
         "block": "B06",
         "label": "shipwreck hull",
         "status": "missing",
         "media_type": "missing",
         "path": "",
         "camera": "rov glide",
+        "transition": "cut"
+      },
+      {
+        "shot_id": "shot_0155",
+        "idx": 155,
+        "start": 896.803,
+        "end": 902.429,
+        "duration": 5.63,
+        "block": "B06",
+        "label": "closed hatch",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
+        "camera": "slow track",
         "transition": "soft dissolve"
       },
       {
@@ -2180,10 +2180,10 @@
         "end": 908.186,
         "duration": 5.76,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ice wide finale",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pullback",
         "transition": "dissolve"
       },
@@ -2208,10 +2208,10 @@
         "end": 919.7,
         "duration": 5.76,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ship memory",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "snow increase",
         "transition": "cut"
       },
@@ -2236,10 +2236,10 @@
         "end": 931.214,
         "duration": 5.76,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ice wide finale",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "fade out",
         "transition": "cut"
       },
@@ -2264,10 +2264,10 @@
         "end": 942.729,
         "duration": 5.76,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ship memory",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "slow pullback",
         "transition": "cut"
       },
@@ -2292,10 +2292,10 @@
         "end": 954.243,
         "duration": 5.76,
         "block": "B06",
-        "label": "S01_SH01_Arctic_Aerial_Master.jpg",
-        "status": "assigned",
-        "media_type": "image",
-        "path": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images/S01_SH01_Arctic_Aerial_Master.jpg",
+        "label": "ice wide finale",
+        "status": "missing",
+        "media_type": "missing",
+        "path": "",
         "camera": "snow increase",
         "transition": "cut"
       },
@@ -2404,171 +2404,161 @@
       },
       {
         "start": 93.553,
-        "end": 99.15,
+        "end": 99.85,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 99.15,
-        "end": 104.747,
+        "start": 99.85,
+        "end": 106.147,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 104.747,
-        "end": 110.345,
+        "start": 106.147,
+        "end": 112.444,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 110.345,
-        "end": 115.942,
+        "start": 112.444,
+        "end": 118.74,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 115.942,
-        "end": 121.539,
+        "start": 118.74,
+        "end": 125.037,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 121.539,
-        "end": 127.136,
+        "start": 125.037,
+        "end": 131.334,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 127.136,
-        "end": 132.734,
+        "start": 131.334,
+        "end": 137.631,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
-        "start": 132.734,
-        "end": 138.331,
-        "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
-      },
-      {
-        "start": 138.331,
+        "start": 137.631,
         "end": 143.928,
         "text": "Люди на кораблях. Перевести масштаб экспедиции к людям, команде и командованию."
       },
       {
         "start": 143.928,
-        "end": 149.505,
+        "end": 150.302,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 149.505,
-        "end": 155.083,
+        "start": 150.302,
+        "end": 156.676,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 155.083,
-        "end": 160.66,
+        "start": 156.676,
+        "end": 163.05,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 160.66,
-        "end": 166.237,
+        "start": 163.05,
+        "end": 169.424,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 166.237,
-        "end": 171.814,
+        "start": 169.424,
+        "end": 175.798,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 171.814,
-        "end": 177.392,
+        "start": 175.798,
+        "end": 182.172,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
-        "start": 177.392,
-        "end": 182.969,
-        "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
-      },
-      {
-        "start": 182.969,
+        "start": 182.172,
         "end": 188.546,
         "text": "Первые годы молчания. Показать, что тревога возникла поздно и время было потеряно."
       },
       {
         "start": 188.546,
-        "end": 194.123,
+        "end": 194.92,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 194.123,
-        "end": 199.701,
+        "start": 194.92,
+        "end": 201.294,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 199.701,
-        "end": 205.278,
+        "start": 201.294,
+        "end": 207.668,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 205.278,
-        "end": 210.855,
+        "start": 207.668,
+        "end": 214.042,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 210.855,
-        "end": 216.432,
+        "start": 214.042,
+        "end": 220.416,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 216.432,
-        "end": 222.01,
+        "start": 220.416,
+        "end": 226.79,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
-        "start": 222.01,
-        "end": 227.587,
-        "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
-      },
-      {
-        "start": 227.587,
+        "start": 226.79,
         "end": 233.164,
         "text": "Джейн Франклин и поиски. Показать личную настойчивость как двигатель расследования."
       },
       {
         "start": 233.164,
-        "end": 239.721,
+        "end": 239.065,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 239.721,
-        "end": 246.277,
+        "start": 239.065,
+        "end": 244.966,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 246.277,
-        "end": 252.834,
+        "start": 244.966,
+        "end": 250.867,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 252.834,
-        "end": 259.391,
+        "start": 250.867,
+        "end": 256.768,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 259.391,
-        "end": 265.947,
+        "start": 256.768,
+        "end": 262.669,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 265.947,
-        "end": 272.504,
+        "start": 262.669,
+        "end": 268.57,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 272.504,
-        "end": 279.061,
+        "start": 268.57,
+        "end": 274.471,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 279.061,
-        "end": 285.617,
+        "start": 274.471,
+        "end": 280.372,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
       {
-        "start": 285.617,
+        "start": 280.372,
+        "end": 286.273,
+        "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
+      },
+      {
+        "start": 286.273,
         "end": 292.174,
         "text": "Остров Бичи. Остров Бичи меняет понимание: катастрофа ещё не началась, но первые смерти уже есть."
       },
@@ -2624,46 +2614,51 @@
       },
       {
         "start": 348.306,
-        "end": 355.023,
+        "end": 354.351,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 355.023,
-        "end": 361.739,
+        "start": 354.351,
+        "end": 360.396,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 361.739,
-        "end": 368.456,
+        "start": 360.396,
+        "end": 366.441,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 368.456,
-        "end": 375.173,
+        "start": 366.441,
+        "end": 372.486,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 375.173,
-        "end": 381.889,
+        "start": 372.486,
+        "end": 378.531,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 381.889,
-        "end": 388.606,
+        "start": 378.531,
+        "end": 384.576,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 388.606,
-        "end": 395.323,
+        "start": 384.576,
+        "end": 390.621,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 395.323,
-        "end": 402.039,
+        "start": 390.621,
+        "end": 396.666,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
       {
-        "start": 402.039,
+        "start": 396.666,
+        "end": 402.711,
+        "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
+      },
+      {
+        "start": 402.711,
         "end": 408.756,
         "text": "Две записи на одном листе. Показать смену смысла: от благополучной записи к сообщению о смерти и уходе."
       },
@@ -3049,51 +3044,56 @@
       },
       {
         "start": 840.54,
-        "end": 846.729,
+        "end": 846.166,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 846.729,
-        "end": 852.918,
+        "start": 846.166,
+        "end": 851.793,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 852.918,
-        "end": 859.107,
+        "start": 851.793,
+        "end": 857.419,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 859.107,
-        "end": 865.296,
+        "start": 857.419,
+        "end": 863.045,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 865.296,
-        "end": 871.484,
+        "start": 863.045,
+        "end": 868.671,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 871.484,
-        "end": 877.673,
+        "start": 868.671,
+        "end": 874.298,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 877.673,
-        "end": 883.862,
+        "start": 874.298,
+        "end": 879.924,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 883.862,
-        "end": 890.051,
+        "start": 879.924,
+        "end": 885.55,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 890.051,
-        "end": 896.24,
+        "start": 885.55,
+        "end": 891.176,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
       {
-        "start": 896.24,
+        "start": 891.176,
+        "end": 896.803,
+        "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
+      },
+      {
+        "start": 896.803,
         "end": 902.429,
         "text": "Erebus и Terror найдены. Показать находку кораблей как начало нового этапа, а не конец расследования."
       },
@@ -3150,39 +3150,204 @@
     ],
     "QC": [
       {
-        "time": 210.855,
+        "time": 48.647,
+        "level": "warn",
+        "text": "Не найден материал: drone arctic"
+      },
+      {
+        "time": 54.261,
+        "level": "warn",
+        "text": "Не найден материал: hull ice"
+      },
+      {
+        "time": 59.874,
+        "level": "warn",
+        "text": "Не найден материал: ship ice wide"
+      },
+      {
+        "time": 65.487,
+        "level": "warn",
+        "text": "Не найден материал: ship ice video"
+      },
+      {
+        "time": 71.1,
+        "level": "warn",
+        "text": "Не найден материал: drone arctic"
+      },
+      {
+        "time": 76.713,
+        "level": "warn",
+        "text": "Не найден материал: hull ice"
+      },
+      {
+        "time": 82.327,
+        "level": "warn",
+        "text": "Не найден материал: ship ice wide"
+      },
+      {
+        "time": 87.94,
+        "level": "warn",
+        "text": "Не найден материал: ship ice video"
+      },
+      {
+        "time": 93.553,
+        "level": "warn",
+        "text": "Не найден материал: crew captain deck"
+      },
+      {
+        "time": 99.85,
+        "level": "warn",
+        "text": "Не найден материал: crew working"
+      },
+      {
+        "time": 106.147,
+        "level": "warn",
+        "text": "Не найден материал: rigging ice"
+      },
+      {
+        "time": 112.444,
+        "level": "warn",
+        "text": "Не найден материал: deck detail"
+      },
+      {
+        "time": 118.74,
+        "level": "warn",
+        "text": "Не найден материал: crew captain deck"
+      },
+      {
+        "time": 125.037,
+        "level": "warn",
+        "text": "Не найден материал: crew working"
+      },
+      {
+        "time": 131.334,
+        "level": "warn",
+        "text": "Не найден материал: rigging ice"
+      },
+      {
+        "time": 137.631,
+        "level": "warn",
+        "text": "Не найден материал: deck detail"
+      },
+      {
+        "time": 143.928,
+        "level": "warn",
+        "text": "Не найден материал: archive document"
+      },
+      {
+        "time": 150.302,
+        "level": "warn",
+        "text": "Не найден материал: map search"
+      },
+      {
+        "time": 156.676,
+        "level": "warn",
+        "text": "Не найден материал: ship ice wide"
+      },
+      {
+        "time": 163.05,
+        "level": "warn",
+        "text": "Не найден материал: journal close"
+      },
+      {
+        "time": 169.424,
+        "level": "warn",
+        "text": "Не найден материал: archive document"
+      },
+      {
+        "time": 175.798,
+        "level": "warn",
+        "text": "Не найден материал: map search"
+      },
+      {
+        "time": 182.172,
+        "level": "warn",
+        "text": "Не найден материал: ship ice wide"
+      },
+      {
+        "time": 188.546,
         "level": "warn",
         "text": "Не найден материал: archive portrait"
       },
       {
-        "time": 216.432,
+        "time": 194.92,
         "level": "warn",
         "text": "Не найден материал: letter document"
       },
       {
-        "time": 222.01,
+        "time": 201.294,
         "level": "warn",
         "text": "Не найден материал: map routes"
       },
       {
-        "time": 239.721,
+        "time": 207.668,
+        "level": "warn",
+        "text": "Не найден материал: search ship"
+      },
+      {
+        "time": 214.042,
+        "level": "warn",
+        "text": "Не найден материал: archive portrait"
+      },
+      {
+        "time": 220.416,
+        "level": "warn",
+        "text": "Не найден материал: letter document"
+      },
+      {
+        "time": 226.79,
+        "level": "warn",
+        "text": "Не найден материал: map routes"
+      },
+      {
+        "time": 233.164,
+        "level": "warn",
+        "text": "Не найден материал: ice camp grave"
+      },
+      {
+        "time": 239.065,
         "level": "warn",
         "text": "Не найден материал: grave marker"
       },
       {
-        "time": 246.277,
+        "time": 244.966,
         "level": "warn",
         "text": "Не найден материал: can archive"
       },
       {
-        "time": 265.947,
+        "time": 250.867,
+        "level": "warn",
+        "text": "Не найден материал: arctic coast"
+      },
+      {
+        "time": 256.768,
+        "level": "warn",
+        "text": "Не найден материал: ice camp grave"
+      },
+      {
+        "time": 262.669,
         "level": "warn",
         "text": "Не найден материал: grave marker"
       },
       {
-        "time": 272.504,
+        "time": 268.57,
         "level": "warn",
         "text": "Не найден материал: can archive"
+      },
+      {
+        "time": 274.471,
+        "level": "warn",
+        "text": "Не найден материал: arctic coast"
+      },
+      {
+        "time": 280.372,
+        "level": "warn",
+        "text": "Не найден материал: ice camp grave"
+      },
+      {
+        "time": 286.273,
+        "level": "warn",
+        "text": "Не найден материал: grave marker"
       },
       {
         "time": 292.174,
@@ -3240,34 +3405,49 @@
         "text": "Не найден материал: document note map"
       },
       {
-        "time": 355.023,
+        "time": 354.351,
         "level": "warn",
         "text": "Не найден материал: document text"
       },
       {
-        "time": 361.739,
+        "time": 360.396,
         "level": "warn",
         "text": "Не найден материал: map route"
       },
       {
-        "time": 375.173,
+        "time": 366.441,
+        "level": "warn",
+        "text": "Не найден материал: ship trapped"
+      },
+      {
+        "time": 372.486,
         "level": "warn",
         "text": "Не найден материал: document note map"
       },
       {
-        "time": 381.889,
+        "time": 378.531,
         "level": "warn",
         "text": "Не найден материал: document text"
       },
       {
-        "time": 388.606,
+        "time": 384.576,
         "level": "warn",
         "text": "Не найден материал: map route"
       },
       {
-        "time": 402.039,
+        "time": 390.621,
+        "level": "warn",
+        "text": "Не найден материал: ship trapped"
+      },
+      {
+        "time": 396.666,
         "level": "warn",
         "text": "Не найден материал: document note map"
+      },
+      {
+        "time": 402.711,
+        "level": "warn",
+        "text": "Не найден материал: document text"
       },
       {
         "time": 408.756,
@@ -3315,6 +3495,16 @@
         "text": "Не найден материал: people snow trail"
       },
       {
+        "time": 459.131,
+        "level": "warn",
+        "text": "Не найден материал: boat sled ice"
+      },
+      {
+        "time": 465.048,
+        "level": "warn",
+        "text": "Не найден материал: arctic coast"
+      },
+      {
         "time": 470.965,
         "level": "warn",
         "text": "Не найден материал: wood runners"
@@ -3325,6 +3515,16 @@
         "text": "Не найден материал: boat interior"
       },
       {
+        "time": 482.799,
+        "level": "warn",
+        "text": "Не найден материал: boat sled ice"
+      },
+      {
+        "time": 488.716,
+        "level": "warn",
+        "text": "Не найден материал: arctic coast"
+      },
+      {
         "time": 494.633,
         "level": "warn",
         "text": "Не найден материал: wood runners"
@@ -3333,6 +3533,11 @@
         "time": 500.55,
         "level": "warn",
         "text": "Не найден материал: boat interior"
+      },
+      {
+        "time": 506.467,
+        "level": "warn",
+        "text": "Не найден материал: boat sled ice"
       },
       {
         "time": 512.384,
@@ -3380,9 +3585,19 @@
         "text": "Не найден материал: silver spoon"
       },
       {
+        "time": 562.759,
+        "level": "warn",
+        "text": "Не найден материал: bones archive lab"
+      },
+      {
         "time": 568.372,
         "level": "warn",
         "text": "Не найден материал: bone close"
+      },
+      {
+        "time": 573.985,
+        "level": "warn",
+        "text": "Не найден материал: lab table"
       },
       {
         "time": 579.599,
@@ -3390,9 +3605,19 @@
         "text": "Не найден материал: archive folder"
       },
       {
+        "time": 585.212,
+        "level": "warn",
+        "text": "Не найден материал: bones archive lab"
+      },
+      {
         "time": 590.825,
         "level": "warn",
         "text": "Не найден материал: bone close"
+      },
+      {
+        "time": 596.438,
+        "level": "warn",
+        "text": "Не найден материал: lab table"
       },
       {
         "time": 602.051,
@@ -3400,9 +3625,19 @@
         "text": "Не найден материал: archive folder"
       },
       {
+        "time": 607.665,
+        "level": "warn",
+        "text": "Не найден материал: bones archive lab"
+      },
+      {
         "time": 613.278,
         "level": "warn",
         "text": "Не найден материал: bone close"
+      },
+      {
+        "time": 618.891,
+        "level": "warn",
+        "text": "Не найден материал: lab archive"
       },
       {
         "time": 624.792,
@@ -3420,6 +3655,11 @@
         "text": "Не найден материал: wood coffin"
       },
       {
+        "time": 642.495,
+        "level": "warn",
+        "text": "Не найден материал: lab archive"
+      },
+      {
         "time": 648.396,
         "level": "warn",
         "text": "Не найден материал: beechy camp"
@@ -3433,6 +3673,11 @@
         "time": 660.198,
         "level": "warn",
         "text": "Не найден материал: wood coffin"
+      },
+      {
+        "time": 666.099,
+        "level": "warn",
+        "text": "Не найден материал: lab archive"
       },
       {
         "time": 672.0,
@@ -3455,6 +3700,11 @@
         "text": "Не найден материал: clothing detail"
       },
       {
+        "time": 694.693,
+        "level": "warn",
+        "text": "Не найден материал: lab hands"
+      },
+      {
         "time": 700.29,
         "level": "warn",
         "text": "Не найден материал: archive portrait"
@@ -3470,6 +3720,11 @@
         "text": "Не найден материал: clothing detail"
       },
       {
+        "time": 717.082,
+        "level": "warn",
+        "text": "Не найден материал: lab hands"
+      },
+      {
         "time": 722.679,
         "level": "warn",
         "text": "Не найден материал: archive portrait"
@@ -3478,6 +3733,11 @@
         "time": 728.276,
         "level": "warn",
         "text": "Не найден материал: lead can archive"
+      },
+      {
+        "time": 733.889,
+        "level": "warn",
+        "text": "Не найден материал: lab analysis"
       },
       {
         "time": 739.502,
@@ -3495,6 +3755,11 @@
         "text": "Не найден материал: lead can archive"
       },
       {
+        "time": 756.342,
+        "level": "warn",
+        "text": "Не найден материал: lab analysis"
+      },
+      {
         "time": 761.955,
         "level": "warn",
         "text": "Не найден материал: newspaper archive"
@@ -3508,6 +3773,11 @@
         "time": 773.182,
         "level": "warn",
         "text": "Не найден материал: lead can archive"
+      },
+      {
+        "time": 778.795,
+        "level": "warn",
+        "text": "Не найден материал: lab analysis"
       },
       {
         "time": 784.408,
@@ -3560,39 +3830,64 @@
         "text": "Не найден материал: research vessel"
       },
       {
-        "time": 846.729,
+        "time": 840.54,
+        "level": "warn",
+        "text": "Не найден материал: underwater ship"
+      },
+      {
+        "time": 846.166,
         "level": "warn",
         "text": "Не найден материал: shipwreck hull"
       },
       {
-        "time": 852.918,
+        "time": 851.793,
         "level": "warn",
         "text": "Не найден материал: closed hatch"
       },
       {
-        "time": 859.107,
+        "time": 857.419,
         "level": "warn",
         "text": "Не найден материал: interior cabin"
       },
       {
-        "time": 871.484,
+        "time": 863.045,
+        "level": "warn",
+        "text": "Не найден материал: underwater ship"
+      },
+      {
+        "time": 868.671,
         "level": "warn",
         "text": "Не найден материал: shipwreck hull"
       },
       {
-        "time": 877.673,
+        "time": 874.298,
         "level": "warn",
         "text": "Не найден материал: closed hatch"
       },
       {
-        "time": 883.862,
+        "time": 879.924,
         "level": "warn",
         "text": "Не найден материал: interior cabin"
       },
       {
-        "time": 896.24,
+        "time": 885.55,
+        "level": "warn",
+        "text": "Не найден материал: underwater ship"
+      },
+      {
+        "time": 891.176,
         "level": "warn",
         "text": "Не найден материал: shipwreck hull"
+      },
+      {
+        "time": 896.803,
+        "level": "warn",
+        "text": "Не найден материал: closed hatch"
+      },
+      {
+        "time": 902.429,
+        "level": "warn",
+        "text": "Не найден материал: ice wide finale"
       },
       {
         "time": 908.186,
@@ -3600,9 +3895,19 @@
         "text": "Не найден материал: empty horizon"
       },
       {
+        "time": 913.943,
+        "level": "warn",
+        "text": "Не найден материал: ship memory"
+      },
+      {
         "time": 919.7,
         "level": "warn",
         "text": "Не найден материал: atlas logo"
+      },
+      {
+        "time": 925.457,
+        "level": "warn",
+        "text": "Не найден материал: ice wide finale"
       },
       {
         "time": 931.214,
@@ -3610,9 +3915,19 @@
         "text": "Не найден материал: empty horizon"
       },
       {
+        "time": 936.972,
+        "level": "warn",
+        "text": "Не найден материал: ship memory"
+      },
+      {
         "time": 942.729,
         "level": "warn",
         "text": "Не найден материал: atlas logo"
+      },
+      {
+        "time": 948.486,
+        "level": "warn",
+        "text": "Не найден материал: ice wide finale"
       },
       {
         "time": 954.243,
@@ -3623,5 +3938,5 @@
   },
   "duration_sec": 960.0,
   "clip_count": 165,
-  "qc_markers": 94
+  "qc_markers": 157
 }

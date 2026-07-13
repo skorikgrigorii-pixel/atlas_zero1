@@ -143,6 +143,7 @@ class App(tk.Tk):
         row2=tk.Frame(self.main,bg=BG); row2.pack(fill='x',padx=14,pady=6)
         self.card(row2,'CV Runtime', 'готов' if cv else 'нет данных', f"grade {round(cv['g'] or 0,2) if cv else 0} · faces {cv['faces'] or 0 if cv else 0} · scenes {cv['scenes'] or 0 if cv else 0}").pack(side='left',fill='x',expand=True,padx=4)
         self.card(row2,'Последний Run', str(last['id']) if last else '—', f"{last['progress'] if last else 0}% · {last['current_step'] if last else 'idle'}").pack(side='left',fill='x',expand=True,padx=4)
+        self.card(row2,'Director AI', self._director_ai_summary()[0], self._director_ai_summary()[1]).pack(side='left',fill='x',expand=True,padx=4)
         self.card(row2,'Live API', self._api_summary()[0], self._api_summary()[1]).pack(side='left',fill='x',expand=True,padx=4)
         graph=tk.Frame(self.main,bg=CARD,highlightbackground='#24364e',highlightthickness=1); graph.pack(fill='both',expand=True,padx=14,pady=8)
         tk.Label(graph,text='ГРАФ КОНВЕЙЕРА',bg=CARD,fg=TEXT,font=('Segoe UI',9,'bold')).pack(anchor='w',padx=10,pady=(8,4))
@@ -154,6 +155,15 @@ class App(tk.Tk):
             if not rows: return ('не настроен','0 сервисов')
             ok=sum(1 for r in rows if r['status'] in ('configured','connected'))
             return (f'{ok}/{len(rows)}', 'configured/connected')
+        except Exception:
+            return ('—','нет данных')
+
+    def _director_ai_summary(self):
+        try:
+            missing=self.db.one("SELECT COUNT(*) c FROM shots WHERE project_id=? AND status='missing'", ('franklin',))['c']
+            tasks=self.db.one('SELECT COUNT(*) c FROM director_tasks WHERE project_id=?', ('franklin',))['c']
+            issues=self.db.one('SELECT COUNT(*) c FROM director_issues WHERE project_id=?', ('franklin',))['c']
+            return (f'{tasks} задач · {missing} missing', f'{issues} проблем для исправления')
         except Exception:
             return ('—','нет данных')
 

@@ -2,26 +2,26 @@
   {
     "artifact": "монтажный_лист.csv",
     "exists": true,
-    "size_bytes": 43029,
+    "size_bytes": 41153,
     "comment": "OK"
   },
   {
     "artifact": "timeline_enterprise.json",
     "exists": true,
-    "size_bytes": 138042,
+    "size_bytes": 126173,
     "comment": "OK"
   },
   {
     "artifact": "timeline_viewer.html",
     "exists": true,
-    "size_bytes": 84744,
+    "size_bytes": 77480,
     "comment": "OK"
   },
   {
     "artifact": "capcut_пакет.csv",
-    "exists": true,
-    "size_bytes": 49238,
-    "comment": "OK"
+    "exists": false,
+    "size_bytes": 0,
+    "comment": "Нужно пересоздать экспорт"
   },
   {
     "artifact": "capcut_guide.md",
@@ -38,37 +38,37 @@
   {
     "artifact": "визуальный_анализ.csv",
     "exists": true,
-    "size_bytes": 7139,
+    "size_bytes": 6374,
     "comment": "OK"
   },
   {
     "artifact": "решения_режиссера.json",
     "exists": true,
-    "size_bytes": 82950,
+    "size_bytes": 91037,
     "comment": "OK"
   },
   {
     "artifact": "franklin_acceptance.html",
     "exists": true,
-    "size_bytes": 2232,
+    "size_bytes": 2239,
     "comment": "OK"
   },
   {
     "artifact": "preflight_report.html",
     "exists": true,
-    "size_bytes": 3707,
+    "size_bytes": 4081,
     "comment": "OK"
   },
   {
     "artifact": "command_center.html",
     "exists": true,
-    "size_bytes": 2663,
+    "size_bytes": 2673,
     "comment": "OK"
   },
   {
     "artifact": "release_center.html",
     "exists": true,
-    "size_bytes": 8905,
+    "size_bytes": 8734,
     "comment": "OK"
   }
 ]

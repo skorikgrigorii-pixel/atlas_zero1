@@ -1,17 +1,17 @@
 {
   "project_id": "franklin",
-  "score": 93.75,
+  "score": 81.25,
   "local_ready": true,
   "autonomous_ready": false,
   "critical_failed": 0,
-  "major_failed": 1,
+  "major_failed": 3,
   "checks": [
     {
       "key": "python",
       "title": "Python Runtime",
       "passed": true,
       "level": "critical",
-      "detail": "CPython 3.13.5",
+      "detail": "CPython 3.14.6",
       "fix": "Install Python 3.10+ and run start_os.bat again."
     },
     {
@@ -19,7 +19,7 @@
       "title": "Project Brain SQLite",
       "passed": true,
       "level": "critical",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/atlas_zero_enterprise.sqlite3",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\atlas_zero_enterprise.sqlite3",
       "fix": "Run the production pipeline once to initialize the database."
     },
     {
@@ -27,7 +27,7 @@
       "title": "Franklin project folder",
       "passed": true,
       "level": "critical",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin",
       "fix": "Restore workspace/projects/franklin."
     },
     {
@@ -35,7 +35,7 @@
       "title": "Project folder 01_Audio",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/01_Audio",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\01_Audio",
       "fix": "Create folder 01_Audio."
     },
     {
@@ -43,7 +43,7 @@
       "title": "Project folder 02_Images",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/02_Images",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\02_Images",
       "fix": "Create folder 02_Images."
     },
     {
@@ -51,7 +51,7 @@
       "title": "Project folder 03_Video",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/03_Video",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\03_Video",
       "fix": "Create folder 03_Video."
     },
     {
@@ -59,7 +59,7 @@
       "title": "Project folder 04_CapCut",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/04_CapCut",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\04_CapCut",
       "fix": "Create folder 04_CapCut."
     },
     {
@@ -67,7 +67,7 @@
       "title": "Project folder 05_Music",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/05_Music",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\05_Music",
       "fix": "Create folder 05_Music."
     },
     {
@@ -75,7 +75,7 @@
       "title": "Project folder 06_Export",
       "passed": true,
       "level": "major",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/projects/franklin/06_Export",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\franklin\\06_Export",
       "fix": "Create folder 06_Export."
     },
     {
@@ -83,23 +83,23 @@
       "title": "Export folder writable",
       "passed": true,
       "level": "critical",
-      "detail": "/mnt/data/ATLAS_ZERO_RC1_ALPHA_2_4/workspace/exports/franklin",
+      "detail": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\exports\\franklin",
       "fix": "Check folder permissions."
     },
     {
       "key": "ffmpeg",
       "title": "FFmpeg installed",
-      "passed": true,
+      "passed": false,
       "level": "major",
-      "detail": "/usr/bin/ffmpeg",
+      "detail": "not found",
       "fix": "Install FFmpeg and add it to PATH for media probing and future renders."
     },
     {
       "key": "ffprobe",
       "title": "FFprobe installed",
-      "passed": true,
+      "passed": false,
       "level": "major",
-      "detail": "/usr/bin/ffprobe",
+      "detail": "not found",
       "fix": "Install FFmpeg package including ffprobe."
     },
     {
@@ -123,7 +123,7 @@
       "title": "Franklin local coverage",
       "passed": true,
       "level": "major",
-      "detail": "71/165 assigned",
+      "detail": "8/165 assigned",
       "fix": "Add missing assets or run generation queue."
     },
     {
@@ -217,6 +217,8 @@
     }
   ],
   "next_actions": [
+    "Install FFmpeg and add it to PATH for media probing and future renders.",
+    "Install FFmpeg package including ffprobe.",
     "Configure at least OpenAI, Leonardo, ElevenLabs/YouTube credentials for RC1 live mode."
   ]
 }

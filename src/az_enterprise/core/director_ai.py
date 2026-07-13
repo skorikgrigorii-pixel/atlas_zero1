@@ -169,14 +169,12 @@ class DirectorAI:
         assigned = 0
         missing = 0
         self.usage.clear()
-        used_asset_ids: set[str] = set()
         for shot in shots:
-            available_assets = [a for a in assets if a['id'] not in used_asset_ids]
+            available_assets = assets
             ranked = sorted(((self._score(shot,a), a) for a in available_assets), key=lambda x: x[0], reverse=True)
             if ranked and ranked[0][0] >= 0.62:
                 score, asset = ranked[0]
                 self.usage[asset['id']] += 1
-                used_asset_ids.add(asset['id'])
                 reason = f"Выбран материал '{asset['filename']}' для потребности '{shot['visual_need']}'. Совпадение по тегам/эмоции, качество={asset['quality']}. Использований={self.usage[asset['id']]}"
                 alternatives = [r[1]['filename'] for r in ranked[1:4]]
                 self.db.execute('UPDATE shots SET assigned_asset_id=?, status=? WHERE id=?', (asset['id'], 'assigned', shot['id']))

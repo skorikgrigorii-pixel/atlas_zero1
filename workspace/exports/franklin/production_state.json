@@ -2,12 +2,12 @@
   "project_id": "franklin",
   "assets": 13,
   "shots": 165,
-  "assigned": 71,
-  "missing": 94,
-  "coverage_pct": 43.0,
+  "assigned": 8,
+  "missing": 157,
+  "coverage_pct": 4.8,
   "visual_profiles": 8,
-  "api_jobs_ready": 660,
-  "qc_readiness": 62.93,
+  "api_jobs_ready": 935,
+  "qc_readiness": 44.6,
   "blockers": [
     {
       "type": "release_gate",
@@ -36,7 +36,7 @@
     {
       "type": "release_gate",
       "title": "Дефицит кадров допустимый",
-      "score": 8.8,
+      "score": 0.0,
       "comment": "Требует доработки"
     },
     {
@@ -54,8 +54,8 @@
     {
       "type": "coverage",
       "title": "Высокий дефицит видеоряда",
-      "score": 43.0,
-      "comment": "Нужно закрыть 94 шотов."
+      "score": 4.8,
+      "comment": "Нужно закрыть 157 шотов."
     },
     {
       "type": "live_api",
@@ -71,7 +71,7 @@
     }
   ],
   "next_actions": [
-    "Проверить очередь генерации: 660 заданий готовы к dry-run/live.",
+    "Проверить очередь генерации: 935 заданий готовы к dry-run/live.",
     "Закрыть блокер: Live API разрешены.",
     "Закрыть блокер: API Gateway готов.",
     "Закрыть блокер: Интеграции настроены.",
