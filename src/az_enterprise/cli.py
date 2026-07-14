@@ -4,6 +4,8 @@ from .core.database import Database
 from .core.workflow import WorkflowEngine
 from .core.pipeline_runtime import PipelineRunManager
 from .core.render_engine_rc1 import RenderEngineRC1
+from .core.render_engine_rc2 import RenderEngineRC2
+from .core.project_config_rc2 import ProjectConfigRC2
 from .core.production_director import ProductionDirector
 from .core.production_visual_manager import ProductionVisualManager
 from .core.visual_asset_registrar import VisualAssetRegistrar
@@ -12,8 +14,17 @@ from .core.visual_asset_registrar import VisualAssetRegistrar
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command')
-    render_parser = subparsers.add_parser('render-rc1')
+    render_parser = subparsers.add_parser(
+        'render-rc1',
+        help='Deprecated compatibility render command.',
+    )
     render_parser.add_argument('project_id')
+
+    render_rc2_parser = subparsers.add_parser(
+        'render-rc2',
+        help='Canonical ATLAS ZERO RC2 production render.',
+    )
+    render_rc2_parser.add_argument('project_id')
     production_parser = subparsers.add_parser('production-status')
     production_parser.add_argument('project_id')
     production_parser.add_argument('--days', type=int, default=4)
@@ -27,12 +38,61 @@ def main():
     parser.add_argument('--json', action='store_true')
     args = parser.parse_args()
 
+    if args.command == 'render-rc2':
+        config = ProjectConfigRC2(
+            project_id=args.project_id,
+        )
+
+        def progress(payload):
+            if not args.json:
+                stage = payload.get("stage", "RENDER")
+                details = {
+                    key: value
+                    for key, value in payload.items()
+                    if key != "stage"
+                }
+
+                if details:
+                    print(
+                        f"[{stage}] "
+                        + json.dumps(
+                            details,
+                            ensure_ascii=False,
+                        )
+                    )
+                else:
+                    print(f"[{stage}]")
+
+        result = RenderEngineRC2(
+            config,
+            progress=progress,
+        ).run()
+
+        if args.json:
+            print(
+                json.dumps(
+                    result,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+        else:
+            print('ATLAS ZERO RC2 Render Engine')
+            print('Project:', args.project_id)
+            print('State:', result.get('state'))
+            print('Authority:', result.get('authority'))
+            print('Backend:', result.get('backend'))
+            print('Output MP4:', result.get('output'))
+
+        return
+
     if args.command == 'render-rc1':
         result = RenderEngineRC1(project_id=args.project_id).run()
         if args.json:
             print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
-            print('ATLAS ZERO Enterprise RC1 Render Engine')
+            print('ATLAS ZERO Legacy RC1 Render Backend')
+            print('Warning: use render-rc2 for canonical production runs.')
             print('Project:', args.project_id)
             print('State:', result.get('state'))
             print('Output MP4:', result.get('output_mp4'))

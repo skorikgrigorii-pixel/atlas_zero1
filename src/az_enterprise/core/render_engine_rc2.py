@@ -62,8 +62,28 @@ class RenderEngineRC2:
 
     def run(self) -> dict[str, Any]:
         self._emit("RENDER_START")
-        legacy = RenderEngineRC1(project_id=self.config.project_id)
-        report = legacy.run()
+        # RenderEngineRC1 is an internal FFmpeg backend only.
+        # RenderEngineRC2 owns the canonical production render stage.
+        backend = RenderEngineRC1(
+            project_id=self.config.project_id,
+            root_dir=self.config.root_dir,
+        )
+
+        self._emit(
+            "BACKEND_START",
+            backend="RenderEngineRC1",
+        )
+
+        report = backend.run()
+
+        self._emit(
+            "BACKEND_COMPLETE",
+            backend="RenderEngineRC1",
+            state=report.get("state"),
+            clips_total=report.get("clips_total"),
+            clips_renderable=report.get("clips_renderable"),
+            clips_skipped=report.get("clips_skipped"),
+        )
         if report.get("state") != "RENDERED":
             raise RuntimeError(str(report.get("error") or report))
 
@@ -88,9 +108,14 @@ class RenderEngineRC2:
 
         return {
             "state": "RENDERED_VERIFIED",
+            "project_id": self.config.project_id,
             "output": str(destination),
             "source": str(source),
             "source_probe": source_probe,
             "media_probe": final_probe,
+            "authority": "RenderEngineRC2",
+            "backend": "RenderEngineRC1",
+            "backend_report": report,
+            # Compatibility key retained during RC2.5 migration.
             "legacy_report": report,
         }

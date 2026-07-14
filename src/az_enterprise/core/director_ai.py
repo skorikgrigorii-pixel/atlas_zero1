@@ -5,6 +5,7 @@ from typing import Any
 
 from .database import Database
 from .events import EventBus
+from .assignment_policy_rc2 import AssignmentPolicyRC2
 from .story_engine_runtime import StoryEngineRuntime
 from .director_ai_runtime import DirectorAIRuntime
 
@@ -44,14 +45,35 @@ NEXT_STAGE_RULES = {
 
 
 class DirectorAI:
-    def __init__(self, db: Database, project_id='franklin'):
+    def __init__(
+        self,
+        db: Database,
+        project_id: str = "franklin",
+        *,
+        enable_legacy_state_authority: bool = True,
+    ):
         self.db = db
         self.project_id = project_id
         self.bus = EventBus(db, project_id)
         self.usage = defaultdict(int)
-        self._ensure_state_schema()
+        self.enable_legacy_state_authority = (
+            enable_legacy_state_authority
+        )
+
+        # Legacy DirectorAI state remains available only for
+        # backward compatibility. RC2 must disable this authority.
+        if self.enable_legacy_state_authority:
+            self._ensure_state_schema()
+            self._initialize_project_state()
+
         self._ensure_task_schema()
-        self._initialize_project_state()
+
+    def _require_legacy_state_authority(self) -> None:
+        if not self.enable_legacy_state_authority:
+            raise RuntimeError(
+                "DirectorAI state authority is disabled in RC2. "
+                "Use ProductionStateStoreRC2 through DirectorCoreRC2."
+            )
 
     def _ensure_state_schema(self) -> None:
         self.db.conn.executescript('''
@@ -143,60 +165,125 @@ class DirectorAI:
             self._persist_state('NEW', 'Project initialized', 'Director AI initialized the production state model.')
 
     def _score(self, shot, asset):
-        need = (shot['visual_need'] or '').lower().split()
-        raw_tags = asset['tags'] or '[]'
-        try:
-            tags = json.loads(raw_tags)
-        except (TypeError, ValueError):
-            tags = [item.strip("'\"") for item in str(raw_tags).strip('[]').split(',') if item.strip()]
-        if not isinstance(tags, list):
-            tags = [str(tags)]
-        hay = ' '.join([asset['filename'].lower(), asset['category'] or '', asset['emotion'] or '', ' '.join(tags)])
-        match = sum(1 for w in need if w in hay)
-        score = float(asset['quality'] or 0) + match * 0.18
-        if shot['emotion'] and shot['emotion'] == asset['emotion']:
-            score += 0.12
-        if self.usage[asset['id']] >= 4:
-            score -= 0.4
-        if asset['duplicate_of']:
-            score -= 0.25
-        return round(max(score, 0), 4)
+        """Compatibility wrapper for legacy callers."""
+        policy = AssignmentPolicyRC2(
+            self.db,
+            self.project_id,
+        )
+        policy.usage = self.usage
+        return policy.score(shot, asset)
 
     def assign_assets(self) -> dict:
-        self.db.execute('DELETE FROM director_decisions WHERE project_id=?', (self.project_id,))
-        shots = self.db.rows('SELECT * FROM shots WHERE project_id=? ORDER BY idx', (self.project_id,))
-        assets = self.db.rows("SELECT * FROM assets WHERE project_id=? AND media_type IN ('image','video')", (self.project_id,))
-        assigned = 0
-        missing = 0
-        self.usage.clear()
-        for shot in shots:
-            available_assets = assets
-            ranked = sorted(((self._score(shot,a), a) for a in available_assets), key=lambda x: x[0], reverse=True)
-            if ranked and ranked[0][0] >= 0.62:
-                score, asset = ranked[0]
-                self.usage[asset['id']] += 1
-                reason = f"Выбран материал '{asset['filename']}' для потребности '{shot['visual_need']}'. Совпадение по тегам/эмоции, качество={asset['quality']}. Использований={self.usage[asset['id']]}"
-                alternatives = [r[1]['filename'] for r in ranked[1:4]]
-                self.db.execute('UPDATE shots SET assigned_asset_id=?, status=? WHERE id=?', (asset['id'], 'assigned', shot['id']))
-                self.db.execute('INSERT INTO director_decisions(project_id,shot_id,asset_id,score,reason,alternatives) VALUES(?,?,?,?,?,?)',
-                                (self.project_id, shot['id'], asset['id'], score, reason, json.dumps(alternatives, ensure_ascii=False)))
-                assigned += 1
-            else:
-                prompt = f"Нужен материал: {shot['visual_need']}. История: {shot['story_goal']}. Эмоция: {shot['emotion']}. Стиль: cold blue cinematic historical documentary."
-                self.db.execute('UPDATE shots SET assigned_asset_id=NULL, status=? WHERE id=?', ('missing', shot['id']))
-                self.db.execute('INSERT INTO director_decisions(project_id,shot_id,asset_id,score,reason,alternatives) VALUES(?,?,?,?,?,?)',
-                                (self.project_id, shot['id'], None, 0, 'Подходящий материал не найден. Создать через генерацию.', prompt))
-                missing += 1
+        """Legacy compatibility API.
+
+        AssignmentPolicyRC2 owns all scoring and assignment writes.
+        """
+        policy_result = AssignmentPolicyRC2(
+            self.db,
+            self.project_id,
+        ).run()
 
         analysis = self._analyze_completeness()
-        task_count = self.db.one('SELECT COUNT(*) c FROM director_tasks WHERE project_id=?', (self.project_id,))['c']
-        self.bus.emit('DIRECTOR_DECISIONS_CREATED', {'assigned': assigned, 'missing': missing, 'tasks': task_count})
+
+        task_row = self.db.one(
+            """
+            SELECT COUNT(*) AS count
+            FROM director_tasks
+            WHERE project_id=?
+            """,
+            (self.project_id,),
+        )
+
+        task_count = int(
+            task_row["count"] if task_row else 0
+        )
+
+        # Preserve the legacy DirectorAI API contract:
+        # every unresolved shot must produce an actionable task.
+        # AssignmentPolicyRC2 still remains the sole owner of
+        # scoring and assigned/missing database writes.
+        if policy_result.get("missing", 0) > 0 and task_count == 0:
+            missing_shots = self.db.rows(
+                """
+                SELECT
+                    id,
+                    visual_need,
+                    story_goal,
+                    emotion
+                FROM shots
+                WHERE project_id=?
+                  AND status='missing'
+                ORDER BY idx
+                """,
+                (self.project_id,),
+            )
+
+            fallback_tasks = []
+
+            for shot in missing_shots:
+                shot_id = str(shot["id"])
+                visual_need = str(
+                    shot["visual_need"] or "visual material"
+                )
+                story_goal = str(shot["story_goal"] or "")
+                emotion = str(shot["emotion"] or "")
+
+                fallback_tasks.append({
+                    "task_uid": (
+                        f"missing_visual:{self.project_id}:{shot_id}"
+                    ),
+                    "task_type": "MISSING_VISUAL",
+                    "priority": 2,
+                    "status": "queued",
+                    "service": "leonardo",
+                    "scene_id": None,
+                    "shot_id": shot_id,
+                    "asset_id": None,
+                    "title": (
+                        f"Generate missing visual for {shot_id}"
+                    ),
+                    "prompt": (
+                        f"Create visual material for: {visual_need}. "
+                        f"Story goal: {story_goal}. "
+                        f"Emotion: {emotion}. "
+                        "Style: cold blue cinematic historical "
+                        "documentary."
+                    ),
+                    "payload": {
+                        "project_id": self.project_id,
+                        "shot_id": shot_id,
+                        "visual_need": visual_need,
+                        "story_goal": story_goal,
+                        "emotion": emotion,
+                        "source": (
+                            "DirectorAI.assign_assets compatibility"
+                        ),
+                    },
+                })
+
+            self._materialize_runtime_tasks({
+                "tasks": fallback_tasks,
+            })
+
+            task_row = self.db.one(
+                """
+                SELECT COUNT(*) AS count
+                FROM director_tasks
+                WHERE project_id=?
+                """,
+                (self.project_id,),
+            )
+
+            task_count = int(
+                task_row["count"] if task_row else 0
+            )
+
         return {
-            'assigned': assigned,
-            'missing': missing,
-            'tasks_generated': task_count,
-            'quality': analysis.get('quality', {}),
-            'analysis': analysis,
+            **policy_result,
+            "tasks_generated": task_count,
+            "quality": analysis.get("quality", {}),
+            "analysis": analysis,
+            "compatibility_api": "DirectorAI.assign_assets",
         }
 
     def _analyze_completeness(self) -> dict:
@@ -232,6 +319,7 @@ class DirectorAI:
                             (self.project_id, task.get('priority', 3), f"Director AI: {task.get('title')}", task.get('status', 'queued'), task.get('service') or 'operator', task.get('prompt') or json.dumps(task.get('payload') or {}, ensure_ascii=False)))
 
     def transition_project_state(self, new_stage: str, reason: str = '') -> dict[str, Any]:
+        self._require_legacy_state_authority()
         current_stage = self.get_project_state()['current_stage']
         if new_stage not in PRODUCTION_STAGES:
             raise ValueError(f"Unknown state '{new_stage}'.")
@@ -250,6 +338,7 @@ class DirectorAI:
         return self.get_project_state()
 
     def record_module_failure(self, module_name: str, error_message: str) -> dict[str, Any]:
+        self._require_legacy_state_authority()
         self.db.execute('INSERT INTO director_project_modules(project_id,module_name,status,error_message) VALUES(?,?,?,?)',
                         (self.project_id, module_name, 'failed', error_message))
         current_stage = self.get_project_state()['current_stage']
@@ -259,6 +348,7 @@ class DirectorAI:
         return self.get_project_state()
 
     def get_project_state(self) -> dict[str, Any]:
+        self._require_legacy_state_authority()
         self._initialize_project_state()
         row = self.db.one('SELECT current_stage, completion_percent, overall_status, next_required_action, blocking_reason, estimated_completion, state_details FROM projects WHERE id=?', (self.project_id,))
         current_stage = (row['current_stage'] if row and row['current_stage'] else 'NEW')
@@ -286,12 +376,14 @@ class DirectorAI:
         return state
 
     def evaluate_project_readiness(self) -> dict[str, Any]:
+        self._require_legacy_state_authority()
         state = self.get_project_state()
         if state['overall_status'] == 'FAILED':
             state['next_required_action'] = state['next_required_action'] or 'Resolve blocking errors and restart the workflow.'
         return state
 
     def _persist_state(self, stage: str, action: str, details: str, reason: str = '') -> None:
+        self._require_legacy_state_authority()
         completion_percent = self._completion_percent_for_stage(stage)
         overall_status = self._derive_overall_status(stage, self._blocking_errors(), completion_percent)
         next_required_action = self._next_required_action(stage, self._blocking_errors())

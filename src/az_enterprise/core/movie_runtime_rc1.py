@@ -15,6 +15,7 @@ from .paths import EXPORTS, MEDIA_DIRS, PROJECTS
 from .story_engine import StoryEngine
 from .story_engine_runtime import StoryEngineRuntime
 from .timeline_studio import TimelineStudio
+from .timeline_engine_rc2 import TimelineEngineRC2
 
 
 AUDIO_EXTENSIONS = {".mp3", ".wav", ".m4a", ".aac", ".flac", ".ogg"}
@@ -278,69 +279,20 @@ class MovieRuntimeRC1:
         }
 
     def _build_timeline(self) -> dict[str, Any]:
-        TimelineStudio(self.db, self.project_id).export_timeline_package()
-        rows = self.db.rows(
-            """SELECT s.id,s.idx,s.start_sec,s.end_sec,s.block,s.story_goal,s.visual_need,s.emotion,
-                      s.status,s.transition,s.camera_motion,a.filename asset,a.path asset_path,a.media_type media_type
-               FROM shots s
-               LEFT JOIN assets a ON a.id=s.assigned_asset_id
-               WHERE s.project_id=? ORDER BY s.idx""",
-            (self.project_id,),
+        """Legacy compatibility wrapper.
+
+        TimelineEngineRC2 owns canonical timeline creation.
+        """
+        from .project_config_rc2 import ProjectConfigRC2
+
+        config = ProjectConfigRC2(
+            project_id=self.project_id,
         )
-        timeline_rows = []
-        for row in rows:
-            timeline_rows.append(
-                {
-                    "shot_id": row["id"],
-                    "shot_index": row["idx"],
-                    "start_sec": row["start_sec"],
-                    "end_sec": row["end_sec"],
-                    "duration_sec": round(float(row["end_sec"]) - float(row["start_sec"]), 3),
-                    "block": row["block"],
-                    "story_goal": row["story_goal"],
-                    "visual_need": row["visual_need"],
-                    "emotion": row["emotion"],
-                    "status": row["status"],
-                    "transition": row["transition"],
-                    "camera_motion": row["camera_motion"],
-                    "asset_name": row["asset"],
-                    "asset_path": row["asset_path"],
-                    "media_type": row["media_type"],
-                }
-            )
-        timeline_json = self.runtime_dir / "timeline.json"
-        timeline_csv = self.runtime_dir / "timeline.csv"
-        timeline_json.write_text(json.dumps(timeline_rows, ensure_ascii=False, indent=2), encoding="utf-8")
-        with timeline_csv.open("w", newline="", encoding="utf-8-sig") as handle:
-            writer = csv.writer(handle)
-            writer.writerow([
-                "shot_index",
-                "start_sec",
-                "end_sec",
-                "duration_sec",
-                "media_type",
-                "asset_name",
-                "asset_path",
-                "story_goal",
-                "visual_need",
-            ])
-            for row in timeline_rows:
-                writer.writerow([
-                    row["shot_index"],
-                    row["start_sec"],
-                    row["end_sec"],
-                    row["duration_sec"],
-                    row["media_type"],
-                    row["asset_name"],
-                    row["asset_path"],
-                    row["story_goal"],
-                    row["visual_need"],
-                ])
-        return {
-            "items": len(timeline_rows),
-            "artifact_json": str(timeline_json),
-            "artifact_csv": str(timeline_csv),
-        }
+
+        return TimelineEngineRC2(
+            self.db,
+            config,
+        ).run()
 
     def _synchronize_audio(self, voice: dict[str, Any]) -> dict[str, Any]:
         shots = self.db.rows(
