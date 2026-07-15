@@ -5,8 +5,8 @@ from .database import Database
 from .paths import FRANKLIN, MEDIA_DIRS
 from .events import EventBus
 
-IMAGE_EXT = {'.jpg', '.jpeg', '.png', '.webp'}
-VIDEO_EXT = {'.mp4', '.mov', '.mkv', '.avi'}
+IMAGE_EXT = {'.jpg', '.jpeg', '.png', '.webp', '.bmp', '.tif', '.tiff', '.heic'}
+VIDEO_EXT = {'.mp4', '.mov', '.mkv', '.avi', '.m4v', '.webm', '.mts', '.m2ts'}
 AUDIO_EXT = {'.mp3', '.wav', '.m4a', '.aac'}
 
 KEYWORDS = {
@@ -62,14 +62,44 @@ def infer_tags(name: str) -> tuple[str, list[str], str, float]:
     return category, sorted(set(tags)), emotion, round(min(quality, .98), 3)
 
 class AssetIntelligence:
-    def __init__(self, db: Database, project_id='franklin', root: Path = FRANKLIN):
+    def __init__(
+        self,
+        db: Database,
+        project_id: str = "franklin",
+        root: Path = FRANKLIN,
+        direct_root_scan: bool = False,
+    ):
         self.db = db
         self.project_id = project_id
-        self.root = root
+        self.root = Path(root)
+        self.direct_root_scan = direct_root_scan
         self.bus = EventBus(db, project_id)
 
+    def _media_folders(self) -> list[Path]:
+        if self.direct_root_scan:
+            return [self.root]
+
+        return [
+            self.root / rel
+            for rel in MEDIA_DIRS.values()
+        ]
+
     def scan(self) -> dict:
-        self.db.execute("INSERT OR IGNORE INTO projects(id,title,duration_sec) VALUES(?,?,?)", (self.project_id, 'Franklin', 960))
+        self.db.execute(
+            """
+            INSERT OR IGNORE INTO projects(
+                id,
+                title,
+                duration_sec
+            )
+            VALUES(?,?,?)
+            """,
+            (
+                self.project_id,
+                self.project_id,
+                0,
+            ),
+        )
         # Alpha 2.0.2: rebuild asset catalog on every scan to avoid stale paths after
         # Windows-safe filename shortening or moving the project folder.
         try:
@@ -78,11 +108,14 @@ class AssetIntelligence:
             pass
         found = []
         seen_hashes: dict[str,str] = {}
-        for rel in MEDIA_DIRS.values():
-            folder = self.root / rel
+        scanned_bytes = 0
+        scanned_files = 0
+
+        for folder in self._media_folders():
             if not folder.exists():
                 continue
-            for p in folder.rglob('*'):
+
+            for p in folder.rglob("*"):
                 if not p.is_file():
                     continue
                 mt = media_type(p)
@@ -90,17 +123,100 @@ class AssetIntelligence:
                     continue
                 digest = sha256(p)
                 category, tags, emotion, quality = infer_tags(p.name)
-                asset_id = digest[:16]
+
+                # Asset IDs must remain unique across projects.
+                project_digest = hashlib.sha256(
+                    f"{self.project_id}:{digest}".encode("utf-8")
+                ).hexdigest()
+                asset_id = project_digest[:24]
+
+                scanned_files += 1
+                try:
+                    scanned_bytes += p.stat().st_size
+                except OSError:
+                    pass
+
+                if (
+                    scanned_files == 1
+                    or scanned_files % 10 == 0
+                ):
+                    print(
+                        f"[ASSETS] indexed={scanned_files} "
+                        f"size_gb={scanned_bytes / 1024**3:.3f} "
+                        f"file={p.name}"
+                    )
                 duplicate_of = seen_hashes.get(digest)
                 if not duplicate_of:
                     seen_hashes[digest] = asset_id
-                self.db.execute("""
-                    INSERT OR REPLACE INTO assets(id,project_id,path,filename,media_type,sha256,category,tags,emotion,quality,duplicate_of)
+                self.db.execute(
+                    """
+                    INSERT INTO assets(
+                        id,
+                        project_id,
+                        path,
+                        filename,
+                        media_type,
+                        sha256,
+                        category,
+                        tags,
+                        emotion,
+                        quality,
+                        duplicate_of
+                    )
                     VALUES(?,?,?,?,?,?,?,?,?,?,?)
-                """, (asset_id, self.project_id, str(p), p.name, mt, digest, category, json.dumps(tags, ensure_ascii=False), emotion, quality, duplicate_of))
+                    ON CONFLICT(id) DO UPDATE SET
+                        project_id=excluded.project_id,
+                        path=excluded.path,
+                        filename=excluded.filename,
+                        media_type=excluded.media_type,
+                        sha256=excluded.sha256,
+                        category=excluded.category,
+                        tags=excluded.tags,
+                        emotion=excluded.emotion,
+                        quality=excluded.quality,
+                        duplicate_of=excluded.duplicate_of
+                    """,
+                    (
+                        asset_id,
+                        self.project_id,
+                        str(p),
+                        p.name,
+                        mt,
+                        digest,
+                        category,
+                        json.dumps(
+                            tags,
+                            ensure_ascii=False,
+                        ),
+                        emotion,
+                        quality,
+                        duplicate_of,
+                    ),
+                )
                 found.append(asset_id)
-        self.bus.emit('ASSETS_SCANNED', {'count': len(found)})
-        return {'assets': len(found), 'duplicates': len([x for x in found if self.db.one('SELECT duplicate_of FROM assets WHERE id=?',(x,))['duplicate_of']])}
+        duplicate_count = int(
+            self.db.one(
+                """
+                SELECT COUNT(*) AS count
+                FROM assets
+                WHERE project_id=?
+                  AND duplicate_of IS NOT NULL
+                """,
+                (self.project_id,),
+            )["count"]
+        )
+
+        result = {
+            "assets": len(found),
+            "duplicates": duplicate_count,
+            "source_dir": str(self.root),
+            "direct_root_scan": self.direct_root_scan,
+            "scanned_bytes": scanned_bytes,
+            "source_files_modified": False,
+        }
+
+        self.bus.emit("ASSETS_SCANNED", result)
+        return result
 
     def stats(self) -> dict:
         rows = self.db.rows("SELECT media_type, COUNT(*) c FROM assets WHERE project_id=? GROUP BY media_type", (self.project_id,))

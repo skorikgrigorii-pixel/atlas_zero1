@@ -17,6 +17,7 @@ class ProjectConfigRC2:
     maximum_average_asset_reuse: float = 5.0
     duration_tolerance_sec: float = 2.0
     minimum_video_shots: int = 1
+    media_source_dir: Path | None = None
 
     @property
     def workspace_dir(self) -> Path:
@@ -25,6 +26,13 @@ class ProjectConfigRC2:
     @property
     def project_dir(self) -> Path:
         return self.workspace_dir / "projects" / self.project_id
+
+    @property
+    def effective_media_source_dir(self) -> Path:
+        """Read-only source used by the asset indexing stage."""
+        if self.media_source_dir is not None:
+            return Path(self.media_source_dir)
+        return self.project_dir
 
     @property
     def export_dir(self) -> Path:
