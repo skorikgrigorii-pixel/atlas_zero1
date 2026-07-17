@@ -26,3 +26,31 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Python runtime
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local databases
+*.sqlite3
+*.sqlite
+*.db
+
+# Generated workspace artifacts
+workspace/exports/
+
+# Installer backups
+*.bak
+*.bak.*
+*.alpha25.bak
+*.alpha*.bak
+*.alpha*.*.bak

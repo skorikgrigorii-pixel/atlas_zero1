@@ -1,6 +1,0 @@
-﻿Приоритет,Задача,Статус,Детали
-1,Закрыть недостающие материалы,open,Сгенерировать или заменить 94 шотов из missing_prioritized.csv
-1,Подключить live API,open,"Добавить ключи в .env: LEONARDO_API_KEY, ELEVENLABS_API_KEY, OPENAI_API_KEY, YOUTUBE credentials"
-1,Импортировать CapCut-пакет,open,Открыть capcut_guide.md и последовательно импортировать capcut_пакет.csv в CapCut
-2,Проверить первые 60 секунд,open,Собрать вступление Franklin вручную по timeline_viewer.html и проверить удержание внимания
-3,Сделать финальный QC-проход,open,После монтажа экспортировать preview и прогнать контроль качества заново

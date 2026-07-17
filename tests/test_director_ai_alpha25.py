@@ -34,7 +34,7 @@ class DirectorAIAlpha25Test(unittest.TestCase):
                 "image",
                 "['ice','arctic']",
                 "cold",
-                0.9,
+                0.2,
             ),
         )
         db.execute(
@@ -49,7 +49,7 @@ class DirectorAIAlpha25Test(unittest.TestCase):
                 "image",
                 "['ship','arctic']",
                 "isolation",
-                0.8,
+                0.1,
             ),
         )
 

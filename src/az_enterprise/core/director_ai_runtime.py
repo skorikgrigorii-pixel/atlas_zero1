@@ -11,6 +11,8 @@ from typing import Any
 from .database import Database
 from .events import EventBus
 from .paths import EXPORTS
+from .project_config_rc2 import ProjectConfigRC2
+from .postproduction_quality_rc2 import PostProductionQualityRC2
 
 
 @dataclass(frozen=True)
@@ -28,11 +30,17 @@ RULES = {
     'LOW_CV_QUALITY': DirectorRule('LOW_CV_QUALITY', 'Материал имеет низкую техническую оценку', 'medium', 'review_or_replace_asset'),
     'LOW_VISUAL_DIVERSITY': DirectorRule('LOW_VISUAL_DIVERSITY', 'Недостаточно разнообразия планов', 'medium', 'add_visual_variety'),
     'API_NOT_READY': DirectorRule('API_NOT_READY', 'API не подключён для автоматического исполнения', 'blocking', 'connect_api'),
+    'FILM_TOO_LONG': DirectorRule('FILM_TOO_LONG', 'Фильм превышает целевую длительность', 'high', 'create_director_cut'),
+    'OPENING_HOOK_WEAK': DirectorRule('OPENING_HOOK_WEAK', 'Слабое вступление', 'high', 'strengthen_opening'),
+    'STATIC_IMAGE_TOO_LONG': DirectorRule('STATIC_IMAGE_TOO_LONG', 'Статичное изображение показывается слишком долго', 'medium', 'shorten_static_shot'),
+    'EXCLUDED_ASSET_USED': DirectorRule('EXCLUDED_ASSET_USED', 'Использован запрещённый материал', 'blocking', 'replace_excluded_asset'),
+    'NATURAL_SOUND_MISSING': DirectorRule('NATURAL_SOUND_MISSING', 'Не используется натуральный звук', 'medium', 'add_natural_sound'),
+    'ASSET_REUSED_TOO_SOON': DirectorRule('ASSET_REUSED_TOO_SOON', 'Материал повторяется слишком быстро', 'medium', 'replace_repeated_asset'),
 }
 
 
 class DirectorAIRuntime:
-    """Director AI 2.4.
+    """Director AI 2.5.
 
     This module is intentionally not a UI-only report. It consumes Story Engine 2.3
     outputs, CV metadata, shot assignments and live API readiness, then creates a
@@ -124,6 +132,7 @@ class DirectorAIRuntime:
         missing_reqs = self._rows('SELECT * FROM story_missing_requirements WHERE project_id=? ORDER BY priority DESC,id', (self.project_id,))
         cv_rows = self._rows('SELECT * FROM cv_asset_metadata WHERE project_id=?', (self.project_id,)) if self._table_exists('cv_asset_metadata') else []
         api_state = self._api_state()
+        postproduction = self._postproduction_analysis()
 
         quality = self._quality_scores(scenes, montage, cv_rows, api_state)
         issues: list[dict[str, Any]] = []
@@ -135,6 +144,7 @@ class DirectorAIRuntime:
         issues += self._issues_for_repetition(montage)
         issues += self._issues_for_cv_quality(montage)
         issues += self._issues_for_diversity(scenes, montage)
+        issues += postproduction.get('issues', [])
         if not api_state['ready_for_generation']:
             issues.append({
                 'rule_code': 'API_NOT_READY', 'severity': 'blocking', 'scene_id': None, 'shot_id': None, 'asset_id': None,
@@ -157,9 +167,10 @@ class DirectorAIRuntime:
             self._insert_matrix(row)
 
         report = {
-            'version': '2.4',
+            'version': '2.5',
             'project_id': self.project_id,
             'quality': quality,
+            'postproduction': postproduction,
             'summary': {
                 'scenes': len(scenes),
                 'montage_items': len(montage),
@@ -178,10 +189,31 @@ class DirectorAIRuntime:
         }
         self.db.execute('''INSERT INTO director_quality_reports(project_id,version,quality_score,coverage_score,diversity_score,cv_score,repetition_score,api_score,report_json)
                            VALUES(?,?,?,?,?,?,?,?,?)''',
-                        (self.project_id, '2.4', quality['overall'], quality['coverage'], quality['diversity'], quality['cv_quality'], quality['repetition'], quality['api'], json.dumps(report, ensure_ascii=False)))
-        self.bus.emit('DIRECTOR_AI_2_4_COMPLETED', {'quality': quality['overall'], 'issues': len(issues), 'tasks': len(tasks)})
+                        (self.project_id, '2.5', quality['overall'], quality['coverage'], quality['diversity'], quality['cv_quality'], quality['repetition'], quality['api'], json.dumps(report, ensure_ascii=False)))
+        self.bus.emit('DIRECTOR_AI_2_5_COMPLETED', {'quality': quality['overall'], 'issues': len(issues), 'tasks': len(tasks)})
         self._export(report)
         return report
+
+    def _postproduction_analysis(self) -> dict[str, Any]:
+        try:
+            config = ProjectConfigRC2(project_id=self.project_id)
+            return PostProductionQualityRC2(config).analyze()
+        except Exception as exc:
+            self.bus.emit(
+                'DIRECTOR_AI_POSTPRODUCTION_ANALYSIS_FAILED',
+                {'error': str(exc)},
+            )
+            return {
+                'state': 'FAILED',
+                'metrics': {},
+                'issues': [{
+                    'rule_code': 'POSTPRODUCTION_ANALYSIS_FAILED',
+                    'severity': 'blocking',
+                    'title': 'Не выполнен постпродакшн-анализ',
+                    'reason': str(exc),
+                    'recommendation': 'Проверить конфигурацию и финальный таймлайн.',
+                }],
+            }
 
     def _clear_previous(self) -> None:
         for table in ['director_issues', 'director_tasks', 'director_decision_matrix']:
@@ -380,7 +412,7 @@ class DirectorAIRuntime:
         }
 
     def _insert_api_job_if_needed(self, service: str, job_type: str, status: str, issue: dict[str, Any], prompt: str) -> None:
-        payload = {'source': 'Director AI 2.4', 'issue': issue, 'prompt': prompt, 'style': 'cold blue cinematic historical documentary'}
+        payload = {'source': 'Director AI 2.5', 'issue': issue, 'prompt': prompt, 'style': 'cold blue cinematic historical documentary'}
         self.db.execute('INSERT INTO api_jobs(project_id,service,job_type,status,payload) VALUES(?,?,?,?,?)',
                         (self.project_id, service, job_type, status, json.dumps(payload, ensure_ascii=False)))
 
@@ -441,11 +473,11 @@ class DirectorAIRuntime:
         return actions
 
     def _export(self, report: dict[str, Any]) -> None:
-        (self.export_dir / 'director_ai_2_4_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+        (self.export_dir / 'director_ai_2_5_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
         self._write_csv(self.export_dir / 'director_issues.csv', report['issues'], ['rule_code','severity','scene_id','shot_id','asset_id','title','reason','recommendation'])
         self._write_csv(self.export_dir / 'director_tasks.csv', report['tasks'], ['task_uid','task_type','priority','status','service','scene_id','shot_id','asset_id','title','prompt'])
         self._write_csv(self.export_dir / 'director_decision_matrix.csv', report['decision_matrix'], ['scene_id','shot_id','asset_id','decision','score','reason','action'])
-        (self.export_dir / 'director_ai_2_4.html').write_text(self._html(report), encoding='utf-8')
+        (self.export_dir / 'director_ai_2_5.html').write_text(self._html(report), encoding='utf-8')
 
     def _write_csv(self, path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
         with path.open('w', encoding='utf-8-sig', newline='') as f:
@@ -457,9 +489,9 @@ class DirectorAIRuntime:
         issue_rows = ''.join(f"<tr><td>{i['severity']}</td><td>{i['rule_code']}</td><td>{i.get('scene_id') or ''}</td><td>{i['title']}</td><td>{i.get('reason') or ''}</td></tr>" for i in report['issues'][:250])
         task_rows = ''.join(f"<tr><td>{t['priority']}</td><td>{t['task_uid']}</td><td>{t['task_type']}</td><td>{t['status']}</td><td>{t.get('service') or ''}</td><td>{t['title']}</td></tr>" for t in report['tasks'][:250])
         actions = ''.join(f"<li>{a}</li>" for a in report['next_actions'])
-        return f"""<!doctype html><meta charset='utf-8'><title>Director AI 2.4</title>
+        return f"""<!doctype html><meta charset='utf-8'><title>Director AI 2.5</title>
 <style>body{{font-family:Segoe UI,Arial;background:#08111f;color:#e5edf8;margin:24px;font-size:13px}}.grid{{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}}.card{{background:#111827;border:1px solid #334155;border-radius:14px;padding:14px}}.v{{font-size:24px;font-weight:800;color:#7dd3fc}}table{{border-collapse:collapse;width:100%;margin-top:12px}}td,th{{border-bottom:1px solid #334155;padding:7px;text-align:left;vertical-align:top}}h2{{margin-top:26px}}li{{margin:8px 0}}</style>
-<h1>ATLAS ZERO — Director AI 2.4</h1><div class='grid'>
+<h1>ATLAS ZERO — Director AI 2.5</h1><div class='grid'>
 <div class='card'><div>Общее качество</div><div class='v'>{q['overall']}%</div></div>
 <div class='card'><div>Покрытие</div><div class='v'>{q['coverage']}%</div></div>
 <div class='card'><div>Разнообразие</div><div class='v'>{q['diversity']}%</div></div>

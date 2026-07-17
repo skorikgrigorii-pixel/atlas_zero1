@@ -6,6 +6,7 @@ from typing import Any
 
 from .project_config_rc2 import ProjectConfigRC2
 from .render_engine_rc2 import RenderEngineRC2
+from .postproduction_quality_rc2 import PostProductionQualityRC2
 
 
 class QualityGateRC2:
@@ -103,6 +104,45 @@ class QualityGateRC2:
             except Exception as exc:
                 add("RENDER_VALID", False, {"error": str(exc)})
 
+        postproduction = PostProductionQualityRC2(self.config).analyze()
+        post_metrics = postproduction.get("metrics", {})
+
+        add(
+            "POSTPRODUCTION_ANALYZED",
+            postproduction.get("state") == "ANALYZED",
+            {"state": postproduction.get("state")},
+        )
+        add(
+            "NO_EXCLUDED_ASSETS",
+            int(post_metrics.get("excluded_assets_used", 0)) == 0,
+            {"count": post_metrics.get("excluded_assets_used", 0)},
+        )
+        add(
+            "FILM_DURATION_ACCEPTABLE",
+            float(post_metrics.get("film_duration_sec", 0.0))
+            <= float(post_metrics.get("maximum_film_duration_sec", 960.0)),
+            {
+                "duration_sec": post_metrics.get("film_duration_sec"),
+                "maximum_sec": post_metrics.get("maximum_film_duration_sec"),
+            },
+        )
+        add(
+            "OPENING_HOOK_ACCEPTABLE",
+            not bool(post_metrics.get("opening_hook_weak", False)),
+            {
+                "opening_items": post_metrics.get("opening_items"),
+                "opening_unique_assets": post_metrics.get("opening_unique_assets"),
+                "opening_video_items": post_metrics.get("opening_video_items"),
+            },
+            required=False,
+        )
+        add(
+            "STATIC_IMAGE_DURATION_ACCEPTABLE",
+            int(post_metrics.get("static_image_overruns", 0)) == 0,
+            {"count": post_metrics.get("static_image_overruns", 0)},
+            required=False,
+        )
+
         context = {
             "timeline": {
                 "items": len(rows),
@@ -113,6 +153,7 @@ class QualityGateRC2:
                 "average_reuse": round(average_reuse, 3),
             },
             "media_probe": media_probe,
+            "postproduction": postproduction,
         }
         return self._finish(checks, context)
 
