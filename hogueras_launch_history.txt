@@ -1,0 +1,142 @@
+﻿
+"src\az_enterprise\core\project_config_rc2.py" ``
+"src\az_enterprise\core\director_core_rc2.py"
+$env:PYTHONPATH = "src"
+python -c "from az_enterprise.core.project_config_rc2 import ProjectConfigRC2; print(ProjectConfigRC2('hogueras').story_strategy_res
+ult_path)"
+Select-String -Pattern "DirectorCoreRC2\(" |`
+Select-String -Pattern "DirectorCoreRC2|\.run\(" |`
+$env:PYTHONPATH="src"
+python -m az_enterprise.core.rc2_cli --help
+$env:PYTHONPATH="src"
+python -m az_enterprise.core.rc2_cli run --project hogueras
+python -m az_enterprise.core.rc2_cli run --help
+python -m az_enterprise.core.rc2_cli run hogueras --force
+python -m py_compile $path
+python -m az_enterprise.core.rc2_cli run hogueras --force
+$env:PYTHONPATH="src"
+python -c "import sqlite3; db=sqlite3.connect('workspace/atlas_zero.db'); print('shots:', db.execute(\"SELECT COUNT(*) FROM shots WH
+ERE project_id='hogueras'\").fetchone()[0]); print('assigned:', db.execute(\"SELECT COUNT(*) FROM shots WHERE project_id='hogueras' 
+AND assigned_asset_id IS NOT NULL AND assigned_asset_id<>''\").fetchone()[0]); print('missing:', db.execute(\"SELECT COUNT(*) FROM s
+hots WHERE project_id='hogueras' AND (assigned_asset_id IS NULL OR assigned_asset_id='')\").fetchone()[0])"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); print(db.execute(\"SELECT COUNT(*) FROM s
+hots WHERE project_id='hogueras'\").fetchone()); print(db.execute(\"SELECT COUNT(*) FROM shots WHERE project_id='hogueras' AND assig
+ned_asset_id IS NOT NULL\").fetchone())"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); rows=db.execute(\"SELECT idx,assigned_ass
+et_id,visual_need,status FROM shots WHERE project_id='hogueras' ORDER BY idx LIMIT 10\").fetchall(); print(rows)"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); print(db.execute(\"SELECT COUNT(*) FROM a
+ssets WHERE project_id='hogueras'\").fetchone()); print(db.execute(\"SELECT asset_type,COUNT(*) FROM assets WHERE project_id='hoguer
+as' GROUP BY asset_type\").fetchall())"
+    ("hogueras",),`
+    ("hogueras",),`
+    ("hogueras",),`
+    ("hogueras",),`
+    ("hogueras",),`
+    ("hogueras",),`
+'@ | python -
+Get-ChildItem workspace\projects\hogueras
+Get-ChildItem workspace\projects\hogueras -Directory -Recurse
+Get-ChildItem workspace\projects\hogueras -Recurse ``
+mkdir workspace\projects\hogueras\02_Visual -Force
+python -m az_enterprise.core.rc2_cli run hogueras --force
+    "SELECT COUNT(*) FROM assets WHERE project_id='hogueras'"`
+    WHERE project_id='hogueras'`
+    WHERE project_id='hogueras'`
+'@ | python -
+Get-ChildItem . -Recurse -Filter "director_core_rc2.py" |`
+Get-ChildItem . -Recurse -Filter "rc2_cli.py" | Select-Object FullName
+python -c "import az_enterprise.core.rc2_cli as m; print(m.__file__)"
+Get-Content .\src\az_enterprise\core\asset_engine_rc2.py -TotalCount 400
+python -c "from az_enterprise.core.paths import MEDIA_DIRS; print(MEDIA_DIRS)"
+python -m az_enterprise.core.rc2_cli run hogueras --force
+python -c "import os; print(os.path.exists(r'.\src\az_enterprise\core\asset_intelligence.py'))"
+python -m az_enterprise.core.rc2_cli run hogueras --force
+python -c "from az_enterprise.core.database import Database; db=Database(); print(db.rows('SELECT media_type, COUNT(*) c FROM assets
+ GROUP BY media_type'))"
+python -c "from az_enterprise.core.database import Database; db=Database(); print(db.rows('SELECT COUNT(*) c FROM shot_asset_assignm
+ents'))"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([dict(r) for r in db.rows('SELECT media_type, COUN
+T(*) AS count FROM assets GROUP BY media_type')])"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([r['name'] for r in db.rows(\"SELECT name FROM sql
+ite_master WHERE type='table' ORDER BY name\")])"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([r['name'] for r in db.rows(\"SELECT name FROM sql
+ite_master WHERE type='table' AND (name LIKE '%shot%' OR name LIKE '%asset%' OR name LIKE '%assign%' OR name LIKE '%timeline%') ORDE
+R BY name\")])"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([dict(r) for r in db.rows('SELECT name FROM sqlite
+_master WHERE type=''table'' ORDER BY name')])"
+python
+python
+python -c "from az_enterprise.core.database import Database; db=Database(); print([dict(r) for r in db.rows('SELECT idx, status, ass
+igned_asset_id FROM shots LIMIT 20')])"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([dict(r) for r in db.rows('SELECT s.idx, s.assigne
+d_asset_id, a.id AS asset_id, a.filename, a.path, a.media_type FROM shots s LEFT JOIN assets a ON a.id=s.assigned_asset_id LIMIT 20'
+)])"
+python -c "from pathlib import Path; import json; p=Path('workspace/exports/franklin/movie_runtime_rc1/timeline.json'); print('exist
+s=', p.exists()); data=json.loads(p.read_text(encoding='utf-8')); print('rows=', len(data)); print(data[0])"
+python -c "from pathlib import Path; import glob; [print(p) for p in Path('workspace').rglob('*.json') if 'timeline' in p.name.lower
+()]"
+python -c "from pathlib import Path; [print(p) for p in Path('workspace').rglob('native_timeline_model.json')]"
+python -c "from pathlib import Path; import json; p=Path('workspace/exports/hogueras/movie_runtime_rc1/timeline.json'); print('path=
+', p); print('exists=', p.exists()); data=json.loads(p.read_text(encoding='utf-8')); print('rows=', len(data)); print('first=', data
+[0]); print('renderable=', sum(1 for r in data if r.get('status')=='assigned' and r.get('asset_path') and r.get('media_type') in ('i
+mage','video'))); print('missing_status=', sum(1 for r in data if r.get('status')!='assigned')); print('missing_path=', sum(1 for r 
+in data if not r.get('asset_path'))); print('bad_media_type=', sum(1 for r in data if r.get('media_type') not in ('image','video')))
+"
+python -c "from az_enterprise.core.database import Database; db=Database(); print([dict(r) for r in db.rows(\"SELECT idx, status, as
+signed_asset_id FROM shots WHERE project_id='hogueras' LIMIT 20\")])"
+python -c "from az_enterprise.core.database import Database; db=Database(); rows=db.rows(\"SELECT idx,status,assigned_asset_id FROM 
+shots WHERE project_id='hogueras' LIMIT 20\"); print([dict(r) for r in rows])"
+python
+python -m az_enterprise.core.rc2_cli run hogueras --force
+python
+Select-String -Pattern "visual_intelligence|visual_semantic_analyzer_rc2" |`
+Get-Content .\src\az_enterprise\core\pipeline_runtime.py |`
+Get-Content .\src\az_enterprise\core\rc2_cli.py |`
+Get-Content .\src\az_enterprise\core\director_core_rc2.py |`
+Get-Content .\src\az_enterprise\core\asset_engine_rc2.py |`
+Get-Content .\src\az_enterprise\core\visual_semantic_analyzer_rc2.py |`
+Get-Content .\src\az_enterprise\core\assignment_engine_rc2.py |`
+Get-Content .\src\az_enterprise\core\visual_understanding_contract_rc2.py |`
+Get-Content .\src\az_enterprise\core\assignment_policy_rc2.py |`
+Get-Content .\src\az_enterprise\core\director_core_rc2.py |`
+  -Path .\src\az_enterprise\core\director_core_rc2.py ``
+$data = Get-Content ".\workspace\exports\hogueras\rc2\story_strategy\story_strategy_result.json" -Raw | ConvertFrom-Json
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); print(db.execute(\"SELECT id, filename, s
+tatus, category, quality FROM assets WHERE id='cd45b6a4e220db3b23fca8ba'\").fetchall()); print('TOTAL ASSETS:', db.execute('SELECT C
+OUNT(*) FROM assets').fetchone()[0])"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); rows=db.execute('SELECT idx, assigned_ass
+et_id, status FROM shots ORDER BY idx LIMIT 10').fetchall(); print(*rows, sep='\n')"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); print(db.execute('PRAGMA table_info(shots
+)').fetchall())"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); print(db.execute('SELECT * FROM shots LIM
+IT 1').description)"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); cur=db.execute(\"SELECT id, filename, sta
+tus, category, quality FROM assets WHERE id=?\", ('cd45b6a4e220db3b23fca8ba',)); print(cur.fetchall()); print('TOTAL ASSETS:', db.ex
+ecute('SELECT COUNT(*) FROM assets').fetchone()[0])"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); rows=db.execute(\"SELECT idx, assigned_as
+set_id, status FROM shots WHERE project_id=? ORDER BY idx\", ('hogueras',)).fetchall(); print(*rows[:20], sep='\n'); print('TOTAL:',
+ len(rows))"
+python -c "import sqlite3; db=sqlite3.connect(r'workspace\atlas_zero_enterprise.sqlite3'); asset='cd45b6a4e220db3b23fca8ba'; print(d
+b.execute('SELECT id, filename, status, category, quality FROM assets WHERE id=?',(asset,)).fetchall()); print('TOTAL ASSETS:', db.e
+xecute('SELECT COUNT(*) FROM assets').fetchone()[0])"
+python
+    ".\src\az_enterprise\core\assignment_policy_rc2.py",`
+    ".\src\az_enterprise\core\director_core_rc2.py",`
+    ".\src\az_enterprise\core\assignment_policy_rc2.py",`
+    ".\src\az_enterprise\core\director_core_rc2.py",`
+$output | Set-Content ".\hogueras_conflict_audit.txt" -Encoding UTF8
+    ".\src\az_enterprise\core\assignment_policy_rc2.py",`
+    ".\src\az_enterprise\core\director_core_rc2.py",`
+$outputFile = Join-Path (Get-Location) "hogueras_conflict_audit.txt"
+    "DirectorCoreRC2",`
+    "PipelineRuntime",`
+    "DirectorAIRuntime",`
+    "ProductionDirector",`
+    "LocalAutopilot",`
+    "Workflow",`
+    "streamlit run"`
+$outputFile = Join-Path (Get-Location) "hogueras_execution_map.txt"
+    Select-String -Pattern "python|streamlit|director|pipeline|autopilot|workflow|hogueras|rc2" |`
+    Out-File ".\hogueras_launch_history.txt" -Encoding utf8
+
+

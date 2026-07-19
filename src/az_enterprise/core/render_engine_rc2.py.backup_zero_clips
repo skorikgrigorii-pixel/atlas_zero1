@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 import os
@@ -86,12 +86,6 @@ class RenderEngineRC2:
         )
         if report.get("state") != "RENDERED":
             raise RuntimeError(str(report.get("error") or report))
-
-        clips_total = int(report.get("clips_total") or 0)
-        if clips_total <= 0:
-            raise RuntimeError(
-                "RenderEngineRC2: backend produced zero timeline clips."
-            )
 
         source = Path(str(report.get("output_mp4") or ""))
         if not source.exists() and self.config.project_id == "franklin":

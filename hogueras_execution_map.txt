@@ -1,0 +1,477 @@
+﻿
+======================================================================
+SEARCH PATTERN: DirectorCoreRC2
+======================================================================
+src\az_enterprise\core\director_ai.py:75: "Use ProductionStateStoreRC2 through DirectorCoreRC2."
+src\az_enterprise\core\director_core_rc2.py:30: class DirectorCoreRC2:
+src\az_enterprise\core\director_core_rc2.py:68: "canonical_orchestrator": "DirectorCoreRC2",
+src\az_enterprise\core\director_core_rc2.py:92: f"Another DirectorCoreRC2 run is active: {self.config.run_lock_path}"
+src\az_enterprise\core\rc2_cli.py:7: from .director_core_rc2 import DirectorCoreRC2
+src\az_enterprise\core\rc2_cli.py:35: result = DirectorCoreRC2(args.project_id).run(
+src\az_enterprise\core\rc2_cli.py:43: print(json.dumps(DirectorCoreRC2(args.project_id).plan(), ensure_ascii=False, indent=2))
+src\az_enterprise\core\runtime_governance_rc2.py:16: name="DirectorCoreRC2",
+src\az_enterprise\core\runtime_governance_rc2.py:39: "Only DirectorCoreRC2 may advance canonical production stages. "
+tests\test_rc2_stage2_unified_runtime.py:11: assert report["canonical_authority"]["name"] == "DirectorCoreRC2"
+
+======================================================================
+SEARCH PATTERN: PipelineRuntime
+======================================================================
+
+======================================================================
+SEARCH PATTERN: DirectorAIRuntime
+======================================================================
+src\az_enterprise\core\director_ai.py:10: from .director_ai_runtime import DirectorAIRuntime
+src\az_enterprise\core\director_ai.py:292: analysis = DirectorAIRuntime(self.db, self.project_id).analyze()
+src\az_enterprise\core\director_ai_runtime.py:42: class DirectorAIRuntime:
+src\az_enterprise\core\movie_runtime_rc1.py:11: from .director_ai_runtime import DirectorAIRuntime
+src\az_enterprise\core\movie_runtime_rc1.py:271: review_report = DirectorAIRuntime(self.db, self.project_id).analyze()
+src\az_enterprise\core\pipeline_runtime.py:40: from .director_ai_runtime import DirectorAIRuntime
+src\az_enterprise\core\pipeline_runtime.py:256: return DirectorAIRuntime(self.db, self.project_id).analyze()
+src\az_enterprise\core\postproduction_quality_rc2.py:10: """Stateless post-production metrics helper owned by DirectorAIRuntime."""
+src\az_enterprise\core\runtime_governance_rc2.py:26: RuntimeAuthority("DirectorAIRuntime", "legacy_analysis_adapter", False, True),
+src\az_enterprise\ui\app.py:326: from az_enterprise.core.director_ai_runtime import DirectorAIRuntime
+src\az_enterprise\ui\app.py:327: report = DirectorAIRuntime(self.db).analyze()
+
+======================================================================
+SEARCH PATTERN: StoryEngineRuntime
+======================================================================
+src\az_enterprise\core\director_ai.py:9: from .story_engine_runtime import StoryEngineRuntime
+src\az_enterprise\core\director_ai.py:291: StoryEngineRuntime(self.db, self.project_id).build()
+src\az_enterprise\core\movie_runtime_rc1.py:16: from .story_engine_runtime import StoryEngineRuntime
+src\az_enterprise\core\movie_runtime_rc1.py:267: story_report = StoryEngineRuntime(self.db, self.project_id).build()
+src\az_enterprise\core\pipeline_runtime.py:39: from .story_engine_runtime import StoryEngineRuntime
+src\az_enterprise\core\pipeline_runtime.py:253: return StoryEngineRuntime(self.db, self.project_id).build()
+src\az_enterprise\core\runtime_governance_rc2.py:27: RuntimeAuthority("StoryEngineRuntime", "legacy_story_adapter", False, True),
+src\az_enterprise\core\story_engine_runtime.py:13: class StoryEngineRuntime:
+src\az_enterprise\ui\app.py:228: from az_enterprise.core.story_engine_runtime import StoryEngineRuntime
+src\az_enterprise\ui\app.py:229: report = StoryEngineRuntime(self.db).build()
+
+======================================================================
+SEARCH PATTERN: ProductionDirector
+======================================================================
+src\az_enterprise\cli.py:9: from .core.production_director import ProductionDirector
+src\az_enterprise\cli.py:103: result = ProductionDirector(
+src\az_enterprise\core\production_director.py:11: class ProductionDirector:
+src\az_enterprise\core\runtime_governance_rc2.py:25: RuntimeAuthority("ProductionDirector", "legacy_quality_adapter", False, True),
+tests\test_production_director.py:6: from az_enterprise.core.production_director import ProductionDirector
+tests\test_production_director.py:71: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:82: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:93: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:105: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:125: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:134: ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+
+======================================================================
+SEARCH PATTERN: MovieRuntimeRC1
+======================================================================
+src\az_enterprise\core\movie_runtime_rc1.py:26: class MovieRuntimeRC1:
+src\az_enterprise\core\movie_runtime_rc1.py:503: return MovieRuntimeRC1(db, project_id).run()
+src\az_enterprise\core\production_director.py:153: "MovieRuntimeRC1",
+src\az_enterprise\core\runtime_governance_rc2.py:24: RuntimeAuthority("MovieRuntimeRC1", "legacy_service_adapter", False, True),
+tools\franklin_autopilot.py:20: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\franklin_autopilot.py:353: runtime = MovieRuntimeRC1(
+tools\media_factory_rc1.py:17: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\media_factory_rc1.py:425: runtime = MovieRuntimeRC1(
+tools\repair_semantic_asset_ids.py:18: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\repair_semantic_asset_ids.py:247: runtime = MovieRuntimeRC1(
+tools\semantic_director_v1.py:24: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\semantic_director_v1.py:792: runtime = MovieRuntimeRC1(
+tools\semantic_director_v1_1_multimedia.py:25: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\semantic_director_v1_1_multimedia.py:879: runtime = MovieRuntimeRC1(
+tools\semantic_director_v1_2_temporal.py:24: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\semantic_director_v1_2_temporal.py:1027: runtime = MovieRuntimeRC1(
+tools\visual_intelligence_v1.py:21: from az_enterprise.core.movie_runtime_rc1 import MovieRuntimeRC1
+tools\visual_intelligence_v1.py:488: runtime = MovieRuntimeRC1(
+tests\test_rc2_timeline_authority.py:14: assert "MovieRuntimeRC1" not in source
+
+======================================================================
+SEARCH PATTERN: LocalAutopilot
+======================================================================
+src\az_enterprise\core\local_autopilot.py:7: class LocalAutopilot:
+src\az_enterprise\core\pipeline_runtime.py:29: from .local_autopilot import LocalAutopilot
+src\az_enterprise\core\pipeline_runtime.py:312: return LocalAutopilot(self.db, self.project_id).build()
+src\az_enterprise\core\workflow.py:26: from .local_autopilot import LocalAutopilot
+src\az_enterprise\core\workflow.py:77: local_autopilot = LocalAutopilot(self.db, self.project_id).build(); self._job('local_autopilot','done',local_autopilot)
+src\az_enterprise\ui\app.py:430: from az_enterprise.core.local_autopilot import LocalAutopilot
+src\az_enterprise\ui\app.py:431: report = LocalAutopilot(self.db).build()
+
+======================================================================
+SEARCH PATTERN: Workflow
+======================================================================
+src\az_enterprise\cli.py:4: from .core.workflow import WorkflowEngine
+src\az_enterprise\core\database.py:66: CREATE TABLE IF NOT EXISTS workflow_jobs(
+src\az_enterprise\core\database.py:122: CREATE TABLE IF NOT EXISTS workflow_steps(
+src\az_enterprise\core\director_ai.py:382: state['next_required_action'] = state['next_required_action'] or 'Resolve blocking errors and restart the workflow.'
+src\az_enterprise\core\director_ai.py:430: return 'Resolve blocking errors before continuing the workflow.'
+src\az_enterprise\core\director_ai.py:432: return 'Resolve blocking errors before continuing the workflow.'
+src\az_enterprise\core\live_api_test_suite.py:87: self.db.execute('INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)', (self.project_id,'live_api_test_suite','done',json.dumps(report, ensure_ascii=False)))
+src\az_enterprise\core\media_orchestrator.py:57: "INSERT INTO workflow_jobs(project_id, stage, status, details) VALUES(?,?,?,?)",
+src\az_enterprise\core\media_orchestrator.py:73: "UPDATE workflow_jobs SET status=?, details=? WHERE project_id=? AND stage=?",
+src\az_enterprise\core\media_orchestrator.py:82: "UPDATE workflow_jobs SET status=?, details=? WHERE project_id=? AND stage=?",
+src\az_enterprise\core\media_orchestrator.py:104: "steps": [row["step_key"] for row in db.rows("SELECT step_key FROM workflow_steps WHERE project_id=? ORDER BY id", (project_id,))],
+src\az_enterprise\core\movie_runtime_rc1.py:56: "INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)",
+src\az_enterprise\core\movie_runtime_rc1.py:129: "SELECT result_json FROM workflow_steps WHERE project_id=? AND step_key='script_ready' ORDER BY id DESC LIMIT 1",
+src\az_enterprise\core\pipeline_runtime.py:43: from .workflow import WorkflowEngine
+src\az_enterprise\core\pipeline_runtime.py:70: self.workflow = WorkflowEngine(db, project_id)
+src\az_enterprise\core\pipeline_runtime.py:333: return self.workflow.export_all()
+src\az_enterprise\core\pipeline_runtime.py:484: "INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)",
+src\az_enterprise\core\pipeline_runtime.py:534: "INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)",
+src\az_enterprise\core\project_state.py:56: "SELECT id FROM workflow_steps WHERE project_id=? AND step_key=?",
+src\az_enterprise\core\project_state.py:62: "INSERT INTO workflow_steps(project_id, step_key, title, status) VALUES(?,?,?,?)",
+src\az_enterprise\core\project_state.py:80: "UPDATE workflow_steps SET status=?, result_json=?, updated_at=CURRENT_TIMESTAMP WHERE project_id=? AND step_key=?",
+src\az_enterprise\core\project_state.py:91: "UPDATE workflow_steps SET status=?, result_json=?, updated_at=CURRENT_TIMESTAMP WHERE project_id=? AND step_key=?",
+src\az_enterprise\core\project_state.py:97: "SELECT status FROM workflow_steps WHERE project_id=? AND step_key=?",
+src\az_enterprise\core\quality.py:45: ('Workflow Engine', 0.84, True, 'Конвейер выполняет основные этапы и пишет workflow-события.'),
+src\az_enterprise\core\rc1_completion_planner.py:10: bring the OS from local Franklin workflow to real RC1 readiness.
+src\az_enterprise\core\runtime_governance_rc2.py:23: RuntimeAuthority("WorkflowEngine", "legacy_orchestrator", False, True),
+src\az_enterprise\core\test_center.py:11: критерии означают рабочее состояние локального production workflow.
+src\az_enterprise\core\test_center.py:63: add('Franklin local workflow', 'Шоты построены', shots >= 150, '>=150', shots, 'critical')
+src\az_enterprise\core\test_center.py:64: add('Franklin local workflow', 'Материалы обнаружены', assets >= 8, '>=8', assets, 'critical')
+src\az_enterprise\core\test_center.py:65: add('Franklin local workflow', 'Покрытие материалами', coverage >= 80, '>=80%', f'{coverage}%', 'critical')
+src\az_enterprise\core\workflow.py:37: class WorkflowEngine:
+src\az_enterprise\core\workflow.py:46: self.db.execute('INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)',
+src\az_enterprise\ui\app.py:7: from az_enterprise.core.workflow import WorkflowEngine
+src\az_enterprise\ui\app.py:98: elif name=='Конвейер': self.workflow()
+src\az_enterprise\ui\app.py:273: def workflow(self):
+src\az_enterprise\ui\app.py:274: rows=self.db.rows('SELECT stage,status,details,created_at FROM workflow_jobs ORDER BY id DESC LIMIT 100')
+tools\autonomy_audit_rc2.py:32: "workflow",
+tools\autonomy_audit_rc2.py:82: r"workflow_jobs",
+tests\test_media_orchestrator.py:18: "SELECT step_key, status FROM workflow_steps WHERE project_id=? ORDER BY id",
+tests\test_media_orchestrator.py:39: "SELECT step_key, status FROM workflow_steps WHERE project_id=? ORDER BY id",
+tests\test_movie_runtime_rc1.py:11: "INSERT INTO workflow_steps(project_id, step_key, title, status, result_json) VALUES(?,?,?,?,?)",
+tests\test_movie_runtime_rc1.py:78: "SELECT COUNT(*) c FROM workflow_jobs WHERE project_id=? AND stage LIKE 'movie_runtime_stage_%' AND status='done'",
+tests\test_movie_runtime_rc1_assets.py:10: "INSERT INTO workflow_steps(project_id, step_key, title, status, result_json) VALUES(?,?,?,?,?)",
+
+======================================================================
+SEARCH PATTERN: build_from_strategy
+======================================================================
+src\az_enterprise\core\director_core_rc2.py:154: ).build_from_strategy(strategy_payload)
+src\az_enterprise\core\story_engine.py:126: def build_from_strategy(
+tests\test_story_engine_semantic_rc26.py:104: ).build_from_strategy(
+tests\test_story_engine_semantic_rc26.py:126: ).build_from_strategy(
+tests\test_story_engine_semantic_rc26.py:157: ).build_from_strategy(
+
+======================================================================
+SEARCH PATTERN: \.run\(
+======================================================================
+src\az_enterprise\cli.py:69: ).run()
+src\az_enterprise\cli.py:90: result = RenderEngineRC1(project_id=args.project_id).run()
+src\az_enterprise\cli.py:106: ).run()
+src\az_enterprise\cli.py:153: result = VisualAssetRegistrar(project_id=args.project_id).run()
+src\az_enterprise\cli.py:174: result = PipelineRunManager(db).run()
+src\az_enterprise\core\assignment_engine_rc2.py:22: ).run()
+src\az_enterprise\core\director_ai.py:184: ).run()
+src\az_enterprise\core\director_core_rc2.py:174: "assets": lambda: AssetEngineRC2(self.db, self.config).run(),
+src\az_enterprise\core\director_core_rc2.py:176: "assignment": lambda: AssignmentEngineRC2(self.db, self.config).run(),
+src\az_enterprise\core\director_core_rc2.py:177: "timeline": lambda: TimelineEngineRC2(self.db, self.config).run(),
+src\az_enterprise\core\director_core_rc2.py:178: "render": lambda: RenderEngineRC2(self.config, progress=self.progress).run(),
+src\az_enterprise\core\director_core_rc2.py:179: "quality": lambda: QualityGateRC2(self.config).run(),
+src\az_enterprise\core\director_supervisor_alpha292.py:119: result = self._runtime.run(targets=targets)
+src\az_enterprise\core\movie_runtime_rc1.py:295: ).run()
+src\az_enterprise\core\movie_runtime_rc1.py:503: return MovieRuntimeRC1(db, project_id).run()
+src\az_enterprise\core\pipeline_runtime.py:230: return PreflightCenter(self.db, self.project_id).run()
+src\az_enterprise\core\pipeline_runtime.py:263: return LiveApiTestSuite(self.db, self.project_id).run()
+src\az_enterprise\core\pipeline_runtime.py:321: return TestCenter(self.db, self.project_id).run()
+src\az_enterprise\core\rc2_cli.py:35: result = DirectorCoreRC2(args.project_id).run(
+src\az_enterprise\core\render_engine_rc1.py:359: proc = subprocess.run(
+src\az_enterprise\core\render_engine_rc1.py:379: return RenderEngineRC1(project_id=project_id).run()
+src\az_enterprise\core\render_engine_rc2.py:35: proc = subprocess.run(
+src\az_enterprise\core\render_engine_rc2.py:77: report = backend.run()
+src\az_enterprise\core\voice_production_engine_rc2.py:514: result = subprocess.run(
+src\az_enterprise\core\voice_production_engine_rc2.py:543: result = subprocess.run(
+src\az_enterprise\core\workflow.py:52: preflight_start = PreflightCenter(self.db, self.project_id).run(); self._job('preflight_start','done',preflight_start)
+src\az_enterprise\core\workflow.py:69: preflight_final = PreflightCenter(self.db, self.project_id).run(); self._job('preflight_final','done',preflight_final)
+src\az_enterprise\core\workflow.py:83: live_api_test = LiveApiTestSuite(self.db, self.project_id).run(); self._job('live_api_test_suite_1_7','done',live_api_test)
+src\az_enterprise\core\workflow.py:86: test_center = TestCenter(self.db, self.project_id).run(); self._job('rc1_test_center_1_7','done',test_center)
+src\az_enterprise\ui\app.py:361: report = PreflightCenter(self.db).run()
+src\az_enterprise\ui\app.py:499: report = LiveApiTestSuite(self.db).run()
+src\az_enterprise\ui\app.py:528: report = TestCenter(self.db).run()
+src\az_enterprise\ui\app.py:646: PipelineRunManager(Database()).run(cb=cb)
+tools\director_core_rc1.py:191: process = subprocess.run(
+tools\director_core_rc1.py:515: process = subprocess.run(
+tools\director_core_rc1.py:572: process = subprocess.run(
+tools\director_core_rc1.py:862: ).run()
+tools\franklin_autopilot.py:70: process = subprocess.run(
+tools\patch_render_nostdin.py:15: proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+tools\patch_render_nostdin.py:29: proc = subprocess.run(
+tools\patch_render_nostdin.py:67: result = subprocess.run(
+tools\patch_semantic_director_clip.py:103: result = subprocess.run(
+tools\recover_franklin_multimedia_render.py:84: check = subprocess.run(
+tools\recover_franklin_multimedia_render.py:128: concat_process = subprocess.run(
+tools\recover_franklin_multimedia_render.py:172: mux_process = subprocess.run(
+tools\recover_franklin_multimedia_render.py:213: probe = subprocess.run(
+tools\render_franklin_roughcut.py:92: report = engine.run()
+tools\smoke_test.py:10: result=PipelineRunManager(db,'franklin').run()
+tools\visual_intelligence_v1_1_multimedia.py:112: proc = subprocess.run(
+tests\test_event_discovery_engine_rc2.py:44: result = EventDiscoveryEngineRC2().run(
+tests\test_event_discovery_engine_rc2.py:75: result = engine.run(report)
+tests\test_event_discovery_engine_rc2.py:96: result = EventDiscoveryEngineRC2().run(
+tests\test_event_discovery_engine_rc2.py:135: result = EventDiscoveryEngineRC2().run(
+tests\test_event_discovery_engine_rc2.py:181: result = EventDiscoveryEngineRC2().run(
+tests\test_execution_graph_alpha291.py:20: result = ExecutionGraph(registry).run(ProjectContext("hogueras"), ["director"])
+tests\test_execution_graph_alpha291.py:29: result = ExecutionGraph(registry).run(context, ["director"])
+tests\test_narrative_writer_openai_rc2.py:71: result = writer.run(payload())
+tests\test_narrative_writer_openai_rc2.py:88: result = writer.run(payload())
+tests\test_narrative_writer_openai_rc2.py:105: result = writer.run(payload())
+tests\test_narrative_writer_rc2.py:59: ).run(strategy_payload())
+tests\test_narrative_writer_rc2.py:73: ).run(strategy_payload())
+tests\test_narrative_writer_rc2.py:86: ).run(strategy_payload())
+tests\test_narrative_writer_rc2.py:96: ).run(strategy_payload())
+tests\test_narrative_writer_rc2.py:108: writer.run({
+tests\test_production_director.py:71: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:82: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:93: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:105: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:125: status = ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_director.py:134: ProductionDirector("franklin", deadline_days_remaining=4, root_dir=tmp_path).run()
+tests\test_production_script_regenerator_rc2.py:113: ).run()
+tests\test_production_script_regenerator_rc2.py:175: ).run()
+tests\test_rc2_asset_project_isolation.py:49: AssetEngineRC2(db, config).run()
+tests\test_rc2_asset_project_isolation.py:84: AssetEngineRC2(db, config).run()
+tests\test_rc2_asset_project_isolation.py:85: AssetEngineRC2(db, config).run()
+tests\test_rc2_external_asset_source.py:27: result = AssetEngineRC2(db, config).run()
+tests\test_rc2_external_asset_source.py:70: AssetEngineRC2(db, config).run()
+tests\test_rc2_render_authority.py:23: assert "report = backend.run()" in source
+tests\test_rc2_timeline_authority.py:120: ).run()
+tests\test_render_engine_rc1.py:56: result = engine.run()
+tests\test_story_strategy_engine_rc2.py:67: ).run(make_report())
+tests\test_story_strategy_engine_rc2.py:87: ).run(make_report())
+tests\test_story_strategy_engine_rc2.py:104: ).run(make_report())
+tests\test_story_strategy_engine_rc2.py:124: ).run(make_report())
+tests\test_story_strategy_engine_rc2.py:140: engine.run({
+tests\test_visual_asset_registrar.py:86: result = VisualAssetRegistrar("franklin", root_dir=tmp_path).run()
+tests\test_visual_asset_registrar.py:175: first = registrar.run()
+tests\test_visual_asset_registrar.py:176: second = registrar.run()
+tests\test_visual_asset_registrar.py:190: result = VisualAssetRegistrar("franklin", root_dir=tmp_path).run()
+
+======================================================================
+SEARCH PATTERN: \.start\(
+======================================================================
+src\az_enterprise\ui\app.py:650: threading.Thread(target=worker, daemon=True).start()
+tools\autonomy_audit_rc2.py:260: match.start(),
+
+======================================================================
+SEARCH PATTERN: \.execute\(
+======================================================================
+src\az_enterprise\core\api_gateway.py:18: self.db.execute('DELETE FROM api_credentials_checks WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\api_gateway.py:36: self.db.execute('INSERT INTO api_credentials_checks(project_id,service,status,detail_json) VALUES(?,?,?,?)',
+src\az_enterprise\core\asset_intelligence.py:166: self.db.execute(
+src\az_enterprise\core\asset_intelligence.py:188: self.db.execute("DELETE FROM assets WHERE project_id=?", (self.project_id,))
+src\az_enterprise\core\asset_intelligence.py:233: self.db.execute(
+src\az_enterprise\core\assignment_policy_rc2.py:118: self.db.execute(
+src\az_enterprise\core\assignment_policy_rc2.py:178: self.db.execute(
+src\az_enterprise\core\assignment_policy_rc2.py:191: self.db.execute(
+src\az_enterprise\core\assignment_policy_rc2.py:231: self.db.execute(
+src\az_enterprise\core\assignment_policy_rc2.py:241: self.db.execute(
+src\az_enterprise\core\cv_model.py:110: self.db.conn.execute(f'ALTER TABLE {table} ADD COLUMN {coldef}')
+src\az_enterprise\core\cv_model.py:407: self.db.execute('DELETE FROM cv_scene_candidates WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\cv_model.py:408: self.db.execute('DELETE FROM asset_similarity WHERE project_id=? AND reason LIKE ?', (self.project_id, 'CVModel%'))
+src\az_enterprise\core\cv_model.py:445: self.db.execute(
+src\az_enterprise\core\cv_model.py:457: self.db.execute('UPDATE cv_asset_metadata SET quality_flags=? WHERE asset_id=?', (json.dumps(item.get('quality_flags') or [], ensure_ascii=False), asset_row['id']))
+src\az_enterprise\core\cv_model.py:459: self.db.execute(
+src\az_enterprise\core\cv_model.py:475: self.db.execute(
+src\az_enterprise\core\cv_model.py:490: self.db.execute('INSERT INTO asset_similarity(project_id,asset_id_a,asset_id_b,score,reason) VALUES(?,?,?,?,?)', (self.project_id, a['asset_id'], b['asset_id'], score, f'CVModel 2.2 phash distance={d}'))
+src\az_enterprise\core\database.py:371: self.conn.execute(
+src\az_enterprise\core\database.py:376: self.conn.execute("BEGIN")
+src\az_enterprise\core\database.py:378: self.conn.execute(
+src\az_enterprise\core\database.py:385: self.conn.execute(
+src\az_enterprise\core\database.py:416: self.conn.execute(
+src\az_enterprise\core\database.py:427: self.conn.execute(
+src\az_enterprise\core\database.py:431: self.conn.execute(
+src\az_enterprise\core\database.py:438: self.conn.execute(
+src\az_enterprise\core\database.py:449: self.conn.execute(
+src\az_enterprise\core\database.py:467: self.conn.execute(
+src\az_enterprise\core\database.py:479: cur = self.conn.execute(sql, tuple(params))
+src\az_enterprise\core\database.py:489: return list(self.conn.execute(sql, tuple(params)))
+src\az_enterprise\core\database.py:492: return self.conn.execute(sql, tuple(params)).fetchone()
+src\az_enterprise\core\director_ai.py:115: existing = {row[1] for row in self.db.conn.execute('PRAGMA table_info(projects)')}
+src\az_enterprise\core\director_ai.py:126: self.db.execute(f'ALTER TABLE projects ADD COLUMN {column_name} {definition}')
+src\az_enterprise\core\director_ai.py:161: self.db.execute("INSERT OR IGNORE INTO projects(id, title, status) VALUES(?,?,?)", (self.project_id, self.project_id, 'active'))
+src\az_enterprise\core\director_ai.py:162: self.db.execute("UPDATE projects SET status=? WHERE id=?", ('active', self.project_id))
+src\az_enterprise\core\director_ai.py:301: self.db.execute('''
+src\az_enterprise\core\director_ai.py:318: self.db.execute('INSERT INTO operator_tasks(project_id,priority,title,status,owner,details) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\director_ai.py:342: self.db.execute('INSERT INTO director_project_modules(project_id,module_name,status,error_message) VALUES(?,?,?,?)',
+src\az_enterprise\core\director_ai.py:391: self.db.execute('''
+src\az_enterprise\core\director_ai.py:396: self.db.execute('''
+src\az_enterprise\core\director_ai.py:453: self.db.execute('INSERT INTO director_project_history(project_id,action,from_stage,to_stage,reason,details) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\director_ai_runtime.py:190: self.db.execute('''INSERT INTO director_quality_reports(project_id,version,quality_score,coverage_score,diversity_score,cv_score,repetition_score,api_score,report_json)
+src\az_enterprise\core\director_ai_runtime.py:220: self.db.execute(f'DELETE FROM {table} WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\director_ai_runtime.py:416: self.db.execute('INSERT INTO api_jobs(project_id,service,job_type,status,payload) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\director_ai_runtime.py:420: cur = self.db.execute('''INSERT INTO director_issues(project_id,rule_code,severity,scene_id,shot_id,asset_id,title,reason,recommendation)
+src\az_enterprise\core\director_ai_runtime.py:426: self.db.execute('''INSERT INTO director_tasks(project_id,issue_id,task_uid,task_type,priority,status,service,scene_id,shot_id,asset_id,title,prompt,payload_json)
+src\az_enterprise\core\director_ai_runtime.py:429: self.db.execute('INSERT INTO operator_tasks(project_id,priority,title,status,owner,details) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\director_ai_runtime.py:452: self.db.execute('''INSERT INTO director_decision_matrix(project_id,scene_id,shot_id,asset_id,decision,score,reason,action)
+src\az_enterprise\core\events.py:39: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:48: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:79: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:117: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:129: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:194: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:250: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:372: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:439: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:528: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:539: self.db.execute(
+src\az_enterprise\core\generated_asset_store_rc2.py:556: self.db.execute(
+src\az_enterprise\core\integrations.py:34: self.db.execute('INSERT OR REPLACE INTO integration_profiles(id,service,status,env_key,capabilities) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\integrations.py:59: self.db.execute('INSERT INTO api_jobs(project_id,service,job_type,status,payload) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\integrations.py:93: self.db.execute('UPDATE api_jobs SET status=? WHERE id=?', (status, job['id']))
+src\az_enterprise\core\integrations.py:94: self.db.execute('INSERT INTO integration_runs(project_id,service,mode,status,request_json,response_json) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\live_api_layer.py:107: self.db.execute('INSERT INTO integration_runs(project_id,service,mode,status,request_json,response_json) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\live_api_test_suite.py:87: self.db.execute('INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)', (self.project_id,'live_api_test_suite','done',json.dumps(report, ensure_ascii=False)))
+src\az_enterprise\core\live_connectors.py:76: self.db.execute('INSERT INTO integration_runs(project_id,service,mode,status,request_json,response_json) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\live_connectors.py:99: self.db.execute('INSERT INTO integration_runs(project_id,service,mode,status,request_json,response_json) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\media_orchestrator.py:48: db.execute(
+src\az_enterprise\core\media_orchestrator.py:56: db.execute(
+src\az_enterprise\core\media_orchestrator.py:72: db.execute(
+src\az_enterprise\core\media_orchestrator.py:81: db.execute(
+src\az_enterprise\core\movie_runtime_rc1.py:49: self.db.execute(
+src\az_enterprise\core\movie_runtime_rc1.py:55: self.db.execute(
+src\az_enterprise\core\movie_runtime_rc1.py:111: self.db.execute(
+src\az_enterprise\core\movie_runtime_rc1.py:484: self.db.execute(
+src\az_enterprise\core\operator_console.py:28: self.db.execute('DELETE FROM operator_tasks WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\operator_console.py:29: self.db.execute('DELETE FROM runbook_items WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\operator_console.py:30: self.db.execute('DELETE FROM export_validations WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\operator_console.py:49: self.db.execute('INSERT INTO operator_tasks(project_id,priority,title,status,details) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\operator_console.py:63: self.db.execute('INSERT INTO export_validations(project_id,artifact,exists_flag,size_bytes,comment) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\operator_console.py:81: self.db.execute('INSERT INTO runbook_items(project_id,stage,step_no,action,expected_result,artifact_path) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\pipeline_runtime.py:155: self.db.conn.execute(f'ALTER TABLE {table} ADD COLUMN {coldef}')
+src\az_enterprise\core\pipeline_runtime.py:354: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:362: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:406: self.db.execute(f"UPDATE pipeline_stage_graph SET status=?, progress=?, result_summary=?, updated_at=CURRENT_TIMESTAMP{extra_sql} WHERE run_id=? AND step_key=?", params)
+src\az_enterprise\core\pipeline_runtime.py:419: self.db.conn.execute("UPDATE pipeline_task_queue SET progress=? WHERE id=?", (pct, task_id))
+src\az_enterprise\core\pipeline_runtime.py:420: self.db.conn.execute("UPDATE pipeline_runs SET progress=? WHERE id=?", (pct, run_id))
+src\az_enterprise\core\pipeline_runtime.py:431: cur = self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:437: self.db.execute("DELETE FROM pipeline_stage_graph WHERE project_id=? AND run_id=?", (self.project_id, run_id))
+src\az_enterprise\core\pipeline_runtime.py:439: tcur = self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:445: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:460: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:465: self.db.execute("UPDATE pipeline_runs SET progress=?, current_step=? WHERE id=?", (pct_start, key, run_id))
+src\az_enterprise\core\pipeline_runtime.py:476: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:483: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:487: self.db.execute("UPDATE pipeline_runs SET progress=?, current_step=? WHERE id=?", (pct_end, key, run_id))
+src\az_enterprise\core\pipeline_runtime.py:495: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:504: self.db.execute("UPDATE pipeline_task_queue SET status=?, started_at=CURRENT_TIMESTAMP, attempts=attempts+1 WHERE id=?", ("running", task_id))
+src\az_enterprise\core\pipeline_runtime.py:508: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:519: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:532: self.db.execute("UPDATE pipeline_runs SET status=?, error=?, finished_at=CURRENT_TIMESTAMP WHERE id=?", ("error", err, run_id))
+src\az_enterprise\core\pipeline_runtime.py:533: self.db.execute(
+src\az_enterprise\core\pipeline_runtime.py:556: self.db.execute("UPDATE pipeline_task_queue SET status=?, result_json=?, error=NULL, finished_at=CURRENT_TIMESTAMP WHERE run_id=? AND step_key=?", ("completed", json.dumps(self._safe_json(res), ensure_ascii=False), run_id, key))
+src\az_enterprise\core\project_state.py:47: self.db.execute(
+src\az_enterprise\core\project_state.py:61: self.db.execute(
+src\az_enterprise\core\project_state.py:75: self.db.execute(
+src\az_enterprise\core\project_state.py:79: self.db.execute(
+src\az_enterprise\core\project_state.py:83: self.db.execute(
+src\az_enterprise\core\project_state.py:90: self.db.execute(
+src\az_enterprise\core\quality.py:33: self.db.execute('INSERT INTO quality_reports(project_id,readiness,coverage,duplicate_count,missing_count,summary) VALUES(?,?,?,?,?,?)',
+src\az_enterprise\core\quality.py:52: self.db.execute('DELETE FROM readiness_checks WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\quality.py:54: self.db.execute('INSERT INTO readiness_checks(project_id,criterion,score,passed,comment) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\release_gate.py:36: self.db.execute('INSERT INTO readiness_checks(project_id,criterion,score,passed,comment) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\story_engine.py:85: self.db.execute('DELETE FROM shots WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\story_engine.py:86: self.db.execute('DELETE FROM story_scenes WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\story_engine.py:209: self.db.execute(
+src\az_enterprise\core\story_engine.py:213: self.db.execute(
+src\az_enterprise\core\story_engine_runtime.py:103: self.db.execute('DELETE FROM story_beats WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\story_engine_runtime.py:104: self.db.execute('DELETE FROM story_montage_items WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\story_engine_runtime.py:105: self.db.execute('DELETE FROM story_missing_requirements WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\story_engine_runtime.py:119: self.db.execute('''INSERT INTO story_beats(project_id,block,start_sec,end_sec,shot_count,assigned_count,missing_count,dominant_need,emotion,summary,risk)
+src\az_enterprise\core\story_engine_runtime.py:123: self.db.execute('UPDATE story_scenes SET coverage=?, status=? WHERE id=? AND project_id=?',
+src\az_enterprise\core\story_engine_runtime.py:133: self.db.execute('''INSERT INTO story_montage_items(project_id,shot_id,scene_id,scene_title,shot_index,start_sec,end_sec,duration_sec,narration_cue,visual_need,emotion,asset_id,asset_filename,asset_type,cv_grade,transition,camera_motion,status,action)
+src\az_enterprise\core\story_engine_runtime.py:139: self.db.execute('''INSERT INTO story_missing_requirements(project_id,scene_id,scene_title,visual_need,priority,prompt,reason,status)
+src\az_enterprise\core\story_engine_runtime.py:166: self.db.execute('INSERT INTO story_runtime_reports(project_id,readiness,report_json) VALUES(?,?,?)',
+src\az_enterprise\core\test_center.py:26: self.db.execute("""CREATE TABLE IF NOT EXISTS rc1_test_cases(
+src\az_enterprise\core\test_center.py:37: self.db.execute("DELETE FROM rc1_test_cases WHERE project_id=?", (self.project_id,))
+src\az_enterprise\core\test_center.py:60: self.db.execute("INSERT INTO rc1_test_cases(project_id,suite,title,status,expected,actual,severity) VALUES(?,?,?,?,?,?,?)",
+src\az_enterprise\core\visual_intelligence.py:182: self.db.execute('''INSERT OR REPLACE INTO visual_profiles(asset_id,project_id,profile_json,style_score,plan_type,palette,created_at)
+src\az_enterprise\core\visual_intelligence.py:186: self.db.execute('UPDATE assets SET width=?, height=? WHERE id=?', (width,height,r['id']))
+src\az_enterprise\core\visual_intelligence.py:197: self.db.execute('DELETE FROM asset_similarity WHERE project_id=?', (self.project_id,))
+src\az_enterprise\core\visual_intelligence.py:206: self.db.execute('INSERT INTO asset_similarity(project_id,asset_id_a,asset_id_b,score,reason) VALUES(?,?,?,?,?)',
+src\az_enterprise\core\workflow.py:46: self.db.execute('INSERT INTO workflow_jobs(project_id,stage,status,details) VALUES(?,?,?,?)',
+src\az_enterprise\core\workflow.py:66: self.db.execute('INSERT INTO production_snapshots(project_id,summary_json) VALUES(?,?)', (self.project_id, json.dumps(production_state, ensure_ascii=False)))
+tools\media_factory_rc1.py:381: db.execute(
+tools\repair_semantic_asset_ids.py:200: db.execute(
+tools\semantic_director_v1.py:535: db.execute(
+tools\semantic_director_v1.py:673: db.execute(
+tools\semantic_director_v1.py:713: db.execute(
+tools\semantic_director_v1_1_multimedia.py:568: db.execute(
+tools\semantic_director_v1_1_multimedia.py:751: db.execute(
+tools\semantic_director_v1_1_multimedia.py:796: db.execute(
+tools\semantic_director_v1_2_temporal.py:694: db.execute(
+tools\semantic_director_v1_2_temporal.py:900: db.execute(
+tools\semantic_director_v1_2_temporal.py:948: db.execute(
+tools\visual_intelligence_v1.py:468: db.execute(
+tools\visual_intelligence_v1.py:617: db.execute(
+tools\visual_intelligence_v1_1_multimedia.py:466: db.execute(
+tests\test_director_ai_alpha25.py:25: db.execute(
+tests\test_director_ai_alpha25.py:40: db.execute(
+tests\test_movie_runtime_rc1.py:10: db.execute(
+tests\test_movie_runtime_rc1.py:23: db.execute(
+tests\test_movie_runtime_rc1.py:42: db.execute(
+tests\test_movie_runtime_rc1_assets.py:9: db.execute(
+tests\test_rc2_asset_schema_migration.py:38: connection.execute(
+tests\test_rc2_asset_schema_migration.py:60: connection.execute(
+tests\test_rc2_asset_schema_migration.py:116: connection.execute(
+tests\test_rc2_asset_schema_migration.py:132: connection.execute(
+tests\test_rc2_asset_schema_migration.py:211: db.execute(
+tests\test_rc2_asset_schema_migration.py:231: db.execute(
+tests\test_rc2_timeline_authority.py:50: db.execute(
+tests\test_rc2_timeline_authority.py:58: db.execute(
+tests\test_rc2_timeline_authority.py:82: db.execute(
+tests\test_rc2_timeline_production_script.py:81: db.execute(
+tests\test_rc2_timeline_production_script.py:106: db.execute(
+tests\test_rc2_timeline_project_discovery.py:21: db.execute(
+tests\test_rc2_timeline_project_discovery.py:45: db.execute(
+tests\test_story_engine_semantic_rc26.py:52: db.execute(
+tests\test_story_engine_semantic_rc26.py:73: db.execute(
+tests\test_visual_semantic_analyzer_rc2.py:100: db.execute(
+tests\test_visual_semantic_analyzer_rc2.py:116: db.execute(
+
+======================================================================
+SEARCH PATTERN: __main__
+======================================================================
+src\az_enterprise\cli.py:186: if __name__ == '__main__':
+src\az_enterprise\timeline_viewer_app.py:59: if __name__=='__main__': main()
+src\az_enterprise\core\rc2_cli.py:56: if __name__ == "__main__":
+src\az_enterprise\ui\app.py:722: if __name__ == '__main__':
+tools\autonomy_audit_rc2.py:834: if __name__ == "__main__":
+tools\build_asset_contact_sheets.py:303: if __name__ == "__main__":
+tools\director_core_rc1.py:857: if __name__ == "__main__":
+tools\franklin_autopilot.py:554: if __name__ == "__main__":
+tools\media_factory_rc1.py:476: if __name__ == "__main__":
+tools\repair_semantic_asset_ids.py:423: if __name__ == "__main__":
+tools\semantic_director_v1.py:900: if __name__ == "__main__":
+tools\semantic_director_v1_1_multimedia.py:1045: if __name__ == "__main__":
+tools\semantic_director_v1_2_temporal.py:1287: if __name__ == "__main__":
+tools\visual_intelligence_v1.py:765: if __name__ == "__main__":
+tools\visual_intelligence_v1_1_multimedia.py:726: if __name__ == "__main__":
+tests\test_director_ai_alpha25.py:118: if __name__ == "__main__":
+tests\test_execution_graph_alpha291.py:46: if __name__ == "__main__":
+tests\test_postproduction_quality_rc2.py:62: if __name__ == "__main__":
+tests\test_postproduction_rhythm_alpha271.py:73: if __name__ == "__main__":
+tests\test_postproduction_visual_alpha272.py:79: if __name__ == "__main__":
+tests\test_project_profiles_alpha273.py:106: if __name__ == "__main__":
+tests\test_recommendation_engine_alpha28.py:171: if __name__ == "__main__":
+
+======================================================================
+SEARCH PATTERN: argparse
+======================================================================
+src\az_enterprise\cli.py:2: import argparse, json
+src\az_enterprise\cli.py:15: parser = argparse.ArgumentParser()
+src\az_enterprise\core\rc2_cli.py:3: import argparse
+src\az_enterprise\core\rc2_cli.py:13: def build_parser() -> argparse.ArgumentParser:
+src\az_enterprise\core\rc2_cli.py:14: parser = argparse.ArgumentParser(description="ATLAS ZERO RC2")
+tools\director_core_rc1.py:3: import argparse
+tools\director_core_rc1.py:842: def parse_args() -> argparse.Namespace:
+tools\director_core_rc1.py:843: parser = argparse.ArgumentParser(
+
+======================================================================
+SEARCH PATTERN: click\.command
+======================================================================
+
+======================================================================
+SEARCH PATTERN: typer\.
+======================================================================
+
+======================================================================
+SEARCH PATTERN: streamlit run
+======================================================================

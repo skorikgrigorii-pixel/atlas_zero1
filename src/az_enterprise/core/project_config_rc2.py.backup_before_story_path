@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -41,14 +41,6 @@ class ProjectConfigRC2:
     @property
     def rc2_dir(self) -> Path:
         return self.export_dir / "rc2"
-
-    @property
-    def story_strategy_result_path(self) -> Path:
-        return (
-            self.rc2_dir
-            / "story_strategy"
-            / "story_strategy_result.json"
-        )
 
     @property
     def timeline_path(self) -> Path:
