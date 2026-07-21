@@ -80,7 +80,7 @@ class StoryStrategyEngineRC2:
     def __init__(
         self,
         project_id: str,
-        target_duration_sec: float = 1500.0,
+        target_duration_sec: float = 810.0,
         language: str = "ru",
         use_existing_assets_only: bool = True,
         allow_generated_visuals: bool = False,

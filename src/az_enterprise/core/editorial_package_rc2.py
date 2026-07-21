@@ -13,7 +13,7 @@ class EditorialPackageRC2:
         project_id: str,
         title: str,
         language: str = "ru",
-        minimum_duration_sec: float = 1500.0,
+        minimum_duration_sec: float = 720.0,
         use_existing_assets_only: bool = True,
         allow_generated_visuals: bool = False,
     ) -> None:
@@ -220,7 +220,7 @@ class EditorialPackageRC2:
                 "deliverable":
                     "Полный документальный сценарий и текст диктора",
                 "language": "Русский",
-                "minimum_duration_minutes": 25,
+                "minimum_duration_minutes": 12,
                 "target_words": 3300,
                 "style": (
                     "Современный документальный фильм: "
