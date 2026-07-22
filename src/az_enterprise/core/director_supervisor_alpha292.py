@@ -114,6 +114,7 @@ class DirectorSupervisor:
         runtime_results: list[Any] = []
         targets = initial_targets
         rework_cycles = 0
+        previous_signature: tuple[str, ...] | None = None
 
         while True:
             result = self._runtime.run(targets=targets)
@@ -149,6 +150,29 @@ class DirectorSupervisor:
                 )
 
             targets = self._targets_from_actions(decision.actions)
+            signature = tuple(targets)
+            if signature == previous_signature:
+                escalation = DirectorDecision(
+                    status=DecisionStatus.ESCALATE,
+                    reason=(
+                        "Rework produced no new corrective plan; "
+                        f"repeated targets: {', '.join(signature)}"
+                    ),
+                    confidence=1.0,
+                    metadata={
+                        "last_decision": decision.status.value,
+                        "repeated_targets": signature,
+                    },
+                )
+                self._log.append(escalation)
+                return SupervisorResult(
+                    final_decision=escalation,
+                    cycles=len(runtime_results),
+                    runtime_results=tuple(runtime_results),
+                    decisions=self._log.records(),
+                )
+
+            previous_signature = signature
             rework_cycles += 1
 
     @staticmethod

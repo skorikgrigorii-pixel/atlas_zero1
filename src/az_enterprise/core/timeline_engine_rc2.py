@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 import csv
 import json
 from pathlib import Path
@@ -424,6 +426,68 @@ class TimelineEngineRC2:
                 target_shots,
                 1,
             )
+
+            # Video assets cannot be displayed beyond their physical source
+            # duration. Increase the number of equal-duration timeline shots
+            # when necessary, while preserving the authoritative duration of
+            # the scene.
+            video_durations = []
+
+            for asset_id in asset_ids:
+                resolved_asset = assets.get(
+                    asset_id
+                )
+
+                if resolved_asset is None:
+                    continue
+
+                media_type = str(
+                    resolved_asset.get(
+                        "media_type",
+                        "",
+                    )
+                    or ""
+                ).strip().lower()
+
+                if media_type != "video":
+                    continue
+
+                try:
+                    asset_duration = float(
+                        resolved_asset.get(
+                            "duration_sec",
+                            0.0,
+                        )
+                        or 0.0
+                    )
+                except (TypeError, ValueError):
+                    asset_duration = 0.0
+
+                if asset_duration > 0.0:
+                    video_durations.append(
+                        asset_duration
+                    )
+
+            if video_durations:
+                # Small safety margin protects against container/ffprobe
+                # rounding differences near the physical end of a file.
+                shortest_video_duration = max(
+                    0.05,
+                    min(video_durations) - 0.05,
+                )
+
+                duration_limited_shots = max(
+                    1,
+                    math.ceil(
+                        scene_duration
+                        / shortest_video_duration
+                    ),
+                )
+
+                target_shots = max(
+                    target_shots,
+                    duration_limited_shots,
+                )
 
             transition = dict(
                 scene.get(

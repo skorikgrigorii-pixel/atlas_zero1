@@ -418,6 +418,7 @@ class CVModel:
                 image_results.append(item)
             item['quality_flags'] = self._quality_flags(item)
             self._store_metadata(r, item)
+            self._sync_asset_metadata(r, item)
             self._merge_visual_profile(r, item)
         duplicate_pairs = self._similar_from_phash(image_results)
         all_items = image_results + video_results
@@ -460,6 +461,36 @@ class CVModel:
                 'INSERT INTO cv_scene_candidates(project_id,asset_id,scene_index,time_sec,confidence,reason) VALUES(?,?,?,?,?,?)',
                 (self.project_id, asset_row['id'], int(sc.get('scene_index') or 0), float(sc.get('time_sec') or 0), float(sc.get('confidence') or 0), sc.get('reason') or ''),
             )
+
+    def _sync_asset_metadata(
+        self,
+        asset_row,
+        item: dict[str, Any],
+    ) -> None:
+        """
+        Synchronize technical media metadata with the canonical assets table.
+
+        AssignmentPolicyRC2, TimelineEngineRC2 and RenderEngineRC2 read
+        duration, width and height from assets.
+        """
+        self.db.execute(
+            """
+            UPDATE assets
+            SET
+                width=?,
+                height=?,
+                duration_sec=?
+            WHERE id=?
+              AND project_id=?
+            """,
+            (
+                int(item.get("width") or 0),
+                int(item.get("height") or 0),
+                float(item.get("duration_sec") or 0.0),
+                asset_row["id"],
+                self.project_id,
+            ),
+        )
 
     def _merge_visual_profile(self, asset_row, item: dict[str, Any]) -> None:
         old = self.db.one('SELECT profile_json FROM visual_profiles WHERE asset_id=?', (asset_row['id'],))

@@ -1,0 +1,2395 @@
+{
+  "generated_at": "2026-07-22T20:02:16.075714+00:00",
+  "root": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\src\\az_enterprise\\core",
+  "summary": {
+    "modules_analyzed": 21,
+    "syntax_errors": 0
+  },
+  "canonical_orchestrator": "director_core_rc2.py",
+  "canonical_chain": [
+    {
+      "module": "asset_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": false,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "visual_semantic_analyzer_rc2.py",
+      "exists": true,
+      "imported_by_director_core": false,
+      "reads_json": false,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "event_discovery_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": false,
+      "reads_json": true,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "story_strategy_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": false,
+      "reads_json": true,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "story_engine.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": false,
+      "writes_json": true,
+      "json_literals": []
+    },
+    {
+      "module": "assignment_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": false,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "timeline_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": true,
+      "writes_json": true,
+      "json_literals": [
+        ". Expected production_script.json in the project script directory.",
+        "production_script*.json",
+        "production_script.json"
+      ]
+    },
+    {
+      "module": "voice_production_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": false,
+      "reads_json": true,
+      "writes_json": true,
+      "json_literals": [
+        "production_script.json",
+        "voice_manifest.json",
+        "voice_report.json"
+      ]
+    },
+    {
+      "module": "audio_composer_rc2.py",
+      "exists": true,
+      "imported_by_director_core": false,
+      "reads_json": false,
+      "writes_json": false,
+      "json_literals": []
+    },
+    {
+      "module": "render_engine_rc2.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": true,
+      "writes_json": true,
+      "json_literals": [
+        "native_timeline_model.json",
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json",
+        "timeline.json"
+      ]
+    },
+    {
+      "module": "quality_gate_rc2.py",
+      "exists": true,
+      "imported_by_director_core": true,
+      "reads_json": true,
+      "writes_json": true,
+      "json_literals": []
+    }
+  ],
+  "missing_direct_imports": [
+    "visual_semantic_analyzer_rc2.py",
+    "event_discovery_engine_rc2.py",
+    "story_strategy_engine_rc2.py",
+    "voice_production_engine_rc2.py",
+    "audio_composer_rc2.py"
+  ],
+  "orchestrators": {
+    "director_core_rc2.py": {
+      "path": "director_core_rc2.py",
+      "imports": [
+        ".asset_engine_rc2",
+        ".assignment_engine_rc2",
+        ".database",
+        ".director_ai_runtime",
+        ".director_policy_alpha293",
+        ".director_policy_evaluator_alpha293",
+        ".director_supervisor_alpha292",
+        ".production_state_rc2",
+        ".project_config_rc2",
+        ".quality_gate_rc2",
+        ".render_engine_rc2",
+        ".runtime_governance_rc2",
+        ".story_engine",
+        ".timeline_engine_rc2",
+        "__future__",
+        "contextlib",
+        "dataclasses",
+        "json",
+        "os",
+        "typing"
+      ],
+      "classes": [
+        "StageDefinition",
+        "_SupervisedRuntimeAdapter",
+        "DirectorCoreRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "__init__",
+        "_default_progress",
+        "plan",
+        "_first_incomplete_stage",
+        "_exclusive_run",
+        "_run_stage",
+        "_run_story_stage",
+        "_stage_services",
+        "_normalize_targets",
+        "run_targets",
+        "run",
+        "_walk_mappings",
+        "_collect_issue_codes",
+        "_generate_temporal_report",
+        "_rewrite_timeline_duration",
+        "_strengthen_opening",
+        "_run_supervised_targets",
+        "_run_director_ai_analysis",
+        "_recommended_targets_from_director_ai",
+        "_recommended_targets_from_quality",
+        "_build_supervisor_report",
+        "default_supervisor_policy",
+        "run_supervised"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "StoryEngine",
+          "line": 211
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "AssetEngineRC2",
+          "line": 224
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "AssignmentEngineRC2",
+          "line": 226
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "TimelineEngineRC2",
+          "line": 230
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "RenderEngineRC2",
+          "line": 234
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "QualityGateRC2",
+          "line": 238
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "quality.get",
+          "line": 300
+        },
+        {
+          "scope": "DirectorCoreRC2._generate_temporal_report",
+          "callee": "timeline_path.exists",
+          "line": 365
+        },
+        {
+          "scope": "DirectorCoreRC2._generate_temporal_report",
+          "callee": "timeline_path.read_text",
+          "line": 370
+        },
+        {
+          "scope": "DirectorCoreRC2._run_supervised_targets",
+          "callee": "self._rewrite_timeline_duration",
+          "line": 508
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "quality.get",
+          "line": 647
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "self._recommended_targets_from_quality",
+          "line": 663
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "quality.get",
+          "line": 682
+        },
+        {
+          "scope": "DirectorCoreRC2.default_supervisor_policy",
+          "callee": "QualityProfile",
+          "line": 702
+        }
+      ]
+    },
+    "pipeline_runtime.py": {
+      "path": "pipeline_runtime.py",
+      "imports": [
+        ".acceptance_center",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".dependency_resolver_alpha31",
+        ".director_ai",
+        ".director_ai_runtime",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".franklin_e2e_runtime",
+        ".integrations",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".module_registry_alpha31",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_pro",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".story_engine_runtime",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".workflow",
+        ".working_state_auditor",
+        "__future__",
+        "datetime",
+        "json",
+        "os",
+        "pathlib",
+        "resource",
+        "time",
+        "traceback",
+        "typing",
+        "uuid"
+      ],
+      "classes": [
+        "PipelineRunManager"
+      ],
+      "functions": [
+        "__init__",
+        "_ensure_schema",
+        "_register_runtime_modules",
+        "_steps",
+        "module_registry_snapshot",
+        "_step_preflight",
+        "_step_scan_assets",
+        "_step_cv_model",
+        "_step_visual_intelligence",
+        "_step_build_shots",
+        "_step_story_runtime",
+        "_step_director_ai_runtime",
+        "_step_director_ai",
+        "_step_live_api_test",
+        "_step_integrations",
+        "_step_api_queue",
+        "_step_api_safe_run",
+        "_step_quality",
+        "_step_readiness_gate",
+        "_step_timeline_package",
+        "_step_native_timeline",
+        "_step_native_viewer",
+        "_step_native_viewer_pro",
+        "_step_timeline_viewer_2",
+        "_step_cv_review_board",
+        "_step_capcut_bridge",
+        "_step_final_assembly_pack",
+        "_step_montage_workbench",
+        "_step_local_autopilot",
+        "_step_operator_console",
+        "_step_acceptance",
+        "_step_test_center",
+        "_step_production_state",
+        "_step_working_state_audit",
+        "_step_franklin_e2e",
+        "_step_export_all",
+        "_counts",
+        "count",
+        "_log",
+        "_event",
+        "_resource_snapshot",
+        "_update_graph",
+        "_emit_subprogress",
+        "run",
+        "retry_failed_tasks",
+        "_safe_json",
+        "_export_pipeline_graph",
+        "_export_run_report"
+      ],
+      "json_literals": [
+        "pipeline_graph.json",
+        "pipeline_run_report.json",
+        "pipeline_task_events.json",
+        "pipeline_task_queue.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "PipelineRunManager._step_scan_assets",
+          "callee": "AssetIntelligence",
+          "line": 234
+        },
+        {
+          "scope": "PipelineRunManager._step_visual_intelligence",
+          "callee": "analyze_assets",
+          "line": 245
+        },
+        {
+          "scope": "PipelineRunManager._step_build_shots",
+          "callee": "StoryEngine",
+          "line": 249
+        },
+        {
+          "scope": "PipelineRunManager._step_story_runtime",
+          "callee": "StoryEngineRuntime",
+          "line": 253
+        },
+        {
+          "scope": "PipelineRunManager._step_director_ai",
+          "callee": "assign_assets",
+          "line": 259
+        },
+        {
+          "scope": "PipelineRunManager._step_quality",
+          "callee": "QualityCenter",
+          "line": 279
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_package",
+          "callee": "export_timeline_package",
+          "line": 285
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_package",
+          "callee": "TimelineStudio",
+          "line": 285
+        },
+        {
+          "scope": "PipelineRunManager._step_native_timeline",
+          "callee": "NativeTimelineModel",
+          "line": 288
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_viewer_2",
+          "callee": "TimelineViewer2",
+          "line": 297
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 452
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 469
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 490
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 501
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 513
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 526
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 538
+        }
+      ]
+    },
+    "media_orchestrator.py": {
+      "path": "media_orchestrator.py",
+      "imports": [
+        ".database",
+        ".events",
+        ".job_queue",
+        ".paths",
+        ".production_state",
+        ".project_config_rc2",
+        ".project_state",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [],
+      "functions": [
+        "run_project",
+        "log",
+        "ensure_job",
+        "execute_stage",
+        "_run_stage_adapter"
+      ],
+      "json_literals": [
+        "/publish/status.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "run_project",
+          "callee": "EventBus",
+          "line": 37
+        },
+        {
+          "scope": "run_project.execute_stage",
+          "callee": "event_bus.emit",
+          "line": 73
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "TimelineEngineRC2",
+          "line": 121
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "RenderEngineRC2",
+          "line": 122
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "render.get",
+          "line": 128
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "render.get",
+          "line": 129
+        }
+      ]
+    },
+    "workflow.py": {
+      "path": "workflow.py",
+      "imports": [
+        ".acceptance_center",
+        ".api_gateway",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".control_layer_rc2",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".director_ai",
+        ".events",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".integrations",
+        ".live_api_layer",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".working_state_auditor",
+        "__future__",
+        "csv",
+        "json",
+        "pathlib"
+      ],
+      "classes": [
+        "WorkflowEngine"
+      ],
+      "functions": [
+        "__init__",
+        "_job",
+        "run_pipeline",
+        "export_all",
+        "_write_command_center_html"
+      ],
+      "json_literals": [
+        "api_готовность.json",
+        "api_запуски.json",
+        "cv_model_report.json",
+        "export_validation.json",
+        "franklin_acceptance_report.json",
+        "live_api_layer_report.json",
+        "live_api_test_suite.json",
+        "live_connectors_report.json",
+        "local_autopilot_report.json",
+        "montage_workbench.json",
+        "native_timeline_model.json",
+        "native_viewer_model_rc.json",
+        "preflight_report.json",
+        "production_state.json",
+        "rc1_completion_plan.json",
+        "rc1_test_report.json",
+        "timeline_operator_view.json",
+        "timeline_viewer_2_model.json",
+        "working_state_audit.json",
+        "готовность_rc1.json",
+        "интеграции.json",
+        "очередь_api.json",
+        "решения_режиссера.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "WorkflowEngine.__init__",
+          "callee": "EventBus",
+          "line": 41
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "AssetIntelligence",
+          "line": 53
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "analyze_assets",
+          "line": 54
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "StoryEngine",
+          "line": 55
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "assign_assets",
+          "line": 56
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "QualityCenter",
+          "line": 61
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "QualityCenter",
+          "line": 62
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "export_timeline_package",
+          "line": 63
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "TimelineStudio",
+          "line": 63
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "FinalTimelineViewer",
+          "line": 72
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "NativeTimelineModel",
+          "line": 78
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "TimelineViewer2",
+          "line": 85
+        },
+        {
+          "scope": "WorkflowEngine.export_all",
+          "callee": "timeline_csv.open",
+          "line": 97
+        }
+      ]
+    },
+    "production_director.py": {
+      "path": "production_director.py",
+      "imports": [
+        ".paths",
+        "__future__",
+        "csv",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "ProductionDirector"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "_build_status",
+        "_decide_next_step",
+        "_build_brief",
+        "_stage_name",
+        "_read_json",
+        "_read_csv_rows"
+      ],
+      "json_literals": [
+        "asset_inventory.json",
+        "missing_story_requirements.json",
+        "production_director_status.json",
+        "production_state.json",
+        "render_manifest.json",
+        "render_report.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "asset_inventory.get",
+          "line": 47
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_manifest.get",
+          "line": 58
+        }
+      ]
+    },
+    "control_layer_rc2.py": {
+      "path": "control_layer_rc2.py",
+      "imports": [
+        ".database",
+        ".project_config_rc2",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "datetime",
+        "json",
+        "typing"
+      ],
+      "classes": [
+        "RC2ReadinessPlanner",
+        "RC2ControlLayer"
+      ],
+      "functions": [
+        "__init__",
+        "evaluate",
+        "plan",
+        "_write_reports",
+        "__init__",
+        "build_timeline",
+        "render"
+      ],
+      "json_literals": [
+        "readiness_rc2.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.timeline_path.exists",
+          "line": 21
+        },
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.canonical_render_path.exists",
+          "line": 22
+        },
+        {
+          "scope": "RC2ReadinessPlanner.plan",
+          "callee": "self.evaluate",
+          "line": 42
+        },
+        {
+          "scope": "RC2ControlLayer.build_timeline",
+          "callee": "TimelineEngineRC2",
+          "line": 95
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.config.timeline_path.exists",
+          "line": 99
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.build_timeline",
+          "line": 100
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "RenderEngineRC2",
+          "line": 101
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "render_report.get",
+          "line": 108
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "render_report.get",
+          "line": 109
+        }
+      ]
+    }
+  },
+  "modules": {
+    "asset_engine_rc2.py": {
+      "path": "asset_engine_rc2.py",
+      "imports": [
+        ".asset_intelligence",
+        ".database",
+        ".project_config_rc2",
+        "__future__",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "AssetEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "AssetEngineRC2.run",
+          "callee": "AssetIntelligence",
+          "line": 30
+        }
+      ]
+    },
+    "assignment_engine_rc2.py": {
+      "path": "assignment_engine_rc2.py",
+      "imports": [
+        ".assignment_policy_rc2",
+        ".database",
+        ".director_ai",
+        ".project_config_rc2",
+        "__future__",
+        "typing"
+      ],
+      "classes": [
+        "AssignmentEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "AssignmentEngineRC2.run",
+          "callee": "AssignmentPolicyRC2",
+          "line": 19
+        }
+      ]
+    },
+    "assignment_policy_rc2.py": {
+      "path": "assignment_policy_rc2.py",
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "collections",
+        "json",
+        "re",
+        "typing"
+      ],
+      "classes": [
+        "AssignmentPolicyRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_tokens",
+        "_parse_required_assets",
+        "_shot_belongs_to_scene",
+        "_preferred_assets_for_shot",
+        "_max_use",
+        "_asset_fits_shot",
+        "_select_story_asset",
+        "score",
+        "_write_assignment",
+        "_write_missing",
+        "run"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "AssignmentPolicyRC2.__init__",
+          "callee": "EventBus",
+          "line": 32
+        },
+        {
+          "scope": "AssignmentPolicyRC2._preferred_assets_for_shot",
+          "callee": "self._parse_required_assets",
+          "line": 144
+        },
+        {
+          "scope": "AssignmentPolicyRC2._select_story_asset",
+          "callee": "self._asset_fits_shot",
+          "line": 196
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._preferred_assets_for_shot",
+          "line": 426
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._select_story_asset",
+          "line": 431
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._write_assignment",
+          "line": 454
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._asset_fits_shot",
+          "line": 470
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._write_assignment",
+          "line": 493
+        }
+      ]
+    },
+    "audio_composer_rc2.py": {
+      "path": "audio_composer_rc2.py",
+      "imports": [
+        ".audio_renderer_rc2",
+        ".audio_timeline_rc2",
+        ".mux_engine_rc2",
+        "__future__",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "NativeAudioComposerRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "NativeAudioComposerRC2.__init__",
+          "callee": "AudioRendererRC2",
+          "line": 17
+        },
+        {
+          "scope": "NativeAudioComposerRC2.run",
+          "callee": "AudioTimelineBuilderRC2.build",
+          "line": 34
+        },
+        {
+          "scope": "NativeAudioComposerRC2.run",
+          "callee": "self.renderer.run",
+          "line": 36
+        },
+        {
+          "scope": "NativeAudioComposerRC2.run",
+          "callee": "self.muxer.run",
+          "line": 40
+        }
+      ]
+    },
+    "control_layer_rc2.py": {
+      "path": "control_layer_rc2.py",
+      "imports": [
+        ".database",
+        ".project_config_rc2",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "datetime",
+        "json",
+        "typing"
+      ],
+      "classes": [
+        "RC2ReadinessPlanner",
+        "RC2ControlLayer"
+      ],
+      "functions": [
+        "__init__",
+        "evaluate",
+        "plan",
+        "_write_reports",
+        "__init__",
+        "build_timeline",
+        "render"
+      ],
+      "json_literals": [
+        "readiness_rc2.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.timeline_path.exists",
+          "line": 21
+        },
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.canonical_render_path.exists",
+          "line": 22
+        },
+        {
+          "scope": "RC2ReadinessPlanner.plan",
+          "callee": "self.evaluate",
+          "line": 42
+        },
+        {
+          "scope": "RC2ControlLayer.build_timeline",
+          "callee": "TimelineEngineRC2",
+          "line": 95
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.config.timeline_path.exists",
+          "line": 99
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.build_timeline",
+          "line": 100
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "RenderEngineRC2",
+          "line": 101
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "render_report.get",
+          "line": 108
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "render_report.get",
+          "line": 109
+        }
+      ]
+    },
+    "director_core_rc2.py": {
+      "path": "director_core_rc2.py",
+      "imports": [
+        ".asset_engine_rc2",
+        ".assignment_engine_rc2",
+        ".database",
+        ".director_ai_runtime",
+        ".director_policy_alpha293",
+        ".director_policy_evaluator_alpha293",
+        ".director_supervisor_alpha292",
+        ".production_state_rc2",
+        ".project_config_rc2",
+        ".quality_gate_rc2",
+        ".render_engine_rc2",
+        ".runtime_governance_rc2",
+        ".story_engine",
+        ".timeline_engine_rc2",
+        "__future__",
+        "contextlib",
+        "dataclasses",
+        "json",
+        "os",
+        "typing"
+      ],
+      "classes": [
+        "StageDefinition",
+        "_SupervisedRuntimeAdapter",
+        "DirectorCoreRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "__init__",
+        "_default_progress",
+        "plan",
+        "_first_incomplete_stage",
+        "_exclusive_run",
+        "_run_stage",
+        "_run_story_stage",
+        "_stage_services",
+        "_normalize_targets",
+        "run_targets",
+        "run",
+        "_walk_mappings",
+        "_collect_issue_codes",
+        "_generate_temporal_report",
+        "_rewrite_timeline_duration",
+        "_strengthen_opening",
+        "_run_supervised_targets",
+        "_run_director_ai_analysis",
+        "_recommended_targets_from_director_ai",
+        "_recommended_targets_from_quality",
+        "_build_supervisor_report",
+        "default_supervisor_policy",
+        "run_supervised"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "StoryEngine",
+          "line": 211
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "AssetEngineRC2",
+          "line": 224
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "AssignmentEngineRC2",
+          "line": 226
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "TimelineEngineRC2",
+          "line": 230
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "RenderEngineRC2",
+          "line": 234
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "QualityGateRC2",
+          "line": 238
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "quality.get",
+          "line": 300
+        },
+        {
+          "scope": "DirectorCoreRC2._generate_temporal_report",
+          "callee": "timeline_path.exists",
+          "line": 365
+        },
+        {
+          "scope": "DirectorCoreRC2._generate_temporal_report",
+          "callee": "timeline_path.read_text",
+          "line": 370
+        },
+        {
+          "scope": "DirectorCoreRC2._run_supervised_targets",
+          "callee": "self._rewrite_timeline_duration",
+          "line": 508
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "quality.get",
+          "line": 647
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "self._recommended_targets_from_quality",
+          "line": 663
+        },
+        {
+          "scope": "DirectorCoreRC2._build_supervisor_report",
+          "callee": "quality.get",
+          "line": 682
+        },
+        {
+          "scope": "DirectorCoreRC2.default_supervisor_policy",
+          "callee": "QualityProfile",
+          "line": 702
+        }
+      ]
+    },
+    "event_discovery_engine_rc2.py": {
+      "path": "event_discovery_engine_rc2.py",
+      "imports": [
+        ".visual_understanding_contract_rc2",
+        "__future__",
+        "collections",
+        "dataclasses",
+        "json",
+        "pathlib",
+        "statistics",
+        "typing"
+      ],
+      "classes": [
+        "ReviewAssetRC2",
+        "EventDiscoveryEngineRC2"
+      ],
+      "functions": [
+        "to_dict",
+        "__init__",
+        "run",
+        "_decision",
+        "_build_off_topic",
+        "_build_review",
+        "_build_clusters",
+        "_duration_for",
+        "_cluster_statistics",
+        "load_semantic_report"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "EventDiscoveryEngineRC2.run",
+          "callee": "semantic_report.get",
+          "line": 135
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2.run",
+          "callee": "semantic_report.get",
+          "line": 167
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_off_topic",
+          "callee": "OffTopicAssetRC2",
+          "line": 282
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_review",
+          "callee": "ReviewAssetRC2",
+          "line": 354
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_clusters",
+          "callee": "EVENT_STORY_IMPORTANCE.get",
+          "line": 448
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_clusters",
+          "callee": "EventClusterRC2",
+          "line": 467
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_clusters",
+          "callee": "EVENT_TITLES_RU.get",
+          "line": 470
+        },
+        {
+          "scope": "EventDiscoveryEngineRC2._build_clusters",
+          "callee": "EVENT_DESCRIPTIONS_RU.get",
+          "line": 475
+        }
+      ]
+    },
+    "media_orchestrator.py": {
+      "path": "media_orchestrator.py",
+      "imports": [
+        ".database",
+        ".events",
+        ".job_queue",
+        ".paths",
+        ".production_state",
+        ".project_config_rc2",
+        ".project_state",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [],
+      "functions": [
+        "run_project",
+        "log",
+        "ensure_job",
+        "execute_stage",
+        "_run_stage_adapter"
+      ],
+      "json_literals": [
+        "/publish/status.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "run_project",
+          "callee": "EventBus",
+          "line": 37
+        },
+        {
+          "scope": "run_project.execute_stage",
+          "callee": "event_bus.emit",
+          "line": 73
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "TimelineEngineRC2",
+          "line": 121
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "RenderEngineRC2",
+          "line": 122
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "render.get",
+          "line": 128
+        },
+        {
+          "scope": "_run_stage_adapter",
+          "callee": "render.get",
+          "line": 129
+        }
+      ]
+    },
+    "pipeline_runtime.py": {
+      "path": "pipeline_runtime.py",
+      "imports": [
+        ".acceptance_center",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".dependency_resolver_alpha31",
+        ".director_ai",
+        ".director_ai_runtime",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".franklin_e2e_runtime",
+        ".integrations",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".module_registry_alpha31",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_pro",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".story_engine_runtime",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".workflow",
+        ".working_state_auditor",
+        "__future__",
+        "datetime",
+        "json",
+        "os",
+        "pathlib",
+        "resource",
+        "time",
+        "traceback",
+        "typing",
+        "uuid"
+      ],
+      "classes": [
+        "PipelineRunManager"
+      ],
+      "functions": [
+        "__init__",
+        "_ensure_schema",
+        "_register_runtime_modules",
+        "_steps",
+        "module_registry_snapshot",
+        "_step_preflight",
+        "_step_scan_assets",
+        "_step_cv_model",
+        "_step_visual_intelligence",
+        "_step_build_shots",
+        "_step_story_runtime",
+        "_step_director_ai_runtime",
+        "_step_director_ai",
+        "_step_live_api_test",
+        "_step_integrations",
+        "_step_api_queue",
+        "_step_api_safe_run",
+        "_step_quality",
+        "_step_readiness_gate",
+        "_step_timeline_package",
+        "_step_native_timeline",
+        "_step_native_viewer",
+        "_step_native_viewer_pro",
+        "_step_timeline_viewer_2",
+        "_step_cv_review_board",
+        "_step_capcut_bridge",
+        "_step_final_assembly_pack",
+        "_step_montage_workbench",
+        "_step_local_autopilot",
+        "_step_operator_console",
+        "_step_acceptance",
+        "_step_test_center",
+        "_step_production_state",
+        "_step_working_state_audit",
+        "_step_franklin_e2e",
+        "_step_export_all",
+        "_counts",
+        "count",
+        "_log",
+        "_event",
+        "_resource_snapshot",
+        "_update_graph",
+        "_emit_subprogress",
+        "run",
+        "retry_failed_tasks",
+        "_safe_json",
+        "_export_pipeline_graph",
+        "_export_run_report"
+      ],
+      "json_literals": [
+        "pipeline_graph.json",
+        "pipeline_run_report.json",
+        "pipeline_task_events.json",
+        "pipeline_task_queue.json"
+      ],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "PipelineRunManager._step_scan_assets",
+          "callee": "AssetIntelligence",
+          "line": 234
+        },
+        {
+          "scope": "PipelineRunManager._step_visual_intelligence",
+          "callee": "analyze_assets",
+          "line": 245
+        },
+        {
+          "scope": "PipelineRunManager._step_build_shots",
+          "callee": "StoryEngine",
+          "line": 249
+        },
+        {
+          "scope": "PipelineRunManager._step_story_runtime",
+          "callee": "StoryEngineRuntime",
+          "line": 253
+        },
+        {
+          "scope": "PipelineRunManager._step_director_ai",
+          "callee": "assign_assets",
+          "line": 259
+        },
+        {
+          "scope": "PipelineRunManager._step_quality",
+          "callee": "QualityCenter",
+          "line": 279
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_package",
+          "callee": "export_timeline_package",
+          "line": 285
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_package",
+          "callee": "TimelineStudio",
+          "line": 285
+        },
+        {
+          "scope": "PipelineRunManager._step_native_timeline",
+          "callee": "NativeTimelineModel",
+          "line": 288
+        },
+        {
+          "scope": "PipelineRunManager._step_timeline_viewer_2",
+          "callee": "TimelineViewer2",
+          "line": 297
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 452
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 469
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 490
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 501
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 513
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 526
+        },
+        {
+          "scope": "PipelineRunManager.run",
+          "callee": "self._event",
+          "line": 538
+        }
+      ]
+    },
+    "production_director.py": {
+      "path": "production_director.py",
+      "imports": [
+        ".paths",
+        "__future__",
+        "csv",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "ProductionDirector"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "_build_status",
+        "_decide_next_step",
+        "_build_brief",
+        "_stage_name",
+        "_read_json",
+        "_read_csv_rows"
+      ],
+      "json_literals": [
+        "asset_inventory.json",
+        "missing_story_requirements.json",
+        "production_director_status.json",
+        "production_state.json",
+        "render_manifest.json",
+        "render_report.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "asset_inventory.get",
+          "line": 47
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_manifest.get",
+          "line": 58
+        }
+      ]
+    },
+    "project_config_rc2.py": {
+      "path": "project_config_rc2.py",
+      "imports": [
+        ".paths",
+        "__future__",
+        "dataclasses",
+        "pathlib"
+      ],
+      "classes": [
+        "ProjectConfigRC2"
+      ],
+      "functions": [
+        "workspace_dir",
+        "project_dir",
+        "effective_media_source_dir",
+        "export_dir",
+        "rc2_dir",
+        "story_strategy_result_path",
+        "timeline_dir",
+        "timeline_path",
+        "legacy_timeline_path",
+        "native_timeline_model_path",
+        "temporal_summary_path",
+        "master_audio_path",
+        "legacy_master_audio_path",
+        "legacy_render_path",
+        "franklin_legacy_render_path",
+        "canonical_render_path",
+        "state_path",
+        "run_lock_path",
+        "governance_path",
+        "quality_report_path"
+      ],
+      "json_literals": [
+        "native_timeline_model.json",
+        "production_state.json",
+        "quality_report.json",
+        "runtime_governance.json",
+        "story_strategy_result.json",
+        "temporal_assignment_summary.json",
+        "timeline.json"
+      ],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": []
+    },
+    "quality_gate_rc2.py": {
+      "path": "quality_gate_rc2.py",
+      "imports": [
+        ".postproduction_quality_rc2",
+        ".project_config_rc2",
+        ".render_engine_rc2",
+        "__future__",
+        "collections",
+        "json",
+        "typing"
+      ],
+      "classes": [
+        "QualityGateRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_read_json",
+        "run",
+        "add",
+        "_finish"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "timeline_path.exists",
+          "line": 42
+        },
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "timeline_path.exists",
+          "line": 43
+        },
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "render_path.exists",
+          "line": 98
+        },
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "render_path.exists",
+          "line": 100
+        },
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "RenderEngineRC2",
+          "line": 102
+        },
+        {
+          "scope": "QualityGateRC2.run",
+          "callee": "PostProductionQualityRC2",
+          "line": 107
+        },
+        {
+          "scope": "QualityGateRC2._finish",
+          "callee": "self.config.quality_report_path.parent.mkdir",
+          "line": 170
+        },
+        {
+          "scope": "QualityGateRC2._finish",
+          "callee": "self.config.quality_report_path.write_text",
+          "line": 171
+        }
+      ]
+    },
+    "rc2_cli.py": {
+      "path": "rc2_cli.py",
+      "imports": [
+        ".director_core_rc2",
+        ".production_state_rc2",
+        ".project_config_rc2",
+        ".runtime_governance_rc2",
+        "__future__",
+        "argparse",
+        "dataclasses",
+        "json"
+      ],
+      "classes": [],
+      "functions": [
+        "build_parser",
+        "main"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": []
+    },
+    "render_engine_rc2.py": {
+      "path": "render_engine_rc2.py",
+      "imports": [
+        ".audio_composer_rc2",
+        ".project_config_rc2",
+        ".visual_renderer_rc2",
+        "__future__",
+        "dataclasses",
+        "json",
+        "os",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "classes": [
+        "RenderClipRC2",
+        "RenderModelRC2",
+        "RenderEngineRC2"
+      ],
+      "functions": [
+        "to_dict",
+        "to_dict",
+        "__init__",
+        "run",
+        "load_timeline",
+        "_timeline_candidates",
+        "_extract_video_rows",
+        "build_render_model",
+        "_normalize_clip",
+        "validate_render_model",
+        "_validate_audio_inputs",
+        "_run_native_visual_backend",
+        "_compose_phase4_audio",
+        "_run_ffmpeg",
+        "_discover_voice_path",
+        "_discover_music_path",
+        "_first_existing_file",
+        "probe_source",
+        "probe",
+        "_validate_final_probe",
+        "_clip_skip_reason",
+        "_skip_record",
+        "_normalize_transition",
+        "_transition_duration",
+        "_normalize_camera_motion",
+        "_parse_natural_sound_windows",
+        "_normalize_quality_flags",
+        "_as_bool",
+        "_as_float",
+        "_as_int",
+        "_safe_int",
+        "_optional_text",
+        "_emit",
+        "_write_json"
+      ],
+      "json_literals": [
+        "native_timeline_model.json",
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json",
+        "timeline.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "RenderEngineRC2.__init__",
+          "callee": "self.render_dir.mkdir",
+          "line": 140
+        },
+        {
+          "scope": "RenderEngineRC2.run",
+          "callee": "self.load_timeline",
+          "line": 153
+        },
+        {
+          "scope": "RenderEngineRC2.run",
+          "callee": "self.build_render_model",
+          "line": 160
+        },
+        {
+          "scope": "RenderEngineRC2.run",
+          "callee": "self.validate_render_model",
+          "line": 163
+        },
+        {
+          "scope": "RenderEngineRC2.run",
+          "callee": "self._compose_phase4_audio",
+          "line": 182
+        },
+        {
+          "scope": "RenderEngineRC2.load_timeline",
+          "callee": "self._timeline_candidates",
+          "line": 229
+        },
+        {
+          "scope": "RenderEngineRC2.build_render_model",
+          "callee": "self._discover_voice_path",
+          "line": 302
+        },
+        {
+          "scope": "RenderEngineRC2.build_render_model",
+          "callee": "RenderModelRC2",
+          "line": 335
+        },
+        {
+          "scope": "RenderEngineRC2._normalize_clip",
+          "callee": "self._normalize_quality_flags",
+          "line": 427
+        },
+        {
+          "scope": "RenderEngineRC2._normalize_clip",
+          "callee": "RenderClipRC2",
+          "line": 429
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "timeline_overlaps.append",
+          "line": 619
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "timeline_gaps.append",
+          "line": 630
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "asset_use_count.get",
+          "line": 643
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "asset_probes.append",
+          "line": 682
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "asset_use_count.values",
+          "line": 719
+        },
+        {
+          "scope": "RenderEngineRC2.validate_render_model",
+          "callee": "self._validate_audio_inputs",
+          "line": 764
+        },
+        {
+          "scope": "RenderEngineRC2._validate_audio_inputs",
+          "callee": "voice.exists",
+          "line": 812
+        },
+        {
+          "scope": "RenderEngineRC2._validate_audio_inputs",
+          "callee": "voice.is_file",
+          "line": 812
+        },
+        {
+          "scope": "RenderEngineRC2._validate_audio_inputs",
+          "callee": "voice_probe.get",
+          "line": 818
+        },
+        {
+          "scope": "RenderEngineRC2._validate_audio_inputs",
+          "callee": "voice_probe.get",
+          "line": 820
+        },
+        {
+          "scope": "RenderEngineRC2._run_native_visual_backend",
+          "callee": "VisualRendererRC2",
+          "line": 881
+        },
+        {
+          "scope": "RenderEngineRC2._run_native_visual_backend",
+          "callee": "renderer.run",
+          "line": 889
+        },
+        {
+          "scope": "RenderEngineRC2._run_ffmpeg",
+          "callee": "subprocess.run",
+          "line": 1008
+        },
+        {
+          "scope": "RenderEngineRC2.probe_source",
+          "callee": "subprocess.run",
+          "line": 1066
+        },
+        {
+          "scope": "RenderEngineRC2.probe",
+          "callee": "subprocess.run",
+          "line": 1130
+        },
+        {
+          "scope": "RenderEngineRC2._clip_skip_reason",
+          "callee": "clip.asset_name.upper",
+          "line": 1197
+        }
+      ]
+    },
+    "runtime_governance_rc2.py": {
+      "path": "runtime_governance_rc2.py",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "classes": [
+        "RuntimeAuthority"
+      ],
+      "functions": [
+        "governance_report"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": []
+    },
+    "story_engine.py": {
+      "path": "story_engine.py",
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "dataclasses",
+        "json",
+        "typing"
+      ],
+      "classes": [
+        "SceneBlueprint",
+        "StoryEngine"
+      ],
+      "functions": [
+        "__init__",
+        "_ensure_schema",
+        "build_shots",
+        "build_from_strategy",
+        "_blueprint_duration",
+        "_allocate_shots",
+        "_transition_for"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "StoryEngine.__init__",
+          "callee": "EventBus",
+          "line": 58
+        }
+      ]
+    },
+    "story_strategy_engine_rc2.py": {
+      "path": "story_strategy_engine_rc2.py",
+      "imports": [
+        ".story_strategy_contract_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "StoryStrategyEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "_cluster_order_key",
+        "_allocate_durations",
+        "_act_id_for",
+        "_build_acts",
+        "_build_transitions",
+        "load_event_discovery"
+      ],
+      "json_literals": [],
+      "reads_json": true,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "event_discovery.get",
+          "line": 105
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "StoryStrategyRC2",
+          "line": 134
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "StorySceneRC2",
+          "line": 168
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "EVENT_TITLES_RU.get",
+          "line": 174
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "EVENT_GOALS_RU.get",
+          "line": 184
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "EVENT_EMOTIONS_RU.get",
+          "line": 194
+        },
+        {
+          "scope": "StoryStrategyEngineRC2.run",
+          "callee": "StoryStrategyResultRC2",
+          "line": 222
+        },
+        {
+          "scope": "StoryStrategyEngineRC2._cluster_order_key",
+          "callee": "EVENT_ORDER.get",
+          "line": 263
+        },
+        {
+          "scope": "StoryStrategyEngineRC2._build_acts",
+          "callee": "StoryActRC2",
+          "line": 378
+        }
+      ]
+    },
+    "timeline_engine_rc2.py": {
+      "path": "timeline_engine_rc2.py",
+      "imports": [
+        ".database",
+        ".project_config_rc2",
+        "__future__",
+        "csv",
+        "json",
+        "math",
+        "pathlib",
+        "typing"
+      ],
+      "classes": [
+        "TimelineEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_load_rows",
+        "_write_json",
+        "_write_csv",
+        "run_from_project",
+        "_discover_production_script_path",
+        "run_from_production_script",
+        "_resolve_assets",
+        "_camera_motion",
+        "run"
+      ],
+      "json_literals": [
+        ". Expected production_script.json in the project script directory.",
+        "production_script*.json",
+        "production_script.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "TimelineEngineRC2._load_rows",
+          "callee": "timeline_rows.append",
+          "line": 61
+        },
+        {
+          "scope": "TimelineEngineRC2._write_csv",
+          "callee": "self.config.timeline_path.with_suffix",
+          "line": 111
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "self._resolve_assets",
+          "line": 383
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "assets.get",
+          "line": 437
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "resolved_asset.get",
+          "line": 445
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "resolved_asset.get",
+          "line": 457
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "assets.get",
+          "line": 555
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "timeline_rows.append",
+          "line": 565
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_production_script",
+          "callee": "voiceover.get",
+          "line": 626
+        }
+      ]
+    },
+    "visual_semantic_analyzer_rc2.py": {
+      "path": "visual_semantic_analyzer_rc2.py",
+      "imports": [
+        ".database",
+        ".visual_understanding_contract_rc2",
+        "PIL",
+        "__future__",
+        "cv2",
+        "dataclasses",
+        "datetime",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "re",
+        "torch",
+        "transformers",
+        "typing"
+      ],
+      "classes": [
+        "SemanticPredictionRC2",
+        "SemanticBackendRC2",
+        "HuggingFaceClipBackendRC2",
+        "VisualSemanticAnalyzerRC2"
+      ],
+      "functions": [
+        "classify",
+        "__init__",
+        "classify",
+        "__init__",
+        "analyze",
+        "_load_assets",
+        "_analyze_asset",
+        "_extract_images",
+        "_relevance_status",
+        "_story_value",
+        "_timestamp_from_filename",
+        "_objects_for_event",
+        "_actions_for_event"
+      ],
+      "json_literals": [],
+      "reads_json": false,
+      "writes_json": false,
+      "relevant_calls": [
+        {
+          "scope": "HuggingFaceClipBackendRC2.classify",
+          "callee": "SemanticPredictionRC2",
+          "line": 265
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2.analyze",
+          "callee": "self._load_assets",
+          "line": 304
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2.analyze",
+          "callee": "self._analyze_asset",
+          "line": 316
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "self._story_value",
+          "line": 493
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "asset.get",
+          "line": 497
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "self._objects_for_event",
+          "line": 506
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "self._actions_for_event",
+          "line": 509
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "asset.get",
+          "line": 526
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "asset.get",
+          "line": 529
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
+          "callee": "AssetUnderstandingRC2",
+          "line": 534
+        }
+      ]
+    },
+    "voice_production_engine_rc2.py": {
+      "path": "voice_production_engine_rc2.py",
+      "imports": [
+        ".project_config_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "classes": [
+        "VoiceProductionEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run",
+        "_render_scene",
+        "_discover_production_script",
+        "_read_json",
+        "_probe_duration",
+        "_run_command"
+      ],
+      "json_literals": [
+        "production_script.json",
+        "voice_manifest.json",
+        "voice_report.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "VoiceProductionEngineRC2.run",
+          "callee": "self._render_scene",
+          "line": 100
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._render_scene",
+          "callee": "voiceover.get",
+          "line": 292
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._render_scene",
+          "callee": "audio_filter_parts.append",
+          "line": 385
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._render_scene",
+          "callee": "audio_filter_parts.extend",
+          "line": 389
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._probe_duration",
+          "callee": "subprocess.run",
+          "line": 514
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._run_command",
+          "callee": "subprocess.run",
+          "line": 543
+        }
+      ]
+    },
+    "workflow.py": {
+      "path": "workflow.py",
+      "imports": [
+        ".acceptance_center",
+        ".api_gateway",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".control_layer_rc2",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".director_ai",
+        ".events",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".integrations",
+        ".live_api_layer",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".working_state_auditor",
+        "__future__",
+        "csv",
+        "json",
+        "pathlib"
+      ],
+      "classes": [
+        "WorkflowEngine"
+      ],
+      "functions": [
+        "__init__",
+        "_job",
+        "run_pipeline",
+        "export_all",
+        "_write_command_center_html"
+      ],
+      "json_literals": [
+        "api_готовность.json",
+        "api_запуски.json",
+        "cv_model_report.json",
+        "export_validation.json",
+        "franklin_acceptance_report.json",
+        "live_api_layer_report.json",
+        "live_api_test_suite.json",
+        "live_connectors_report.json",
+        "local_autopilot_report.json",
+        "montage_workbench.json",
+        "native_timeline_model.json",
+        "native_viewer_model_rc.json",
+        "preflight_report.json",
+        "production_state.json",
+        "rc1_completion_plan.json",
+        "rc1_test_report.json",
+        "timeline_operator_view.json",
+        "timeline_viewer_2_model.json",
+        "working_state_audit.json",
+        "готовность_rc1.json",
+        "интеграции.json",
+        "очередь_api.json",
+        "решения_режиссера.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
+      "relevant_calls": [
+        {
+          "scope": "WorkflowEngine.__init__",
+          "callee": "EventBus",
+          "line": 41
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "AssetIntelligence",
+          "line": 53
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "analyze_assets",
+          "line": 54
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "StoryEngine",
+          "line": 55
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "assign_assets",
+          "line": 56
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "QualityCenter",
+          "line": 61
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "QualityCenter",
+          "line": 62
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "export_timeline_package",
+          "line": 63
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "TimelineStudio",
+          "line": 63
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "FinalTimelineViewer",
+          "line": 72
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "NativeTimelineModel",
+          "line": 78
+        },
+        {
+          "scope": "WorkflowEngine.run_pipeline",
+          "callee": "TimelineViewer2",
+          "line": 85
+        },
+        {
+          "scope": "WorkflowEngine.export_all",
+          "callee": "timeline_csv.open",
+          "line": 97
+        }
+      ]
+    }
+  },
+  "syntax_errors": []
+}

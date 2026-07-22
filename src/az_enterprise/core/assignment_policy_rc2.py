@@ -162,12 +162,38 @@ class AssignmentPolicyRC2:
             return 10**9
         return value if value > 0 else 10**9
 
-    def _select_story_asset(self, candidates: list[Any]) -> Any | None:
-        """Select the least-used Story Engine candidate within max_use."""
+
+    def _asset_fits_shot(
+        self,
+        shot: Any,
+        asset: Any,
+    ) -> bool:
+        """Return True when an asset can safely cover the shot duration."""
+        media_type = str(asset["media_type"] or "").strip().lower()
+        if media_type == "image":
+            return True
+        if media_type != "video":
+            return False
+        shot_start = float(shot["start_sec"] or 0.0)
+        shot_end = float(shot["end_sec"] or shot_start)
+        shot_duration = max(0.0, shot_end - shot_start)
+        try:
+            asset_duration = float(asset["duration_sec"] or 0.0)
+        except (TypeError, ValueError):
+            return False
+        return asset_duration + 0.10 >= shot_duration
+
+    def _select_story_asset(
+        self,
+        shot: Any,
+        candidates: list[Any],
+    ) -> Any | None:
+        """Select the least-used compatible Story Engine candidate."""
         available = [
             asset
             for asset in candidates
             if self.usage[str(asset["id"])] < self._max_use(asset)
+            and self._asset_fits_shot(shot, asset)
         ]
 
         if not available:
@@ -402,7 +428,10 @@ class AssignmentPolicyRC2:
                 scenes,
                 assets_by_id,
             )
-            story_asset = self._select_story_asset(preferred_assets)
+            story_asset = self._select_story_asset(
+                shot,
+                preferred_assets,
+            )
 
             if story_asset is not None:
                 story_asset_id = str(story_asset["id"])
@@ -438,6 +467,7 @@ class AssignmentPolicyRC2:
                     (self.score(shot, asset), asset)
                     for asset in assets
                     if self.usage[str(asset["id"])] < self._max_use(asset)
+                    and self._asset_fits_shot(shot, asset)
                 ),
                 key=lambda item: item[0],
                 reverse=True,
@@ -474,7 +504,7 @@ class AssignmentPolicyRC2:
 
                 if preferred_assets:
                     reason = (
-                        "Story Engine assets exist, but all reached max_use; "
+                        "Story Engine assets exist, but none were usable because of duration or max_use constraints; "
                         "no fallback asset reached the acceptance threshold."
                     )
                 elif scene_id:

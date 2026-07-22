@@ -1,0 +1,5069 @@
+{
+  "generated_at": "2026-07-22T19:49:14.997170+00:00",
+  "root": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\src\\az_enterprise\\core",
+  "summary": {
+    "python_modules": 94,
+    "python_lines": 22021,
+    "syntax_errors": 3,
+    "duplicate_symbols": 23,
+    "json_readers": 13,
+    "json_writers": 44
+  },
+  "syntax_errors": [
+    {
+      "path": "dependency_resolver_alpha31.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "module_registry_alpha31.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "story_engine.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    }
+  ],
+  "modules": [
+    {
+      "path": "__init__.py",
+      "module": "",
+      "lines": 2,
+      "classes": [],
+      "functions": [],
+      "imports": [],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "acceptance_center.py",
+      "module": "acceptance_center",
+      "lines": 125,
+      "classes": [
+        "AcceptanceCenter"
+      ],
+      "functions": [
+        "__init__",
+        "_capcut_guide_text",
+        "_count",
+        "_next_actions",
+        "_write_html",
+        "build_capcut_handoff",
+        "evaluate_franklin_working_state",
+        "tc"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "csv"
+      ],
+      "states": [
+        "FRANKLIN_ACCEPTANCE_EVALUATED"
+      ],
+      "json_literals": [
+        "franklin_acceptance_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "audio",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "agents\\__init__.py",
+      "module": "agents",
+      "lines": 15,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        ".agent_registry",
+        ".base_agent",
+        ".event_bus",
+        ".task_model"
+      ],
+      "states": [
+        "TASK_STATUSES"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "event"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "agents\\agent_registry.py",
+      "module": "agents.agent_registry",
+      "lines": 136,
+      "classes": [
+        "AgentRegistry",
+        "AnalyticsAgent",
+        "EditorAgent",
+        "PackagingAgent",
+        "ProducerAgent",
+        "QAAgent",
+        "ResearchAgent",
+        "ScriptAgent",
+        "VisualAgent",
+        "VoiceAgent",
+        "YouTubePublisherAgent"
+      ],
+      "functions": [
+        "__init__",
+        "get_agent_for_task",
+        "list_agents",
+        "list_roles",
+        "register",
+        "register_default_agents",
+        "run"
+      ],
+      "imports": [
+        ".base_agent",
+        ".task_model",
+        "__future__",
+        "typing"
+      ],
+      "states": [
+        "PUBLISHED",
+        "READY_FOR_MANUAL_UPLOAD"
+      ],
+      "json_literals": [
+        "video/edit-plan.json",
+        "visual/plan.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "agents\\base_agent.py",
+      "module": "agents.base_agent",
+      "lines": 49,
+      "classes": [
+        "AgentResult",
+        "BaseAgent"
+      ],
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "can_handle",
+        "error",
+        "run",
+        "status",
+        "to_dict"
+      ],
+      "imports": [
+        ".task_model",
+        "__future__",
+        "abc",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "COMPLETED",
+        "IDLE"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "agents\\event_bus.py",
+      "module": "agents.event_bus",
+      "lines": 9,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "..events"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "event"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "agents\\task_model.py",
+      "module": "agents.task_model",
+      "lines": 63,
+      "classes": [
+        "Task"
+      ],
+      "functions": [
+        "_utc_now_iso",
+        "mark_completed",
+        "mark_failed",
+        "mark_running",
+        "to_dict"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "typing",
+        "uuid"
+      ],
+      "states": [
+        "COMPLETED",
+        "FAILED",
+        "QUEUED",
+        "RUNNING",
+        "SKIPPED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "api_gateway.py",
+      "module": "api_gateway",
+      "lines": 49,
+      "classes": [
+        "ApiGateway"
+      ],
+      "functions": [
+        "__init__",
+        "check_credentials",
+        "readiness_score"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".integrations",
+        "__future__",
+        "os"
+      ],
+      "states": [
+        "API_GATEWAY_CHECKED",
+        "AZ_ENABLE_LIVE_CALLS"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "event"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "asset_engine_rc2.py",
+      "module": "asset_engine_rc2",
+      "lines": 62,
+      "classes": [
+        "AssetEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "imports": [
+        ".asset_intelligence",
+        ".database",
+        ".project_config_rc2",
+        "__future__",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "ASSETS_INDEXED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "asset_intelligence.py",
+      "module": "asset_intelligence",
+      "lines": 504,
+      "classes": [
+        "AssetIntelligence"
+      ],
+      "functions": [
+        "__init__",
+        "_media_folders",
+        "_move_videos_from_images",
+        "_probe_video",
+        "_unique_destination",
+        "infer_tags",
+        "media_type",
+        "scan",
+        "sha256",
+        "stats"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "hashlib",
+        "json",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "ASSETS_SCANNED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "voice",
+        "audio",
+        "quality"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "assignment_engine_rc2.py",
+      "module": "assignment_engine_rc2",
+      "lines": 55,
+      "classes": [
+        "AssignmentEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "imports": [
+        ".assignment_policy_rc2",
+        ".database",
+        ".director_ai",
+        ".project_config_rc2",
+        "__future__",
+        "typing"
+      ],
+      "states": [
+        "ASSIGNED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "assignment",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "assignment_policy_rc2.backup.py",
+      "module": "assignment_policy_rc2.backup",
+      "lines": 280,
+      "classes": [
+        "AssignmentPolicyRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_tokens",
+        "run",
+        "score"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "collections",
+        "json",
+        "re",
+        "typing"
+      ],
+      "states": [
+        "ASSIGNMENT_COMPLETED",
+        "ASSIGNMENT_POLICY_COMPLETED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story",
+        "assignment",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "assignment_policy_rc2.py",
+      "module": "assignment_policy_rc2",
+      "lines": 545,
+      "classes": [
+        "AssignmentPolicyRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_asset_fits_shot",
+        "_max_use",
+        "_parse_required_assets",
+        "_preferred_assets_for_shot",
+        "_select_story_asset",
+        "_shot_belongs_to_scene",
+        "_tokens",
+        "_write_assignment",
+        "_write_missing",
+        "run",
+        "score"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "collections",
+        "json",
+        "re",
+        "typing"
+      ],
+      "states": [
+        "ASSIGNMENT_COMPLETED",
+        "ASSIGNMENT_POLICY_COMPLETED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story",
+        "assignment",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "audio_composer_rc2.py",
+      "module": "audio_composer_rc2",
+      "lines": 51,
+      "classes": [
+        "NativeAudioComposerRC2"
+      ],
+      "functions": [
+        "__init__",
+        "run"
+      ],
+      "imports": [
+        ".audio_renderer_rc2",
+        ".audio_timeline_rc2",
+        ".mux_engine_rc2",
+        "__future__",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "PHASE_7_COMPLETE"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "visual",
+        "event",
+        "timeline",
+        "audio",
+        "render"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "audio_renderer_rc2.py",
+      "module": "audio_renderer_rc2",
+      "lines": 231,
+      "classes": [
+        "AudioRendererRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_build_command",
+        "_run",
+        "_verify",
+        "_write_json",
+        "run"
+      ],
+      "imports": [
+        ".audio_timeline_rc2",
+        ".ducking_engine_rc2",
+        ".loudness_engine_rc2",
+        "__future__",
+        "json",
+        "os",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "AUDIO_RENDERED",
+        "PHASE_7_NATIVE_AUDIO_COMPOSER"
+      ],
+      "json_literals": [
+        "audio_report_rc2.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "timeline",
+        "voice",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "audio_timeline_rc2.py",
+      "module": "audio_timeline_rc2",
+      "lines": 108,
+      "classes": [
+        "AudioEventRC2",
+        "AudioTimelineBuilderRC2",
+        "AudioTimelineValidatorRC2"
+      ],
+      "functions": [
+        "build",
+        "end_sec",
+        "to_dict",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "pathlib",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "timeline",
+        "voice",
+        "audio"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "camera_motion_rc2.py",
+      "module": "camera_motion_rc2",
+      "lines": 171,
+      "classes": [
+        "CameraMotionEngine",
+        "FFmpegMotionBuilder",
+        "MotionInterpolator",
+        "MotionProfile",
+        "MotionValidator"
+      ],
+      "functions": [
+        "__init__",
+        "_defaults",
+        "_value",
+        "build",
+        "build_profile",
+        "clamp",
+        "eased_progress",
+        "interpolate",
+        "normalize",
+        "progress",
+        "to_dict",
+        "total_frames",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "capcut_bridge.py",
+      "module": "capcut_bridge",
+      "lines": 94,
+      "classes": [
+        "CapCutBridge"
+      ],
+      "functions": [
+        "__init__",
+        "_tc",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "csv",
+        "pathlib"
+      ],
+      "states": [
+        "MISSING_"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "control_layer_rc2.py",
+      "module": "control_layer_rc2",
+      "lines": 111,
+      "classes": [
+        "RC2ControlLayer",
+        "RC2ReadinessPlanner"
+      ],
+      "functions": [
+        "__init__",
+        "_write_reports",
+        "build_timeline",
+        "evaluate",
+        "plan",
+        "render"
+      ],
+      "imports": [
+        ".database",
+        ".project_config_rc2",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "datetime",
+        "json",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [
+        "readiness_rc2.json"
+      ],
+      "pipeline_hints": [
+        "timeline",
+        "render",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "cv_model.py",
+      "module": "cv_model",
+      "lines": 555,
+      "classes": [
+        "CVModel"
+      ],
+      "functions": [
+        "__init__",
+        "_analyze_image_opencv",
+        "_analyze_image_pillow",
+        "_analyze_video",
+        "_analyze_video_ffprobe",
+        "_avg",
+        "_cinematic_grade",
+        "_cv_summary_rows",
+        "_detect_faces",
+        "_ensure_schema",
+        "_export_csv",
+        "_export_html",
+        "_export_scene_csv",
+        "_merge_visual_profile",
+        "_object_hints",
+        "_ocr_image",
+        "_phash_opencv",
+        "_quality_flags",
+        "_shot_type",
+        "_similar_from_phash",
+        "_std",
+        "_store_metadata",
+        "_sync_asset_metadata",
+        "analyze",
+        "dist"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "PIL",
+        "__future__",
+        "csv",
+        "cv2",
+        "json",
+        "math",
+        "numpy",
+        "os",
+        "pathlib",
+        "pytesseract",
+        "shutil",
+        "subprocess",
+        "tempfile",
+        "typing"
+      ],
+      "states": [
+        "AZ_ENABLE_OCR",
+        "CV_MODEL_2_2_COMPLETED"
+      ],
+      "json_literals": [
+        "cv_model_report.json",
+        "cv_runtime_2_2_summary.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "assignment",
+        "timeline",
+        "render",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "cv_review_board.py",
+      "module": "cv_review_board",
+      "lines": 37,
+      "classes": [
+        "CVReviewBoard"
+      ],
+      "functions": [
+        "__init__",
+        "build"
+      ],
+      "imports": [
+        ".cv_model",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "database.py",
+      "module": "database",
+      "lines": 496,
+      "classes": [
+        "Database"
+      ],
+      "functions": [
+        "__init__",
+        "_migrate_assets_project_scoped_path",
+        "close",
+        "execute",
+        "init",
+        "many",
+        "one",
+        "rows"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "pathlib",
+        "sqlite3",
+        "typing"
+      ],
+      "states": [
+        "BEGIN",
+        "CURRENT_TIMESTAMP",
+        "NULL"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_ai.py",
+      "module": "director_ai",
+      "lines": 458,
+      "classes": [
+        "DirectorAI"
+      ],
+      "functions": [
+        "__init__",
+        "_analyze_completeness",
+        "_blocking_errors",
+        "_blocking_reason",
+        "_completion_percent_for_stage",
+        "_derive_overall_status",
+        "_ensure_project_columns",
+        "_ensure_state_schema",
+        "_ensure_task_schema",
+        "_estimate_completion",
+        "_history_rows",
+        "_initialize_project_state",
+        "_log_history",
+        "_materialize_runtime_tasks",
+        "_missing_modules",
+        "_next_required_action",
+        "_next_stage_for",
+        "_persist_state",
+        "_require_legacy_state_authority",
+        "_score",
+        "assign_assets",
+        "evaluate_project_readiness",
+        "get_project_state",
+        "record_module_failure",
+        "transition_project_state"
+      ],
+      "imports": [
+        ".assignment_policy_rc2",
+        ".database",
+        ".director_ai_runtime",
+        ".events",
+        ".story_engine_runtime",
+        "__future__",
+        "collections",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "DIRECTOR_AI_ANALYSIS_FAILED",
+        "DIRECTOR_AI_PROJECT_STATE_CHANGED",
+        "EDIT_READY",
+        "FAILED",
+        "FINAL_READY",
+        "IN_PROGRESS",
+        "MISSING_VISUAL",
+        "PACKAGING_READY",
+        "PENDING",
+        "READY",
+        "RESEARCH_READY",
+        "SCRIPT_READY",
+        "TEXT",
+        "VISUAL_READY",
+        "VOICE_READY"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "assignment",
+        "voice",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_ai_runtime.py",
+      "module": "director_ai_runtime",
+      "lines": 504,
+      "classes": [
+        "DirectorAIRuntime",
+        "DirectorRule"
+      ],
+      "functions": [
+        "__init__",
+        "_api_state",
+        "_clear_previous",
+        "_ensure_schema",
+        "_export",
+        "_fallback_montage_from_shots",
+        "_html",
+        "_insert_api_job_if_needed",
+        "_insert_issue",
+        "_insert_matrix",
+        "_insert_task",
+        "_issues_for_cv_quality",
+        "_issues_for_diversity",
+        "_issues_for_missing",
+        "_issues_for_repetition",
+        "_issues_for_scene_coverage",
+        "_matrix_from_issue",
+        "_need_bucket",
+        "_next_actions",
+        "_positive_decisions",
+        "_postproduction_analysis",
+        "_prompt",
+        "_quality_scores",
+        "_rows",
+        "_table_exists",
+        "_task_from_issue",
+        "_write_csv",
+        "analyze"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        ".postproduction_quality_rc2",
+        ".project_config_rc2",
+        "__future__",
+        "collections",
+        "csv",
+        "dataclasses",
+        "json",
+        "os",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "API_NOT_READY",
+        "ASSET_OVERUSED",
+        "ASSET_REUSED_TOO_SOON",
+        "AZ_ALLOW_PAID_CALLS",
+        "AZ_ENABLE_LIVE_API",
+        "CANVA_API_KEY",
+        "DIRECTOR_AI_2_5_COMPLETED",
+        "DIRECTOR_AI_POSTPRODUCTION_ANALYSIS_FAILED",
+        "ELEVENLABS_API_KEY",
+        "EXCLUDED_ASSET_USED",
+        "FAILED",
+        "FILM_TOO_LONG",
+        "LEONARDO_API_KEY",
+        "LOW_CV_QUALITY",
+        "LOW_VISUAL_DIVERSITY",
+        "MISSING_VISUAL",
+        "NATURAL_SOUND_MISSING",
+        "OPENAI_API_KEY",
+        "OPENING_HOOK_WEAK",
+        "POSTPRODUCTION_ANALYSIS_FAILED",
+        "SCENE_LOW_COVERAGE",
+        "STATIC_IMAGE_TOO_LONG",
+        "SUNO_API_KEY",
+        "UNASSIGNED",
+        "YOUTUBE_CLIENT_SECRET"
+      ],
+      "json_literals": [
+        "director_ai_2_5_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "assignment",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_core_rc2.py",
+      "module": "director_core_rc2",
+      "lines": 767,
+      "classes": [
+        "DirectorCoreRC2",
+        "StageDefinition",
+        "_SupervisedRuntimeAdapter"
+      ],
+      "functions": [
+        "__init__",
+        "_build_supervisor_report",
+        "_collect_issue_codes",
+        "_default_progress",
+        "_exclusive_run",
+        "_first_incomplete_stage",
+        "_generate_temporal_report",
+        "_normalize_targets",
+        "_recommended_targets_from_director_ai",
+        "_recommended_targets_from_quality",
+        "_rewrite_timeline_duration",
+        "_run_director_ai_analysis",
+        "_run_stage",
+        "_run_story_stage",
+        "_run_supervised_targets",
+        "_stage_services",
+        "_strengthen_opening",
+        "_walk_mappings",
+        "default_supervisor_policy",
+        "plan",
+        "run",
+        "run_supervised",
+        "run_targets"
+      ],
+      "imports": [
+        ".asset_engine_rc2",
+        ".assignment_engine_rc2",
+        ".database",
+        ".director_ai_runtime",
+        ".director_policy_alpha293",
+        ".director_policy_evaluator_alpha293",
+        ".director_supervisor_alpha292",
+        ".production_state_rc2",
+        ".project_config_rc2",
+        ".quality_gate_rc2",
+        ".render_engine_rc2",
+        ".runtime_governance_rc2",
+        ".story_engine",
+        ".timeline_engine_rc2",
+        "__future__",
+        "contextlib",
+        "dataclasses",
+        "json",
+        "os",
+        "typing"
+      ],
+      "states": [
+        "ADVISORY_FAILED",
+        "ASSET_OVERUSED",
+        "ASSET_REUSED_TOO_SOON",
+        "COMPLETED",
+        "DIRECTOR_AI",
+        "DIRECTOR_AI_ADVISORY_FAILED",
+        "DIRECTOR_AI_ANALYSIS_READY",
+        "EXCLUDED_ASSET_USED",
+        "FAILED",
+        "FILM_DURATION_ACCEPTABLE",
+        "FILM_TOO_LONG",
+        "INFO",
+        "LOW_CV_QUALITY",
+        "LOW_VISUAL_DIVERSITY",
+        "LOW_VISUAL_DYNAMICS",
+        "MISSING_VISUAL",
+        "NATURAL_SOUND_MISSING",
+        "OPENING_HOOK_ACCEPTABLE",
+        "OPENING_HOOK_WEAK",
+        "OPENING_REWORK",
+        "OPENING_STRENGTHENED",
+        "PASSED",
+        "QUALITY_REWORK_REQUIRED",
+        "REPEATED_VISUAL_PATTERN",
+        "REVIEW",
+        "RUNNING",
+        "SCENE_LOW_COVERAGE",
+        "SKIPPED_QUALITY_PASSED",
+        "STATIC_IMAGE_TOO_LONG",
+        "STORY_STRATEGY_READY",
+        "TEMPORALLY_VALIDATED",
+        "TEMPORAL_REPORT",
+        "TEMPORAL_REPORT_EXISTS",
+        "TIMELINE_DURATION_REWRITTEN",
+        "TIMELINE_REWORK",
+        "UNCHANGED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "story_strategy",
+        "story",
+        "assignment",
+        "timeline",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_knowledge_base_rc2.py",
+      "module": "director_knowledge_base_rc2",
+      "lines": 247,
+      "classes": [
+        "DirectorKnowledgeBaseRC2",
+        "TargetExperience"
+      ],
+      "functions": [
+        "__init__",
+        "_init_schema",
+        "_json",
+        "begin_cycle",
+        "complete_cycle",
+        "rank_targets",
+        "target_experience"
+      ],
+      "imports": [
+        ".database",
+        "__future__",
+        "dataclasses",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "IGNORED",
+        "RECORDED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "story",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_policy_alpha293.py",
+      "module": "director_policy_alpha293",
+      "lines": 160,
+      "classes": [
+        "DirectorPolicy",
+        "DirectorPolicyEvaluator",
+        "MandatoryConstraint",
+        "ProjectEvaluation",
+        "ProjectObjective",
+        "ProjectType",
+        "QualityProfile"
+      ],
+      "functions": [
+        "__post_init__",
+        "constraints_passed",
+        "evaluate",
+        "normalized_weights",
+        "score",
+        "validate_constraints",
+        "validate_rework_targets"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "enum",
+        "typing"
+      ],
+      "states": [
+        "ACCURACY",
+        "ADVERTISEMENT",
+        "BALANCED",
+        "CLARITY",
+        "CONVERSION",
+        "CUSTOM",
+        "DOCUMENTARY",
+        "EDUCATIONAL",
+        "EMOTION",
+        "PRESTIGE",
+        "RETENTION",
+        "SHORT_FILM",
+        "SHORT_FORM",
+        "YOUTUBE"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_policy_evaluator_alpha293.py",
+      "module": "director_policy_evaluator_alpha293",
+      "lines": 239,
+      "classes": [
+        "PolicyDecisionEvaluator",
+        "RuntimeReport"
+      ],
+      "functions": [
+        "__call__",
+        "__init__",
+        "_coerce_report",
+        "_complete_previous_cycle",
+        "_create_default_database",
+        "_issue_codes"
+      ],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.database",
+        "az_enterprise.core.director_knowledge_base_rc2",
+        "az_enterprise.core.director_policy_alpha293",
+        "az_enterprise.core.director_supervisor_alpha292",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "IGNORED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "director_supervisor_alpha292.py",
+      "module": "director_supervisor_alpha292",
+      "lines": 190,
+      "classes": [
+        "DecisionLog",
+        "DecisionRecord",
+        "DecisionStatus",
+        "DirectorAction",
+        "DirectorDecision",
+        "DirectorSupervisor",
+        "RuntimePort",
+        "SupervisorResult"
+      ],
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_targets_from_actions",
+        "append",
+        "decision_log",
+        "latest",
+        "records",
+        "run",
+        "run_project"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "enum",
+        "typing"
+      ],
+      "states": [
+        "APPROVE",
+        "ESCALATE",
+        "REJECT",
+        "REWORK"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "story",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "ducking_engine_rc2.py",
+      "module": "ducking_engine_rc2",
+      "lines": 41,
+      "classes": [
+        "DuckingEngineRC2",
+        "DuckingProfileRC2"
+      ],
+      "functions": [
+        "build_filter",
+        "to_dict"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "editorial_package_rc2.py",
+      "module": "editorial_package_rc2",
+      "lines": 312,
+      "classes": [
+        "EditorialPackageRC2"
+      ],
+      "functions": [
+        "__init__",
+        "build",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "datetime",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story_strategy",
+        "story",
+        "assignment",
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "event_discovery_engine_rc2.py",
+      "module": "event_discovery_engine_rc2",
+      "lines": 565,
+      "classes": [
+        "EventDiscoveryEngineRC2",
+        "ReviewAssetRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_build_clusters",
+        "_build_off_topic",
+        "_build_review",
+        "_cluster_statistics",
+        "_decision",
+        "_duration_for",
+        "load_semantic_report",
+        "run",
+        "to_dict"
+      ],
+      "imports": [
+        ".visual_understanding_contract_rc2",
+        "__future__",
+        "collections",
+        "dataclasses",
+        "json",
+        "pathlib",
+        "statistics",
+        "typing"
+      ],
+      "states": [
+        "EXCLUDE",
+        "INCLUDE",
+        "OFF_TOPIC",
+        "REVIEW",
+        "UNCERTAIN"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "events.py",
+      "module": "events",
+      "lines": 63,
+      "classes": [
+        "EventBus"
+      ],
+      "functions": [
+        "__init__",
+        "emit",
+        "on"
+      ],
+      "imports": [
+        ".database",
+        "__future__",
+        "json",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "event"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "execution_graph_alpha29.py",
+      "module": "execution_graph_alpha29",
+      "lines": 107,
+      "classes": [
+        "DependencyError",
+        "ExecutionGraph",
+        "ExecutionRecord"
+      ],
+      "functions": [
+        "__init__",
+        "_publish_result",
+        "_select_modules",
+        "build_order",
+        "include",
+        "run"
+      ],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.module_registry_alpha29",
+        "az_enterprise.core.project_context_alpha29",
+        "dataclasses",
+        "time",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "final_assembly_pack.py",
+      "module": "final_assembly_pack",
+      "lines": 96,
+      "classes": [
+        "FinalAssemblyPack"
+      ],
+      "functions": [
+        "__init__",
+        "build",
+        "ts"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "csv",
+        "pathlib"
+      ],
+      "states": [
+        "FINAL_ASSEMBLY_PACK",
+        "MISSING"
+      ],
+      "json_literals": [
+        "assembly_manifest.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "final_timeline_viewer.py",
+      "module": "final_timeline_viewer",
+      "lines": 66,
+      "classes": [
+        "FinalTimelineViewer"
+      ],
+      "functions": [
+        "__init__",
+        "_html",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "html"
+      ],
+      "states": [
+        "FINAL_TIMELINE_VIEWER_BUILT"
+      ],
+      "json_literals": [
+        "timeline_operator_view.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "assignment",
+        "timeline",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "franklin_e2e_runtime.py",
+      "module": "franklin_e2e_runtime",
+      "lines": 47,
+      "classes": [
+        "FranklinE2ERuntime"
+      ],
+      "functions": [
+        "__init__",
+        "_actions",
+        "_html",
+        "evaluate",
+        "one"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "MISSING"
+      ],
+      "json_literals": [
+        "franklin_e2e_runtime.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "story"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "generated_asset_store_rc2.py",
+      "module": "generated_asset_store_rc2",
+      "lines": 645,
+      "classes": [
+        "GeneratedAssetStoreRC2"
+      ],
+      "functions": [
+        "__init__",
+        "add_candidate",
+        "batch_summary",
+        "create_batch",
+        "ensure_schema",
+        "list_candidates",
+        "record_review",
+        "select_winner",
+        "update_batch"
+      ],
+      "imports": [
+        ".database",
+        "__future__",
+        "json",
+        "typing",
+        "uuid"
+      ],
+      "states": [
+        "ACCEPTED",
+        "CANCELLED",
+        "COMPLETED",
+        "CREATED",
+        "DISCOVERED",
+        "DOWNLOADED",
+        "FAILED",
+        "PROCESSING",
+        "PROVISIONAL",
+        "REGISTERED",
+        "REJECTED",
+        "REVIEWED",
+        "SUBMITTED",
+        "TECHNICALLY_VALID"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "integrations.py",
+      "module": "integrations",
+      "lines": 111,
+      "classes": [
+        "IntegrationRegistry"
+      ],
+      "functions": [
+        "__init__",
+        "_execute_live",
+        "_leonardo_prompt",
+        "create_api_jobs_for_missing",
+        "credential_report",
+        "refresh",
+        "run_api_jobs"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "os"
+      ],
+      "states": [
+        "API_JOBS_CREATED",
+        "API_JOBS_RUN",
+        "AZ_ENABLE_LIVE_CALLS",
+        "CANVA_API_KEY",
+        "CAPCUT_PROJECT_PATH",
+        "DAVINCI_PROJECT_PATH",
+        "ELEVENLABS_API_KEY",
+        "INTEGRATIONS_REFRESHED",
+        "LEONARDO_API_KEY",
+        "OPENAI_API_KEY",
+        "PREMIERE_PROJECT_PATH",
+        "SUNO_API_KEY",
+        "YOUTUBE_OAUTH_CLIENT"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "visual",
+        "event",
+        "story",
+        "voice",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "job_queue.py",
+      "module": "job_queue",
+      "lines": 26,
+      "classes": [
+        "JobQueue"
+      ],
+      "functions": [
+        "__init__",
+        "dequeue",
+        "enqueue",
+        "retry",
+        "size"
+      ],
+      "imports": [
+        "__future__",
+        "collections",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "live_api_layer.py",
+      "module": "live_api_layer",
+      "lines": 127,
+      "classes": [
+        "LiveApiLayer",
+        "LiveServiceContract"
+      ],
+      "functions": [
+        "__init__",
+        "export_report",
+        "guarded_execute",
+        "inspect",
+        "live_enabled",
+        "validate_http_health"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "dataclasses",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "AZ_ENABLE_LIVE_CALLS",
+        "CANVA_API_KEY",
+        "ELEVENLABS_API_KEY",
+        "LEONARDO_API_KEY",
+        "LIVE_API_GUARDED_EXECUTION",
+        "LIVE_API_LAYER_INSPECTED",
+        "OPENAI_API_KEY",
+        "SUNO_API_KEY",
+        "YOUTUBE_OAUTH_TOKEN"
+      ],
+      "json_literals": [
+        "live_api_layer_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "event"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "live_api_test_suite.py",
+      "module": "live_api_test_suite",
+      "lines": 91,
+      "classes": [
+        "LiveApiTestSuite"
+      ],
+      "functions": [
+        "__init__",
+        "_request",
+        "load_env_file",
+        "run"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "os",
+        "pathlib"
+      ],
+      "states": [
+        "AZ_ALLOW_PAID_CALLS",
+        "AZ_ENABLE_LIVE_API",
+        "CANVA_API_KEY",
+        "ELEVENLABS_API_KEY",
+        "LEONARDO_API_KEY",
+        "OPENAI_API_KEY",
+        "SUNO_API_KEY",
+        "YOUTUBE_API_KEY"
+      ],
+      "json_literals": [
+        "live_api_test_suite.json"
+      ],
+      "pipeline_hints": [],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "live_connectors.py",
+      "module": "live_connectors",
+      "lines": 113,
+      "classes": [
+        "ConnectorSpec",
+        "LiveConnectorHub"
+      ],
+      "functions": [
+        "__init__",
+        "_headers",
+        "export_report",
+        "live_enabled",
+        "paid_allowed",
+        "plan_generation_payload",
+        "validate_all",
+        "validate_service"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "dataclasses",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "AZ_ALLOW_PAID_API",
+        "AZ_ENABLE_LIVE_CALLS",
+        "CANVA_API_KEY",
+        "ELEVENLABS_API_KEY",
+        "LEONARDO_API_KEY",
+        "LIVE_CONNECTORS_VALIDATED",
+        "OPENAI_API_KEY",
+        "SUNO_API_KEY",
+        "YOUTUBE_OAUTH_TOKEN"
+      ],
+      "json_literals": [
+        "live_connectors_report.json"
+      ],
+      "pipeline_hints": [
+        "event"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "local_autopilot.py",
+      "module": "local_autopilot",
+      "lines": 61,
+      "classes": [
+        "LocalAutopilot"
+      ],
+      "functions": [
+        "__init__",
+        "_table",
+        "_write_csv",
+        "_write_md",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "LOCAL_AUTOPILOT_BUILT"
+      ],
+      "json_literals": [
+        "local_autopilot_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "loudness_engine_rc2.py",
+      "module": "loudness_engine_rc2",
+      "lines": 33,
+      "classes": [
+        "LoudnessEngineRC2",
+        "LoudnessProfileRC2"
+      ],
+      "functions": [
+        "build_filter",
+        "to_dict"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "media_orchestrator.py",
+      "module": "media_orchestrator",
+      "lines": 138,
+      "classes": [],
+      "functions": [
+        "_run_stage_adapter",
+        "ensure_job",
+        "execute_stage",
+        "log",
+        "run_project"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".job_queue",
+        ".paths",
+        ".production_state",
+        ".project_config_rc2",
+        ".project_state",
+        ".render_engine_rc2",
+        ".timeline_engine_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "ANALYTICS",
+        "FAILED",
+        "IDEA",
+        "MEDIA_ORCHESTRATOR_LOG",
+        "PACKAGED",
+        "PUBLISHED",
+        "RESEARCH",
+        "SCRIPT_READY",
+        "VIDEO_READY",
+        "VISUAL_READY",
+        "VOICE_READY"
+      ],
+      "json_literals": [
+        "{project_id}/publish/status.json"
+      ],
+      "pipeline_hints": [
+        "visual",
+        "event",
+        "timeline",
+        "voice",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "module_registry_alpha29.py",
+      "module": "module_registry_alpha29",
+      "lines": 57,
+      "classes": [
+        "ModuleDefinition",
+        "ModuleRegistry"
+      ],
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "all",
+        "extend",
+        "get",
+        "producers_for",
+        "register",
+        "validate_unique_producers"
+      ],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.project_context_alpha29",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "montage_workbench.py",
+      "module": "montage_workbench",
+      "lines": 124,
+      "classes": [
+        "MontageWorkbench"
+      ],
+      "functions": [
+        "__init__",
+        "_prompt_for",
+        "_tc",
+        "_write_csv",
+        "_write_html",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "json",
+        "pathlib"
+      ],
+      "states": [
+        "MONTAGE_WORKBENCH_BUILT"
+      ],
+      "json_literals": [
+        "montage_workbench.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "mux_engine_rc2.py",
+      "module": "mux_engine_rc2",
+      "lines": 93,
+      "classes": [
+        "MuxEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_verify",
+        "run"
+      ],
+      "imports": [
+        "__future__",
+        "json",
+        "os",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "FINAL_MOVIE_RENDERED",
+        "PHASE_7_NATIVE_AUDIO_COMPOSER"
+      ],
+      "json_literals": [
+        "mux_report_rc2.json"
+      ],
+      "pipeline_hints": [
+        "visual",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "narrative_writer_rc2.py",
+      "module": "narrative_writer_rc2",
+      "lines": 535,
+      "classes": [
+        "NarrativeResultRC2",
+        "NarrativeWriterRC2",
+        "SceneNarrationRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_apply_openai_editorial",
+        "_clean_text",
+        "_closing_line",
+        "_join_unique",
+        "_limit_to_target",
+        "_opening_line",
+        "_scene_body",
+        "_transition_bridge",
+        "run",
+        "to_dict",
+        "validate"
+      ],
+      "imports": [
+        ".openai_adapter_rc2",
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "NARRATIVE_READY"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "native_timeline.py",
+      "module": "native_timeline",
+      "lines": 132,
+      "classes": [
+        "NativeTimelineModel"
+      ],
+      "functions": [
+        "__init__",
+        "_camera_for",
+        "_qc_message",
+        "_severity",
+        "_stats",
+        "_transition_for",
+        "_write_html",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "json",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [
+        "native_timeline_model.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline",
+        "audio",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "native_viewer_pro.py",
+      "module": "native_viewer_pro",
+      "lines": 66,
+      "classes": [
+        "NativeViewerPro"
+      ],
+      "functions": [
+        "__init__",
+        "_asset_rel",
+        "_csv",
+        "_html",
+        "_tc",
+        "build"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [
+        "native_viewer_pro.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "native_viewer_rc.py",
+      "module": "native_viewer_rc",
+      "lines": 55,
+      "classes": [
+        "NativeViewerRC"
+      ],
+      "functions": [
+        "__init__",
+        "_write_csv",
+        "_write_html",
+        "build_model"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "NATIVE_VIEWER_RC_BUILT"
+      ],
+      "json_literals": [
+        "native_viewer_model_rc.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "openai_adapter_rc2.py",
+      "module": "openai_adapter_rc2",
+      "lines": 239,
+      "classes": [
+        "OpenAIAdapterRC2",
+        "OpenAITextResultRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_extract_output_text",
+        "generate_text",
+        "live_enabled",
+        "to_dict"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "json",
+        "os",
+        "typing",
+        "urllib.error",
+        "urllib.request"
+      ],
+      "states": [
+        "AZ_ENABLE_LIVE_CALLS",
+        "OPENAI_API_KEY",
+        "OPENAI_MODEL",
+        "POST"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "operator_console.py",
+      "module": "operator_console",
+      "lines": 105,
+      "classes": [
+        "OperatorConsole"
+      ],
+      "functions": [
+        "__init__",
+        "_create_runbook",
+        "_export_files",
+        "build_operator_plan",
+        "validate_exports"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "csv",
+        "pathlib"
+      ],
+      "states": [
+        "OPERATOR_PLAN_BUILT"
+      ],
+      "json_literals": [
+        "export_validation.json",
+        "timeline_enterprise.json",
+        "Заполнить .env и проверить api_готовность.json",
+        "решения_режиссера.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "timeline"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "paths.py",
+      "module": "paths",
+      "lines": 22,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "__future__",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "audio"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "pipeline_runtime.py",
+      "module": "pipeline_runtime",
+      "lines": 599,
+      "classes": [
+        "PipelineRunManager"
+      ],
+      "functions": [
+        "__init__",
+        "_counts",
+        "_emit_subprogress",
+        "_ensure_schema",
+        "_event",
+        "_export_pipeline_graph",
+        "_export_run_report",
+        "_log",
+        "_register_runtime_modules",
+        "_resource_snapshot",
+        "_safe_json",
+        "_step_acceptance",
+        "_step_api_queue",
+        "_step_api_safe_run",
+        "_step_build_shots",
+        "_step_capcut_bridge",
+        "_step_cv_model",
+        "_step_cv_review_board",
+        "_step_director_ai",
+        "_step_director_ai_runtime",
+        "_step_export_all",
+        "_step_final_assembly_pack",
+        "_step_franklin_e2e",
+        "_step_integrations",
+        "_step_live_api_test",
+        "_step_local_autopilot",
+        "_step_montage_workbench",
+        "_step_native_timeline",
+        "_step_native_viewer",
+        "_step_native_viewer_pro",
+        "_step_operator_console",
+        "_step_preflight",
+        "_step_production_state",
+        "_step_quality",
+        "_step_readiness_gate",
+        "_step_scan_assets",
+        "_step_story_runtime",
+        "_step_test_center",
+        "_step_timeline_package",
+        "_step_timeline_viewer_2",
+        "_step_visual_intelligence",
+        "_step_working_state_audit",
+        "_steps",
+        "_update_graph",
+        "count",
+        "module_registry_snapshot",
+        "retry_failed_tasks",
+        "run"
+      ],
+      "imports": [
+        ".acceptance_center",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".dependency_resolver_alpha31",
+        ".director_ai",
+        ".director_ai_runtime",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".franklin_e2e_runtime",
+        ".integrations",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".module_registry_alpha31",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_pro",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".story_engine_runtime",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".workflow",
+        ".working_state_auditor",
+        "__future__",
+        "datetime",
+        "json",
+        "os",
+        "pathlib",
+        "time",
+        "traceback",
+        "typing",
+        "uuid"
+      ],
+      "states": [
+        "AZ_ALLOW_PAID_CALLS",
+        "AZ_ENABLE_LIVE_API",
+        "ERROR",
+        "INFO",
+        "WARN"
+      ],
+      "json_literals": [
+        "pipeline_graph.json",
+        "pipeline_run_report.json",
+        "pipeline_task_events.json",
+        "pipeline_task_queue.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "audio",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "postproduction_quality_rc2.py",
+      "module": "postproduction_quality_rc2",
+      "lines": 430,
+      "classes": [
+        "PostProductionQualityRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_analyze_alpha271",
+        "_find_duration_runs",
+        "_normalize",
+        "_read_json",
+        "analyze"
+      ],
+      "imports": [
+        ".visual_dynamics_alpha272",
+        "__future__",
+        "collections",
+        "json",
+        "statistics",
+        "typing"
+      ],
+      "states": [
+        "ANALYZED",
+        "ASSET_OVERUSED",
+        "ASSET_REUSED_TOO_SOON",
+        "EXCLUDED_ASSET_USED",
+        "FILM_TOO_LONG",
+        "MISSING_TIMELINE",
+        "NATURAL_SOUND_MISSING",
+        "OPENING_HOOK_WEAK",
+        "PACE_TOO_FAST",
+        "PACE_TOO_SLOW",
+        "RHYTHM_IMBALANCE",
+        "SCENE_TOO_LONG",
+        "SCENE_TOO_SHORT",
+        "STATIC_IMAGE_TOO_LONG",
+        "TIMELINE_MISSING"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "timeline",
+        "audio",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "preflight.py",
+      "module": "preflight",
+      "lines": 137,
+      "classes": [
+        "PreflightCenter"
+      ],
+      "functions": [
+        "__init__",
+        "_export",
+        "_is_writable",
+        "_next_actions",
+        "add",
+        "run"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".integrations",
+        ".paths",
+        "__future__",
+        "json",
+        "pathlib"
+      ],
+      "states": [
+        "PREFLIGHT_COMPLETED"
+      ],
+      "json_literals": [
+        "preflight_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_director.py",
+      "module": "production_director",
+      "lines": 229,
+      "classes": [
+        "ProductionDirector"
+      ],
+      "functions": [
+        "__init__",
+        "_build_brief",
+        "_build_status",
+        "_decide_next_step",
+        "_read_csv_rows",
+        "_read_json",
+        "_stage_name",
+        "run"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "csv",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "RENDERED"
+      ],
+      "json_literals": [
+        "asset_inventory.json",
+        "missing_story_requirements.json",
+        "production_director_status.json",
+        "production_state.json",
+        "render_manifest.json",
+        "render_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_script_assembler_rc2.py",
+      "module": "production_script_assembler_rc2",
+      "lines": 452,
+      "classes": [
+        "ProductionScriptAssemblerRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_format_time",
+        "_transition_for",
+        "build",
+        "export",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "MUSIC",
+        "TRANSITION",
+        "VIDEO",
+        "VOICEOVER"
+      ],
+      "json_literals": [
+        "production_script.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "voice"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_script_regenerator_rc2.py",
+      "module": "production_script_regenerator_rc2",
+      "lines": 228,
+      "classes": [
+        "ProductionScriptRegeneratorRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_count_scene_words",
+        "_discover_editorial_package",
+        "_discover_narrative_result",
+        "_first_existing",
+        "_read_json",
+        "run"
+      ],
+      "imports": [
+        ".production_script_assembler_rc2",
+        ".project_config_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "PRODUCTION_SCRIPT_REGENERATED"
+      ],
+      "json_literals": [
+        "editorial_package.json",
+        "narrative_result*.json",
+        "narrative_result.json",
+        "{self.config.project_id}.json"
+      ],
+      "pipeline_hints": [
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_state.py",
+      "module": "production_state",
+      "lines": 89,
+      "classes": [
+        "ProductionState"
+      ],
+      "functions": [
+        "__init__",
+        "_count",
+        "_scalar",
+        "blockers",
+        "next_actions",
+        "summarize"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "PRODUCTION_STATE_SUMMARIZED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "quality"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_state_rc2.py",
+      "module": "production_state_rc2",
+      "lines": 135,
+      "classes": [
+        "ProductionStateRC2",
+        "ProductionStateStoreRC2",
+        "StageState"
+      ],
+      "functions": [
+        "__init__",
+        "complete_stage",
+        "fail_stage",
+        "load",
+        "reset_for_run",
+        "save",
+        "start_stage",
+        "utc_now"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "json",
+        "os",
+        "pathlib",
+        "tempfile",
+        "typing",
+        "uuid"
+      ],
+      "states": [
+        "COMPLETED",
+        "FAILED",
+        "PENDING",
+        "RUNNING"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "production_visual_manager.py",
+      "module": "production_visual_manager",
+      "lines": 143,
+      "classes": [
+        "ProductionVisualManager"
+      ],
+      "functions": [
+        "__init__",
+        "_build_batch_markdown",
+        "_build_progress",
+        "_build_queue_items",
+        "_detect_image_library_path",
+        "_read_plan_rows",
+        "_scenes_and_shots_line",
+        "run_progress",
+        "run_queue"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "collections",
+        "csv",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "COMPLETED",
+        "GENERATE",
+        "PENDING"
+      ],
+      "json_literals": [
+        "visual_generation_progress.json",
+        "visual_generation_queue.json"
+      ],
+      "pipeline_hints": [
+        "visual"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "project_config_rc2.py",
+      "module": "project_config_rc2",
+      "lines": 118,
+      "classes": [
+        "ProjectConfigRC2"
+      ],
+      "functions": [
+        "canonical_render_path",
+        "effective_media_source_dir",
+        "export_dir",
+        "franklin_legacy_render_path",
+        "governance_path",
+        "legacy_master_audio_path",
+        "legacy_render_path",
+        "legacy_timeline_path",
+        "master_audio_path",
+        "native_timeline_model_path",
+        "project_dir",
+        "quality_report_path",
+        "rc2_dir",
+        "run_lock_path",
+        "state_path",
+        "story_strategy_result_path",
+        "temporal_summary_path",
+        "timeline_dir",
+        "timeline_path",
+        "workspace_dir"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "dataclasses",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [
+        "native_timeline_model.json",
+        "production_state.json",
+        "quality_report.json",
+        "runtime_governance.json",
+        "story_strategy_result.json",
+        "temporal_assignment_summary.json",
+        "timeline.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "semantic",
+        "story_strategy",
+        "story",
+        "assignment",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "project_context_alpha29.py",
+      "module": "project_context_alpha29",
+      "lines": 47,
+      "classes": [
+        "ProjectContext"
+      ],
+      "functions": [
+        "add_diagnostic",
+        "get",
+        "publish",
+        "publish_many",
+        "require",
+        "snapshot"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "timeline"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "project_model_alpha301.py",
+      "module": "project_model_alpha301",
+      "lines": 230,
+      "classes": [
+        "Asset",
+        "Experience",
+        "ExperienceStatus",
+        "Project",
+        "ProjectStatus",
+        "Scene",
+        "SceneStatus",
+        "Task"
+      ],
+      "functions": [
+        "__post_init__",
+        "_ensure_unique",
+        "add_asset",
+        "add_experience",
+        "add_scene",
+        "add_task",
+        "evolve",
+        "from_dict",
+        "from_json",
+        "new_id",
+        "to_dict",
+        "to_json",
+        "utc_now",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "enum",
+        "json",
+        "typing",
+        "uuid"
+      ],
+      "states": [
+        "APPROVED",
+        "ARCHIVED",
+        "DRAFT",
+        "IN_PROGRESS",
+        "OBSERVED",
+        "PROMOTED",
+        "PUBLISHED",
+        "READY",
+        "REJECTED",
+        "REVIEW",
+        "REWORK",
+        "VALIDATED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "project_profiles_alpha273.py",
+      "module": "project_profiles_alpha273",
+      "lines": 122,
+      "classes": [
+        "ProjectProfile"
+      ],
+      "functions": [
+        "available_profiles",
+        "profile_to_dict",
+        "resolve_project_profile"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "visual",
+        "event",
+        "story"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "project_state.py",
+      "module": "project_state",
+      "lines": 101,
+      "classes": [
+        "ProjectState"
+      ],
+      "functions": [
+        "__init__",
+        "_ensure_project",
+        "_ensure_step",
+        "advance",
+        "current_state",
+        "get_step_status",
+        "mark_step"
+      ],
+      "imports": [
+        ".database",
+        "__future__",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "ANALYTICS",
+        "FAILED",
+        "IDEA",
+        "PACKAGED",
+        "PROJECT_STATE",
+        "PUBLISHED",
+        "RESEARCH",
+        "SCRIPT_READY",
+        "VIDEO_READY",
+        "VISUAL_READY",
+        "VOICE_READY"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "visual",
+        "event",
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "quality.py",
+      "module": "quality",
+      "lines": 60,
+      "classes": [
+        "QualityCenter"
+      ],
+      "functions": [
+        "__init__",
+        "evaluate",
+        "readiness_gate"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "QUALITY_EVALUATED",
+        "RC1_READINESS_CHECKED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "timeline",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "quality_gate_rc2.py",
+      "module": "quality_gate_rc2",
+      "lines": 176,
+      "classes": [
+        "QualityGateRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_finish",
+        "_read_json",
+        "add",
+        "run"
+      ],
+      "imports": [
+        ".postproduction_quality_rc2",
+        ".project_config_rc2",
+        ".render_engine_rc2",
+        "__future__",
+        "collections",
+        "json",
+        "typing"
+      ],
+      "states": [
+        "ANALYZED",
+        "ASSET_LIBRARY_SUFFICIENT",
+        "BLOCKED",
+        "FILM_DURATION_ACCEPTABLE",
+        "NO_EXCLUDED_ASSETS",
+        "NO_MODERN_ASSETS_IN_HISTORY",
+        "NO_TEMPORAL_VIOLATIONS",
+        "OPENING_HOOK_ACCEPTABLE",
+        "PASSED",
+        "POSTPRODUCTION_ANALYZED",
+        "RENDER_EXISTS",
+        "RENDER_VALID",
+        "STATIC_IMAGE_DURATION_ACCEPTABLE",
+        "TEMPORALLY_VALIDATED",
+        "TEMPORAL_REPORT_EXISTS",
+        "TEMPORAL_VALIDATED",
+        "TIMELINE_COMPLETE",
+        "TIMELINE_EXISTS",
+        "TIMELINE_NOT_EMPTY",
+        "VIDEO_USAGE_PRESENT"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "semantic",
+        "story",
+        "timeline",
+        "render",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "rc2_cli.py",
+      "module": "rc2_cli",
+      "lines": 58,
+      "classes": [],
+      "functions": [
+        "build_parser",
+        "main"
+      ],
+      "imports": [
+        ".director_core_rc2",
+        ".production_state_rc2",
+        ".project_config_rc2",
+        ".runtime_governance_rc2",
+        "__future__",
+        "argparse",
+        "dataclasses",
+        "json"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "recommendation_engine_alpha28.py",
+      "module": "recommendation_engine_alpha28",
+      "lines": 625,
+      "classes": [
+        "ActionPlanGenerator",
+        "Decision",
+        "DecisionEngine",
+        "Recommendation",
+        "RecommendationEngine"
+      ],
+      "functions": [
+        "_best_video_asset",
+        "_normalize_text",
+        "_optional_int",
+        "_options_for",
+        "_value_score",
+        "build",
+        "build_recommendation_plan"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "EXCLUDED_ASSET",
+        "FAST_SEQUENCE",
+        "LOW_VISUAL_DYNAMICS",
+        "MISSING_ASSET",
+        "PROJECT_BLOCKED",
+        "REPEATED_VISUAL_PATTERN",
+        "SCENE_TOO_LONG",
+        "SCENE_TOO_SHORT",
+        "SLOW_SEQUENCE",
+        "STATIC_SEQUENCE",
+        "UNKNOWN",
+        "VIDEO_GAP"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "timeline",
+        "quality"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "release_gate.py",
+      "module": "release_gate",
+      "lines": 44,
+      "classes": [
+        "ReleaseGate"
+      ],
+      "functions": [
+        "__init__",
+        "evaluate_rc1",
+        "evaluate_release"
+      ],
+      "imports": [
+        ".api_gateway",
+        ".database",
+        ".events",
+        "__future__"
+      ],
+      "states": [
+        "RELEASE_GATE_EVALUATED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "timeline"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "render_engine_rc2.py",
+      "module": "render_engine_rc2",
+      "lines": 1404,
+      "classes": [
+        "RenderClipRC2",
+        "RenderEngineRC2",
+        "RenderModelRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_as_bool",
+        "_as_float",
+        "_as_int",
+        "_clip_skip_reason",
+        "_compose_phase4_audio",
+        "_discover_music_path",
+        "_discover_voice_path",
+        "_emit",
+        "_extract_video_rows",
+        "_first_existing_file",
+        "_normalize_camera_motion",
+        "_normalize_clip",
+        "_normalize_quality_flags",
+        "_normalize_transition",
+        "_optional_text",
+        "_parse_natural_sound_windows",
+        "_run_ffmpeg",
+        "_run_native_visual_backend",
+        "_safe_int",
+        "_skip_record",
+        "_timeline_candidates",
+        "_transition_duration",
+        "_validate_audio_inputs",
+        "_validate_final_probe",
+        "_write_json",
+        "build_render_model",
+        "load_timeline",
+        "probe",
+        "probe_source",
+        "run",
+        "to_dict",
+        "validate_render_model"
+      ],
+      "imports": [
+        ".audio_composer_rc2",
+        ".project_config_rc2",
+        ".visual_renderer_rc2",
+        "__future__",
+        "dataclasses",
+        "json",
+        "os",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "BACKEND_COMPLETE",
+        "BACKEND_START",
+        "INVALID",
+        "MISSING",
+        "MODEL_READY",
+        "NEEDS_CREATION",
+        "PHASE4_AUDIO_MUX_COMPLETE",
+        "PHASE4_AUDIO_MUX_START",
+        "PHASE_7_NATIVE_AUDIO_COMPOSER",
+        "RENDERED_VERIFIED",
+        "RENDER_COMPLETE",
+        "RENDER_START",
+        "TIMELINE_LOADED",
+        "VALID",
+        "VERIFY_COPY",
+        "VERIFY_SOURCE",
+        "VISUAL_RENDERED"
+      ],
+      "json_literals": [
+        "native_timeline_model.json",
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json",
+        "timeline.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "runtime_governance_rc2.py",
+      "module": "runtime_governance_rc2",
+      "lines": 43,
+      "classes": [
+        "RuntimeAuthority"
+      ],
+      "functions": [
+        "governance_report"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "story",
+        "quality",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "story_engine_runtime.py",
+      "module": "story_engine_runtime",
+      "lines": 361,
+      "classes": [
+        "StoryEngineRuntime"
+      ],
+      "functions": [
+        "__init__",
+        "_ensure_schema",
+        "_export",
+        "_fallback_scenes_from_shots",
+        "_map_shots_to_scenes",
+        "_missing_requirement",
+        "_montage_item",
+        "_narration_cue",
+        "_recommendations",
+        "_risk_text",
+        "_scene_report",
+        "_write_csv",
+        "_write_html",
+        "_write_missing_md",
+        "build",
+        "write_json"
+      ],
+      "imports": [
+        ".database",
+        ".paths",
+        "__future__",
+        "collections",
+        "csv",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "UNASSIGNED"
+      ],
+      "json_literals": [
+        "missing_story_requirements.json",
+        "montage_sheet.json",
+        "story_engine_2_3_report.json",
+        "story_engine_runtime.json",
+        "story_scenes.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "story_strategy_contract_rc2.py",
+      "module": "story_strategy_contract_rc2",
+      "lines": 341,
+      "classes": [
+        "NarrativeTransitionRC2",
+        "StoryActRC2",
+        "StorySceneRC2",
+        "StoryStrategyRC2",
+        "StoryStrategyResultRC2"
+      ],
+      "functions": [
+        "to_dict",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "STORY_STRATEGY_READY"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story_strategy",
+        "story"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "story_strategy_engine_rc2.py",
+      "module": "story_strategy_engine_rc2",
+      "lines": 442,
+      "classes": [
+        "StoryStrategyEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_act_id_for",
+        "_allocate_durations",
+        "_build_acts",
+        "_build_transitions",
+        "_cluster_order_key",
+        "load_event_discovery",
+        "run"
+      ],
+      "imports": [
+        ".story_strategy_contract_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "ACT01",
+        "ACT02",
+        "ACT03"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story_strategy",
+        "story"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "test_center.py",
+      "module": "test_center",
+      "lines": 135,
+      "classes": [
+        "TestCenter"
+      ],
+      "functions": [
+        "__init__",
+        "_exists",
+        "_export",
+        "add",
+        "run"
+      ],
+      "imports": [
+        ".paths",
+        "__future__",
+        "json",
+        "pathlib"
+      ],
+      "states": [
+        "ELEVENLABS_API_KEY",
+        "LEONARDO_API_KEY",
+        "OPENAI_API_KEY",
+        "YOUTUBE_CLIENT_ID"
+      ],
+      "json_literals": [
+        "rc1_test_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "timeline",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "timeline_engine_rc2.py",
+      "module": "timeline_engine_rc2",
+      "lines": 798,
+      "classes": [
+        "TimelineEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_camera_motion",
+        "_discover_production_script_path",
+        "_load_rows",
+        "_resolve_assets",
+        "_write_csv",
+        "_write_json",
+        "run",
+        "run_from_production_script",
+        "run_from_project"
+      ],
+      "imports": [
+        ".database",
+        ".project_config_rc2",
+        "__future__",
+        "csv",
+        "json",
+        "math",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "TIMELINE_INCOMPLETE",
+        "TIMELINE_READY"
+      ],
+      "json_literals": [
+        "production_script*.json",
+        "production_script.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "story",
+        "timeline",
+        "voice",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "timeline_studio.py",
+      "module": "timeline_studio",
+      "lines": 79,
+      "classes": [
+        "TimelineStudio"
+      ],
+      "functions": [
+        "__init__",
+        "export_timeline_package",
+        "rows",
+        "tc"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "TIMELINE_PACKAGE_EXPORTED"
+      ],
+      "json_literals": [
+        "timeline_enterprise.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "timeline_viewer_2.py",
+      "module": "timeline_viewer_2",
+      "lines": 26,
+      "classes": [
+        "TimelineViewer2"
+      ],
+      "functions": [
+        "__init__",
+        "build"
+      ],
+      "imports": [
+        ".native_timeline",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [],
+      "json_literals": [
+        "timeline_viewer_2_model.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "timeline",
+        "voice"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "transition_engine_rc2.py",
+      "module": "transition_engine_rc2",
+      "lines": 228,
+      "classes": [
+        "FFmpegTransitionGraphBuilder",
+        "TransitionEngineRC2",
+        "TransitionProfile",
+        "TransitionValidator"
+      ],
+      "functions": [
+        "build",
+        "build_profile",
+        "normalize",
+        "to_dict",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "timeline"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "visual_asset_registrar.py",
+      "module": "visual_asset_registrar",
+      "lines": 624,
+      "classes": [
+        "CandidateImage",
+        "ImageFeatures",
+        "VisualAssetRegistrar"
+      ],
+      "functions": [
+        "__init__",
+        "_build_html_report",
+        "_collect_candidates",
+        "_detect_duplicates",
+        "_detect_image_library",
+        "_dhash_hex",
+        "_extract_features",
+        "_filename_hint_score",
+        "_hamming_hex",
+        "_load_queue_items",
+        "_match_candidates",
+        "_safe_create_target_copy",
+        "_score_candidate_item",
+        "_write_review_csv",
+        "run"
+      ],
+      "imports": [
+        ".paths",
+        ".production_visual_manager",
+        "PIL",
+        "__future__",
+        "csv",
+        "dataclasses",
+        "html",
+        "json",
+        "pathlib",
+        "shutil",
+        "typing"
+      ],
+      "states": [
+        "AUTO_ACCEPT",
+        "COMPLETED",
+        "JPEG",
+        "PENDING",
+        "REJECT",
+        "REVIEW"
+      ],
+      "json_literals": [
+        "visual_generation_queue.json",
+        "visual_registration_report.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "assignment",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "visual_dynamics_alpha272.py",
+      "module": "visual_dynamics_alpha272",
+      "lines": 363,
+      "classes": [],
+      "functions": [
+        "_find_repeated_patterns",
+        "_find_video_gaps",
+        "_find_visual_runs",
+        "_load_rows",
+        "_visual_type",
+        "add_issue",
+        "enrich_visual_dynamics"
+      ],
+      "imports": [
+        ".project_profiles_alpha273",
+        "__future__",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "LOW_VISUAL_DYNAMICS",
+        "REPEATED_VISUAL_PATTERN",
+        "STATIC_SEQUENCE",
+        "VIDEO_GAP"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "timeline"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "visual_intelligence.py",
+      "module": "visual_intelligence",
+      "lines": 239,
+      "classes": [
+        "VisualIntelligence"
+      ],
+      "functions": [
+        "__init__",
+        "_export_contact_sheet",
+        "_image_metrics",
+        "_jpeg_size",
+        "_png_size",
+        "_safe_lower",
+        "_write_similarity",
+        "analyze_assets",
+        "coverage",
+        "hamming",
+        "image_size",
+        "palette_from_name",
+        "plan_from_name"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "PIL",
+        "__future__",
+        "json",
+        "pathlib"
+      ],
+      "states": [
+        "VISUAL_INTELLIGENCE_COMPLETED"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "visual_renderer_rc2.py",
+      "module": "visual_renderer_rc2",
+      "lines": 422,
+      "classes": [
+        "VisualRendererRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_build_transition_profiles",
+        "_compose_transition_groups",
+        "_concat_escape",
+        "_concat_segments",
+        "_emit",
+        "_format_seconds",
+        "_render_segment",
+        "_render_transition_group",
+        "_reset_workspace",
+        "_run_ffmpeg",
+        "_safe_name",
+        "_verify_video_output",
+        "_write_json",
+        "run"
+      ],
+      "imports": [
+        ".camera_motion_rc2",
+        ".transition_engine_rc2",
+        "__future__",
+        "json",
+        "os",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "PHASE_6_NATIVE_TRANSITION_ENGINE",
+        "TRANSITION_GROUP_COMPLETE",
+        "TRANSITION_PROFILE",
+        "VISUAL_RENDERED",
+        "VISUAL_RENDER_COMPLETE",
+        "VISUAL_RENDER_START"
+      ],
+      "json_literals": [
+        "visual_render_report_rc2.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "visual_semantic_analyzer_rc2.py",
+      "module": "visual_semantic_analyzer_rc2",
+      "lines": 858,
+      "classes": [
+        "HuggingFaceClipBackendRC2",
+        "SemanticBackendRC2",
+        "SemanticPredictionRC2",
+        "VisualSemanticAnalyzerRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_actions_for_event",
+        "_analyze_asset",
+        "_extract_images",
+        "_load_assets",
+        "_objects_for_event",
+        "_relevance_status",
+        "_story_value",
+        "_timestamp_from_filename",
+        "analyze",
+        "classify"
+      ],
+      "imports": [
+        ".database",
+        ".visual_understanding_contract_rc2",
+        "PIL",
+        "__future__",
+        "cv2",
+        "dataclasses",
+        "datetime",
+        "json",
+        "math",
+        "numpy",
+        "pathlib",
+        "re",
+        "torch",
+        "transformers",
+        "typing"
+      ],
+      "states": [
+        "OFF_TOPIC",
+        "RELEVANT",
+        "UNCERTAIN"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story",
+        "quality"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "visual_understanding_contract_rc2.py",
+      "module": "visual_understanding_contract_rc2",
+      "lines": 452,
+      "classes": [
+        "AssetUnderstandingRC2",
+        "ChronologyEntryRC2",
+        "EventClusterRC2",
+        "MissingEpisodeRC2",
+        "OffTopicAssetRC2",
+        "VisualUnderstandingResultRC2"
+      ],
+      "functions": [
+        "to_dict",
+        "validate"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [
+        "EXCLUDE",
+        "MISSING",
+        "OFF_TOPIC",
+        "PARTIAL",
+        "PRESENT",
+        "RELEVANT",
+        "REVIEW",
+        "UNCERTAIN",
+        "UNDERSTANDING_COMPLETE"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "voice_production_engine_rc2.py",
+      "module": "voice_production_engine_rc2",
+      "lines": 557,
+      "classes": [
+        "VoiceProductionEngineRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_discover_production_script",
+        "_probe_duration",
+        "_read_json",
+        "_render_scene",
+        "_run_command",
+        "run"
+      ],
+      "imports": [
+        ".project_config_rc2",
+        "__future__",
+        "json",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "typing"
+      ],
+      "states": [
+        "VOICE_READY"
+      ],
+      "json_literals": [
+        "production_script.json",
+        "voice_manifest.json",
+        "voice_report.json"
+      ],
+      "pipeline_hints": [
+        "voice",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "workflow.py",
+      "module": "workflow",
+      "lines": 182,
+      "classes": [
+        "WorkflowEngine"
+      ],
+      "functions": [
+        "__init__",
+        "_job",
+        "_write_command_center_html",
+        "export_all",
+        "run_pipeline"
+      ],
+      "imports": [
+        ".acceptance_center",
+        ".api_gateway",
+        ".asset_intelligence",
+        ".capcut_bridge",
+        ".control_layer_rc2",
+        ".cv_model",
+        ".cv_review_board",
+        ".database",
+        ".director_ai",
+        ".events",
+        ".final_assembly_pack",
+        ".final_timeline_viewer",
+        ".integrations",
+        ".live_api_layer",
+        ".live_api_test_suite",
+        ".live_connectors",
+        ".local_autopilot",
+        ".montage_workbench",
+        ".native_timeline",
+        ".native_viewer_rc",
+        ".operator_console",
+        ".paths",
+        ".preflight",
+        ".production_state",
+        ".quality",
+        ".release_gate",
+        ".story_engine",
+        ".test_center",
+        ".timeline_studio",
+        ".timeline_viewer_2",
+        ".visual_intelligence",
+        ".working_state_auditor",
+        "__future__",
+        "csv",
+        "pathlib"
+      ],
+      "states": [
+        "FINAL_ASSEMBLY_PACK",
+        "PIPELINE_FINISHED",
+        "PIPELINE_STARTED"
+      ],
+      "json_literals": [
+        "api_готовность.json",
+        "api_запуски.json",
+        "cv_model_report.json",
+        "export_validation.json",
+        "franklin_acceptance_report.json",
+        "live_api_layer_report.json",
+        "live_api_test_suite.json",
+        "live_connectors_report.json",
+        "local_autopilot_report.json",
+        "montage_workbench.json",
+        "native_timeline_model.json",
+        "native_viewer_model_rc.json",
+        "preflight_report.json",
+        "production_state.json",
+        "rc1_completion_plan.json",
+        "rc1_test_report.json",
+        "timeline_operator_view.json",
+        "timeline_viewer_2_model.json",
+        "working_state_audit.json",
+        "готовность_rc1.json",
+        "интеграции.json",
+        "очередь_api.json",
+        "решения_режиссера.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "event",
+        "story",
+        "timeline",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "working_state_auditor.py",
+      "module": "working_state_auditor",
+      "lines": 61,
+      "classes": [
+        "WorkingStateAuditor"
+      ],
+      "functions": [
+        "__init__",
+        "_count",
+        "_html",
+        "_live_ready",
+        "audit"
+      ],
+      "imports": [
+        ".database",
+        ".events",
+        ".paths",
+        "__future__",
+        "json"
+      ],
+      "states": [
+        "WORKING_STATE_AUDITED"
+      ],
+      "json_literals": [
+        "working_state_audit.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "event",
+        "timeline"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    }
+  ],
+  "duplicates": [
+    {
+      "kind": "function",
+      "name": "run",
+      "count": 27,
+      "locations": [
+        "agents\\agent_registry.py",
+        "agents\\base_agent.py",
+        "asset_engine_rc2.py",
+        "assignment_engine_rc2.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "audio_composer_rc2.py",
+        "audio_renderer_rc2.py",
+        "director_core_rc2.py",
+        "director_supervisor_alpha292.py",
+        "event_discovery_engine_rc2.py",
+        "execution_graph_alpha29.py",
+        "live_api_test_suite.py",
+        "mux_engine_rc2.py",
+        "narrative_writer_rc2.py",
+        "pipeline_runtime.py",
+        "preflight.py",
+        "production_director.py",
+        "production_script_regenerator_rc2.py",
+        "quality_gate_rc2.py",
+        "render_engine_rc2.py",
+        "story_strategy_engine_rc2.py",
+        "test_center.py",
+        "timeline_engine_rc2.py",
+        "visual_asset_registrar.py",
+        "visual_renderer_rc2.py",
+        "voice_production_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "build",
+      "count": 16,
+      "locations": [
+        "audio_timeline_rc2.py",
+        "camera_motion_rc2.py",
+        "capcut_bridge.py",
+        "cv_review_board.py",
+        "editorial_package_rc2.py",
+        "final_assembly_pack.py",
+        "final_timeline_viewer.py",
+        "local_autopilot.py",
+        "montage_workbench.py",
+        "native_timeline.py",
+        "native_viewer_pro.py",
+        "production_script_assembler_rc2.py",
+        "recommendation_engine_alpha28.py",
+        "story_engine_runtime.py",
+        "timeline_viewer_2.py",
+        "transition_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "to_dict",
+      "count": 14,
+      "locations": [
+        "agents\\base_agent.py",
+        "agents\\task_model.py",
+        "audio_timeline_rc2.py",
+        "camera_motion_rc2.py",
+        "ducking_engine_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "loudness_engine_rc2.py",
+        "narrative_writer_rc2.py",
+        "openai_adapter_rc2.py",
+        "project_model_alpha301.py",
+        "render_engine_rc2.py",
+        "story_strategy_contract_rc2.py",
+        "transition_engine_rc2.py",
+        "visual_understanding_contract_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "validate",
+      "count": 9,
+      "locations": [
+        "audio_timeline_rc2.py",
+        "camera_motion_rc2.py",
+        "editorial_package_rc2.py",
+        "narrative_writer_rc2.py",
+        "production_script_assembler_rc2.py",
+        "project_model_alpha301.py",
+        "story_strategy_contract_rc2.py",
+        "transition_engine_rc2.py",
+        "visual_understanding_contract_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "analyze",
+      "count": 4,
+      "locations": [
+        "cv_model.py",
+        "director_ai_runtime.py",
+        "postproduction_quality_rc2.py",
+        "visual_semantic_analyzer_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "evaluate",
+      "count": 4,
+      "locations": [
+        "control_layer_rc2.py",
+        "director_policy_alpha293.py",
+        "franklin_e2e_runtime.py",
+        "quality.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "add",
+      "count": 3,
+      "locations": [
+        "preflight.py",
+        "quality_gate_rc2.py",
+        "test_center.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "live_enabled",
+      "count": 3,
+      "locations": [
+        "live_api_layer.py",
+        "live_connectors.py",
+        "openai_adapter_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "score",
+      "count": 3,
+      "locations": [
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "director_policy_alpha293.py"
+      ]
+    },
+    {
+      "kind": "class",
+      "name": "AssignmentPolicyRC2",
+      "count": 2,
+      "locations": [
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py"
+      ]
+    },
+    {
+      "kind": "class",
+      "name": "Task",
+      "count": 2,
+      "locations": [
+        "agents\\task_model.py",
+        "project_model_alpha301.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "build_filter",
+      "count": 2,
+      "locations": [
+        "ducking_engine_rc2.py",
+        "loudness_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "build_profile",
+      "count": 2,
+      "locations": [
+        "camera_motion_rc2.py",
+        "transition_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "export_report",
+      "count": 2,
+      "locations": [
+        "live_api_layer.py",
+        "live_connectors.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "get",
+      "count": 2,
+      "locations": [
+        "module_registry_alpha29.py",
+        "project_context_alpha29.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "normalize",
+      "count": 2,
+      "locations": [
+        "camera_motion_rc2.py",
+        "transition_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "one",
+      "count": 2,
+      "locations": [
+        "database.py",
+        "franklin_e2e_runtime.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "plan",
+      "count": 2,
+      "locations": [
+        "control_layer_rc2.py",
+        "director_core_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "register",
+      "count": 2,
+      "locations": [
+        "agents\\agent_registry.py",
+        "module_registry_alpha29.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "rows",
+      "count": 2,
+      "locations": [
+        "database.py",
+        "timeline_studio.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "run_project",
+      "count": 2,
+      "locations": [
+        "director_supervisor_alpha292.py",
+        "media_orchestrator.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "tc",
+      "count": 2,
+      "locations": [
+        "acceptance_center.py",
+        "timeline_studio.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "utc_now",
+      "count": 2,
+      "locations": [
+        "production_state_rc2.py",
+        "project_model_alpha301.py"
+      ]
+    }
+  ],
+  "pipeline": {
+    "stage_modules": {
+      "asset": [
+        "acceptance_center.py",
+        "agents\\agent_registry.py",
+        "asset_engine_rc2.py",
+        "asset_intelligence.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "audio_renderer_rc2.py",
+        "audio_timeline_rc2.py",
+        "capcut_bridge.py",
+        "cv_model.py",
+        "cv_review_board.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "editorial_package_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "final_assembly_pack.py",
+        "final_timeline_viewer.py",
+        "franklin_e2e_runtime.py",
+        "generated_asset_store_rc2.py",
+        "live_api_layer.py",
+        "local_autopilot.py",
+        "montage_workbench.py",
+        "narrative_writer_rc2.py",
+        "native_timeline.py",
+        "native_viewer_pro.py",
+        "native_viewer_rc.py",
+        "operator_console.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "preflight.py",
+        "production_director.py",
+        "production_script_assembler_rc2.py",
+        "production_state.py",
+        "project_config_rc2.py",
+        "project_context_alpha29.py",
+        "project_model_alpha301.py",
+        "quality.py",
+        "quality_gate_rc2.py",
+        "recommendation_engine_alpha28.py",
+        "release_gate.py",
+        "render_engine_rc2.py",
+        "story_engine_runtime.py",
+        "story_strategy_contract_rc2.py",
+        "story_strategy_engine_rc2.py",
+        "test_center.py",
+        "timeline_engine_rc2.py",
+        "timeline_studio.py",
+        "timeline_viewer_2.py",
+        "visual_asset_registrar.py",
+        "visual_dynamics_alpha272.py",
+        "visual_intelligence.py",
+        "visual_renderer_rc2.py",
+        "visual_semantic_analyzer_rc2.py",
+        "visual_understanding_contract_rc2.py",
+        "workflow.py",
+        "working_state_auditor.py"
+      ],
+      "assignment": [
+        "assignment_engine_rc2.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "cv_model.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "editorial_package_rc2.py",
+        "final_timeline_viewer.py",
+        "project_config_rc2.py",
+        "visual_asset_registrar.py"
+      ],
+      "audio": [
+        "acceptance_center.py",
+        "asset_intelligence.py",
+        "audio_composer_rc2.py",
+        "audio_renderer_rc2.py",
+        "audio_timeline_rc2.py",
+        "mux_engine_rc2.py",
+        "native_timeline.py",
+        "paths.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "preflight.py",
+        "production_director.py",
+        "project_config_rc2.py",
+        "render_engine_rc2.py",
+        "voice_production_engine_rc2.py"
+      ],
+      "director": [
+        "acceptance_center.py",
+        "asset_engine_rc2.py",
+        "assignment_engine_rc2.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "control_layer_rc2.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "director_knowledge_base_rc2.py",
+        "director_policy_alpha293.py",
+        "director_policy_evaluator_alpha293.py",
+        "director_supervisor_alpha292.py",
+        "final_timeline_viewer.py",
+        "integrations.py",
+        "montage_workbench.py",
+        "native_timeline.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "production_director.py",
+        "project_config_rc2.py",
+        "quality.py",
+        "rc2_cli.py",
+        "runtime_governance_rc2.py",
+        "story_engine_runtime.py",
+        "timeline_engine_rc2.py",
+        "timeline_studio.py",
+        "workflow.py"
+      ],
+      "event": [
+        "acceptance_center.py",
+        "agents\\__init__.py",
+        "agents\\event_bus.py",
+        "api_gateway.py",
+        "asset_intelligence.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "audio_composer_rc2.py",
+        "audio_renderer_rc2.py",
+        "audio_timeline_rc2.py",
+        "cv_model.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "editorial_package_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "events.py",
+        "final_timeline_viewer.py",
+        "integrations.py",
+        "live_api_layer.py",
+        "live_connectors.py",
+        "local_autopilot.py",
+        "media_orchestrator.py",
+        "montage_workbench.py",
+        "narrative_writer_rc2.py",
+        "native_viewer_rc.py",
+        "operator_console.py",
+        "pipeline_runtime.py",
+        "preflight.py",
+        "production_state.py",
+        "project_context_alpha29.py",
+        "project_profiles_alpha273.py",
+        "project_state.py",
+        "quality.py",
+        "release_gate.py",
+        "render_engine_rc2.py",
+        "story_strategy_contract_rc2.py",
+        "story_strategy_engine_rc2.py",
+        "timeline_studio.py",
+        "visual_intelligence.py",
+        "visual_semantic_analyzer_rc2.py",
+        "visual_understanding_contract_rc2.py",
+        "workflow.py",
+        "working_state_auditor.py"
+      ],
+      "quality": [
+        "acceptance_center.py",
+        "asset_intelligence.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "capcut_bridge.py",
+        "cv_model.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "director_policy_alpha293.py",
+        "director_policy_evaluator_alpha293.py",
+        "final_timeline_viewer.py",
+        "integrations.py",
+        "native_timeline.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "production_state.py",
+        "production_state_rc2.py",
+        "project_config_rc2.py",
+        "quality.py",
+        "quality_gate_rc2.py",
+        "recommendation_engine_alpha28.py",
+        "render_engine_rc2.py",
+        "runtime_governance_rc2.py",
+        "story_engine_runtime.py",
+        "test_center.py",
+        "timeline_engine_rc2.py",
+        "visual_asset_registrar.py",
+        "visual_intelligence.py",
+        "visual_semantic_analyzer_rc2.py",
+        "workflow.py"
+      ],
+      "render": [
+        "audio_composer_rc2.py",
+        "audio_renderer_rc2.py",
+        "control_layer_rc2.py",
+        "cv_model.py",
+        "director_core_rc2.py",
+        "media_orchestrator.py",
+        "mux_engine_rc2.py",
+        "native_viewer_rc.py",
+        "preflight.py",
+        "production_director.py",
+        "project_config_rc2.py",
+        "quality_gate_rc2.py",
+        "render_engine_rc2.py",
+        "visual_renderer_rc2.py",
+        "voice_production_engine_rc2.py"
+      ],
+      "semantic": [
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "database.py",
+        "director_core_rc2.py",
+        "editorial_package_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "generated_asset_store_rc2.py",
+        "project_config_rc2.py",
+        "quality_gate_rc2.py",
+        "visual_semantic_analyzer_rc2.py"
+      ],
+      "story": [
+        "acceptance_center.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "capcut_bridge.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "director_knowledge_base_rc2.py",
+        "director_supervisor_alpha292.py",
+        "editorial_package_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "final_assembly_pack.py",
+        "final_timeline_viewer.py",
+        "franklin_e2e_runtime.py",
+        "integrations.py",
+        "montage_workbench.py",
+        "narrative_writer_rc2.py",
+        "native_timeline.py",
+        "native_viewer_pro.py",
+        "native_viewer_rc.py",
+        "pipeline_runtime.py",
+        "production_director.py",
+        "project_config_rc2.py",
+        "project_profiles_alpha273.py",
+        "quality_gate_rc2.py",
+        "render_engine_rc2.py",
+        "runtime_governance_rc2.py",
+        "story_engine_runtime.py",
+        "story_strategy_contract_rc2.py",
+        "story_strategy_engine_rc2.py",
+        "timeline_engine_rc2.py",
+        "timeline_studio.py",
+        "visual_semantic_analyzer_rc2.py",
+        "visual_understanding_contract_rc2.py",
+        "workflow.py"
+      ],
+      "story_strategy": [
+        "director_core_rc2.py",
+        "editorial_package_rc2.py",
+        "project_config_rc2.py",
+        "story_strategy_contract_rc2.py",
+        "story_strategy_engine_rc2.py"
+      ],
+      "timeline": [
+        "audio_composer_rc2.py",
+        "audio_renderer_rc2.py",
+        "audio_timeline_rc2.py",
+        "capcut_bridge.py",
+        "control_layer_rc2.py",
+        "cv_model.py",
+        "director_core_rc2.py",
+        "final_assembly_pack.py",
+        "final_timeline_viewer.py",
+        "media_orchestrator.py",
+        "montage_workbench.py",
+        "native_timeline.py",
+        "native_viewer_pro.py",
+        "native_viewer_rc.py",
+        "operator_console.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "production_director.py",
+        "project_config_rc2.py",
+        "project_context_alpha29.py",
+        "quality.py",
+        "quality_gate_rc2.py",
+        "recommendation_engine_alpha28.py",
+        "release_gate.py",
+        "render_engine_rc2.py",
+        "test_center.py",
+        "timeline_engine_rc2.py",
+        "timeline_studio.py",
+        "timeline_viewer_2.py",
+        "transition_engine_rc2.py",
+        "visual_dynamics_alpha272.py",
+        "workflow.py",
+        "working_state_auditor.py"
+      ],
+      "visual": [
+        "acceptance_center.py",
+        "agents\\agent_registry.py",
+        "assignment_policy_rc2.backup.py",
+        "assignment_policy_rc2.py",
+        "audio_composer_rc2.py",
+        "capcut_bridge.py",
+        "cv_model.py",
+        "cv_review_board.py",
+        "database.py",
+        "director_ai.py",
+        "director_ai_runtime.py",
+        "director_core_rc2.py",
+        "editorial_package_rc2.py",
+        "event_discovery_engine_rc2.py",
+        "final_assembly_pack.py",
+        "final_timeline_viewer.py",
+        "generated_asset_store_rc2.py",
+        "integrations.py",
+        "local_autopilot.py",
+        "media_orchestrator.py",
+        "montage_workbench.py",
+        "mux_engine_rc2.py",
+        "narrative_writer_rc2.py",
+        "native_timeline.py",
+        "native_viewer_pro.py",
+        "native_viewer_rc.py",
+        "operator_console.py",
+        "pipeline_runtime.py",
+        "postproduction_quality_rc2.py",
+        "production_director.py",
+        "production_script_assembler_rc2.py",
+        "production_state.py",
+        "production_visual_manager.py",
+        "project_profiles_alpha273.py",
+        "project_state.py",
+        "quality.py",
+        "recommendation_engine_alpha28.py",
+        "release_gate.py",
+        "render_engine_rc2.py",
+        "story_engine_runtime.py",
+        "story_strategy_contract_rc2.py",
+        "story_strategy_engine_rc2.py",
+        "timeline_engine_rc2.py",
+        "timeline_studio.py",
+        "timeline_viewer_2.py",
+        "visual_asset_registrar.py",
+        "visual_dynamics_alpha272.py",
+        "visual_intelligence.py",
+        "visual_renderer_rc2.py",
+        "visual_semantic_analyzer_rc2.py",
+        "visual_understanding_contract_rc2.py",
+        "workflow.py"
+      ],
+      "voice": [
+        "agents\\agent_registry.py",
+        "asset_intelligence.py",
+        "audio_renderer_rc2.py",
+        "audio_timeline_rc2.py",
+        "director_ai.py",
+        "ducking_engine_rc2.py",
+        "editorial_package_rc2.py",
+        "integrations.py",
+        "media_orchestrator.py",
+        "narrative_writer_rc2.py",
+        "production_director.py",
+        "production_script_assembler_rc2.py",
+        "production_script_regenerator_rc2.py",
+        "project_config_rc2.py",
+        "project_state.py",
+        "render_engine_rc2.py",
+        "timeline_engine_rc2.py",
+        "timeline_viewer_2.py",
+        "voice_production_engine_rc2.py"
+      ]
+    },
+    "json_writers": [
+      "acceptance_center.py",
+      "assignment_policy_rc2.backup.py",
+      "assignment_policy_rc2.py",
+      "audio_renderer_rc2.py",
+      "capcut_bridge.py",
+      "control_layer_rc2.py",
+      "cv_model.py",
+      "cv_review_board.py",
+      "director_ai.py",
+      "director_ai_runtime.py",
+      "director_core_rc2.py",
+      "final_assembly_pack.py",
+      "final_timeline_viewer.py",
+      "franklin_e2e_runtime.py",
+      "live_api_layer.py",
+      "live_api_test_suite.py",
+      "live_connectors.py",
+      "local_autopilot.py",
+      "media_orchestrator.py",
+      "montage_workbench.py",
+      "mux_engine_rc2.py",
+      "native_timeline.py",
+      "native_viewer_pro.py",
+      "native_viewer_rc.py",
+      "operator_console.py",
+      "pipeline_runtime.py",
+      "preflight.py",
+      "production_director.py",
+      "production_script_assembler_rc2.py",
+      "production_state_rc2.py",
+      "production_visual_manager.py",
+      "quality_gate_rc2.py",
+      "render_engine_rc2.py",
+      "story_engine_runtime.py",
+      "test_center.py",
+      "timeline_engine_rc2.py",
+      "timeline_studio.py",
+      "timeline_viewer_2.py",
+      "visual_asset_registrar.py",
+      "visual_intelligence.py",
+      "visual_renderer_rc2.py",
+      "voice_production_engine_rc2.py",
+      "workflow.py",
+      "working_state_auditor.py"
+    ],
+    "json_readers": [
+      "director_core_rc2.py",
+      "event_discovery_engine_rc2.py",
+      "postproduction_quality_rc2.py",
+      "production_director.py",
+      "production_script_regenerator_rc2.py",
+      "production_state_rc2.py",
+      "quality_gate_rc2.py",
+      "render_engine_rc2.py",
+      "story_strategy_engine_rc2.py",
+      "timeline_engine_rc2.py",
+      "visual_asset_registrar.py",
+      "visual_dynamics_alpha272.py",
+      "voice_production_engine_rc2.py"
+    ],
+    "suspicious_findings": [
+      "DirectorCoreRC2 does not import visual_semantic_analyzer_rc2; upstream RC2 chain may be disconnected.",
+      "DirectorCoreRC2 does not import event_discovery_engine_rc2; upstream RC2 chain may be disconnected.",
+      "DirectorCoreRC2 does not import story_strategy_engine_rc2; upstream RC2 chain may be disconnected."
+    ]
+  },
+  "compileall": {
+    "returncode": 0,
+    "output": ""
+  },
+  "pytest": {
+    "state": "SKIPPED",
+    "returncode": null,
+    "output": ""
+  },
+  "git": {
+    "branch": "feature/rc2-duration-authority-2.6",
+    "head": "daa0440d5508f9129aa15e15000e77763f439fad",
+    "status": "D ../../../ATLAS_ZERO_RC1_ALPHA_3_1.patch\n D ../../../paceexportsfranklinmovie_runtime_rc1manual_edit_package.md\n M ../cli.py\n M asset_intelligence.py\n M assignment_policy_rc2.py\n M cv_model.py\n M director_core_rc2.py\n M director_policy_evaluator_alpha293.py\n M director_supervisor_alpha292.py\n M media_orchestrator.py\n D movie_runtime_rc1.py\n D movie_runtime_rc1.py.backup_duration_shots_20260712_202102\n D movie_runtime_rc1.py.backup_shot_mode_20260712_201034\n M narrative_writer_rc2.py\n M pipeline_runtime.py\n M project_config_rc2.py\n D rc1_completion_planner.py\n M release_gate.py\n D render_engine_rc1.py\n D render_engine_rc1.py.backup_before_master_audio\n D render_engine_rc1.py.backup_before_nostdin\n M render_engine_rc2.py\n M timeline_engine_rc2.py\n M workflow.py\n M ../ui/__pycache__/app.cpython-313.pyc\n M ../ui/app.py\n D ../../../tests/test_movie_runtime_rc1.py\n D ../../../tests/test_movie_runtime_rc1_assets.py\n D ../../../tests/test_render_engine_rc1.py\n D ../../../tools/franklin_autopilot.py\n D ../../../tools/media_factory_rc1.py\n D ../../../tools/render_franklin_roughcut.py\n D ../../../tools/repair_semantic_asset_ids.py\n D ../../../tools/semantic_director_v1.py\n D ../../../tools/semantic_director_v1_1_multimedia.py\n D ../../../tools/semantic_director_v1_2_temporal.py\n D ../../../tools/visual_intelligence_v1.py\n?? ../../../APPLY_PHASE5.py\n?? ../../../alpha26_full_pytest.txt\n?? ../../../apply_director_knowledge_base_rc2.py\n?? ../../../apply_director_supervisor_rc2_fix.py\n?? ../../../atlas_zero_full_audit.py\n?? ../../../atlas_zero_phase5_native_camera_motion/\n?? ../../../atlas_zero_phase6_native_transition_engine/\n?? ../../../atlas_zero_phase7_native_audio_composer/\n?? ../../../atlas_zero_phase8_rc2_control_layer/\n?? ../../../atlas_zero_phase9_production_cleanup/\n?? ../../../atlas_zero_rc2_final_audit/\n?? ../../../atlas_zero_rc2_finalization/\n?? ../../../atlas_zero_rc2_production_audit/\n?? ../../../atlas_zero_remove_rc1/\n?? ../../../audit_output/\n?? ../../../audit_rc2_production.zip\n?? ../../../audit_rc2_production/\n?? ../../../audit_rc2_production_contour.ps1\n?? ../../../collect_diagnostic.txt\n?? ../../../collect_errors.txt\n?? ../../../collect_stderr.txt\n?? ../../../collect_stdout.txt\n?? ../../../editorial_intelligence_source.txt\n?? ../../../hogueras_duration_audit.txt\n?? ../../../phase5_payload/\n?? audio_composer_rc2.py\n?? audio_renderer_rc2.py\n?? audio_timeline_rc2.py\n?? camera_motion_rc2.py\n?? control_layer_rc2.py\n?? director_knowledge_base_rc2.py\n?? director_policy_evaluator_alpha293.py.before_knowledge_base\n?? ducking_engine_rc2.py\n?? loudness_engine_rc2.py\n?? mux_engine_rc2.py\n?? transition_engine_rc2.py\n?? visual_renderer_rc2.py\n?? ../../../tests/test_audio_phase7_rc2.py\n?? ../../../tests/test_director_knowledge_base_rc2.py\n?? ../../../tests/test_phase8_control_layer_rc2.py\n?? ../../../tests/test_transition_engine_rc2.py\n?? ../../../timeline_code_search.txt",
+    "remote": "origin\thttps://github.com/skorikgrigorii-pixel/atlas_zero1.git (fetch)\norigin\thttps://github.com/skorikgrigorii-pixel/atlas_zero1.git (push)"
+  }
+}

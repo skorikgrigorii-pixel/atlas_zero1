@@ -13,7 +13,7 @@ BG = '#08111f'; PANEL = '#0b1424'; CARD = '#101b2d'; CARD2 = '#14243a'; TEXT = '
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('ATLAS ZERO Enterprise RC1 Alpha 2.4 — Director AI Runtime')
+        self.title('ATLAS ZERO Enterprise RC2 — Native Production Runtime')
         self.geometry('1366x820')
         self.configure(bg=BG)
         self.db = Database(); self.db.init()
@@ -25,13 +25,13 @@ class App(tk.Tk):
         self.style.configure('Treeview', font=('Segoe UI', 7), rowheight=20, background='#0b1220', fieldbackground='#0b1220', foreground=TEXT)
         self.style.configure('Treeview.Heading', font=('Segoe UI', 7, 'bold'), background='#d9d7cf', foreground='#111827')
         self.style.configure('TButton', font=('Segoe UI', 8), padding=5)
-        self.sections = ['Командный центр','Проектный мозг','Граф конвейера','Story Engine','Director AI 2.4','Native Viewer Pro','Franklin E2E','Конвейер','Live Run Console','Менеджер задач','Материалы','Визуальный анализ','Шоты','Решения','Интеграции','API-очередь','API-запуски','Preflight','Оператор','Рабочее состояние','Live API','Операторский таймлайн','Монтажная мастерская','Local Autopilot','Native Timeline','Native Viewer RC','CV Runtime 2.2','Live Connectors','Live API Test','CV Review Board','Timeline Viewer 2','Центр тестирования','Final Assembly Pack','CapCut Bridge','План RC1','Готовность RC1','События','Production State','Franklin готовность','Экспорт']
+        self.sections = ['Командный центр','Проектный мозг','Граф конвейера','Story Engine','Director AI 2.4','Native Viewer Pro','Franklin E2E','Конвейер','Live Run Console','Менеджер задач','Материалы','Визуальный анализ','Шоты','Решения','Интеграции','API-очередь','API-запуски','Preflight','Оператор','Рабочее состояние','Live API','Операторский таймлайн','Монтажная мастерская','Local Autopilot','Native Timeline','Native Viewer RC','CV Runtime 2.2','Live Connectors','Live API Test','CV Review Board','Timeline Viewer 2','Центр тестирования','Final Assembly Pack','CapCut Bridge','План RC2','Готовность RC2','События','Production State','Franklin готовность','Экспорт']
         self._build()
         self.show('Командный центр')
 
     def _build(self):
         top = tk.Frame(self,bg='#020617',height=42); top.pack(fill='x')
-        tk.Label(top,text='ATLAS ZERO ENTERPRISE RC1',bg='#020617',fg=TEXT,font=('Segoe UI',11,'bold')).pack(side='left',padx=14)
+        tk.Label(top,text='ATLAS ZERO ENTERPRISE RC2',bg='#020617',fg=TEXT,font=('Segoe UI',11,'bold')).pack(side='left',padx=14)
         tk.Label(top,text='Franklin · Alpha 2.4 · Director AI / quality / tasks',bg='#020617',fg=MUTED,font=('Segoe UI',8)).pack(side='left')
         tk.Button(top,text='Запустить конвейер',command=self.run_pipeline,bg='#075985',fg='white',font=('Segoe UI',8),relief='flat').pack(side='right',padx=6,pady=6)
         tk.Button(top,text='Открыть экспорт',command=self.open_exports,bg='#334155',fg='white',font=('Segoe UI',8),relief='flat').pack(side='right',padx=6,pady=6)
@@ -122,8 +122,8 @@ class App(tk.Tk):
         elif name=='Центр тестирования': self.test_center()
         elif name=='Final Assembly Pack': self.final_assembly_pack()
         elif name=='CapCut Bridge': self.capcut_bridge()
-        elif name=='План RC1': self.rc1_plan()
-        elif name=='Готовность RC1': self.readiness()
+        elif name=='План RC2': self.rc2_plan()
+        elif name=='Готовность RC2': self.readiness()
         elif name=='Production State': self.production_state()
         elif name=='Franklin готовность': self.franklin_acceptance()
         elif name=='События': self.events()
@@ -551,10 +551,10 @@ class App(tk.Tk):
         except Exception as e:
             self.table(['Ошибка'], [(str(e),)])
 
-    def rc1_plan(self):
+    def rc2_plan(self):
         try:
-            from az_enterprise.core.rc1_completion_planner import RC1CompletionPlanner
-            report = RC1CompletionPlanner(self.db).plan()
+            from az_enterprise.core.control_layer_rc2 import RC2ReadinessPlanner
+            report = RC2ReadinessPlanner(self.db).plan()
             rows=[('Задач', report['tasks']), ('Missing', report['missing']), ('QC', str(report['qc'])+'%'), ('HTML', report['html']), ('CSV', report['csv'])]
             self.table(['Показатель','Значение'], rows)
         except Exception as e:

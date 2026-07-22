@@ -10,7 +10,9 @@ from .paths import PROJECTS
 from .production_state import ProductionState
 from .project_state import ProjectState, PROJECT_STATES
 from .job_queue import JobQueue
-from .movie_runtime_rc1 import run_movie as run_movie
+from .project_config_rc2 import ProjectConfigRC2
+from .timeline_engine_rc2 import TimelineEngineRC2
+from .render_engine_rc2 import RenderEngineRC2
 
 PIPELINE_STAGES = [
     ("research", "Research", "RESEARCH"),
@@ -115,7 +117,17 @@ def _run_stage_adapter(step_key: str, project_id: str, db: Database) -> dict[str
     if step_key == "visual_ready":
         return {"module": "visual", "artifact": f"{project_id}/visual/scene_pack", "status": "ready"}
     if step_key == "video_ready":
-        return {"module": "video", "artifact": f"{project_id}/video/final.mp4", "status": "ready"}
+        config = ProjectConfigRC2(project_id=project_id)
+        timeline = TimelineEngineRC2(db, config).run()
+        render = RenderEngineRC2(config).run()
+        return {
+            "module": "video_rc2",
+            "authority": "RC2ControlLayer",
+            "timeline": timeline,
+            "render": render,
+            "artifact": render.get("output"),
+            "status": render.get("state", "ready"),
+        }
     if step_key == "packaged":
         return {"module": "packaging", "artifact": f"{project_id}/packaging/package.zip", "status": "ready"}
     if step_key == "published":

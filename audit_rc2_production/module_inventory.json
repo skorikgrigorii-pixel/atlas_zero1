@@ -1,0 +1,356 @@
+﻿[
+    {
+        "File":  "src\\az_enterprise\\core\\acceptance_center.py",
+        "Size":  9189,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "audio, transition, camera_motion"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\asset_engine_rc2.py",
+        "Size":  1879,
+        "Modified":  "2026-07-14T22:30:32",
+        "Matches":  "ProjectConfigRC2, AssetEngineRC2"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\asset_intelligence.py",
+        "Size":  10403,
+        "Modified":  "2026-07-18T19:53:26",
+        "Matches":  "audio, duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\assignment_engine_rc2.py",
+        "Size":  1702,
+        "Modified":  "2026-07-14T18:45:39",
+        "Matches":  "ProjectConfigRC2, AssignmentEngineRC2"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\assignment_policy_rc2.backup.py",
+        "Size":  7923,
+        "Modified":  "2026-07-18T22:40:13",
+        "Matches":  "duplicate"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\assignment_policy_rc2.py",
+        "Size":  15223,
+        "Modified":  "2026-07-19T01:55:31",
+        "Matches":  "duplicate, max_use"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\capcut_bridge.py",
+        "Size":  6835,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\cv_model.py",
+        "Size":  28480,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "ffprobe, duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\database.py",
+        "Size":  14070,
+        "Modified":  "2026-07-15T13:39:35",
+        "Matches":  "transition, dissolve, camera_motion, duplicate, max_use, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\director_ai.py",
+        "Size":  20541,
+        "Modified":  "2026-07-14T19:09:47",
+        "Matches":  "transition, StoryEngine"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\director_ai_runtime.py",
+        "Size":  31516,
+        "Modified":  "2026-07-17T13:24:15",
+        "Matches":  "natural_sound, sound, montage, repeated, duration_sec, ProjectConfigRC2"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\director_core_rc2.py",
+        "Size":  27454,
+        "Modified":  "2026-07-20T01:41:58",
+        "Matches":  "RenderEngineRC2, natural_sound, sound, montage, repeated, duration_sec, ProjectConfigRC2, QualityGateRC2, AssignmentEngineRC2, AssetEngineRC2, StoryEngine, timeline_path, canonical_render_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\director_supervisor_alpha292.py",
+        "Size":  6219,
+        "Modified":  "2026-07-20T01:33:51",
+        "Matches":  "repeated"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\editorial_package_rc2.py",
+        "Size":  11360,
+        "Modified":  "2026-07-15T19:34:10",
+        "Matches":  "transition, duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
+        "Size":  15072,
+        "Modified":  "2026-07-15T15:38:36",
+        "Matches":  "music, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\final_timeline_viewer.py",
+        "Size":  6344,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\integrations.py",
+        "Size":  7255,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "music"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\live_api_layer.py",
+        "Size":  6601,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "music"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\live_connectors.py",
+        "Size":  6536,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "music"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\local_autopilot.py",
+        "Size":  4043,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "montage"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\media_orchestrator.py",
+        "Size":  5702,
+        "Modified":  "2026-07-08T15:31:43",
+        "Matches":  "movie_runtime_rc1"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\module_registry_alpha29.py",
+        "Size":  2292,
+        "Modified":  "2026-07-17T20:36:33",
+        "Matches":  "duplicate"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\montage_workbench.py",
+        "Size":  9668,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion, montage"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\movie_runtime_rc1.py",
+        "Size":  20695,
+        "Modified":  "2026-07-14T19:45:12",
+        "Matches":  "audio, montage, duration_sec, ProjectConfigRC2, StoryEngine, production_script, movie_runtime_rc1"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\narrative_writer_rc2.py",
+        "Size":  15895,
+        "Modified":  "2026-07-15T18:47:16",
+        "Matches":  "audio, transition, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\native_timeline.py",
+        "Size":  8520,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "audio, transition, dissolve, fade, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\native_viewer_pro.py",
+        "Size":  5515,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "camera_motion"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\native_viewer_rc.py",
+        "Size":  5145,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\operator_console.py",
+        "Size":  9036,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "duplicate"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\paths.py",
+        "Size":  554,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "audio, music"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\pipeline_runtime.py",
+        "Size":  35024,
+        "Modified":  "2026-07-17T23:45:30",
+        "Matches":  "audio, montage, repeated, duration_sec, StoryEngine"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
+        "Size":  18523,
+        "Modified":  "2026-07-17T15:09:02",
+        "Matches":  "audio, natural_sound, sound, rhythm, duration_sec, timeline_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\preflight.py",
+        "Size":  7678,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "ffmpeg, ffprobe, audio, music"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\production_director.py",
+        "Size":  9123,
+        "Modified":  "2026-07-10T16:42:34",
+        "Matches":  "RenderEngineRC1, audio, duration_sec, render_rc1, movie_runtime_rc1"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
+        "Size":  12185,
+        "Modified":  "2026-07-15T20:32:22",
+        "Matches":  "music, sound, transition, duration_sec, production_script"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\production_script_regenerator_rc2.py",
+        "Size":  5648,
+        "Modified":  "2026-07-15T22:20:36",
+        "Matches":  "duration_sec, ProjectConfigRC2, production_script"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\project_config_rc2.py",
+        "Size":  2656,
+        "Modified":  "2026-07-18T17:38:21",
+        "Matches":  "audio, ProjectConfigRC2, timeline_path, canonical_render_path, render_rc1, movie_runtime_rc1, franklin_render_rc1"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\project_model_alpha301.py",
+        "Size":  7693,
+        "Modified":  "2026-07-17T22:02:20",
+        "Matches":  "duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\project_profiles_alpha273.py",
+        "Size":  3727,
+        "Modified":  "2026-07-17T15:34:15",
+        "Matches":  "repeated"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\quality.py",
+        "Size":  4864,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "duplicate"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\quality_gate_rc2.py",
+        "Size":  6925,
+        "Modified":  "2026-07-17T13:24:15",
+        "Matches":  "RenderEngineRC2, duration_sec, ProjectConfigRC2, QualityGateRC2, timeline_path, canonical_render_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\rc2_cli.py",
+        "Size":  1909,
+        "Modified":  "2026-07-13T19:12:22",
+        "Matches":  "ProjectConfigRC2"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
+        "Size":  21535,
+        "Modified":  "2026-07-17T15:52:28",
+        "Matches":  "duplicate, repeated, rhythm, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\render_engine_rc1.py",
+        "Size":  14520,
+        "Modified":  "2026-07-12T23:36:54",
+        "Matches":  "RenderEngineRC1, ffmpeg, audio, duration_sec, timeline_path, render_rc1, movie_runtime_rc1, franklin_render_rc1"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "Size":  4565,
+        "Modified":  "2026-07-18T13:52:30",
+        "Matches":  "RenderEngineRC1, RenderEngineRC2, ffmpeg, ffprobe, audio, ProjectConfigRC2, canonical_render_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\runtime_governance_rc2.py",
+        "Size":  1492,
+        "Modified":  "2026-07-13T19:12:22",
+        "Matches":  "StoryEngine"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\story_engine.py",
+        "Size":  28283,
+        "Modified":  "2026-07-18T18:02:13",
+        "Matches":  "transition, dissolve, fade, camera_motion, montage, duration_sec, StoryEngine"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "Size":  21271,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion, montage, duration_sec, StoryEngine"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
+        "Size":  8906,
+        "Modified":  "2026-07-15T16:40:17",
+        "Matches":  "transition, duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
+        "Size":  13429,
+        "Modified":  "2026-07-15T17:11:27",
+        "Matches":  "music, transition, dissolve, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\timeline_engine_rc2.py",
+        "Size":  20426,
+        "Modified":  "2026-07-15T21:41:45",
+        "Matches":  "natural_sound, sound, transition, camera_motion, duration_sec, ProjectConfigRC2, production_script, timeline_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\timeline_studio.py",
+        "Size":  5129,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\timeline_viewer_2.py",
+        "Size":  2953,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "transition, camera_motion, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\visual_asset_registrar.py",
+        "Size":  26000,
+        "Modified":  "2026-07-12T16:16:01",
+        "Matches":  "duplicate"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\visual_dynamics_alpha272.py",
+        "Size":  12030,
+        "Modified":  "2026-07-17T15:34:15",
+        "Matches":  "transition, repeated, duration_sec, timeline_path"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
+        "Size":  23681,
+        "Modified":  "2026-07-15T14:48:48",
+        "Matches":  "music, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py",
+        "Size":  11880,
+        "Modified":  "2026-07-15T13:58:43",
+        "Matches":  "duplicate, duration_sec"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
+        "Size":  13587,
+        "Modified":  "2026-07-15T23:14:13",
+        "Matches":  "ffmpeg, ffprobe, audio, duration_sec, ProjectConfigRC2, production_script"
+    },
+    {
+        "File":  "src\\az_enterprise\\core\\workflow.py",
+        "Size":  17533,
+        "Modified":  "2026-07-07T14:20:08",
+        "Matches":  "montage, StoryEngine"
+    }
+]

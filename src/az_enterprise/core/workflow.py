@@ -21,7 +21,7 @@ from .live_api_layer import LiveApiLayer
 from .final_timeline_viewer import FinalTimelineViewer
 from .working_state_auditor import WorkingStateAuditor
 from .capcut_bridge import CapCutBridge
-from .rc1_completion_planner import RC1CompletionPlanner
+from .control_layer_rc2 import RC2ReadinessPlanner
 from .montage_workbench import MontageWorkbench
 from .local_autopilot import LocalAutopilot
 from .native_timeline import NativeTimelineModel
@@ -61,7 +61,7 @@ class WorkflowEngine:
         qc = QualityCenter(self.db, self.project_id).evaluate(); self._job('quality','done',qc)
         gate = QualityCenter(self.db, self.project_id).readiness_gate(); self._job('readiness_gate','done',gate)
         timeline_package = TimelineStudio(self.db, self.project_id).export_timeline_package(); self._job('timeline_package','done',timeline_package)
-        rc1_gate = ReleaseGate(self.db, self.project_id).evaluate_rc1(); self._job('rc1_release_gate','done',rc1_gate)
+        rc2_gate = RC2ReadinessPlanner(self.db, self.project_id).evaluate(); self._job('rc2_release_gate','done',rc2_gate)
         production_state = ProductionState(self.db, self.project_id).summarize(); self._job('production_state','done',production_state)
         self.db.execute('INSERT INTO production_snapshots(project_id,summary_json) VALUES(?,?)', (self.project_id, json.dumps(production_state, ensure_ascii=False)))
         handoff = AcceptanceCenter(self.db, self.project_id).build_capcut_handoff(); self._job('capcut_handoff','done',handoff)
@@ -72,7 +72,7 @@ class WorkflowEngine:
         final_viewer = FinalTimelineViewer(self.db, self.project_id).build(); self._job('final_timeline_viewer','done',final_viewer)
         working_audit = WorkingStateAuditor(self.db, self.project_id).audit(); self._job('working_state_audit','done',working_audit)
         capcut_bridge = CapCutBridge(self.db, self.project_id).build(); self._job('capcut_bridge','done',capcut_bridge)
-        completion_plan = RC1CompletionPlanner(self.db, self.project_id).plan(); self._job('rc1_completion_plan','done',completion_plan)
+        completion_plan = RC2ReadinessPlanner(self.db, self.project_id).plan(); self._job('rc2_completion_plan','done',completion_plan)
         montage_workbench = MontageWorkbench(self.db, self.project_id).build(); self._job('montage_workbench','done',montage_workbench)
         local_autopilot = LocalAutopilot(self.db, self.project_id).build(); self._job('local_autopilot','done',local_autopilot)
         native_timeline = NativeTimelineModel(self.db, self.project_id).build(); self._job('native_timeline_model','done',native_timeline)
@@ -84,10 +84,10 @@ class WorkflowEngine:
         cv_review = CVReviewBoard(self.db, self.project_id).build(); self._job('cv_review_board_1_7','done',cv_review)
         timeline_viewer_2 = TimelineViewer2(self.db, self.project_id).build(); self._job('timeline_viewer_2_2_7','done',timeline_viewer_2)
         test_center = TestCenter(self.db, self.project_id).run(); self._job('rc1_test_center_1_7','done',test_center)
-        rc1_gate_final = ReleaseGate(self.db, self.project_id).evaluate_rc1(); self._job('rc1_release_gate_final','done',rc1_gate_final)
+        rc2_gate_final = RC2ReadinessPlanner(self.db, self.project_id).evaluate(); self._job('rc2_release_gate_final','done',rc2_gate_final)
         exports = self.export_all(); self._job('export','done',exports)
-        self.bus.emit('PIPELINE_FINISHED', {'readiness': gate['score'], 'rc1_ready': gate['ready']})
-        return {'scan': scan, 'visual': visual, 'shots': shots, 'decisions': decisions, 'integrations': integrations, 'api_gateway': api_gateway, 'api_jobs': api_jobs, 'api_run': api_run, 'qc': qc, 'gate': gate, 'timeline_package': timeline_package, 'rc1_gate': rc1_gate, 'production_state': production_state, 'handoff': handoff, 'acceptance': acceptance, 'preflight': preflight_final, 'operator': operator, 'live_api': live_api, 'final_viewer': final_viewer, 'working_audit': working_audit, 'capcut_bridge': capcut_bridge, 'completion_plan': completion_plan, 'montage_workbench': montage_workbench, 'local_autopilot': local_autopilot, 'native_timeline': native_timeline, 'final_pack': final_pack, 'cv_model': cv_model, 'live_connectors': live_connectors, 'native_viewer_rc': native_viewer_rc, 'live_api_test': live_api_test, 'cv_review': cv_review, 'timeline_viewer_2': timeline_viewer_2, 'test_center': test_center, 'rc1_gate_final': rc1_gate_final, 'exports': exports}
+        self.bus.emit('PIPELINE_FINISHED', {'readiness': rc2_gate_final['score'], 'rc2_ready': rc2_gate_final['ready']})
+        return {'scan': scan, 'visual': visual, 'shots': shots, 'decisions': decisions, 'integrations': integrations, 'api_gateway': api_gateway, 'api_jobs': api_jobs, 'api_run': api_run, 'qc': qc, 'gate': gate, 'timeline_package': timeline_package, 'rc2_gate': rc2_gate, 'production_state': production_state, 'handoff': handoff, 'acceptance': acceptance, 'preflight': preflight_final, 'operator': operator, 'live_api': live_api, 'final_viewer': final_viewer, 'working_audit': working_audit, 'capcut_bridge': capcut_bridge, 'completion_plan': completion_plan, 'montage_workbench': montage_workbench, 'local_autopilot': local_autopilot, 'native_timeline': native_timeline, 'final_pack': final_pack, 'cv_model': cv_model, 'live_connectors': live_connectors, 'native_viewer_rc': native_viewer_rc, 'live_api_test': live_api_test, 'cv_review': cv_review, 'timeline_viewer_2': timeline_viewer_2, 'test_center': test_center, 'rc2_gate_final': rc2_gate_final, 'exports': exports}
 
     def export_all(self) -> dict:
         files = []

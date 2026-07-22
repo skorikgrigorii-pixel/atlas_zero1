@@ -279,7 +279,7 @@ class PipelineRunManager:
         return QualityCenter(self.db, self.project_id).evaluate()
 
     def _step_readiness_gate(self):
-        return ReleaseGate(self.db, self.project_id).evaluate_rc1()
+        return ReleaseGate(self.db, self.project_id).evaluate_release()
 
     def _step_timeline_package(self):
         return TimelineStudio(self.db, self.project_id).export_timeline_package()

@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -51,8 +51,24 @@ class ProjectConfigRC2:
         )
 
     @property
+    def timeline_dir(self) -> Path:
+        """Canonical RC2 timeline directory."""
+        return self.rc2_dir / "timeline"
+
+    @property
     def timeline_path(self) -> Path:
+        """Canonical production timeline owned by TimelineEngineRC2."""
+        return self.timeline_dir / "timeline.json"
+
+    @property
+    def legacy_timeline_path(self) -> Path:
+        """Temporary read-only fallback used during RC2 migration."""
         return self.export_dir / "movie_runtime_rc1" / "timeline.json"
+
+    @property
+    def native_timeline_model_path(self) -> Path:
+        """Operator/viewer timeline; not the canonical render authority."""
+        return self.export_dir / "native_timeline_model.json"
 
     @property
     def temporal_summary_path(self) -> Path:
@@ -64,6 +80,12 @@ class ProjectConfigRC2:
 
     @property
     def master_audio_path(self) -> Path:
+        """Canonical narration produced by VoiceProductionEngineRC2."""
+        return self.project_dir / "01_Audio" / "voice_master.wav"
+
+    @property
+    def legacy_master_audio_path(self) -> Path:
+        """Temporary compatibility path for older projects."""
         return self.project_dir / "01_Audio" / "voice_master.m4a"
 
     @property
