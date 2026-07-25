@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 
 
 def test_rc2_assignment_does_not_use_director_ai_state_authority():

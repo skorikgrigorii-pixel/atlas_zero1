@@ -1,0 +1,12 @@
+{
+  "minimum_architecture_score": 70.0,
+  "block_architecture_score": 50.0,
+  "maximum_syntax_errors": 0,
+  "block_syntax_errors": 25,
+  "maximum_layer_violations": 0,
+  "maximum_critical_nodes": null,
+  "maximum_dead_modules": null,
+  "fail_closed": true,
+  "refresh_before_run": true,
+  "build_knowledge_graph": true
+}

@@ -10,7 +10,6 @@ from typing import Any, Callable, Iterable
 
 from .project_config_rc2 import ProjectConfigRC2
 from .visual_renderer_rc2 import VisualRendererRC2
-from .audio_composer_rc2 import NativeAudioComposerRC2
 
 
 ProgressCallback = Callable[[dict[str, Any]], None]
@@ -113,15 +112,15 @@ class RenderModelRC2:
 class RenderEngineRC2:
     """Canonical RC2 render orchestrator.
 
-    Phase 4 responsibilities:
-    - load and normalize the canonical RC2 timeline;
-    - block invalid projects through the strict Phase 3 validator;
-    - render all visual segments through VisualRendererRC2;
-    - concatenate a native RC2 video master without RenderEngineRC1;
-    - attach narration temporarily until the Phase 7 Audio Composer exists;
-    - verify and atomically publish the final RC2 artifact.
+    Responsibilities:
+    - load only the canonical RC2 timeline;
+    - build and validate the immutable RC2 render model;
+    - support preflight before narration exists;
+    - render a non-final preview when narration is absent;
+    - publish the canonical final artifact only when narration exists;
+    - verify every produced media artifact before publication.
 
-    Camera motion and transition effects remain deferred to Phase 5 and 6.
+    Legacy timeline artifacts are intentionally ignored.
     """
 
     def __init__(
@@ -136,18 +135,76 @@ class RenderEngineRC2:
         if not self.ffprobe:
             raise RuntimeError("ffprobe is not available in PATH")
 
-        self.render_dir = self.config.canonical_render_path.parent
+        self.render_dir = self.config.render_dir
         self.render_dir.mkdir(parents=True, exist_ok=True)
 
         self.render_model_path = self.render_dir / "render_model_rc2.json"
         self.validation_report_path = self.render_dir / "render_validation_rc2.json"
+        self.preflight_report_path = self.config.render_preflight_report_path
         self.render_report_path = self.render_dir / "render_report_rc2.json"
+        self.preview_render_path = self.config.preview_render_path
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
 
+    def prepare(self) -> dict[str, Any]:
+        """Build and validate the render model without starting FFmpeg."""
+
+        self._emit("RENDER_PREFLIGHT_START", project_id=self.config.project_id)
+
+        rows, timeline_source = self.load_timeline()
+        self._emit(
+            "TIMELINE_LOADED",
+            path=str(timeline_source),
+            rows=len(rows),
+        )
+
+        model = self.build_render_model(rows, timeline_source)
+        self._write_json(self.render_model_path, model.to_dict())
+
+        validation = self.validate_render_model(model)
+        self._write_json(self.validation_report_path, validation)
+
+        report = {
+            "state": (
+                "RENDER_PREFLIGHT_READY"
+                if not validation["blocking_errors"]
+                else "RENDER_PREFLIGHT_BLOCKED"
+            ),
+            "project_id": self.config.project_id,
+            "timeline_source": str(timeline_source),
+            "render_model_path": str(self.render_model_path),
+            "validation_report_path": str(self.validation_report_path),
+            "expected_duration_sec": model.expected_duration_sec,
+            "clips_total": len(rows),
+            "clips_renderable": len(model.clips),
+            "clips_skipped": len(model.skipped),
+            "voice_ready": model.voice_path is not None,
+            "music_ready": model.music_path is not None,
+            "blocking_errors": list(validation["blocking_errors"]),
+            "warnings": list(validation["warnings"]),
+            "authority": "RenderEngineRC2",
+            "backend": "VisualRendererRC2",
+        }
+
+        self._write_json(self.preflight_report_path, report)
+        self._emit(
+            "RENDER_PREFLIGHT_COMPLETE",
+            state=report["state"],
+            expected_duration_sec=model.expected_duration_sec,
+        )
+        return report
+
     def run(self) -> dict[str, Any]:
+        """Render preview or final output from the canonical RC2 timeline.
+
+        When narration is absent, the engine creates a verified preview with a
+        silent compatibility track and does not overwrite the canonical final
+        render. Once narration exists, the canonical final artifact is
+        published atomically.
+        """
+
         self._emit("RENDER_START", project_id=self.config.project_id)
 
         rows, timeline_source = self.load_timeline()
@@ -169,6 +226,7 @@ class RenderEngineRC2:
             clips_renderable=len(model.clips),
             clips_skipped=len(model.skipped),
             expected_duration_sec=model.expected_duration_sec,
+            voice_ready=model.voice_path is not None,
         )
 
         if validation["blocking_errors"]:
@@ -179,12 +237,17 @@ class RenderEngineRC2:
 
         visual_report = self._run_native_visual_backend(model)
         visual_source = Path(str(visual_report["output_video"]))
-        source = self._compose_phase4_audio(visual_source, model)
+        source, audio_mode = self._compose_phase4_audio(visual_source, model)
 
         self._emit("VERIFY_SOURCE", path=str(source))
         source_probe = self.probe(source)
 
-        destination = self.config.canonical_render_path
+        final_mode = model.voice_path is not None
+        destination = (
+            self.config.canonical_render_path
+            if final_mode
+            else self.preview_render_path
+        )
         destination.parent.mkdir(parents=True, exist_ok=True)
         partial = destination.with_suffix(destination.suffix + ".partial")
         partial.unlink(missing_ok=True)
@@ -197,7 +260,11 @@ class RenderEngineRC2:
         os.replace(partial, destination)
 
         report = {
-            "state": "RENDERED_VERIFIED",
+            "state": (
+                "RENDERED_VERIFIED"
+                if final_mode
+                else "RENDER_PREVIEW_VERIFIED"
+            ),
             "project_id": self.config.project_id,
             "output": str(destination),
             "source": str(source),
@@ -210,6 +277,14 @@ class RenderEngineRC2:
             "clips_total": len(rows),
             "clips_renderable": len(model.clips),
             "clips_skipped": len(model.skipped),
+            "voice_ready": model.voice_path is not None,
+            "music_ready": model.music_path is not None,
+            "audio_mode": audio_mode,
+            "publish_mode": (
+                "canonical_final"
+                if final_mode
+                else "non_final_preview"
+            ),
             "authority": "RenderEngineRC2",
             "backend": "VisualRendererRC2",
             "migration_phase": "PHASE_7_NATIVE_AUDIO_COMPOSER",
@@ -218,7 +293,11 @@ class RenderEngineRC2:
         }
 
         self._write_json(self.render_report_path, report)
-        self._emit("RENDER_COMPLETE", path=str(destination))
+        self._emit(
+            "RENDER_COMPLETE",
+            path=str(destination),
+            state=report["state"],
+        )
         return report
 
     # ------------------------------------------------------------------
@@ -248,14 +327,16 @@ class RenderEngineRC2:
         return rows, source
 
     def _timeline_candidates(self) -> tuple[Path, ...]:
+        """Return canonical RC2 timeline locations only."""
+
+        configured = Path(self.config.timeline_path)
         native_rc2 = self.config.rc2_dir / "timeline" / "timeline.json"
-        configured = self.config.timeline_path
-        legacy_native = self.config.export_dir / "native_timeline_model.json"
 
         ordered: list[Path] = []
-        for path in (native_rc2, configured, legacy_native):
-            if path not in ordered:
-                ordered.append(path)
+        for path in (configured, native_rc2):
+            normalized = Path(path)
+            if normalized not in ordered:
+                ordered.append(normalized)
         return tuple(ordered)
 
     @staticmethod
@@ -909,11 +990,11 @@ class RenderEngineRC2:
         self,
         visual_source: Path,
         model: RenderModelRC2,
-    ) -> Path:
-        """Attach narration until the native Phase 7 mixer is implemented.
+    ) -> tuple[Path, str]:
+        """Attach narration or create a silent preview compatibility track.
 
-        Phase 4 owns only the visual backend. This compatibility mux prevents
-        the existing final artifact contract from losing its audio stream.
+        A silent track is permitted only for a non-final preview. The caller
+        decides whether the result may be published as the canonical final.
         """
 
         ffmpeg = shutil.which("ffmpeg")
@@ -998,7 +1079,7 @@ class RenderEngineRC2:
             mode=mode,
             output=str(output),
         )
-        return output
+        return output, mode
 
     @staticmethod
     def _run_ffmpeg(command: list[str], *, step: str) -> None:

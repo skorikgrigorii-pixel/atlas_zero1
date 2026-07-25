@@ -19,7 +19,7 @@ class QualityGateRC2:
     def _read_json(path):
         return json.loads(path.read_text(encoding="utf-8"))
 
-    def run(self) -> dict[str, Any]:
+    def run(self, *, release: bool = True) -> dict[str, Any]:
         checks: list[dict[str, Any]] = []
 
         def add(
@@ -94,6 +94,29 @@ class QualityGateRC2:
                 {"violations": temporal.get("modern_assets_in_historical", 0)},
             )
 
+        if not release:
+            preflight_path = self.config.render_preflight_report_path
+            add("RENDER_PREFLIGHT_EXISTS", preflight_path.exists(), {"path": str(preflight_path)})
+            if preflight_path.exists():
+                preflight=self._read_json(preflight_path)
+                add(
+                    "RENDER_PREFLIGHT_READY",
+                    preflight.get("state")=="RENDER_PREFLIGHT_READY",
+                    {"state": preflight.get("state")},
+                )
+            context={
+                "mode":"production",
+                "timeline":{
+                    "items":len(rows),
+                    "incomplete":len(incomplete),
+                    "unique_assets":len(unique_assets),
+                    "media_usage":dict(media_usage),
+                    "unique_ratio":round(unique_ratio,4),
+                    "average_reuse":round(average_reuse,3),
+                }
+            }
+            return self._finish(checks, context)
+
         render_path = self.config.canonical_render_path
         add("RENDER_EXISTS", render_path.exists(), {"path": str(render_path)})
         media_probe = None
@@ -160,8 +183,14 @@ class QualityGateRC2:
     def _finish(self, checks: list[dict[str, Any]], context: dict[str, Any]) -> dict[str, Any]:
         required_passed = all(row["passed"] for row in checks if row.get("required", True))
         warnings = [row for row in checks if not row["passed"] and not row.get("required", True)]
+        mode=context.get("mode","release")
         result = {
-            "state": "PASSED" if required_passed else "BLOCKED",
+            "state": (
+                "PRODUCTION_READY" if (mode=="production" and required_passed)
+                else "PASSED" if required_passed
+                else "PRODUCTION_BLOCKED" if mode=="production"
+                else "BLOCKED"
+            ),
             "project_id": self.config.project_id,
             "checks": checks,
             "warnings": warnings,

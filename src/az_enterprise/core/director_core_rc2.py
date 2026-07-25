@@ -8,6 +8,7 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from .asset_engine_rc2 import AssetEngineRC2
 from .assignment_engine_rc2 import AssignmentEngineRC2
+from .event_discovery_engine_rc2 import EventDiscoveryEngineRC2
 from .database import Database
 from .director_ai_runtime import DirectorAIRuntime
 from .director_policy_alpha293 import (
@@ -24,7 +25,9 @@ from .quality_gate_rc2 import QualityGateRC2
 from .render_engine_rc2 import RenderEngineRC2
 from .runtime_governance_rc2 import governance_report
 from .story_engine import StoryEngine
+from .story_strategy_engine_rc2 import StoryStrategyEngineRC2
 from .timeline_engine_rc2 import TimelineEngineRC2
+from .visual_semantic_analyzer_rc2 import VisualSemanticAnalyzerRC2
 
 
 ProgressCallback = Callable[[dict[str, Any]], None]
@@ -39,8 +42,8 @@ class StageDefinition:
 class _SupervisedRuntimeAdapter:
     """Expose DirectorCoreRC2 through the RuntimePort protocol.
 
-    The adapter deliberately calls ``run_targets`` rather than ``run_supervised``
-    so the supervisor cannot recursively invoke itself.
+    The adapter deliberately calls the release-target path rather than
+    ``run_supervised`` so the supervisor cannot recursively invoke itself.
     """
 
     def __init__(self, core: "DirectorCoreRC2", *, force: bool) -> None:
@@ -58,9 +61,15 @@ class _SupervisedRuntimeAdapter:
 class DirectorCoreRC2:
     """The sole canonical orchestration authority for RC2.
 
-    ``run`` preserves the existing one-pass behaviour.
-    ``run_supervised`` adds bounded DirectorSupervisor rework cycles without
-    changing the current stage implementations.
+    RC2 now has two explicit execution modes:
+
+    - production build: assets -> story -> assignment -> timeline ->
+      render_prepare;
+    - release build: production stages -> render -> quality.
+
+    ``run`` performs the production build and therefore does not require a
+    narration master. ``run_release`` performs the final render and release
+    validation. ``run_supervised`` always operates in release mode.
     """
 
     STAGES = (
@@ -68,17 +77,37 @@ class DirectorCoreRC2:
         StageDefinition("story"),
         StageDefinition("assignment"),
         StageDefinition("timeline"),
+        StageDefinition("render_prepare"),
         StageDefinition("render", resumable=False),
         StageDefinition("quality", resumable=False),
     )
 
-    _STAGE_ORDER = tuple(item.name for item in STAGES)
+    _PRODUCTION_STAGE_ORDER = (
+        "assets",
+        "story",
+        "assignment",
+        "timeline",
+        "render_prepare",
+    )
+    _RELEASE_STAGE_ORDER = (
+        "assets",
+        "story",
+        "assignment",
+        "timeline",
+        "render_prepare",
+        "render",
+        "quality",
+    )
+    _STAGE_ORDER = _RELEASE_STAGE_ORDER
     _TARGET_ALIASES = {
         "visual": "assets",
         "editorial": "story",
         "script": "story",
         "montage": "timeline",
+        "preflight": "render_prepare",
+        "render_preflight": "render_prepare",
         "postproduction": "render",
+        "release": "render",
     }
 
     def __init__(
@@ -115,7 +144,9 @@ class DirectorCoreRC2:
         return {
             "project_id": self.config.project_id,
             "canonical_orchestrator": "DirectorCoreRC2",
-            "stages": list(self._STAGE_ORDER),
+            "default_mode": "production",
+            "production_stages": list(self._PRODUCTION_STAGE_ORDER),
+            "release_stages": list(self._RELEASE_STAGE_ORDER),
             "supervised_mode_available": True,
             "current_state": state.status,
             "resume_from": self._first_incomplete_stage(state),
@@ -173,22 +204,52 @@ class DirectorCoreRC2:
         self.progress({"stage": name.upper(), "status": "COMPLETED"})
         return result
 
+    @staticmethod
+    def _write_json_artifact(path, payload: Mapping[str, Any]) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                dict(payload),
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
     def _run_story_stage(self) -> dict[str, Any]:
-        strategy_path = self.config.story_strategy_result_path
+        semantic_report = VisualSemanticAnalyzerRC2(
+            self.db,
+            project_id=self.config.project_id,
+        ).analyze()
 
-        if not strategy_path.exists():
-            raise FileNotFoundError(
-                f"Story strategy file not found: {strategy_path}"
-            )
-
-        try:
-            strategy_payload = json.loads(
-                strategy_path.read_text(encoding="utf-8")
-            )
-        except json.JSONDecodeError as exc:
+        analyzed = int(semantic_report.get("assets_analyzed") or 0)
+        semantic_results = semantic_report.get("results")
+        if analyzed <= 0 or not isinstance(semantic_results, list):
             raise RuntimeError(
-                f"Invalid story strategy JSON: {strategy_path}"
-            ) from exc
+                "VisualSemanticAnalyzerRC2 produced no usable results"
+            )
+
+        self._write_json_artifact(
+            self.config.visual_semantic_report_path,
+            semantic_report,
+        )
+
+        event_discovery = EventDiscoveryEngineRC2().run(semantic_report)
+        event_clusters = event_discovery.get("event_clusters")
+        if not isinstance(event_clusters, list) or not event_clusters:
+            raise RuntimeError(
+                "EventDiscoveryEngineRC2 produced no event clusters"
+            )
+
+        self._write_json_artifact(
+            self.config.event_discovery_result_path,
+            event_discovery,
+        )
+
+        strategy_result = StoryStrategyEngineRC2(
+            project_id=self.config.project_id,
+        ).run(event_discovery)
+        strategy_payload = strategy_result.to_dict()
 
         if strategy_payload.get("state") != "STORY_STRATEGY_READY":
             raise RuntimeError(
@@ -208,15 +269,37 @@ class DirectorCoreRC2:
         if not isinstance(scenes, list) or not scenes:
             raise RuntimeError("Story strategy contains no scenes")
 
-        result = StoryEngine(
+        self._write_json_artifact(
+            self.config.story_strategy_result_path,
+            strategy_payload,
+        )
+
+        story_result = StoryEngine(
             self.db,
             project_id=self.config.project_id,
         ).build_from_strategy(strategy_payload)
 
-        shots = int(result.get("shots") or 0)
+        shots = int(story_result.get("shots") or 0)
         if shots <= 0:
             raise RuntimeError("StoryEngine produced zero shots")
 
+        result = dict(story_result)
+        result.update(
+            {
+                "visual_semantic_report": str(
+                    self.config.visual_semantic_report_path
+                ),
+                "event_discovery_result": str(
+                    self.config.event_discovery_result_path
+                ),
+                "story_strategy_result": str(
+                    self.config.story_strategy_result_path
+                ),
+                "assets_analyzed": analyzed,
+                "event_clusters": len(event_clusters),
+                "strategy_scenes": len(scenes),
+            }
+        )
         return result
 
     def _stage_services(self) -> dict[str, Callable[[], dict[str, Any]]]:
@@ -231,41 +314,63 @@ class DirectorCoreRC2:
                 self.db,
                 self.config,
             ).run(),
+            "render_prepare": lambda: RenderEngineRC2(
+                self.config,
+                progress=self.progress,
+            ).prepare(),
             "render": lambda: RenderEngineRC2(
                 self.config,
                 progress=self.progress,
             ).run(),
-            "quality": lambda: QualityGateRC2(self.config).run(),
+            "quality": lambda: QualityGateRC2(self.config).run(release=True),
         }
 
     @classmethod
     def _normalize_targets(
         cls,
         targets: Sequence[str] | None,
+        *,
+        release: bool,
     ) -> tuple[str, ...]:
+        stage_order = (
+            cls._RELEASE_STAGE_ORDER
+            if release
+            else cls._PRODUCTION_STAGE_ORDER
+        )
+
         if not targets:
-            return cls._STAGE_ORDER
+            return stage_order
 
         normalized: list[str] = []
         for raw_target in targets:
             target = str(raw_target).strip().lower()
             target = cls._TARGET_ALIASES.get(target, target)
-            if target not in cls._STAGE_ORDER:
+
+            if target not in cls._RELEASE_STAGE_ORDER:
                 raise ValueError(f"Unknown RC2 rework target: {raw_target!r}")
+
+            if not release and target in {"render", "quality"}:
+                raise ValueError(
+                    f"Stage {target!r} requires release=True or run_release()"
+                )
+
             if target not in normalized:
                 normalized.append(target)
 
-        # Every upstream change invalidates all downstream artifacts.
-        first_index = min(cls._STAGE_ORDER.index(item) for item in normalized)
-        return cls._STAGE_ORDER[first_index:]
+        first_index = min(stage_order.index(item) for item in normalized)
+        return stage_order[first_index:]
 
     def run_targets(
         self,
         *,
         targets: Sequence[str] | None = None,
         force: bool = False,
+        release: bool = False,
     ) -> dict[str, Any]:
-        selected_stages = self._normalize_targets(targets)
+        selected_stages = self._normalize_targets(
+            targets,
+            release=release,
+        )
 
         with self._exclusive_run():
             self.config.governance_path.parent.mkdir(parents=True, exist_ok=True)
@@ -291,35 +396,72 @@ class DirectorCoreRC2:
                         services[stage_name],
                     )
 
-                quality = results.get("quality")
-                if quality is None:
-                    raise RuntimeError(
-                        "Targeted RC2 execution must include the quality stage"
+                if release:
+                    quality = results.get("quality")
+                    if quality is None:
+                        raise RuntimeError(
+                            "Release execution must include the quality stage"
+                        )
+
+                    passed = quality.get("state") == "PASSED"
+                    state.status = "COMPLETED" if passed else "REVIEW"
+                    state.quality = quality
+                    state.release_authorized = passed
+                    result_state = (
+                        "COMPLETED"
+                        if passed
+                        else "QUALITY_REWORK_REQUIRED"
+                    )
+                else:
+                    preflight = results.get("render_prepare")
+                    if preflight is None:
+                        raise RuntimeError(
+                            "Production execution must include render_prepare"
+                        )
+
+                    ready = preflight.get("state") == "RENDER_PREFLIGHT_READY"
+                    state.status = "PREPARED" if ready else "REVIEW"
+                    state.quality = {}
+                    state.release_authorized = False
+                    result_state = (
+                        "PRODUCTION_PREPARED"
+                        if ready
+                        else "PRODUCTION_REWORK_REQUIRED"
                     )
 
-                passed = quality.get("state") == "PASSED"
-                state.status = "COMPLETED" if passed else "REVIEW"
                 state.current_stage = None
-                state.artifacts.update(
-                    {
-                        "timeline": str(self.config.timeline_path),
-                        "render": str(self.config.canonical_render_path),
-                        "quality_report": str(self.config.quality_report_path),
-                        "governance": str(self.config.governance_path),
-                    }
-                )
-                state.quality = quality
-                state.release_authorized = passed
+                artifacts = {
+                    "timeline": str(self.config.timeline_path),
+                    "render_preflight": str(
+                        self.config.render_preflight_report_path
+                    ),
+                    "governance": str(self.config.governance_path),
+                }
+                if release:
+                    artifacts.update(
+                        {
+                            "render": str(
+                                self.config.canonical_render_path
+                            ),
+                            "quality_report": str(
+                                self.config.quality_report_path
+                            ),
+                        }
+                    )
+
+                state.artifacts.update(artifacts)
                 state.error = None
                 self.store.save(state)
 
                 return {
-                    "state": "COMPLETED" if passed else "QUALITY_REWORK_REQUIRED",
+                    "state": result_state,
+                    "mode": "release" if release else "production",
                     "project_id": self.config.project_id,
                     "run_id": state.run_id,
                     "executed_stages": list(selected_stages),
                     "results": results,
                     "production_state": str(self.config.state_path),
+                    "release_authorized": state.release_authorized,
                 }
             except Exception as exc:
                 state.status = "FAILED"
@@ -329,9 +471,32 @@ class DirectorCoreRC2:
                 raise
 
     def run(self, *, resume: bool = True, force: bool = False) -> dict[str, Any]:
-        """Preserve the previous one-pass RC2 contract."""
-        del resume  # Resume remains disabled until fingerprints are implemented.
-        result = self.run_targets(targets=None, force=force)
+        """Run the production build without requiring narration or release."""
+
+        del resume
+        result = self.run_targets(
+            targets=None,
+            force=force,
+            release=False,
+        )
+        if result["state"] != "PRODUCTION_PREPARED":
+            raise RuntimeError("RC2 production preflight blocked completion")
+        return result
+
+    def run_release(
+        self,
+        *,
+        resume: bool = True,
+        force: bool = False,
+    ) -> dict[str, Any]:
+        """Run the final render and Quality Gate release build."""
+
+        del resume
+        result = self.run_targets(
+            targets=None,
+            force=force,
+            release=True,
+        )
         if result["state"] != "COMPLETED":
             raise RuntimeError("Quality Gate RC2 blocked release")
         return result
@@ -522,6 +687,7 @@ class DirectorCoreRC2:
         execution = self.run_targets(
             targets=tuple(remaining) if remaining else None,
             force=force,
+            release=True,
         )
         if corrective:
             execution["corrective_actions"] = corrective
@@ -709,6 +875,7 @@ class DirectorCoreRC2:
                 "story",
                 "assignment",
                 "timeline",
+                "render_prepare",
                 "render",
                 "quality",
                 "temporal_report",

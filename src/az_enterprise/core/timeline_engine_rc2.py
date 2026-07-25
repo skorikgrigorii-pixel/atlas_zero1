@@ -180,59 +180,20 @@ class TimelineEngineRC2:
         minimum_shot_duration_sec: float = 2.0,
         maximum_shot_duration_sec: float = 12.0,
     ) -> dict[str, Any]:
-        """Discover and load the current project's production script."""
+        """Build the current project timeline from canonical SQLite shots.
 
-        script_path = (
-            self._discover_production_script_path()
-        )
+        The RC2 project timeline authority is the shots table produced by
+        StoryStrategyEngineRC2 and StoryEngine. Production-script discovery is
+        intentionally not used here, because an obsolete script may contain a
+        legacy duration such as 1500 seconds.
+        """
+        del average_shot_duration_sec
+        del minimum_shot_duration_sec
+        del maximum_shot_duration_sec
 
-        if script_path is None:
-            raise FileNotFoundError(
-                "Production script JSON was not found for "
-                f"project {self.config.project_id}. "
-                "Expected production_script.json in the "
-                "project script directory."
-            )
-
-        try:
-            production_script = json.loads(
-                script_path.read_text(
-                    encoding="utf-8"
-                )
-            )
-        except json.JSONDecodeError as exc:
-            raise ValueError(
-                f"Invalid production script JSON: {script_path}"
-            ) from exc
-
-        if not isinstance(
-            production_script,
-            dict,
-        ):
-            raise ValueError(
-                "Production script root must be a JSON object"
-            )
-
-        result = self.run_from_production_script(
-            production_script,
-            average_shot_duration_sec=(
-                average_shot_duration_sec
-            ),
-            minimum_shot_duration_sec=(
-                minimum_shot_duration_sec
-            ),
-            maximum_shot_duration_sec=(
-                maximum_shot_duration_sec
-            ),
-        )
-
-        result["production_script_path"] = str(
-            script_path
-        )
-        result["discovery_mode"] = (
-            "project_auto_discovery"
-        )
-
+        result = self.run()
+        result["mode"] = "canonical_database"
+        result["discovery_mode"] = "canonical_database"
         return result
 
     def _discover_production_script_path(
@@ -547,13 +508,21 @@ class TimelineEngineRC2:
                     3,
                 )
 
-                asset_id = asset_ids[
-                    local_index
-                    % len(asset_ids)
-                ]
+                # Each production asset may be used only once in a scene.
+                # When the scene requires more shots than available assets,
+                # keep the shot explicitly missing instead of cyclically
+                # repeating existing material. This exposes the coverage gap
+                # to AssignmentEngineRC2 and Director AI.
+                asset_id = (
+                    asset_ids[local_index]
+                    if local_index < len(asset_ids)
+                    else None
+                )
 
-                asset = assets.get(
-                    asset_id
+                asset = (
+                    assets.get(asset_id)
+                    if asset_id is not None
+                    else None
                 )
 
                 status = (
@@ -785,10 +754,27 @@ class TimelineEngineRC2:
             )
         ]
 
+        duration_sec = round(
+            max(
+                (
+                    float(row.get("end_sec") or 0.0)
+                    for row in rows
+                ),
+                default=0.0,
+            ),
+            3,
+        )
+
         return {
-            "state": "TIMELINE_READY",
+            "state": (
+                "TIMELINE_READY"
+                if not incomplete
+                else "TIMELINE_INCOMPLETE"
+            ),
             "project_id": self.config.project_id,
+            "mode": "canonical_database",
             "items": len(rows),
+            "duration_sec": duration_sec,
             "incomplete": len(incomplete),
             "artifact": str(json_path),
             "artifact_json": str(json_path),

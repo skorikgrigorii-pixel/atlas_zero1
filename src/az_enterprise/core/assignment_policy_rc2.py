@@ -22,6 +22,20 @@ class AssignmentPolicyRC2:
 
     ACCEPTANCE_THRESHOLD = 0.62
 
+    # Universal semantic classes that must never enter a production timeline.
+    # These classes describe private, unrelated, or otherwise non-editorial
+    # material rather than project-specific story content.
+    EXCLUDED_SEMANTIC_CLASSES = {
+        "unrelated_private_content",
+        "off_topic",
+        "private_content",
+        "medical_private_content",
+    }
+
+    # Semantic confidence below this value is treated as too weak to influence
+    # assignment ranking. It does not reject the asset by itself.
+    MIN_SEMANTIC_CONFIDENCE = 0.30
+
     def __init__(
         self,
         db: Database,
@@ -151,6 +165,79 @@ class AssignmentPolicyRC2:
 
         return preferred, str(scene["id"])
 
+    @staticmethod
+    def _row_value(
+        row: Any,
+        key: str,
+        default: Any = None,
+    ) -> Any:
+        """Read a value from sqlite rows, dicts, or row-like objects."""
+        try:
+            value = row[key]
+        except (KeyError, IndexError, TypeError):
+            return default
+        return default if value is None else value
+
+    def _semantic_profile(
+        self,
+        asset: Any,
+    ) -> tuple[str, str, float]:
+        """Return normalized semantic class, description, and confidence."""
+        semantic_class = str(
+            self._row_value(asset, "semantic_class", "")
+        ).strip().lower()
+        semantic_description = str(
+            self._row_value(asset, "semantic_description", "")
+        ).strip().lower()
+
+        try:
+            semantic_confidence = float(
+                self._row_value(asset, "semantic_confidence", 0.0)
+            )
+        except (TypeError, ValueError):
+            semantic_confidence = 0.0
+
+        semantic_confidence = max(
+            0.0,
+            min(semantic_confidence, 1.0),
+        )
+
+        return (
+            semantic_class,
+            semantic_description,
+            semantic_confidence,
+        )
+
+    def _asset_is_semantically_allowed(
+        self,
+        asset: Any,
+    ) -> bool:
+        """Reject universally unrelated or private material.
+
+        This rule is intentionally project-independent. Project relevance is
+        determined by score; explicit unrelated/private classes are hard
+        exclusions for both Story Engine and fallback candidates.
+        """
+        semantic_class, semantic_description, _ = self._semantic_profile(
+            asset
+        )
+
+        if semantic_class in self.EXCLUDED_SEMANTIC_CLASSES:
+            return False
+
+        if semantic_class.startswith("unrelated_"):
+            return False
+
+        exclusion_markers = (
+            "off_topic",
+            "off topic",
+            "unrelated private",
+        )
+        return not any(
+            marker in semantic_description
+            for marker in exclusion_markers
+        )
+
     def _max_use(self, asset: Any) -> int:
         """Return a safe per-asset usage limit.
 
@@ -192,7 +279,8 @@ class AssignmentPolicyRC2:
         available = [
             asset
             for asset in candidates
-            if self.usage[str(asset["id"])] < self._max_use(asset)
+            if self._asset_is_semantically_allowed(asset)
+            and self.usage[str(asset["id"])] < self._max_use(asset)
             and self._asset_fits_shot(shot, asset)
         ]
 
@@ -209,7 +297,10 @@ class AssignmentPolicyRC2:
         )
 
     def score(self, shot: Any, asset: Any) -> float:
-        """Legacy fallback score for shots without an explicit Story asset."""
+        """Fallback score with universal semantic understanding."""
+        if not self._asset_is_semantically_allowed(asset):
+            return 0.0
+
         need_tokens = self._tokens(shot["visual_need"])
         raw_tags = asset["tags"] or "[]"
 
@@ -225,10 +316,18 @@ class AssignmentPolicyRC2:
         if not isinstance(tags, list):
             tags = [str(tags)]
 
+        (
+            semantic_class,
+            semantic_description,
+            semantic_confidence,
+        ) = self._semantic_profile(asset)
+
         searchable_values = [
             asset["filename"],
             asset["category"],
             asset["emotion"],
+            semantic_class,
+            semantic_description,
             *tags,
         ]
 
@@ -268,6 +367,57 @@ class AssignmentPolicyRC2:
         score += exact_matches * 0.18
         score += partial_matches * 0.08
         score += phrase_bonus
+
+        if semantic_confidence >= self.MIN_SEMANTIC_CONFIDENCE:
+            semantic_tokens = set(
+                self._tokens(
+                    f"{semantic_class} {semantic_description}"
+                )
+            )
+            semantic_exact_matches = sum(
+                1
+                for token in need_tokens
+                if token in semantic_tokens
+            )
+            semantic_partial_matches = sum(
+                1
+                for token in need_tokens
+                if token not in semantic_tokens
+                and any(
+                    token in candidate or candidate in token
+                    for candidate in semantic_tokens
+                    if len(candidate) >= 4
+                )
+            )
+
+            class_tokens = set(
+                self._tokens(
+                    semantic_class.replace("_", " ")
+                )
+            )
+            class_overlap = bool(
+                class_tokens.intersection(need_tokens)
+            )
+
+            if class_overlap:
+                score += 0.45 * semantic_confidence
+
+            score += (
+                semantic_exact_matches
+                * 0.12
+                * semantic_confidence
+            )
+            score += (
+                semantic_partial_matches
+                * 0.05
+                * semantic_confidence
+            )
+
+            if (
+                visual_need
+                and visual_need in semantic_description
+            ):
+                score += 0.20 * semantic_confidence
 
         shot_emotion = str(shot["emotion"] or "").strip().lower()
         asset_emotion = str(asset["emotion"] or "").strip().lower()
@@ -466,7 +616,8 @@ class AssignmentPolicyRC2:
                 (
                     (self.score(shot, asset), asset)
                     for asset in assets
-                    if self.usage[str(asset["id"])] < self._max_use(asset)
+                    if self._asset_is_semantically_allowed(asset)
+                    and self.usage[str(asset["id"])] < self._max_use(asset)
                     and self._asset_fits_shot(shot, asset)
                 ),
                 key=lambda item: item[0],

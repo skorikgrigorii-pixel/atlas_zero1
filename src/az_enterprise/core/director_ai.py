@@ -6,7 +6,6 @@ from typing import Any
 from .database import Database
 from .events import EventBus
 from .assignment_policy_rc2 import AssignmentPolicyRC2
-from .story_engine_runtime import StoryEngineRuntime
 from .director_ai_runtime import DirectorAIRuntime
 
 
@@ -288,7 +287,6 @@ class DirectorAI:
 
     def _analyze_completeness(self) -> dict:
         try:
-            StoryEngineRuntime(self.db, self.project_id).build()
             analysis = DirectorAIRuntime(self.db, self.project_id).analyze()
             self._materialize_runtime_tasks(analysis)
             return analysis

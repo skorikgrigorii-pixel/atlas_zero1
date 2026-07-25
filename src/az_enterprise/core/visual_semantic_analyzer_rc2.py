@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import gc
 import json
 import math
+import os
 import re
+import time
+import traceback
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -145,7 +149,12 @@ class SemanticBackendRC2(Protocol):
 
 
 class HuggingFaceClipBackendRC2:
-    """Local HuggingFace CLIP zero-shot backend."""
+    """Memory-safe local HuggingFace CLIP zero-shot backend.
+
+    CUDA is used only when explicitly enabled with
+    ATLAS_ZERO_CLIP_DEVICE=cuda. CPU is the safe default for RC2 because
+    native CUDA/driver failures can terminate Python without a traceback.
+    """
 
     name = "huggingface_clip_vit_base_patch32"
 
@@ -166,22 +175,57 @@ class HuggingFaceClipBackendRC2:
             ) from exc
 
         self.torch = torch
+
+        thread_count = max(
+            1,
+            int(os.getenv("ATLAS_ZERO_TORCH_THREADS", "1")),
+        )
+        try:
+            torch.set_num_threads(thread_count)
+            torch.set_num_interop_threads(1)
+        except RuntimeError:
+            pass
+
+        requested_device = os.getenv(
+            "ATLAS_ZERO_CLIP_DEVICE",
+            "cpu",
+        ).strip().lower()
+
+        if requested_device == "cuda":
+            if not torch.cuda.is_available():
+                raise RuntimeError(
+                    "ATLAS_ZERO_CLIP_DEVICE=cuda was requested, "
+                    "but CUDA is not available"
+                )
+            self.device = "cuda"
+        else:
+            self.device = "cpu"
+
+        print(
+            "[SEMANTIC][BACKEND] "
+            f"loading {model_name} on {self.device}"
+        )
+
         self.processor = CLIPProcessor.from_pretrained(
             model_name,
             local_files_only=local_files_only,
         )
+
         self.model = CLIPModel.from_pretrained(
             model_name,
             local_files_only=local_files_only,
+            low_cpu_mem_usage=True,
         )
         self.model.eval()
-
-        self.device = (
-            "cuda"
-            if torch.cuda.is_available()
-            else "cpu"
-        )
+        self.model.requires_grad_(False)
         self.model.to(self.device)
+
+        self._cleanup_memory()
+
+        print(
+            "[SEMANTIC][BACKEND] "
+            f"ready on {self.device}"
+        )
 
     def classify(
         self,
@@ -207,44 +251,58 @@ class HuggingFaceClipBackendRC2:
         }
 
         for image in images:
-            inputs = self.processor(
-                text=prompts,
-                images=image,
-                return_tensors="pt",
-                padding=True,
-            )
+            inputs: dict[str, Any] | None = None
+            outputs: Any = None
+            probabilities: np.ndarray | None = None
 
-            inputs = {
-                key: value.to(self.device)
-                for key, value in inputs.items()
-            }
-
-            with self.torch.no_grad():
-                outputs = self.model(**inputs)
-
-            probabilities = (
-                outputs.logits_per_image
-                .softmax(dim=1)
-                .detach()
-                .cpu()
-                .numpy()[0]
-            )
-
-            per_label: dict[str, list[float]] = {
-                label: []
-                for label in labels
-            }
-
-            for prompt_label, probability in zip(
-                prompt_labels,
-                probabilities,
-            ):
-                per_label[prompt_label].append(
-                    float(probability)
+            try:
+                inputs = self.processor(
+                    text=prompts,
+                    images=image,
+                    return_tensors="pt",
+                    padding=True,
                 )
 
-            for label, values in per_label.items():
-                aggregate[label].append(max(values))
+                inputs = {
+                    key: value.to(
+                        self.device,
+                        non_blocking=False,
+                    )
+                    for key, value in inputs.items()
+                }
+
+                with self.torch.inference_mode():
+                    outputs = self.model(**inputs)
+
+                probabilities = (
+                    outputs.logits_per_image
+                    .softmax(dim=1)
+                    .detach()
+                    .to("cpu")
+                    .numpy()[0]
+                )
+
+                per_label: dict[str, list[float]] = {
+                    label: []
+                    for label in labels
+                }
+
+                for prompt_label, probability in zip(
+                    prompt_labels,
+                    probabilities,
+                ):
+                    per_label[prompt_label].append(
+                        float(probability)
+                    )
+
+                for label, values in per_label.items():
+                    aggregate[label].append(max(values))
+
+            finally:
+                del probabilities
+                del outputs
+                del inputs
+                self._cleanup_memory()
 
         scores = {
             label: float(np.mean(values))
@@ -262,7 +320,7 @@ class HuggingFaceClipBackendRC2:
             key=normalized.get,
         )
 
-        return SemanticPredictionRC2(
+        result = SemanticPredictionRC2(
             label=winner,
             score=round(normalized[winner], 6),
             scores={
@@ -270,6 +328,26 @@ class HuggingFaceClipBackendRC2:
                 for key, value in normalized.items()
             },
         )
+
+        self._cleanup_memory()
+        return result
+
+    def cleanup(self) -> None:
+        self._cleanup_memory()
+
+    def _cleanup_memory(self) -> None:
+        gc.collect()
+
+        if (
+            self.device == "cuda"
+            and self.torch.cuda.is_available()
+        ):
+            self.torch.cuda.synchronize()
+            self.torch.cuda.empty_cache()
+            try:
+                self.torch.cuda.ipc_collect()
+            except RuntimeError:
+                pass
 
 
 class VisualSemanticAnalyzerRC2:
@@ -295,6 +373,37 @@ class VisualSemanticAnalyzerRC2:
         )
         self.video_frames = max(1, video_frames)
 
+        story_dir = Path(
+            os.getenv(
+                "ATLAS_ZERO_SEMANTIC_STORY_DIR",
+                str(
+                    Path("workspace")
+                    / "exports"
+                    / project_id
+                    / "rc2"
+                    / "story"
+                ),
+            )
+        )
+        self.checkpoint_path = Path(
+            os.getenv(
+                "ATLAS_ZERO_SEMANTIC_CHECKPOINT_PATH",
+                str(story_dir / "visual_semantic_checkpoint.json"),
+            )
+        )
+        self.partial_report_path = Path(
+            os.getenv(
+                "ATLAS_ZERO_SEMANTIC_PARTIAL_REPORT_PATH",
+                str(story_dir / "visual_semantic_report.partial.json"),
+            )
+        )
+        self.final_report_path = Path(
+            os.getenv(
+                "ATLAS_ZERO_SEMANTIC_REPORT_PATH",
+                str(story_dir / "visual_semantic_report.json"),
+            )
+        )
+
     def analyze(
         self,
         *,
@@ -305,54 +414,521 @@ class VisualSemanticAnalyzerRC2:
             limit=limit,
             asset_ids=asset_ids,
         )
-
-        results: list[AssetUnderstandingRC2] = []
-        failures: list[dict[str, str]] = []
-
         total = len(rows)
+        run_started_at = datetime.now(timezone.utc).isoformat()
+
+        if self._env_flag("ATLAS_ZERO_SEMANTIC_RESET"):
+            self._remove_progress_files()
+            print("[SEMANTIC][RESET] previous progress removed")
+
+        checkpoint = self._load_checkpoint()
+        restored_results = self._restore_results(
+            checkpoint=checkpoint,
+            rows=rows,
+        )
+        results_by_id: dict[str, dict[str, Any]] = {
+            str(item["asset_id"]): item
+            for item in restored_results
+        }
+        failures_by_id: dict[str, dict[str, Any]] = {}
+
+        # A checkpoint may contain completed semantic results from an earlier
+        # run even when the corresponding assets table fields are still empty.
+        # Re-persist restored results so SQLite and the JSON checkpoint cannot
+        # drift apart.
+        for restored_result in restored_results:
+            self._persist_semantic_payload(restored_result)
+
+        if results_by_id:
+            print(
+                "[SEMANTIC][RESUME] "
+                f"restored {len(results_by_id)}/{total} assets from checkpoint"
+            )
 
         for index, row in enumerate(rows, start=1):
-            try:
-                result = self._analyze_asset(dict(row))
-                results.append(result)
+            asset = dict(row)
+            asset_id = str(asset["id"])
+            filename = str(asset["filename"])
 
+            if asset_id in results_by_id:
                 print(
-                    f"[SEMANTIC] {index}/{total} "
-                    f"{row['filename']} "
+                    f"[SEMANTIC][SKIP] "
+                    f"{index}/{total} {filename} already completed"
+                )
+                continue
+
+            started_at = time.monotonic()
+            print(
+                f"[SEMANTIC][START] "
+                f"{index}/{total} {filename}"
+            )
+
+            try:
+                result = self._analyze_asset(asset)
+                self._persist_semantic_result(result)
+
+                result_dict = result.to_dict()
+                results_by_id[asset_id] = result_dict
+                failures_by_id.pop(asset_id, None)
+
+                elapsed = time.monotonic() - started_at
+                print(
+                    f"[SEMANTIC][DONE] "
+                    f"{index}/{total} "
+                    f"{filename} "
                     f"=> {result.event_type} "
                     f"({result.event_confidence:.3f}) "
-                    f"{result.relevance_status}"
+                    f"{result.relevance_status} "
+                    f"in {elapsed:.2f}s"
                 )
 
             except Exception as exc:
-                failures.append({
-                    "asset_id": str(row["id"]),
-                    "filename": str(row["filename"]),
-                    "error": str(exc),
-                })
+                elapsed = time.monotonic() - started_at
+                failure = self._classify_failure(
+                    exc=exc,
+                    asset=asset,
+                    elapsed_sec=elapsed,
+                )
+                failures_by_id[asset_id] = failure
 
                 print(
                     f"[SEMANTIC][FAILED] "
                     f"{index}/{total} "
-                    f"{row['filename']} "
-                    f"=> {exc}"
+                    f"{filename} "
+                    f"=> {failure['failure_type']} "
+                    f"action={failure['recommended_action']} "
+                    f"error={failure['error']} "
+                    f"after {elapsed:.2f}s"
                 )
+
+            finally:
+                self._cleanup_after_asset()
+                report = self._build_report(
+                    rows=rows,
+                    results_by_id=results_by_id,
+                    failures_by_id=failures_by_id,
+                    run_started_at=run_started_at,
+                    status="RUNNING",
+                )
+                self._save_progress(
+                    report=report,
+                    rows=rows,
+                )
+
+        final_report = self._build_report(
+            rows=rows,
+            results_by_id=results_by_id,
+            failures_by_id=failures_by_id,
+            run_started_at=run_started_at,
+            status=(
+                "COMPLETED_WITH_ERRORS"
+                if failures_by_id
+                else "COMPLETED"
+            ),
+        )
+        self._atomic_write_json(
+            self.final_report_path,
+            final_report,
+        )
+        self._safe_unlink(self.partial_report_path)
+        self._safe_unlink(self.checkpoint_path)
+
+        print(
+            "[SEMANTIC][COMPLETE] "
+            f"analyzed={final_report['assets_analyzed']} "
+            f"failed={final_report['assets_failed']} "
+            f"report={self.final_report_path}"
+        )
+        return final_report
+
+
+    def _persist_semantic_result(
+        self,
+        result: AssetUnderstandingRC2,
+    ) -> None:
+        """Persist one validated semantic result in the canonical assets row."""
+        self._persist_semantic_payload(
+            result.to_dict()
+        )
+
+    def _persist_semantic_payload(
+        self,
+        payload: dict[str, Any],
+    ) -> None:
+        """Synchronize semantic analysis output with the assets table.
+
+        Only the dedicated semantic columns are updated. Existing category,
+        tags, quality and other asset metadata remain untouched.
+        """
+        asset_id = str(payload.get("asset_id", "")).strip()
+
+        if not asset_id:
+            raise ValueError(
+                "Semantic result does not contain asset_id"
+            )
+
+        semantic_class = str(
+            payload.get("event_type", "")
+        ).strip()
+
+        semantic_description = str(
+            payload.get("description", "")
+        ).strip()
+
+        try:
+            semantic_confidence = float(
+                payload.get("event_confidence", 0.0)
+            )
+        except (TypeError, ValueError):
+            semantic_confidence = 0.0
+
+        semantic_confidence = max(
+            0.0,
+            min(1.0, semantic_confidence),
+        )
+
+        self.db.execute(
+            """
+            UPDATE assets
+            SET
+                semantic_class=?,
+                semantic_description=?,
+                semantic_confidence=?
+            WHERE id=?
+              AND project_id=?
+            """,
+            (
+                semantic_class or None,
+                semantic_description or None,
+                semantic_confidence,
+                asset_id,
+                self.project_id,
+            ),
+        )
+
+    def _classify_failure(
+        self,
+        *,
+        exc: Exception,
+        asset: dict[str, Any],
+        elapsed_sec: float,
+    ) -> dict[str, Any]:
+        """Convert a raw exception into an RC2 recovery decision.
+
+        The classification is intentionally deterministic and side-effect free
+        so future Task Recovery and Health Monitor services can consume the
+        same failure records without parsing log text.
+        """
+        exception_name = type(exc).__name__
+        message = str(exc)
+        lowered = message.lower()
+
+        failure_type = "UNKNOWN_ERROR"
+        recommended_action = "skip"
+        retryable = False
+        severity = "ERROR"
+
+        if isinstance(exc, FileNotFoundError):
+            failure_type = "SOURCE_MISSING"
+            recommended_action = "skip"
+        elif isinstance(exc, PermissionError):
+            failure_type = "READ_ERROR"
+            recommended_action = "retry"
+            retryable = True
+        elif isinstance(exc, TimeoutError):
+            failure_type = "TIMEOUT_ERROR"
+            recommended_action = "retry"
+            retryable = True
+        elif isinstance(exc, MemoryError) or any(
+            marker in lowered
+            for marker in (
+                "out of memory",
+                "cannot allocate memory",
+                "cuda error: out of memory",
+                "defaultcpuallocator",
+            )
+        ):
+            failure_type = "OOM_ERROR"
+            recommended_action = "abort"
+            retryable = True
+            severity = "CRITICAL"
+        elif any(
+            marker in lowered
+            for marker in (
+                "cannot identify image file",
+                "truncated file",
+                "corrupt",
+                "invalid data found",
+                "moov atom not found",
+                "failed to decode",
+                "decode error",
+            )
+        ):
+            failure_type = "DECODE_ERROR"
+            recommended_action = "skip"
+        elif isinstance(exc, ValueError) and any(
+            marker in lowered
+            for marker in (
+                "unsupported media type",
+                "at least one image is required",
+                "no frames",
+            )
+        ):
+            failure_type = "MEDIA_ERROR"
+            recommended_action = "skip"
+        elif any(
+            marker in lowered
+            for marker in (
+                "opencv",
+                "videocapture",
+                "pillow",
+                "image.open",
+                "failed to open",
+                "cannot open",
+            )
+        ):
+            failure_type = "READ_ERROR"
+            recommended_action = "retry"
+            retryable = True
+        elif any(
+            marker in lowered
+            for marker in (
+                "clipmodel",
+                "clipprocessor",
+                "transformers",
+                "torch",
+                "model",
+                "tensor",
+            )
+        ):
+            failure_type = "MODEL_ERROR"
+            recommended_action = "retry"
+            retryable = True
+        elif isinstance(exc, (OSError, RuntimeError)):
+            failure_type = "RUNTIME_ERROR"
+            recommended_action = "retry"
+            retryable = True
+
+        return {
+            "asset_id": str(asset.get("id", "")),
+            "filename": str(asset.get("filename", "")),
+            "path": str(asset.get("path", "")),
+            "media_type": str(asset.get("media_type", "")),
+            "failure_type": failure_type,
+            "severity": severity,
+            "recommended_action": recommended_action,
+            "retryable": retryable,
+            "exception_type": exception_name,
+            "error": f"{exception_name}: {message}",
+            "elapsed_sec": round(float(elapsed_sec), 6),
+            "occurred_at": datetime.now(timezone.utc).isoformat(),
+            "traceback": "".join(
+                traceback.format_exception(
+                    type(exc),
+                    exc,
+                    exc.__traceback__,
+                )
+            ),
+        }
+
+    def _build_report(
+        self,
+        *,
+        rows: Sequence[Any],
+        results_by_id: dict[str, dict[str, Any]],
+        failures_by_id: dict[str, dict[str, Any]],
+        run_started_at: str,
+        status: str,
+    ) -> dict[str, Any]:
+        ordered_results: list[dict[str, Any]] = []
+        ordered_failures: list[dict[str, Any]] = []
+
+        for row in rows:
+            asset_id = str(row["id"])
+            if asset_id in results_by_id:
+                ordered_results.append(results_by_id[asset_id])
+            if asset_id in failures_by_id:
+                ordered_failures.append(failures_by_id[asset_id])
 
         return {
             "engine": "visual_semantic_analyzer_rc2",
             "backend": self.backend.name,
             "project_id": self.project_id,
-            "assets_requested": total,
-            "assets_analyzed": len(results),
-            "assets_failed": len(failures),
-            "results": [
-                item.to_dict()
-                for item in results
-            ],
-            "failures": failures,
-            "created_at": datetime.now(
-                timezone.utc
-            ).isoformat(),
+            "status": status,
+            "assets_requested": len(rows),
+            "assets_analyzed": len(ordered_results),
+            "assets_failed": len(ordered_failures),
+            "results": ordered_results,
+            "failures": ordered_failures,
+            "run_started_at": run_started_at,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+    def _save_progress(
+        self,
+        *,
+        report: dict[str, Any],
+        rows: Sequence[Any],
+    ) -> None:
+        checkpoint = {
+            "schema_version": 1,
+            "engine": "visual_semantic_analyzer_rc2",
+            "backend": self.backend.name,
+            "project_id": self.project_id,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "asset_signatures": {
+                str(row["id"]): self._asset_signature(dict(row))
+                for row in rows
+            },
+            "results": report["results"],
+            "failures": report["failures"],
+        }
+        self._atomic_write_json(
+            self.checkpoint_path,
+            checkpoint,
+        )
+        self._atomic_write_json(
+            self.partial_report_path,
+            report,
+        )
+        print(
+            "[SEMANTIC][CHECKPOINT] "
+            f"saved={report['assets_analyzed']} "
+            f"failed={report['assets_failed']}"
+        )
+
+    def _load_checkpoint(self) -> dict[str, Any] | None:
+        if not self.checkpoint_path.exists():
+            return None
+
+        try:
+            payload = json.loads(
+                self.checkpoint_path.read_text(encoding="utf-8")
+            )
+        except (OSError, json.JSONDecodeError) as exc:
+            print(
+                "[SEMANTIC][CHECKPOINT_INVALID] "
+                f"cannot read {self.checkpoint_path}: "
+                f"{type(exc).__name__}: {exc}"
+            )
+            return None
+
+        if not isinstance(payload, dict):
+            print("[SEMANTIC][CHECKPOINT_INVALID] root is not an object")
+            return None
+        if payload.get("project_id") != self.project_id:
+            print("[SEMANTIC][CHECKPOINT_INVALID] project mismatch")
+            return None
+        if payload.get("backend") != self.backend.name:
+            print("[SEMANTIC][CHECKPOINT_INVALID] backend mismatch")
+            return None
+        if payload.get("engine") != "visual_semantic_analyzer_rc2":
+            print("[SEMANTIC][CHECKPOINT_INVALID] engine mismatch")
+            return None
+        return payload
+
+    def _restore_results(
+        self,
+        *,
+        checkpoint: dict[str, Any] | None,
+        rows: Sequence[Any],
+    ) -> list[dict[str, Any]]:
+        if checkpoint is None:
+            return []
+
+        current_signatures = {
+            str(row["id"]): self._asset_signature(dict(row))
+            for row in rows
+        }
+        stored_signatures = checkpoint.get("asset_signatures", {})
+        stored_results = checkpoint.get("results", [])
+        if not isinstance(stored_signatures, dict):
+            return []
+        if not isinstance(stored_results, list):
+            return []
+
+        restored: list[dict[str, Any]] = []
+        for item in stored_results:
+            if not isinstance(item, dict):
+                continue
+            asset_id = str(item.get("asset_id", ""))
+            if not asset_id:
+                continue
+            if current_signatures.get(asset_id) != stored_signatures.get(asset_id):
+                print(
+                    "[SEMANTIC][RESUME_INVALIDATED] "
+                    f"asset_id={asset_id} source changed"
+                )
+                continue
+            restored.append(item)
+        return restored
+
+    @staticmethod
+    def _asset_signature(asset: dict[str, Any]) -> dict[str, Any]:
+        path = Path(str(asset.get("path", "")))
+        try:
+            stat = path.stat()
+            return {
+                "path": str(path.resolve()),
+                "size": int(stat.st_size),
+                "mtime_ns": int(stat.st_mtime_ns),
+            }
+        except OSError:
+            return {
+                "path": str(path),
+                "size": None,
+                "mtime_ns": None,
+            }
+
+    @staticmethod
+    def _atomic_write_json(
+        path: Path,
+        payload: dict[str, Any],
+    ) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary_path = path.with_name(path.name + ".tmp")
+        serialized = json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=False,
+        )
+        try:
+            with temporary_path.open("w", encoding="utf-8", newline="\n") as stream:
+                stream.write(serialized)
+                stream.write("\n")
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary_path, path)
+        finally:
+            if temporary_path.exists():
+                try:
+                    temporary_path.unlink()
+                except OSError:
+                    pass
+
+    def _remove_progress_files(self) -> None:
+        self._safe_unlink(self.checkpoint_path)
+        self._safe_unlink(self.partial_report_path)
+
+    @staticmethod
+    def _safe_unlink(path: Path) -> None:
+        try:
+            path.unlink(missing_ok=True)
+        except OSError as exc:
+            print(
+                "[SEMANTIC][CLEANUP_WARNING] "
+                f"cannot remove {path}: {type(exc).__name__}: {exc}"
+            )
+
+    @staticmethod
+    def _env_flag(name: str) -> bool:
+        return os.getenv(name, "").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
         }
 
     def _load_assets(
@@ -562,6 +1138,19 @@ class VisualSemanticAnalyzerRC2:
 
         result.validate()
         return result
+
+    def _cleanup_after_asset(self) -> None:
+        cleanup = getattr(
+            self.backend,
+            "cleanup",
+            None,
+        )
+
+        if callable(cleanup):
+            cleanup()
+        else:
+            gc.collect()
+
 
     def _extract_images(
         self,
