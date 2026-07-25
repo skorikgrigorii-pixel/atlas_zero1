@@ -1,0 +1,1182 @@
+ATLAS ZERO RC2 ? HOGUERAS SINGLE ASSET TRACE
+Project: hogueras
+Asset ID: cd45b6a4e220db3b23fca8ba
+Repository root: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1
+
+====================================================================================================
+1. DATABASE DISCOVERY
+====================================================================================================
+FOUND DATABASE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\atlas_zero_enterprise.sqlite3
+Size: 129466368 bytes
+
+====================================================================================================
+2. DATABASE TRACE ? atlas_zero_enterprise.sqlite3
+====================================================================================================
+Relevant tables:
+- asset_similarity: ['id', 'project_id', 'asset_id_a', 'asset_id_b', 'score', 'reason', 'created_at']
+- assets: ['id', 'project_id', 'path', 'filename', 'media_type', 'sha256', 'category', 'tags', 'emotion', 'quality', 'width', 'height', 'duration_sec', 'duplicate_of', 'created_at', 'semantic_class', 'semantic_description', 'visual_group', 'perceptual_hash', 'semantic_confidence', 'max_use']
+- cv_asset_metadata: ['asset_id', 'project_id', 'filename', 'media_type', 'engine', 'width', 'height', 'duration_sec', 'fps', 'frame_count', 'brightness', 'contrast', 'blur_score', 'edge_density', 'face_count', 'text_detected', 'object_hints', 'scene_count', 'cinematic_grade', 'phash', 'metadata_json', 'created_at', 'updated_at', 'quality_flags']
+- director_project_history: ['id', 'project_id', 'action', 'from_stage', 'to_stage', 'reason', 'details', 'created_at']
+- director_project_modules: ['id', 'project_id', 'module_name', 'status', 'error_message', 'created_at']
+- director_project_state: ['id', 'project_id', 'current_stage', 'completion_percent', 'overall_status', 'next_required_action', 'blocking_reason', 'estimated_completion', 'details', 'updated_at']
+- production_snapshots: ['id', 'project_id', 'summary_json', 'created_at']
+- projects: ['id', 'title', 'status', 'duration_sec', 'created_at', 'updated_at', 'current_stage', 'completion_percent', 'overall_status', 'next_required_action', 'blocking_reason', 'estimated_completion', 'state_details']
+- shots: ['id', 'project_id', 'idx', 'start_sec', 'end_sec', 'block', 'story_goal', 'visual_need', 'emotion', 'status', 'assigned_asset_id', 'transition', 'camera_motion']
+- story_beats: ['id', 'project_id', 'block', 'start_sec', 'end_sec', 'shot_count', 'assigned_count', 'missing_count', 'dominant_need', 'emotion', 'summary', 'risk', 'created_at']
+- story_missing_requirements: ['id', 'project_id', 'scene_id', 'scene_title', 'visual_need', 'priority', 'prompt', 'reason', 'status', 'created_at']
+- story_montage_items: ['id', 'project_id', 'shot_id', 'scene_id', 'scene_title', 'shot_index', 'start_sec', 'end_sec', 'duration_sec', 'narration_cue', 'visual_need', 'emotion', 'asset_id', 'asset_filename', 'asset_type', 'cv_grade', 'transition', 'camera_motion', 'status', 'action', 'created_at']
+- story_runtime_reports: ['id', 'project_id', 'readiness', 'report_json', 'created_at']
+- story_scenes: ['id', 'project_id', 'idx', 'block', 'title', 'start_sec', 'end_sec', 'duration_sec', 'target_shots', 'narrative_goal', 'emotional_goal', 'visual_strategy', 'required_assets', 'status', 'coverage', 'created_at']
+- workflow_jobs: ['id', 'project_id', 'stage', 'status', 'details', 'created_at', 'updated_at']
+- workflow_steps: ['id', 'project_id', 'step_key', 'title', 'depends_on', 'status', 'result_json', 'created_at', 'updated_at']
+
+====================================================================================================
+2.1 ASSET RECORD
+====================================================================================================
+{
+  "ok": true,
+  "rows": [
+    {
+      "id": "cd45b6a4e220db3b23fca8ba",
+      "project_id": "hogueras",
+      "path": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\workspace\\projects\\hogueras\\02_Images\\IMG_9876.JPG",
+      "filename": "IMG_9876.JPG",
+      "media_type": "image",
+      "sha256": "5316dfb30861eeb0fca17f8541fa1f06f46e46e1be071f70e1159e56e47c331d",
+      "category": "general",
+      "tags": "[]",
+      "emotion": "neutral",
+      "quality": 0.55,
+      "width": null,
+      "height": null,
+      "duration_sec": null,
+      "duplicate_of": null,
+      "created_at": "2026-07-18 19:49:08",
+      "semantic_class": null,
+      "semantic_description": null,
+      "visual_group": null,
+      "perceptual_hash": null,
+      "semantic_confidence": 0.0,
+      "max_use": 3
+    }
+  ]
+}
+
+====================================================================================================
+2.2 PROJECT ASSET INVENTORY
+====================================================================================================
+{
+  "ok": true,
+  "rows": [
+    {
+      "project_id": "hogueras",
+      "total_assets": 239
+    }
+  ]
+}
+
+Grouped by media_type:
+{
+  "ok": true,
+  "rows": [
+    {
+      "media_type": "video",
+      "count": 120
+    },
+    {
+      "media_type": "image",
+      "count": 58
+    },
+    {
+      "media_type": "audio",
+      "count": 39
+    },
+    {
+      "media_type": "document",
+      "count": 22
+    }
+  ]
+}
+
+Grouped by category:
+{
+  "ok": true,
+  "rows": [
+    {
+      "category": "general",
+      "count": 235
+    },
+    {
+      "category": "ice",
+      "count": 4
+    }
+  ]
+}
+
+====================================================================================================
+2.3 SHOTS REFERENCING ASSET
+====================================================================================================
+{
+  "ok": true,
+  "rows": []
+}
+
+Assignment summary:
+{
+  "ok": true,
+  "rows": [
+    {
+      "total_shots": 188,
+      "assigned_shots": 0,
+      "missing_shots": 188
+    }
+  ]
+}
+
+First 100 Hogueras shots:
+{
+  "ok": true,
+  "rows": [
+    {
+      "id": "hogueras_shot_0001",
+      "idx": 1,
+      "visual_need": "cluster-preparation-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0002",
+      "idx": 2,
+      "visual_need": "cluster-preparation-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0003",
+      "idx": 3,
+      "visual_need": "cluster-preparation-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0004",
+      "idx": 4,
+      "visual_need": "cluster-preparation-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0005",
+      "idx": 5,
+      "visual_need": "cluster-preparation-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0006",
+      "idx": 6,
+      "visual_need": "cluster-preparation-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0007",
+      "idx": 7,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0008",
+      "idx": 8,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0009",
+      "idx": 9,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0010",
+      "idx": 10,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0011",
+      "idx": 11,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0012",
+      "idx": 12,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0013",
+      "idx": 13,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0014",
+      "idx": 14,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0015",
+      "idx": 15,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0016",
+      "idx": 16,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0017",
+      "idx": 17,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0018",
+      "idx": 18,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0019",
+      "idx": 19,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0020",
+      "idx": 20,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0021",
+      "idx": 21,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0022",
+      "idx": 22,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0023",
+      "idx": 23,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0024",
+      "idx": 24,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0025",
+      "idx": 25,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0026",
+      "idx": 26,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0027",
+      "idx": 27,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0028",
+      "idx": 28,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0029",
+      "idx": 29,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0030",
+      "idx": 30,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0031",
+      "idx": 31,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0032",
+      "idx": 32,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0033",
+      "idx": 33,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0034",
+      "idx": 34,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0035",
+      "idx": 35,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0036",
+      "idx": 36,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0037",
+      "idx": 37,
+      "visual_need": "cluster-monument-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0038",
+      "idx": 38,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0039",
+      "idx": 39,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0040",
+      "idx": 40,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0041",
+      "idx": 41,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0042",
+      "idx": 42,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0043",
+      "idx": 43,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0044",
+      "idx": 44,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0045",
+      "idx": 45,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0046",
+      "idx": 46,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0047",
+      "idx": 47,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0048",
+      "idx": 48,
+      "visual_need": "cluster-monument-evening",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0049",
+      "idx": 49,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0050",
+      "idx": 50,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0051",
+      "idx": 51,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0052",
+      "idx": 52,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0053",
+      "idx": 53,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0054",
+      "idx": 54,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0055",
+      "idx": 55,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0056",
+      "idx": 56,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0057",
+      "idx": 57,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0058",
+      "idx": 58,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0059",
+      "idx": 59,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0060",
+      "idx": 60,
+      "visual_need": "cluster-monument-night",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0061",
+      "idx": 61,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0062",
+      "idx": 62,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0063",
+      "idx": 63,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0064",
+      "idx": 64,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0065",
+      "idx": 65,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0066",
+      "idx": 66,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0067",
+      "idx": 67,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0068",
+      "idx": 68,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0069",
+      "idx": 69,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0070",
+      "idx": 70,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0071",
+      "idx": 71,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0072",
+      "idx": 72,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0073",
+      "idx": 73,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0074",
+      "idx": 74,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0075",
+      "idx": 75,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0076",
+      "idx": 76,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0077",
+      "idx": 77,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0078",
+      "idx": 78,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0079",
+      "idx": 79,
+      "visual_need": "cluster-parade-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0080",
+      "idx": 80,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0081",
+      "idx": 81,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0082",
+      "idx": 82,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0083",
+      "idx": 83,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0084",
+      "idx": 84,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0085",
+      "idx": 85,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0086",
+      "idx": 86,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0087",
+      "idx": 87,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0088",
+      "idx": 88,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0089",
+      "idx": 89,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0090",
+      "idx": 90,
+      "visual_need": "cluster-music_band-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0091",
+      "idx": 91,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0092",
+      "idx": 92,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0093",
+      "idx": 93,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0094",
+      "idx": 94,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0095",
+      "idx": 95,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0096",
+      "idx": 96,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0097",
+      "idx": 97,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0098",
+      "idx": 98,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0099",
+      "idx": 99,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    },
+    {
+      "id": "hogueras_shot_0100",
+      "idx": 100,
+      "visual_need": "cluster-street_festival-day",
+      "status": "missing",
+      "assigned_asset_id": null
+    }
+  ]
+}
+
+====================================================================================================
+2.4 ASSIGNMENT TABLES
+====================================================================================================
+No assignment-related tables found.
+
+====================================================================================================
+2.5 TIMELINE TABLES
+====================================================================================================
+No timeline-related tables found.
+
+====================================================================================================
+2.6 GENERIC CROSS-TABLE ASSET SEARCH
+====================================================================================================
+
+HIT TABLE: cv_asset_metadata
+{
+  "ok": true,
+  "rows": [
+    {
+      "asset_id": "cd45b6a4e220db3b23fca8ba",
+      "project_id": "hogueras",
+      "filename": "IMG_9876.JPG",
+      "media_type": "image",
+      "engine": "pillow_cv_runtime_2_2",
+      "width": 4032,
+      "height": 3024,
+      "duration_sec": 0.0,
+      "fps": 0.0,
+      "frame_count": 0,
+      "brightness": 132.92,
+      "contrast": 61.69,
+      "blur_score": 0.0,
+      "edge_density": 0.0893,
+      "face_count": 0,
+      "text_detected": 0,
+      "object_hints": "[\"нейтральный визуальный материал\"]",
+      "scene_count": 0,
+      "cinematic_grade": 0.94,
+      "phash": "1101000111000001110000111110000111010001110000011100001111100011",
+      "metadata_json": "{\"asset_id\": \"cd45b6a4e220db3b23fca8ba\", \"filename\": \"IMG_9876.JPG\", \"media_type\": \"image\", \"engine\": \"pillow_cv_runtime_2_2\", \"width\": 4032, \"height\": 3024, \"aspect\": 1.333, \"brightness\": 132.92, \"contrast\": 61.69, \"blur_laplacian\": null, \"edge_density\": 0.0893, \"mean_rgb\": [127, 130, 123], \"hist8_rgb\": null, \"shot_type_cv\": \"общий кинематографический план\", \"face_count\": 0, \"face_boxes\": [], \"ocr_ready\": false, \"text_detected\": false, \"ocr_text_preview\": \"\", \"object_hints\": [\"нейтральный визуальный материал\"], \"cinematic_grade\": 0.94, \"phash\": \"1101000111000001110000111110000111010001110000011100001111100011\", \"quality_flags\": [\"ok\"]}",
+      "created_at": "2026-07-14 20:04:20",
+      "updated_at": "2026-07-14 20:04:20",
+      "quality_flags": "[\"ok\"]"
+    }
+  ]
+}
+
+HIT TABLE: story_scenes
+{
+  "ok": true,
+  "rows": [
+    {
+      "id": "SC01",
+      "project_id": "hogueras",
+      "idx": 1,
+      "block": "ACT01",
+      "title": "Подготовка к празднику",
+      "start_sec": 0.0,
+      "end_sec": 26.717,
+      "duration_sec": 26.717,
+      "target_shots": 3,
+      "narrative_goal": "Показать, как Аликанте готовится к главным событиям.",
+      "emotional_goal": "предвкушение",
+      "visual_strategy": "???????????? ?????? ????????? ????????? ????????; ?????????? ?????, ??????? ? ??????? ?????.",
+      "required_assets": "{\"cluster_ids\": [\"cluster-preparation-day\"], \"asset_ids\": [\"cd45b6a4e220db3b23fca8ba\"], \"use_existing_assets_only\": true}",
+      "status": "missing",
+      "coverage": 0.0,
+      "created_at": "2026-07-18 19:49:58"
+    }
+  ]
+}
+
+====================================================================================================
+3. JSON EXPORT TRACE
+====================================================================================================
+JSON files inspected: 24
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\editorial_package\editorial_package_hogueras.json
+HITS: 4
+{
+  "location": "$.scenes[0].asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+{
+  "location": "$.event_clusters[6].asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+{
+  "location": "$.review_assets[15]",
+  "object": {
+    "asset_id": "cd45b6a4e220db3b23fca8ba",
+    "filename": "IMG_9876.JPG",
+    "event_type": "preparation",
+    "event_confidence": 0.458813,
+    "relevance_status": "OFF_TOPIC",
+    "off_topic_score": 0.711341,
+    "reason_ru": "?????????? ??????????? ???????????? ?????????; ?????? OFF_TOPIC ??? ??????????? ??????????? ??? ??????????????? ??????????",
+    "recommended_action": "REVIEW"
+  }
+}
+{
+  "location": "$.review_assets[15].asset_id",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\event_discovery\event_discovery_result.json
+HITS: 3
+{
+  "location": "$.event_clusters[6].asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+{
+  "location": "$.review_assets[15]",
+  "object": {
+    "asset_id": "cd45b6a4e220db3b23fca8ba",
+    "filename": "IMG_9876.JPG",
+    "event_type": "preparation",
+    "event_confidence": 0.458813,
+    "relevance_status": "OFF_TOPIC",
+    "off_topic_score": 0.711341,
+    "reason_ru": "?????????? ??????????? ???????????? ?????????; ?????? OFF_TOPIC ??? ??????????? ??????????? ??? ??????????????? ??????????",
+    "recommended_action": "REVIEW"
+  }
+}
+{
+  "location": "$.review_assets[15].asset_id",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\narrative\narrative_result.json
+HITS: 1
+{
+  "location": "$.scenes[0].source_asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\narrative\scene_narration_ru.json
+HITS: 1
+{
+  "location": "$[0].source_asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\story_strategy\story_strategy_result.json
+HITS: 1
+{
+  "location": "$.scenes[0].asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\visual_semantic_full\checkpoint.json
+HITS: 2
+{
+  "location": "$.results[128]",
+  "object": {
+    "asset_id": "cd45b6a4e220db3b23fca8ba",
+    "filename": "IMG_9876.JPG",
+    "media_type": "image",
+    "event_type": "preparation",
+    "event_confidence": 0.458813,
+    "relevance_status": "OFF_TOPIC",
+    "relevance_score": 0.288659,
+    "off_topic_score": 0.711341,
+    "time_period": "day",
+    "description": "CLIP identified the material as 'preparation' with confidence 0.459; probable time period is 'day'.",
+    "story_value": 0.641435,
+    "detected_objects": [
+      "preparation"
+    ],
+    "detected_actions": [],
+    "location_hint": null,
+    "chronology_timestamp": null,
+    "evidence": {
+      "backend": "huggingface_clip_vit_base_patch32",
+      "event_scores": {
+        "monument": 0.428894,
+        "parade": 0.003917,
+        "flower_offering": 0.004737,
+        "mascleta": 0.017375,
+        "fireworks": 3.4e-05,
+        "crema": 0.00077,
+        "street_festival": 0.026896,
+        "music_band": 0.045795,
+        "beach_event": 3.3e-05,
+        "city_context": 0.001031,
+        "preparation": 0.458813,
+        "firefighters": 0.001322,
+        "crowd_reaction": 0.001855,
+        "unrelated_private_content": 0.008529
+      },
+      "time_scores": {
+        "morning": 0.022421,
+        "day": 0.927573,
+        "evening": 0.041308,
+        "night": 0.008699
+      },
+      "topic_scores": {
+        "relevant": 0.288659,
+        "off_topic": 0.711341
+      },
+      "frames_analyzed": 1,
+      "cinematic_grade": 0.94,
+      "quality_flags": "[\"ok\"]"
+    }
+  }
+}
+{
+  "location": "$.results[128].asset_id",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\visual_semantic_full\semantic_distribution_audit.json
+HITS: 2
+{
+  "location": "$.off_topic_candidates[20]",
+  "object": {
+    "asset_id": "cd45b6a4e220db3b23fca8ba",
+    "filename": "IMG_9876.JPG",
+    "event_type": "preparation",
+    "off_topic_score": 0.711341,
+    "relevance_status": "OFF_TOPIC"
+  }
+}
+{
+  "location": "$.off_topic_candidates[20].asset_id",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\rc2\visual_semantic_full\visual_semantic_analysis_178.json
+HITS: 2
+{
+  "location": "$.results[128]",
+  "object": {
+    "asset_id": "cd45b6a4e220db3b23fca8ba",
+    "filename": "IMG_9876.JPG",
+    "media_type": "image",
+    "event_type": "preparation",
+    "event_confidence": 0.458813,
+    "relevance_status": "OFF_TOPIC",
+    "relevance_score": 0.288659,
+    "off_topic_score": 0.711341,
+    "time_period": "day",
+    "description": "CLIP identified the material as 'preparation' with confidence 0.459; probable time period is 'day'.",
+    "story_value": 0.641435,
+    "detected_objects": [
+      "preparation"
+    ],
+    "detected_actions": [],
+    "location_hint": null,
+    "chronology_timestamp": null,
+    "evidence": {
+      "backend": "huggingface_clip_vit_base_patch32",
+      "event_scores": {
+        "monument": 0.428894,
+        "parade": 0.003917,
+        "flower_offering": 0.004737,
+        "mascleta": 0.017375,
+        "fireworks": 3.4e-05,
+        "crema": 0.00077,
+        "street_festival": 0.026896,
+        "music_band": 0.045795,
+        "beach_event": 3.3e-05,
+        "city_context": 0.001031,
+        "preparation": 0.458813,
+        "firefighters": 0.001322,
+        "crowd_reaction": 0.001855,
+        "unrelated_private_content": 0.008529
+      },
+      "time_scores": {
+        "morning": 0.022421,
+        "day": 0.927573,
+        "evening": 0.041308,
+        "night": 0.008699
+      },
+      "topic_scores": {
+        "relevant": 0.288659,
+        "off_topic": 0.711341
+      },
+      "frames_analyzed": 1,
+      "cinematic_grade": 0.94,
+      "quality_flags": "[\"ok\"]"
+    }
+  }
+}
+{
+  "location": "$.results[128].asset_id",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\projects\hogueras\script\production_script.json
+HITS: 1
+{
+  "location": "$.scenes[0].video.asset_ids[0]",
+  "value": "cd45b6a4e220db3b23fca8ba"
+}
+
+TOTAL JSON HITS: 17
+
+====================================================================================================
+4. TIMELINE EXPORT SUMMARY
+====================================================================================================
+
+FILE: C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\workspace\exports\hogueras\movie_runtime_rc1\timeline.json
+{
+  "timeline_rows": 188,
+  "assigned_rows": 0,
+  "rows_with_path": 0,
+  "renderable_rows": 0,
+  "target_asset_rows": []
+}
+
+====================================================================================================
+5. AUTOMATIC DIAGNOSIS
+====================================================================================================
+- atlas_zero_enterprise.sqlite3: asset exists but AssignmentPolicy did not attach it to any Hogueras shot.
+- The target asset appears 17 time(s) in JSON exports.
+
+====================================================================================================
+6. TRACE DECISION RULES
+====================================================================================================
+Interpretation:
+
+A. Asset absent from assets
+   ? AssetEngineRC2 or database-path selection is the failure point.
+
+B. Asset exists, but no shots reference it
+   ? AssignmentEngineRC2 / AssignmentPolicyRC2 is the failure point.
+
+C. Shot references asset, but timeline does not
+   ? TimelineEngineRC2 is dropping or rewriting the assignment.
+
+D. Timeline references asset, but asset_path is empty
+   ? Timeline materialization or path normalization is broken.
+
+E. Timeline has asset and valid path, but render omits it
+   ? RenderEngineRC2/backend filtering is the failure point.
+
+F. Different results across the two SQLite files
+   ? RC2 modules are opening different databases. This is a critical
+     split-brain configuration defect.

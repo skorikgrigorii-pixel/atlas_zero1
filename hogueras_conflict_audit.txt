@@ -1,0 +1,1890 @@
+﻿
+============================================================
+FILE: .\src\az_enterprise\core\story_engine.py
+============================================================
+    1: from __future__ import annotations
+    2: 
+    3: import json
+    4: from dataclasses import dataclass
+    5: from typing import Any
+    6: 
+    7: from .database import Database
+    8: from .events import EventBus
+    9: 
+   10: 
+   11: @dataclass(frozen=True)
+   12: class SceneBlueprint:
+   13:     scene_id: str
+   14:     block: str
+   15:     title: str
+   16:     duration_sec: float
+   17:     narrative_goal: str
+   18:     emotional_goal: str
+   19:     visual_strategy: str
+   20:     visual_needs: tuple[str, ...]
+   21:     preferred_motion: tuple[str, ...]
+   22: 
+   23: 
+   24: SCENE_BLUEPRINTS: list[SceneBlueprint] = [
+   25:     SceneBlueprint('S01','B01','РҐРѕР»РѕРґРЅС‹Р№ С„Р°РєС‚ РёСЃС‡РµР·РЅРѕРІРµРЅРёСЏ',52,'РћС‚РєСЂС‹С‚СЊ С„РёР»СЊРј РЅРµ СЃРїСЂР°РІРєРѕР№, Р° РїРѕСЃР»РµРґСЃС‚РІРёСЏРјРё РєР°С‚Р°СЃС‚СЂРѕС„С‹.','С‚СЂРµРІРѕРіР°','РјРёРЅРёРјР°Р»РёСЃС‚РёС‡РЅС‹Рµ РєСЂСѓРїРЅС‹Рµ РґРµС‚Р°Р»Рё, Р·Р°С‚РµРј РїРµСЂРµС…РѕРґ Рє РјР°СЃС€С‚Р°Р±Сѓ РђСЂРєС‚РёРєРё',('ice detail','artifact close','note close','arctic wide'),('slow push-in','macro drift','fade from black')),
+   26:     SceneBlueprint('S02','B01','Р­РєСЃРїРµРґРёС†РёСЏ РІС…РѕРґРёС‚ РІ РђСЂРєС‚РёРєСѓ',78,'РџРѕРєР°Р·Р°С‚СЊ РґРІР° РєРѕСЂР°Р±Р»СЏ РєР°Рє РіРµСЂРѕРµРІ С„РёР»СЊРјР° Рё РёР·РѕР»СЏС†РёСЋ РІ Р»РµРґРѕРІРѕРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ.','РёР·РѕР»СЏС†РёСЏ', 'РѕР±С‰РёРµ РїР»Р°РЅС‹ РєРѕСЂР°Р±Р»РµР№, Р»РµРґСЏРЅС‹Рµ РїСЂРѕС…РѕРґС‹, С…РѕР»РѕРґРЅС‹Р№ С‚СѓРјР°РЅ',('ship ice wide','ship ice video','drone arctic','hull ice'),('slow drone','dolly forward','slow pan')),
+   27:     SceneBlueprint('S03','B01','Р›СЋРґРё РЅР° РєРѕСЂР°Р±Р»СЏС…',70,'РџРµСЂРµРІРµСЃС‚Рё РјР°СЃС€С‚Р°Р± СЌРєСЃРїРµРґРёС†РёРё Рє Р»СЋРґСЏРј, РєРѕРјР°РЅРґРµ Рё РєРѕРјР°РЅРґРѕРІР°РЅРёСЋ.','С‡РµР»РѕРІРµС‡РµСЃРєРѕРµ РїСЂРёСЃСѓС‚СЃС‚РІРёРµ', 'РїР°Р»СѓР±Р°, СЌРєРёРїР°Р¶, С‚Р°РєРµР»Р°Р¶, РѕС„РёС†РµСЂС‹',('crew captain deck','crew working','rigging ice','deck detail'),('slow track','handheld subtle','push-in')),
+   28:     SceneBlueprint('S04','B02','РџРµСЂРІС‹Рµ РіРѕРґС‹ РјРѕР»С‡Р°РЅРёСЏ',62,'РџРѕРєР°Р·Р°С‚СЊ, С‡С‚Рѕ С‚СЂРµРІРѕРіР° РІРѕР·РЅРёРєР»Р° РїРѕР·РґРЅРѕ Рё РІСЂРµРјСЏ Р±С‹Р»Рѕ РїРѕС‚РµСЂСЏРЅРѕ.','Р·Р°РїРѕР·РґР°Р»РѕРµ РѕСЃРѕР·РЅР°РЅРёРµ', 'Р°СЂС…РёРІС‹ РђРґРјРёСЂР°Р»С‚РµР№СЃС‚РІР°, РєР°СЂС‚С‹, РїРѕРёСЃРєРѕРІС‹Рµ РєРѕСЂР°Р±Р»Рё',('archive document','map search','ship ice wide','journal close'),('paper reveal','map pan','dissolve')),
+   29:     SceneBlueprint('S05','B02','Р”Р¶РµР№РЅ Р¤СЂР°РЅРєР»РёРЅ Рё РїРѕРёСЃРєРё',62,'РџРѕРєР°Р·Р°С‚СЊ Р»РёС‡РЅСѓСЋ РЅР°СЃС‚РѕР№С‡РёРІРѕСЃС‚СЊ РєР°Рє РґРІРёРіР°С‚РµР»СЊ СЂР°СЃСЃР»РµРґРѕРІР°РЅРёСЏ.','СЂРµС€РёРјРѕСЃС‚СЊ', 'РїРёСЃСЊРјР°, РїРѕСЂС‚СЂРµС‚РЅС‹Р№ СЃРёР»СѓСЌС‚, РєР°СЂС‚С‹ РјР°СЂС€СЂСѓС‚РѕРІ',('archive portrait','letter document','map routes','search ship'),('slow push-in','map trace','dissolve')),
+   30:     SceneBlueprint('S06','B02','РћСЃС‚СЂРѕРІ Р‘РёС‡Рё',82,'РћСЃС‚СЂРѕРІ Р‘РёС‡Рё РјРµРЅСЏРµС‚ РїРѕРЅРёРјР°РЅРёРµ: РєР°С‚Р°СЃС‚СЂРѕС„Р° РµС‰С‘ РЅРµ РЅР°С‡Р°Р»Р°СЃСЊ, РЅРѕ РїРµСЂРІС‹Рµ СЃРјРµСЂС‚Рё СѓР¶Рµ РµСЃС‚СЊ.','СЃРїРѕРєРѕР№РЅРѕРµ РїРѕС‚СЂСЏСЃРµРЅРёРµ', 'Р»Р°РіРµСЂСЊ, РјРѕРіРёР»С‹, Р±Р°РЅРєРё, РєР°РјРЅРё, РїСѓСЃС‚РѕС‚Р°',('ice camp grave','grave marker','can archive','arctic coast'),('slow pullback','static hold','cold dissolve')),
+   31:     SceneBlueprint('S07','B03','РќР°С…РѕРґРєР° Р·Р°РїРёСЃРєРё',78,'РџРѕРґРІРµСЃС‚Рё Рє РіР»Р°РІРЅРѕРјСѓ РїРёСЃСЊРјРµРЅРЅРѕРјСѓ РґРѕРєСѓРјРµРЅС‚Сѓ СЌРєСЃРїРµРґРёС†РёРё.','РїСЂРёРєРѕСЃРЅРѕРІРµРЅРёРµ Рє СЃРѕР±С‹С‚РёСЋ', 'РєР°РјРЅРё, РјРµС‚Р°Р»Р»РёС‡РµСЃРєРёР№ С†РёР»РёРЅРґСЂ, Р±СѓРјР°РіР°, СЂСѓРєР° РїРѕРёСЃРєРѕРІРёРєР°',('document note close','stone cairn','metal cylinder','paper reveal'),('macro push','paper unfold','hold')),
+   32:     SceneBlueprint('S08','B03','Р”РІРµ Р·Р°РїРёСЃРё РЅР° РѕРґРЅРѕРј Р»РёСЃС‚Рµ',84,'РџРѕРєР°Р·Р°С‚СЊ СЃРјРµРЅСѓ СЃРјС‹СЃР»Р°: РѕС‚ Р±Р»Р°РіРѕРїРѕР»СѓС‡РЅРѕР№ Р·Р°РїРёСЃРё Рє СЃРѕРѕР±С‰РµРЅРёСЋ Рѕ СЃРјРµСЂС‚Рё Рё СѓС…РѕРґРµ.','СЂРµР·РєР°СЏ СЃРјРµРЅР° РѕР¶РёРґР°РЅРёР№', 'РёСЃС‚РѕСЂРёС‡РµСЃРєРёР№ Р±Р»Р°РЅРє, РґР°С‚С‹, РїРѕР»СЏ РґРѕРєСѓРјРµРЅС‚Р°, РєР°СЂС‚Р° СѓС…РѕРґР°',('document note map','document text','map route','ship trapped'),('slow scan','date reveal','map move')),
+   33:     SceneBlueprint('S09','B03','РЎС‚Рѕ РїСЏС‚СЊ С‡РµР»РѕРІРµРє СѓС…РѕРґСЏС‚ РїРµС€РєРѕРј',70,'РџРѕРєР°Р·Р°С‚СЊ РѕСЂРіР°РЅРёР·РѕРІР°РЅРЅС‹Р№ СѓС…РѕРґ Рё РЅР°С‡Р°Р»Рѕ РјРѕР»С‡Р°РЅРёСЏ.','РЅРµРёР·РІРµСЃС‚РЅРѕСЃС‚СЊ', 'С†РµРїРѕС‡РєР° Р»СЋРґРµР№, СЃР»РµРґС‹ РІ СЃРЅРµРіСѓ, Р±РµР»Р°СЏ РїСѓСЃС‚РѕС‚Р°',('people snow trail','footprints snow','white horizon','sled silhouette'),('slow fade','long lens','snow drift')),
+   34:     SceneBlueprint('S10','B04','РЁР»СЋРїРєР° РЅР° СЃР°РЅСЏС…',74,'РќР°С‡Р°С‚СЊ Р±Р»РѕРє РјР°С‚РµСЂРёР°Р»СЊРЅС‹РјРё СЃР»РµРґР°РјРё, РєРѕС‚РѕСЂС‹Рµ РЅРµ СЃРєР»Р°РґС‹РІР°СЋС‚СЃСЏ РІ Р»РѕРіРёРєСѓ РІС‹Р¶РёРІР°РЅРёСЏ.','РЅРµРґРѕСѓРјРµРЅРёРµ', 'Р»РѕРґРєР° РЅР° СЃР°РЅСЏС…, РєР°РјРµРЅРёСЃС‚С‹Р№ Р±РµСЂРµРі, РІРЅСѓС‚СЂРµРЅРЅРµРµ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ Р»РѕРґРєРё',('boat sled ice','arctic coast','wood runners','boat interior'),('slow reveal','side track','static hold')),
+   35:     SceneBlueprint('S11','B04','РЎС‚СЂР°РЅРЅС‹Р№ РіСЂСѓР·',70,'РџРѕРєР°Р·Р°С‚СЊ, С‡С‚Рѕ Р»СЋРґРё С‚Р°С‰РёР»Рё РІРµС‰Рё, РЅРµ СѓРІРµР»РёС‡РёРІР°РІС€РёРµ С€Р°РЅСЃС‹ СЃРїР°СЃРµРЅРёСЏ.','РЅР°СЂР°СЃС‚Р°СЋС‰РµРµ РЅРµРїРѕРЅРёРјР°РЅРёРµ', 'СЃРµСЂРµР±СЂРѕ, РєРЅРёРіРё, РїР°С‚СЂРѕРЅС‹, РїСЂРµРґРјРµС‚С‹ Р±С‹С‚Р°',('silver spoon','object close','book archive','rifle detail'),('macro slide','tabletop pan','hard cut')),
+   36:     SceneBlueprint('S12','B04','РљРѕСЃС‚Рё Рё СЃРїРѕСЂРЅС‹Рµ СѓР»РёРєРё',78,'Р’РІРµСЃС‚Рё РїСЂРёР·РЅР°РєРё РѕР±СЂР°Р±РѕС‚РєРё РєРѕСЃС‚РµР№ С‡РµСЂРµР· С„Р°РєС‚С‹, Р±РµР· СЃРµРЅСЃР°С†РёРѕРЅРЅРѕСЃС‚Рё.','С€РѕРє Р±РµР· Р°РєС†РµРЅС‚Р°', 'Р°СЂС…РµРѕР»РѕРіРёСЏ, РєРѕСЃС‚Рё, Р°СЂС…РёРІРЅС‹Рµ С„РѕС‚РѕРіСЂР°С„РёРё, Р»Р°Р±РѕСЂР°С‚РѕСЂРЅС‹Р№ СЃС‚РѕР»',('bones archive lab','bone close','lab table','archive folder'),('static macro','slow tilt','folder close')),
+   37:     SceneBlueprint('S13','B05','РќР°СѓРєР° РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РЅР° Р‘РёС‡Рё',82,'РџРѕРєР°Р·Р°С‚СЊ РїРµСЂРµС…РѕРґ СЂР°СЃСЃР»РµРґРѕРІР°РЅРёСЏ РёР· РђСЂРєС‚РёРєРё РІ Р»Р°Р±РѕСЂР°С‚РѕСЂРёСЋ.','СЃРѕСЃСЂРµРґРѕС‚РѕС‡РµРЅРЅРѕСЃС‚СЊ', 'СЌРєСЃРїРµРґРёС†РёСЏ 1984, РјРµСЂР·Р»РѕС‚Р°, РіСЂРѕР±, Р»РёС†Р° РёСЃСЃР»РµРґРѕРІР°С‚РµР»РµР№',('lab archive','beechy camp','forensic dig','wood coffin'),('documentary handheld','slow reveal','cutaway')),
+   38:     SceneBlueprint('S14','B05','РўРѕСЂСЂРёРЅРіС‚РѕРЅ Рё РјР°СЃС€С‚Р°Р± РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ',70,'РџРѕРєР°Р·Р°С‚СЊ СѓРЅРёРєР°Р»СЊРЅСѓСЋ СЃРѕС…СЂР°РЅРЅРѕСЃС‚СЊ С‚РµР» СЌС‚РёС‡РЅРѕ Рё Р±РµР· РЅР°С‚СѓСЂР°Р»РёР·РјР°.','СѓРґРёРІР»РµРЅРёРµ', 'Р°СЂС…РёРІРЅС‹Рµ С„РѕС‚Рѕ, РѕРґРµР¶РґР°, РјРµРґРёС†РёРЅСЃРєРёРµ Р·Р°РїРёСЃРё, СЂСѓРєРё РёСЃСЃР»РµРґРѕРІР°С‚РµР»РµР№',('archive portrait','medical notes','clothing detail','lab hands'),('slow push','macro detail','dissolve')),
+   39:     SceneBlueprint('S15','B05','РЎРІРёРЅРµС† Рё РЅРѕРІР°СЏ РєР°СЂС‚РёРЅР°',78,'РџРѕРєР°Р·Р°С‚СЊ, РєР°Рє РіРёРїРѕС‚РµР·Р° СЃС‚Р°Р»Р° РїРѕРїСѓР»СЏСЂРЅРѕР№ Рё РєР°Рє РїРѕСЃР»РµРґСѓСЋС‰РёРµ РґР°РЅРЅС‹Рµ СѓСЃР»РѕР¶РЅРёР»Рё РѕС‚РІРµС‚.','РѕС‚РІРµС‚ СЃРЅРѕРІР° СЃР»РѕР¶РЅРµРµ', 'РєРѕРЅСЃРµСЂРІС‹, РїСЂРёРїРѕР№, Р»Р°Р±РѕСЂР°С‚РѕСЂРёСЏ, РіР°Р·РµС‚РЅС‹Рµ РїСѓР±Р»РёРєР°С†РёРё',('lead can archive','lab analysis','newspaper archive','medical record'),('macro metal','paper montage','lab pan')),
+   40:     SceneBlueprint('S16','B06','РЎРѕРІСЂРµРјРµРЅРЅС‹Рµ РїРѕРёСЃРєРё',78,'РџРѕРєР°Р·Р°С‚СЊ РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРѕРёСЃРєРѕРІ СЃ С‚РµС…РЅРѕР»РѕРіРёСЏРјРё Рё СЂРѕР»СЊСЋ СЃРІРёРґРµС‚РµР»СЊСЃС‚РІ РёРЅСѓРёС‚РѕРІ.','РѕСЃС‚РѕСЂРѕР¶РЅР°СЏ РЅР°РґРµР¶РґР°', 'РёСЃСЃР»РµРґРѕРІР°С‚РµР»СЊСЃРєРѕРµ СЃСѓРґРЅРѕ, СЃРїСѓС‚РЅРёРєРё, РіРёРґСЂРѕР»РѕРєР°С‚РѕСЂ, РєР°СЂС‚С‹',('sonar screen','research vessel','satellite map','underwater robot'),('screen scan','drone coast','map overlay')),
+   41:     SceneBlueprint('S17','B06','Erebus Рё Terror РЅР°Р№РґРµРЅС‹',86,'РџРѕРєР°Р·Р°С‚СЊ РЅР°С…РѕРґРєСѓ РєРѕСЂР°Р±Р»РµР№ РєР°Рє РЅР°С‡Р°Р»Рѕ РЅРѕРІРѕРіРѕ СЌС‚Р°РїР°, Р° РЅРµ РєРѕРЅРµС† СЂР°СЃСЃР»РµРґРѕРІР°РЅРёСЏ.','РѕС‚РєСЂС‹С‚РёРµ Рё СѓРґРёРІР»РµРЅРёРµ', 'РїРѕРґРІРѕРґРЅС‹Рµ РєР°РґСЂС‹, РєРѕСЂРїСѓСЃ, Р»СЋРєРё, РёРЅС‚РµСЂСЊРµСЂ, РєР°СЂС‚С‹ РїРѕР»РѕР¶РµРЅРёСЏ',('underwater ship','shipwreck hull','closed hatch','interior cabin'),('rov glide','slow track','dark dissolve')),
+   42:     SceneBlueprint('S18','B06','Р¤РёРЅР°Р»: РёСЃС‚РѕСЂРёСЏ СЃРѕС…СЂР°РЅСЏРµС‚ СЃР»РµРґС‹',80,'РЎРїРѕРєРѕР№РЅРѕ Р·Р°РІРµСЂС€РёС‚СЊ С„РёР»СЊРј: РѕС‚РІРµС‚С‹ РµСЃС‚СЊ, РЅРѕ РїРѕСЃР»РµРґРЅРµРµ РјРѕР»С‡Р°РЅРёРµ РѕСЃС‚Р°С‘С‚СЃСЏ.','СѓРІР°Р¶РµРЅРёРµ', 'РјРѕРЅС‚Р°Р¶ РєР»СЋС‡РµРІС‹С… РјРµСЃС‚, РђСЂРєС‚РёРєР° СЃРІРµСЂС…Сѓ, Р»РѕРіРѕС‚РёРї',('ice wide finale','empty horizon','ship memory','atlas logo'),('slow pullback','fade out','snow increase')),
+   43: ]
+   44: 
+   45: 
+   46: class StoryEngine:
+   47:     """Alpha 2.3 Story Engine.
+   48: 
+   49:     Builds a real scene structure and a shot plan instead of a flat synthetic list.
+   50:     The engine uses the locked Franklin narrative blueprint, distributes shot timing
+   51:     across scenes, rotates visual needs and camera motion, and writes scenes + shots
+   52:     to SQLite so Director AI and Timeline can operate on a structured film model.
+   53:     """
+   54: 
+   55:     def __init__(self, db: Database, project_id: str = 'franklin'):
+   56:         self.db = db
+   57:         self.project_id = project_id
+   58:         self.bus = EventBus(db, project_id)
+   59:         self._ensure_schema()
+   60: 
+   61:     def _ensure_schema(self) -> None:
+   62:         self.db.conn.executescript('''
+   63:         CREATE TABLE IF NOT EXISTS story_scenes(
+   64:           id TEXT PRIMARY KEY,
+   65:           project_id TEXT NOT NULL,
+   66:           idx INTEGER NOT NULL,
+   67:           block TEXT NOT NULL,
+   68:           title TEXT NOT NULL,
+   69:           start_sec REAL NOT NULL,
+   70:           end_sec REAL NOT NULL,
+   71:           duration_sec REAL NOT NULL,
+   72:           target_shots INTEGER NOT NULL,
+   73:           narrative_goal TEXT,
+   74:           emotional_goal TEXT,
+   75:           visual_strategy TEXT,
+   76:           required_assets TEXT,
+   77:           status TEXT DEFAULT 'planned',
+   78:           coverage REAL DEFAULT 0,
+   79:           created_at TEXT DEFAULT CURRENT_TIMESTAMP
+   80:         );
+   81:         ''')
+   82:         self.db.conn.commit()
+   83: 
+   84:     def build_shots(self, target_count: int = 165, duration_sec: float = 960.0) -> dict[str, Any]:
+   85:         self.db.execute('DELETE FROM shots WHERE project_id=?', (self.project_id,))
+   86:         self.db.execute('DELETE FROM story_scenes WHERE project_id=?', (self.project_id,))
+   87:         scene_counts = self._allocate_shots(target_count)
+   88:         current_time = 0.0
+   89:         shot_idx = 1
+   90:         scene_rows: list[tuple[Any, ...]] = []
+   91:         shot_rows: list[tuple[Any, ...]] = []
+   92:         for scene_idx, bp in enumerate(SCENE_BLUEPRINTS, start=1):
+   93:             count = scene_counts[scene_idx - 1]
+   94:             scene_duration = round(duration_sec * (bp.duration_sec / self._blueprint_duration()), 3)
+   95:             start = round(current_time, 3)
+   96:             end = round(current_time + scene_duration, 3)
+   97:             scene_rows.append((
+   98:                 bp.scene_id, self.project_id, scene_idx, bp.block, bp.title, start, end, scene_duration, count,
+   99:                 bp.narrative_goal, bp.emotional_goal, bp.visual_strategy, json.dumps(list(bp.visual_needs), ensure_ascii=False), 'planned', 0.0
+  100:             ))
+  101:             shot_len = scene_duration / max(count, 1)
+  102:             for local_idx in range(count):
+  103:                 s_start = round(start + local_idx * shot_len, 3)
+  104:                 s_end = round(start + (local_idx + 1) * shot_len, 3)
+  105:                 visual_need = bp.visual_needs[local_idx % len(bp.visual_needs)]
+  106:                 motion = bp.preferred_motion[local_idx % len(bp.preferred_motion)]
+  107:                 transition = self._transition_for(scene_idx, local_idx, count)
+  108:                 story_goal = f'{bp.title}. {bp.narrative_goal}'
+  109:                 shot_rows.append((
+  110:                     f'shot_{shot_idx:04d}', self.project_id, shot_idx, s_start, s_end, bp.block, story_goal,
+  111:                     visual_need, bp.emotional_goal, 'missing', None, transition, motion
+  112:                 ))
+  113:                 shot_idx += 1
+  114:             current_time = end
+  115:         self.db.many('''
+  116:             INSERT INTO story_scenes(id,project_id,idx,block,title,start_sec,end_sec,duration_sec,target_shots,narrative_goal,emotional_goal,visual_strategy,required_assets,status,coverage)
+  117:             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+  118:         ''', scene_rows)
+  119:         self.db.many('''
+  120:             INSERT INTO shots(id,project_id,idx,start_sec,end_sec,block,story_goal,visual_need,emotion,status,assigned_asset_id,transition,camera_motion)
+  121:             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+  122:         ''', shot_rows)
+  123:         self.bus.emit('STORY_SCENES_BUILT', {'scenes': len(scene_rows), 'shots': len(shot_rows), 'duration_sec': duration_sec})
+  124:         return {'version': '2.3', 'scenes': len(scene_rows), 'shots': len(shot_rows), 'duration_sec': duration_sec}
+  125: 
+  126:     def build_from_strategy(
+  127:         self,
+  128:         strategy_payload: dict[str, Any],
+  129:         *,
+  130:         target_count: int | None = None,
+  131:     ) -> dict[str, Any]:
+  132:         """Build story scenes and shots from RC2.6 strategy output.
+  133: 
+  134:         Franklin remains supported through build_shots(), while semantic
+  135:         projects may supply dynamically created scenes.
+  136:         """
+  137:         scenes = list(
+  138:             strategy_payload.get("scenes", [])
+  139:         )
+  140: 
+  141:         if not scenes:
+  142:             raise ValueError(
+  143:                 "Strategy payload contains no scenes"
+  144:             )
+  145: 
+  146:         target_duration = float(
+  147:             strategy_payload.get(
+  148:                 "strategy",
+  149:                 {},
+  150:             ).get(
+  151:                 "target_duration_sec",
+  152:                 0.0,
+  153:             )
+  154:         )
+  155: 
+  156:         if target_duration <= 0:
+  157:             target_duration = sum(
+  158:                 float(
+  159:                     scene.get(
+  160:                         "duration_sec",
+  161:                         0.0,
+  162:                     )
+  163:                 )
+  164:                 for scene in scenes
+  165:             )
+  166: 
+  167:         if target_duration <= 0:
+  168:             raise ValueError(
+  169:                 "Strategy target duration must be > 0"
+  170:             )
+  171: 
+  172:         if target_count is None:
+  173:             target_count = max(
+  174:                 len(scenes) * 4,
+  175:                 round(target_duration / 8.0),
+  176:             )
+  177: 
+  178:         target_count = max(
+  179:             int(target_count),
+  180:             len(scenes),
+  181:         )
+  182: 
+  183:         weights = [
+  184:             max(
+  185:                 float(
+  186:                     scene.get(
+  187:                         "duration_sec",
+  188:                         0.0,
+  189:                     )
+  190:                 ),
+  191:                 1.0,
+  192:             )
+  193:             for scene in scenes
+  194:         ]
+  195: 
+  196:         counts = [1] * len(scenes)
+  197:         remaining = target_count - len(scenes)
+  198: 
+  199:         for _ in range(remaining):
+  200:             index = max(
+  201:                 range(len(scenes)),
+  202:                 key=lambda i: (
+  203:                     weights[i] / (counts[i] + 1),
+  204:                     -i,
+  205:                 ),
+  206:             )
+  207:             counts[index] += 1
+  208: 
+  209:         self.db.execute(
+  210:             "DELETE FROM shots WHERE project_id=?",
+  211:             (self.project_id,),
+  212:         )
+  213:         self.db.execute(
+  214:             "DELETE FROM story_scenes WHERE project_id=?",
+  215:             (self.project_id,),
+  216:         )
+  217: 
+  218:         current_time = 0.0
+  219:         shot_index = 1
+  220:         scene_rows: list[tuple[Any, ...]] = []
+  221:         shot_rows: list[tuple[Any, ...]] = []
+  222: 
+  223:         for scene_index, scene in enumerate(
+  224:             scenes,
+  225:             start=1,
+  226:         ):
+  227:             duration = float(
+  228:                 scene["duration_sec"]
+  229:             )
+  230:             start = round(current_time, 3)
+  231:             end = round(
+  232:                 current_time + duration,
+  233:                 3,
+  234:             )
+  235: 
+  236:             scene_id = str(
+  237:                 scene.get("scene_id")
+  238:                 or f"SC{scene_index:02d}"
+  239:             )
+  240:             act_id = str(
+  241:                 scene.get("act_id")
+  242:                 or "ACT00"
+  243:             )
+  244:             title = str(
+  245:                 scene.get("title_ru")
+  246:                 or f"РЎС†РµРЅР° {scene_index}"
+  247:             )
+  248:             narrative_goal = str(
+  249:                 scene.get("narrative_goal_ru")
+  250:                 or ""
+  251:             )
+  252:             emotional_goal = str(
+  253:                 scene.get("emotional_goal_ru")
+  254:                 or "neutral"
+  255:             )
+  256:             visual_strategy = str(
+  257:                 scene.get("visual_strategy_ru")
+  258:                 or ""
+  259:             )
+  260:             cluster_ids = list(
+  261:                 scene.get("cluster_ids")
+  262:                 or []
+  263:             )
+  264:             asset_ids = [
+  265:                 str(asset_id)
+  266:                 for asset_id
+  267:                 in (
+  268:                     scene.get("asset_ids")
+  269:                     or []
+  270:                 )
+  271:             ]
+  272: 
+  273:             required_assets = {
+  274:                 "cluster_ids": cluster_ids,
+  275:                 "asset_ids": asset_ids,
+  276:                 "use_existing_assets_only": bool(
+  277:                     strategy_payload.get(
+  278:                         "strategy",
+  279:                         {},
+  280:                     ).get(
+  281:                         "use_existing_assets_only",
+  282:                         False,
+  283:                     )
+  284:                 ),
+  285:             }
+  286: 
+  287:             count = counts[scene_index - 1]
+  288: 
+  289:             scene_rows.append((
+  290:                 scene_id,
+  291:                 self.project_id,
+  292:                 scene_index,
+  293:                 act_id,
+  294:                 title,
+  295:                 start,
+  296:                 end,
+  297:                 duration,
+  298:                 count,
+  299:                 narrative_goal,
+  300:                 emotional_goal,
+  301:                 visual_strategy,
+  302:                 json.dumps(
+  303:                     required_assets,
+  304:                     ensure_ascii=False,
+  305:                 ),
+  306:                 "planned",
+  307:                 0.0,
+  308:             ))
+  309: 
+  310:             shot_duration = duration / count
+  311: 
+  312:             for local_index in range(count):
+  313:                 shot_start = round(
+  314:                     start
+  315:                     + local_index
+  316:                     * shot_duration,
+  317:                     3,
+  318:                 )
+  319:                 shot_end = round(
+  320:                     start
+  321:                     + (local_index + 1)
+  322:                     * shot_duration,
+  323:                     3,
+  324:                 )
+  325: 
+  326:                 assigned_asset_id = (
+  327:                     asset_ids[
+  328:                         local_index
+  329:                         % len(asset_ids)
+  330:                     ]
+  331:                     if asset_ids
+  332:                     else None
+  333:                 )
+  334: 
+  335:                 status = (
+  336:                     "assigned"
+  337:                     if assigned_asset_id
+  338:                     else "missing"
+  339:                 )
+  340: 
+  341:                 visual_need = (
+  342:                     cluster_ids[
+  343:                         local_index
+  344:                         % len(cluster_ids)
+  345:                     ]
+  346:                     if cluster_ids
+  347:                     else title
+  348:                 )
+  349: 
+  350:                 transition = self._transition_for(
+  351:                     scene_index,
+  352:                     local_index,
+  353:                     count,
+  354:                 )
+  355: 
+  356:                 camera_motion = (
+  357:                     "slow pan"
+  358:                     if local_index % 3 == 0
+  359:                     else (
+  360:                         "slow push-in"
+  361:                         if local_index % 3 == 1
+  362:                         else "static hold"
+  363:                     )
+  364:                 )
+  365: 
+  366:                 story_goal = (
+  367:                     f"{title}. {narrative_goal}"
+  368:                 )
+  369: 
+  370:                 shot_rows.append((
+  371:                     f"{self.project_id}_shot_{shot_index:04d}",
+  372:                     self.project_id,
+  373:                     shot_index,
+  374:                     shot_start,
+  375:                     shot_end,
+  376:                     act_id,
+  377:                     story_goal,
+  378:                     visual_need,
+  379:                     emotional_goal,
+  380:                     status,
+  381:                     assigned_asset_id,
+  382:                     transition,
+  383:                     camera_motion,
+  384:                 ))
+  385: 
+  386:                 shot_index += 1
+  387: 
+  388:             current_time = end
+  389: 
+  390:         self.db.many(
+  391:             """
+  392:             INSERT INTO story_scenes(
+  393:                 id,
+  394:                 project_id,
+  395:                 idx,
+  396:                 block,
+  397:                 title,
+  398:                 start_sec,
+  399:                 end_sec,
+  400:                 duration_sec,
+  401:                 target_shots,
+  402:                 narrative_goal,
+  403:                 emotional_goal,
+  404:                 visual_strategy,
+  405:                 required_assets,
+  406:                 status,
+  407:                 coverage
+  408:             )
+  409:             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+  410:             """,
+  411:             scene_rows,
+  412:         )
+  413: 
+  414:         self.db.many(
+  415:             """
+  416:             INSERT INTO shots(
+  417:                 id,
+  418:                 project_id,
+  419:                 idx,
+  420:                 start_sec,
+  421:                 end_sec,
+  422:                 block,
+  423:                 story_goal,
+  424:                 visual_need,
+  425:                 emotion,
+  426:                 status,
+  427:                 assigned_asset_id,
+  428:                 transition,
+  429:                 camera_motion
+  430:             )
+  431:             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+  432:             """,
+  433:             shot_rows,
+  434:         )
+  435: 
+  436:         self.bus.emit(
+  437:             "STORY_SCENES_BUILT_FROM_STRATEGY",
+  438:             {
+  439:                 "scenes": len(scene_rows),
+  440:                 "shots": len(shot_rows),
+  441:                 "duration_sec": round(
+  442:                     current_time,
+  443:                     3,
+  444:                 ),
+  445:             },
+  446:         )
+  447: 
+  448:         return {
+  449:             "version": "2.6",
+  450:             "mode": "semantic_strategy",
+  451:             "project_id": self.project_id,
+  452:             "scenes": len(scene_rows),
+  453:             "shots": len(shot_rows),
+  454:             "duration_sec": round(
+  455:                 current_time,
+  456:                 3,
+  457:             ),
+  458:             "assigned_shots": sum(
+  459:                 1
+  460:                 for row in shot_rows
+  461:                 if row[10]
+  462:             ),
+  463:             "missing_shots": sum(
+  464:                 1
+  465:                 for row in shot_rows
+  466:                 if not row[10]
+  467:             ),
+  468:         }
+  469: 
+  470:     def _blueprint_duration(self) -> float:
+  471:         return sum(bp.duration_sec for bp in SCENE_BLUEPRINTS)
+  472: 
+  473:     def _allocate_shots(self, target_count: int) -> list[int]:
+  474:         target_count = max(0, int(target_count))
+  475:         raw = [0] * len(SCENE_BLUEPRINTS)
+  476:         if target_count <= 0:
+  477:             return raw
+  478: 
+  479:         for i in range(min(target_count, len(raw))):
+  480:             raw[i] = 1
+  481: 
+  482:         remaining = target_count - sum(raw)
+  483:         if remaining <= 0:
+  484:             return raw
+  485: 
+  486:         weights = [bp.duration_sec for bp in SCENE_BLUEPRINTS]
+  487:         for _ in range(remaining):
+  488:             idx = max(range(len(raw)), key=lambda i: (weights[i] / (raw[i] + 1), i))
+  489:             raw[idx] += 1
+  490:         return raw
+  491: 
+  492:     def _transition_for(self, scene_idx: int, local_idx: int, count: int) -> str:
+  493:         if scene_idx == 1 and local_idx == 0:
+  494:             return 'fade from black'
+  495:         if local_idx == 0:
+  496:             return 'dissolve'
+  497:         if local_idx == count - 1:
+  498:             return 'soft dissolve'
+  499:         return 'cut'
+  500: 
+
+============================================================
+FILE: .\src\az_enterprise\core\assignment_policy_rc2.py
+============================================================
+    1: from __future__ import annotations
+    2: 
+    3: import json
+    4: import re
+    5: from collections import defaultdict
+    6: from typing import Any
+    7: 
+    8: from .database import Database
+    9: from .events import EventBus
+   10: 
+   11: 
+   12: class AssignmentPolicyRC2:
+   13:     """Canonical assignment decision policy.
+   14: 
+   15:     This class is the only owner of asset scoring and assignment writes.
+   16:     The current formula preserves legacy behaviour during RC2.5 migration.
+   17:     """
+   18: 
+   19:     ACCEPTANCE_THRESHOLD = 0.62
+   20: 
+   21:     def __init__(
+   22:         self,
+   23:         db: Database,
+   24:         project_id: str,
+   25:     ) -> None:
+   26:         self.db = db
+   27:         self.project_id = project_id
+   28:         self.bus = EventBus(db, project_id)
+   29:         self.usage: defaultdict[str, int] = defaultdict(int)
+   30: 
+   31:     @staticmethod
+   32:     def _tokens(value: Any) -> list[str]:
+   33:         """Normalize text into comparable semantic tokens.
+   34: 
+   35:         Splits values on spaces, hyphens, underscores and punctuation.
+   36:         Very short tokens are ignored because they create noisy matches.
+   37:         """
+   38:         return [
+   39:             token
+   40:             for token in re.findall(r"[\\w]+", str(value or "").lower())
+   41:             if len(token) >= 3
+   42:         ]
+   43: 
+   44:     def score(self, shot: Any, asset: Any) -> float:
+   45:         need_tokens = self._tokens(shot["visual_need"])
+   46:         raw_tags = asset["tags"] or "[]"
+   47: 
+   48:         try:
+   49:             tags = json.loads(raw_tags)
+   50:         except (TypeError, ValueError):
+   51:             tags = [
+   52:                 item.strip("'\\\"")
+   53:                 for item in str(raw_tags).strip("[]").split(",")
+   54:                 if item.strip()
+   55:             ]
+   56: 
+   57:         if not isinstance(tags, list):
+   58:             tags = [str(tags)]
+   59: 
+   60:         searchable_values = [
+   61:             asset["filename"],
+   62:             asset["category"],
+   63:             asset["emotion"],
+   64:             *tags,
+   65:         ]
+   66: 
+   67:         haystack_tokens: set[str] = set()
+   68:         haystack_text_parts: list[str] = []
+   69: 
+   70:         for value in searchable_values:
+   71:             normalized = str(value or "").lower()
+   72:             haystack_text_parts.append(normalized)
+   73:             haystack_tokens.update(self._tokens(normalized))
+   74: 
+   75:         haystack_text = " ".join(haystack_text_parts)
+   76: 
+   77:         exact_matches = sum(
+   78:             1
+   79:             for token in need_tokens
+   80:             if token in haystack_tokens
+   81:         )
+   82: 
+   83:         partial_matches = sum(
+   84:             1
+   85:             for token in need_tokens
+   86:             if token not in haystack_tokens
+   87:             and any(
+   88:                 token in candidate or candidate in token
+   89:                 for candidate in haystack_tokens
+   90:                 if len(candidate) >= 4
+   91:             )
+   92:         )
+   93: 
+   94:         phrase_bonus = 0.0
+   95:         visual_need = str(shot["visual_need"] or "").lower().strip()
+   96:         if visual_need and visual_need in haystack_text:
+   97:             phrase_bonus = 0.15
+   98: 
+   99:         score = float(asset["quality"] or 0)
+  100:         score += exact_matches * 0.18
+  101:         score += partial_matches * 0.08
+  102:         score += phrase_bonus
+  103: 
+  104:         shot_emotion = str(shot["emotion"] or "").strip().lower()
+  105:         asset_emotion = str(asset["emotion"] or "").strip().lower()
+  106:         if shot_emotion and shot_emotion == asset_emotion:
+  107:             score += 0.12
+  108: 
+  109:         if self.usage[str(asset["id"])] >= 4:
+  110:             score -= 0.4
+  111: 
+  112:         if asset["duplicate_of"]:
+  113:             score -= 0.25
+  114: 
+  115:         return round(max(score, 0.0), 4)
+  116: 
+  117:     def run(self) -> dict[str, Any]:
+  118:         self.db.execute(
+  119:             "DELETE FROM director_decisions WHERE project_id=?",
+  120:             (self.project_id,),
+  121:         )
+  122: 
+  123:         shots = self.db.rows(
+  124:             """
+  125:             SELECT *
+  126:             FROM shots
+  127:             WHERE project_id=?
+  128:             ORDER BY idx
+  129:             """,
+  130:             (self.project_id,),
+  131:         )
+  132: 
+  133:         assets = self.db.rows(
+  134:             """
+  135:             SELECT *
+  136:             FROM assets
+  137:             WHERE project_id=?
+  138:               AND media_type IN ('image','video')
+  139:             """,
+  140:             (self.project_id,),
+  141:         )
+  142: 
+  143:         assigned = 0
+  144:         missing = 0
+  145:         self.usage.clear()
+  146: 
+  147:         for shot in shots:
+  148:             ranked = sorted(
+  149:                 (
+  150:                     (self.score(shot, asset), asset)
+  151:                     for asset in assets
+  152:                 ),
+  153:                 key=lambda item: item[0],
+  154:                 reverse=True,
+  155:             )
+  156: 
+  157:             if (
+  158:                 ranked
+  159:                 and ranked[0][0]
+  160:                 >= self.ACCEPTANCE_THRESHOLD
+  161:             ):
+  162:                 score, asset = ranked[0]
+  163:                 asset_id = str(asset["id"])
+  164:                 self.usage[asset_id] += 1
+  165: 
+  166:                 reason = (
+  167:                     f"Selected asset '{asset['filename']}' "
+  168:                     f"for visual need '{shot['visual_need']}'. "
+  169:                     f"Score={score}. "
+  170:                     f"Usage={self.usage[asset_id]}."
+  171:                 )
+  172: 
+  173:                 alternatives = [
+  174:                     candidate[1]["filename"]
+  175:                     for candidate in ranked[1:4]
+  176:                 ]
+  177: 
+  178:                 self.db.execute(
+  179:                     """
+  180:                     UPDATE shots
+  181:                     SET assigned_asset_id=?, status=?
+  182:                     WHERE id=?
+  183:                     """,
+  184:                     (
+  185:                         asset["id"],
+  186:                         "assigned",
+  187:                         shot["id"],
+  188:                     ),
+  189:                 )
+  190: 
+  191:                 self.db.execute(
+  192:                     """
+  193:                     INSERT INTO director_decisions(
+  194:                         project_id,
+  195:                         shot_id,
+  196:                         asset_id,
+  197:                         score,
+  198:                         reason,
+  199:                         alternatives
+  200:                     )
+  201:                     VALUES(?,?,?,?,?,?)
+  202:                     """,
+  203:                     (
+  204:                         self.project_id,
+  205:                         shot["id"],
+  206:                         asset["id"],
+  207:                         score,
+  208:                         reason,
+  209:                         json.dumps(
+  210:                             alternatives,
+  211:                             ensure_ascii=False,
+  212:                         ),
+  213:                     ),
+  214:                 )
+  215: 
+  216:                 assigned += 1
+  217: 
+  218:             else:
+  219:                 prompt = (
+  220:                     f"Required visual: {shot['visual_need']}. "
+  221:                     f"Story goal: {shot['story_goal']}. "
+  222:                     f"Emotion: {shot['emotion']}."
+  223:                 )
+  224: 
+  225:                 best_score = (
+  226:                     float(ranked[0][0])
+  227:                     if ranked
+  228:                     else 0.0
+  229:                 )
+  230: 
+  231:                 self.db.execute(
+  232:                     """
+  233:                     UPDATE shots
+  234:                     SET assigned_asset_id=NULL,
+  235:                         status='missing'
+  236:                     WHERE id=?
+  237:                     """,
+  238:                     (shot["id"],),
+  239:                 )
+  240: 
+  241:                 self.db.execute(
+  242:                     """
+  243:                     INSERT INTO director_decisions(
+  244:                         project_id,
+  245:                         shot_id,
+  246:                         asset_id,
+  247:                         score,
+  248:                         reason,
+  249:                         alternatives
+  250:                     )
+  251:                     VALUES(?,?,?,?,?,?)
+  252:                     """,
+  253:                     (
+  254:                         self.project_id,
+  255:                         shot["id"],
+  256:                         None,
+  257:                         best_score,
+  258:                         "No asset reached the acceptance threshold.",
+  259:                         prompt,
+  260:                     ),
+  261:                 )
+  262: 
+  263:                 missing += 1
+  264: 
+  265:         result = {
+  266:             "state": "ASSIGNMENT_COMPLETED",
+  267:             "project_id": self.project_id,
+  268:             "assigned": assigned,
+  269:             "missing": missing,
+  270:             "threshold": self.ACCEPTANCE_THRESHOLD,
+  271:             "policy": "AssignmentPolicyRC2",
+  272:         }
+  273: 
+  274:         self.bus.emit(
+  275:             "ASSIGNMENT_POLICY_COMPLETED",
+  276:             result,
+  277:         )
+  278: 
+  279:         return result
+
+============================================================
+FILE: .\src\az_enterprise\core\director_core_rc2.py
+============================================================
+    1: from __future__ import annotations
+    2: 
+    3: import json
+    4: import os
+    5: from contextlib import contextmanager
+    6: from dataclasses import dataclass
+    7: from typing import Any, Callable
+    8: 
+    9: from .asset_engine_rc2 import AssetEngineRC2
+   10: from .assignment_engine_rc2 import AssignmentEngineRC2
+   11: from .database import Database
+   12: from .production_state_rc2 import ProductionStateRC2, ProductionStateStoreRC2
+   13: from .project_config_rc2 import ProjectConfigRC2
+   14: from .quality_gate_rc2 import QualityGateRC2
+   15: from .render_engine_rc2 import RenderEngineRC2
+   16: from .runtime_governance_rc2 import governance_report
+   17: from .story_engine import StoryEngine
+   18: from .timeline_engine_rc2 import TimelineEngineRC2
+   19: 
+   20: 
+   21: ProgressCallback = Callable[[dict[str, Any]], None]
+   22: 
+   23: 
+   24: @dataclass(frozen=True)
+   25: class StageDefinition:
+   26:     name: str
+   27:     resumable: bool = True
+   28: 
+   29: 
+   30: class DirectorCoreRC2:
+   31:     """The sole canonical orchestration authority for RC2."""
+   32: 
+   33:     STAGES = (
+   34:         StageDefinition("assets"),
+   35:         StageDefinition("story"),
+   36:         StageDefinition("assignment"),
+   37:         StageDefinition("timeline"),
+   38:         StageDefinition("render", resumable=False),
+   39:         StageDefinition("quality", resumable=False),
+   40:     )
+   41: 
+   42:     def __init__(
+   43:         self,
+   44:         project_id: str,
+   45:         *,
+   46:         root_dir=None,
+   47:         progress: ProgressCallback | None = None,
+   48:     ) -> None:
+   49:         kwargs = {"project_id": project_id}
+   50:         if root_dir is not None:
+   51:             kwargs["root_dir"] = root_dir
+   52:         self.config = ProjectConfigRC2(**kwargs)
+   53:         self.progress = progress or self._default_progress
+   54:         self.db = Database()
+   55:         self.db.init()
+   56:         self.store = ProductionStateStoreRC2(self.config.state_path, project_id=project_id)
+   57: 
+   58:     @staticmethod
+   59:     def _default_progress(payload: dict[str, Any]) -> None:
+   60:         stage = payload.get("stage", "INFO")
+   61:         rest = " ".join(f"{key}={value}" for key, value in payload.items() if key != "stage")
+   62:         print(f"[RC2 {stage}] {rest}".rstrip(), flush=True)
+   63: 
+   64:     def plan(self) -> dict[str, Any]:
+   65:         state = self.store.load()
+   66:         return {
+   67:             "project_id": self.config.project_id,
+   68:             "canonical_orchestrator": "DirectorCoreRC2",
+   69:             "stages": [item.name for item in self.STAGES],
+   70:             "current_state": state.status,
+   71:             "resume_from": self._first_incomplete_stage(state),
+   72:             "governance": governance_report(),
+   73:         }
+   74: 
+   75:     def _first_incomplete_stage(self, state: ProductionStateRC2) -> str | None:
+   76:         for definition in self.STAGES:
+   77:             stage = state.stages.get(definition.name)
+   78:             if stage is None or stage.status != "COMPLETED":
+   79:                 return definition.name
+   80:         return None
+   81: 
+   82:     @contextmanager
+   83:     def _exclusive_run(self):
+   84:         self.config.run_lock_path.parent.mkdir(parents=True, exist_ok=True)
+   85:         try:
+   86:             fd = os.open(
+   87:                 self.config.run_lock_path,
+   88:                 os.O_CREAT | os.O_EXCL | os.O_WRONLY,
+   89:             )
+   90:         except FileExistsError as exc:
+   91:             raise RuntimeError(
+   92:                 f"Another DirectorCoreRC2 run is active: {self.config.run_lock_path}"
+   93:             ) from exc
+   94:         try:
+   95:             os.write(fd, str(os.getpid()).encode("ascii"))
+   96:             os.close(fd)
+   97:             yield
+   98:         finally:
+   99:             self.config.run_lock_path.unlink(missing_ok=True)
+  100: 
+  101:     def _run_stage(self, state: ProductionStateRC2, name: str, callable_) -> dict[str, Any]:
+  102:         self.store.start_stage(state, name)
+  103:         self.progress({"stage": name.upper(), "status": "RUNNING"})
+  104:         try:
+  105:             result = callable_()
+  106:         except Exception as exc:
+  107:             self.store.fail_stage(state, name, str(exc))
+  108:             self.progress({"stage": name.upper(), "status": "FAILED", "error": str(exc)})
+  109:             raise
+  110:         self.store.complete_stage(state, name, result)
+  111:         self.progress({"stage": name.upper(), "status": "COMPLETED"})
+  112:         return result
+  113: 
+  114:     def _run_story_stage(self) -> dict[str, Any]:
+  115:         strategy_path = self.config.story_strategy_result_path
+  116: 
+  117:         if not strategy_path.exists():
+  118:             raise FileNotFoundError(
+  119:                 f"Story strategy file not found: {strategy_path}"
+  120:             )
+  121: 
+  122:         try:
+  123:             strategy_payload = json.loads(
+  124:                 strategy_path.read_text(encoding="utf-8")
+  125:             )
+  126:         except json.JSONDecodeError as exc:
+  127:             raise RuntimeError(
+  128:                 f"Invalid story strategy JSON: {strategy_path}"
+  129:             ) from exc
+  130: 
+  131:         if strategy_payload.get("state") != "STORY_STRATEGY_READY":
+  132:             raise RuntimeError(
+  133:                 "Story strategy is not ready: "
+  134:                 f"{strategy_payload.get('state')!r}"
+  135:             )
+  136: 
+  137:         strategy_project_id = strategy_payload.get("project_id")
+  138:         if strategy_project_id != self.config.project_id:
+  139:             raise RuntimeError(
+  140:                 "Story strategy project mismatch: "
+  141:                 f"expected {self.config.project_id!r}, "
+  142:                 f"got {strategy_project_id!r}"
+  143:             )
+  144: 
+  145:         scenes = strategy_payload.get("scenes")
+  146:         if not isinstance(scenes, list) or not scenes:
+  147:             raise RuntimeError(
+  148:                 "Story strategy contains no scenes"
+  149:             )
+  150: 
+  151:         result = StoryEngine(
+  152:             self.db,
+  153:             project_id=self.config.project_id,
+  154:         ).build_from_strategy(strategy_payload)
+  155: 
+  156:         shots = int(result.get("shots") or 0)
+  157:         if shots <= 0:
+  158:             raise RuntimeError(
+  159:                 "StoryEngine produced zero shots"
+  160:             )
+  161: 
+  162:         return result
+  163:     def run(self, *, resume: bool = True, force: bool = False) -> dict[str, Any]:
+  164:         with self._exclusive_run():
+  165:             self.config.governance_path.parent.mkdir(parents=True, exist_ok=True)
+  166:             self.config.governance_path.write_text(
+  167:                 json.dumps(governance_report(), ensure_ascii=False, indent=2),
+  168:                 encoding="utf-8",
+  169:             )
+  170:             state = self.store.load()
+  171:             self.store.reset_for_run(state, force=force)
+  172: 
+  173:             stage_services = {
+  174:                 "assets": lambda: AssetEngineRC2(self.db, self.config).run(),
+  175:                 "story": lambda: self._run_story_stage(),
+  176:                 "assignment": lambda: AssignmentEngineRC2(self.db, self.config).run(),
+  177:                 "timeline": lambda: TimelineEngineRC2(self.db, self.config).run(),
+  178:                 "render": lambda: RenderEngineRC2(self.config, progress=self.progress).run(),
+  179:                 "quality": lambda: QualityGateRC2(self.config).run(),
+  180:             }
+  181:             results: dict[str, Any] = {}
+  182:             try:
+  183:                 for definition in self.STAGES:
+  184:                     existing = state.stages.get(definition.name)
+  185:                     # RC2 Recovery: rebuild every production stage.
+  186:                     # Resume is disabled until project fingerprints are implemented.
+  187:                     can_skip = False
+  188:                     if can_skip:
+  189:                         results[definition.name] = existing.details
+  190:                         self.progress(
+  191:                             {"stage": definition.name.upper(), "status": "SKIPPED_COMPLETED"}
+  192:                         )
+  193:                         continue
+  194:                     results[definition.name] = self._run_stage(
+  195:                         state,
+  196:                         definition.name,
+  197:                         stage_services[definition.name],
+  198:                     )
+  199: 
+  200:                 quality = results["quality"]
+  201:                 if quality.get("state") != "PASSED":
+  202:                     raise RuntimeError("Quality Gate RC2 blocked release")
+  203: 
+  204:                 state.status = "COMPLETED"
+  205:                 state.current_stage = None
+  206:                 state.artifacts.update(
+  207:                     {
+  208:                         "timeline": str(self.config.timeline_path),
+  209:                         "render": str(self.config.canonical_render_path),
+  210:                         "quality_report": str(self.config.quality_report_path),
+  211:                         "governance": str(self.config.governance_path),
+  212:                     }
+  213:                 )
+  214:                 state.quality = quality
+  215:                 state.release_authorized = True
+  216:                 self.store.save(state)
+  217:                 return {
+  218:                     "state": "COMPLETED",
+  219:                     "project_id": self.config.project_id,
+  220:                     "run_id": state.run_id,
+  221:                     "results": results,
+  222:                     "production_state": str(self.config.state_path),
+  223:                 }
+  224:             except Exception as exc:
+  225:                 state.status = "FAILED"
+  226:                 state.error = str(exc)
+  227:                 state.release_authorized = False
+  228:                 self.store.save(state)
+  229:                 raise
+  230: 
+  231: 
+  232: 
+
+============================================================
+FILE: .\src\az_enterprise\core\preflight.py
+============================================================
+    1: from __future__ import annotations
+    2: import json, os, shutil, sys, platform
+    3: from pathlib import Path
+    4: from .database import Database
+    5: from .paths import PROJECTS, EXPORTS, DB_PATH
+    6: from .integrations import SERVICES
+    7: from .events import EventBus
+    8: 
+    9: class PreflightCenter:
+   10:     """RC1 operational preflight.
+   11: 
+   12:     This is intentionally local-first: it does not call paid APIs and does not
+   13:     consume credits. It validates whether the workstation, project folders,
+   14:     database, export pipeline, environment variables and optional tools are
+   15:     ready for a real production run.
+   16:     """
+   17:     def __init__(self, db: Database, project_id: str = 'franklin'):
+   18:         self.db = db
+   19:         self.project_id = project_id
+   20:         self.bus = EventBus(db, project_id)
+   21:         self.export_dir = EXPORTS / project_id
+   22:         self.project_dir = PROJECTS / project_id
+   23:         self.export_dir.mkdir(parents=True, exist_ok=True)
+   24: 
+   25:     def run(self) -> dict:
+   26:         checks: list[dict] = []
+   27:         def add(key: str, title: str, passed: bool, level: str, detail: str, fix: str = ''):
+   28:             checks.append({
+   29:                 'key': key, 'title': title, 'passed': bool(passed),
+   30:                 'level': level, 'detail': detail, 'fix': fix
+   31:             })
+   32: 
+   33:         add('python', 'Python Runtime', sys.version_info >= (3, 10), 'critical',
+   34:             f"{platform.python_implementation()} {platform.python_version()}",
+   35:             'Install Python 3.10+ and run start_os.bat again.')
+   36:         add('sqlite', 'Project Brain SQLite', DB_PATH.exists(), 'critical',
+   37:             str(DB_PATH), 'Run the production pipeline once to initialize the database.')
+   38:         add('project_dir', 'Franklin project folder', self.project_dir.exists(), 'critical',
+   39:             str(self.project_dir), 'Restore workspace/projects/franklin.')
+   40:         for sub in ['01_Audio','02_Images','03_Video','04_CapCut','05_Music','06_Export']:
+   41:             p = self.project_dir / sub
+   42:             add(f'folder_{sub}', f'Project folder {sub}', p.exists(), 'major', str(p), f'Create folder {sub}.')
+   43:         add('exports', 'Export folder writable', self._is_writable(self.export_dir), 'critical',
+   44:             str(self.export_dir), 'Check folder permissions.')
+   45: 
+   46:         ffmpeg = shutil.which('ffmpeg')
+   47:         ffprobe = shutil.which('ffprobe')
+   48:         add('ffmpeg', 'FFmpeg installed', bool(ffmpeg), 'major', ffmpeg or 'not found',
+   49:             'Install FFmpeg and add it to PATH for media probing and future renders.')
+   50:         add('ffprobe', 'FFprobe installed', bool(ffprobe), 'major', ffprobe or 'not found',
+   51:             'Install FFmpeg package including ffprobe.')
+   52: 
+   53:         # Data coverage checks
+   54:         try:
+   55:             assets = self.db.one('SELECT COUNT(*) c FROM assets')['c']
+   56:             shots = self.db.one('SELECT COUNT(*) c FROM shots')['c']
+   57:             missing = self.db.one("SELECT COUNT(*) c FROM shots WHERE status='missing'")['c'] if shots else 0
+   58:         except Exception:
+   59:             assets = shots = missing = 0
+   60:         add('assets_indexed', 'Assets indexed', assets > 0, 'critical', f'{assets} assets', 'Run Scan Assets / pipeline.')
+   61:         add('shots_built', 'Shots built', shots > 0, 'critical', f'{shots} shots', 'Run Build Film / pipeline.')
+   62:         add('coverage_local', 'Franklin local coverage', shots > 0 and missing < shots, 'major',
+   63:             f'{shots-missing}/{shots} assigned', 'Add missing assets or run generation queue.')
+   64: 
+   65:         # Integration readiness (not required for local Franklin, required for autonomous RC1)
+   66:         configured = 0
+   67:         integration_checks = []
+   68:         for service, (env_key, caps, endpoint) in SERVICES.items():
+   69:             value = os.getenv(env_key)
+   70:             ok = bool(value)
+   71:             if endpoint == 'local_exchange':
+   72:                 ok = bool(value and Path(value).exists())
+   73:             if ok: configured += 1
+   74:             integration_checks.append({'service': service, 'env_key': env_key, 'configured': ok, 'capabilities': caps})
+   75:         add('integrations_minimum', 'Minimum live integrations configured', configured >= 3, 'major',
+   76:             f'{configured}/{len(SERVICES)} configured', 'Configure at least OpenAI, Leonardo, ElevenLabs/YouTube credentials for RC1 live mode.')
+   77: 
+   78:         critical_failed = [c for c in checks if not c['passed'] and c['level'] == 'critical']
+   79:         major_failed = [c for c in checks if not c['passed'] and c['level'] == 'major']
+   80:         passed_count = sum(1 for c in checks if c['passed'])
+   81:         score = round(passed_count / max(1, len(checks)) * 100, 2)
+   82:         local_ready = not critical_failed
+   83:         autonomous_ready = local_ready and len(major_failed) == 0 and configured >= 4
+   84:         report = {
+   85:             'project_id': self.project_id,
+   86:             'score': score,
+   87:             'local_ready': local_ready,
+   88:             'autonomous_ready': autonomous_ready,
+   89:             'critical_failed': len(critical_failed),
+   90:             'major_failed': len(major_failed),
+   91:             'checks': checks,
+   92:             'integrations': integration_checks,
+   93:             'next_actions': self._next_actions(checks)
+   94:         }
+   95:         self._export(report)
+   96:         self.bus.emit('PREFLIGHT_COMPLETED', {'score': score, 'local_ready': local_ready, 'autonomous_ready': autonomous_ready})
+   97:         return report
+   98: 
+   99:     def _is_writable(self, path: Path) -> bool:
+  100:         try:
+  101:             path.mkdir(parents=True, exist_ok=True)
+  102:             test = path / '.write_test'
+  103:             test.write_text('ok', encoding='utf-8')
+  104:             test.unlink(missing_ok=True)
+  105:             return True
+  106:         except Exception:
+  107:             return False
+  108: 
+  109:     def _next_actions(self, checks: list[dict]) -> list[str]:
+  110:         failed = [c for c in checks if not c['passed']]
+  111:         actions = []
+  112:         for c in failed[:8]:
+  113:             if c.get('fix'):
+  114:                 actions.append(c['fix'])
+  115:             else:
+  116:                 actions.append(f"Fix: {c['title']}")
+  117:         if not actions:
+  118:             actions.append('Local production preflight passed. Continue to QC and handoff export.')
+  119:         return actions
+  120: 
+  121:     def _export(self, report: dict):
+  122:         json_path = self.export_dir / 'preflight_report.json'
+  123:         json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+  124:         rows = ''.join(
+  125:             f"<tr><td>{c['title']}</td><td>{'вњ…' if c['passed'] else 'вќЊ'}</td><td>{c['level']}</td><td>{c['detail']}</td><td>{c.get('fix','')}</td></tr>"
+  126:             for c in report['checks']
+  127:         )
+  128:         actions = ''.join(f"<li>{a}</li>" for a in report['next_actions'])
+  129:         html = f"""<!doctype html><html lang='ru'><meta charset='utf-8'><title>ATLAS ZERO Preflight</title>
+  130: <style>body{{font-family:Segoe UI,Arial;background:#0f172a;color:#e5e7eb;margin:24px;font-size:13px}}table{{border-collapse:collapse;width:100%}}td,th{{border-bottom:1px solid #334155;padding:7px;text-align:left}}.card{{background:#111827;border:1px solid #334155;border-radius:12px;padding:14px;margin:10px 0}}.score{{font-size:34px;font-weight:700}}</style>
+  131: <h1>ATLAS ZERO Enterprise RC1 Alpha 0.9 вЂ” Preflight</h1>
+  132: <div class='card'><div class='score'>{report['score']}%</div><div>Р›РѕРєР°Р»СЊРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ: {'Р”Р°' if report['local_ready'] else 'РќРµС‚'} В· РђРІС‚РѕРЅРѕРјРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ: {'Р”Р°' if report['autonomous_ready'] else 'РќРµС‚'}</div></div>
+  133: <div class='card'><h2>РЎР»РµРґСѓСЋС‰РёРµ РґРµР№СЃС‚РІРёСЏ</h2><ol>{actions}</ol></div>
+  134: <div class='card'><h2>РџСЂРѕРІРµСЂРєРё</h2><table><tr><th>РџСЂРѕРІРµСЂРєР°</th><th>РЎС‚Р°С‚СѓСЃ</th><th>РЈСЂРѕРІРµРЅСЊ</th><th>Р”РµС‚Р°Р»СЊ</th><th>РСЃРїСЂР°РІР»РµРЅРёРµ</th></tr>{rows}</table></div>
+  135: </html>"""
+  136:         (self.export_dir / 'preflight_report.html').write_text(html, encoding='utf-8')
+
+============================================================
+FILE: .\src\az_enterprise\ui\app.py
+============================================================
+    1: from __future__ import annotations
+    2: import json, subprocess, sys, webbrowser, threading, queue
+    3: import tkinter as tk
+    4: from tkinter import ttk
+    5: from pathlib import Path
+    6: from az_enterprise.core.database import Database
+    7: from az_enterprise.core.workflow import WorkflowEngine
+    8: from az_enterprise.core.pipeline_runtime import PipelineRunManager
+    9: from az_enterprise.core.paths import EXPORTS, DB_PATH
+   10: 
+   11: BG = '#08111f'; PANEL = '#0b1424'; CARD = '#101b2d'; CARD2 = '#14243a'; TEXT = '#e8eef8'; MUTED = '#91a3ba'; ACCENT = '#38bdf8'; GOOD='#22c55e'; WARN='#f59e0b'; BAD='#ef4444'
+   12: 
+   13: class App(tk.Tk):
+   14:     def __init__(self):
+   15:         super().__init__()
+   16:         self.title('ATLAS ZERO Enterprise RC1 Alpha 2.4 вЂ” Director AI Runtime')
+   17:         self.geometry('1366x820')
+   18:         self.configure(bg=BG)
+   19:         self.db = Database(); self.db.init()
+   20:         self.pipeline_queue = queue.Queue()
+   21:         self.pipeline_running = False
+   22:         self.style = ttk.Style(self)
+   23:         self.style.theme_use('clam')
+   24:         self.style.configure('.', font=('Segoe UI', 8), background=BG, foreground=TEXT)
+   25:         self.style.configure('Treeview', font=('Segoe UI', 7), rowheight=20, background='#0b1220', fieldbackground='#0b1220', foreground=TEXT)
+   26:         self.style.configure('Treeview.Heading', font=('Segoe UI', 7, 'bold'), background='#d9d7cf', foreground='#111827')
+   27:         self.style.configure('TButton', font=('Segoe UI', 8), padding=5)
+   28:         self.sections = ['РљРѕРјР°РЅРґРЅС‹Р№ С†РµРЅС‚СЂ','РџСЂРѕРµРєС‚РЅС‹Р№ РјРѕР·Рі','Р“СЂР°С„ РєРѕРЅРІРµР№РµСЂР°','Story Engine','Director AI 2.4','Native Viewer Pro','Franklin E2E','РљРѕРЅРІРµР№РµСЂ','Live Run Console','РњРµРЅРµРґР¶РµСЂ Р·Р°РґР°С‡','РњР°С‚РµСЂРёР°Р»С‹','Р’РёР·СѓР°Р»СЊРЅС‹Р№ Р°РЅР°Р»РёР·','РЁРѕС‚С‹','Р РµС€РµРЅРёСЏ','РРЅС‚РµРіСЂР°С†РёРё','API-РѕС‡РµСЂРµРґСЊ','API-Р·Р°РїСѓСЃРєРё','Preflight','РћРїРµСЂР°С‚РѕСЂ','Р Р°Р±РѕС‡РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ','Live API','РћРїРµСЂР°С‚РѕСЂСЃРєРёР№ С‚Р°Р№РјР»Р°Р№РЅ','РњРѕРЅС‚Р°Р¶РЅР°СЏ РјР°СЃС‚РµСЂСЃРєР°СЏ','Local Autopilot','Native Timeline','Native Viewer RC','CV Runtime 2.2','Live Connectors','Live API Test','CV Review Board','Timeline Viewer 2','Р¦РµРЅС‚СЂ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ','Final Assembly Pack','CapCut Bridge','РџР»Р°РЅ RC1','Р“РѕС‚РѕРІРЅРѕСЃС‚СЊ RC1','РЎРѕР±С‹С‚РёСЏ','Production State','Franklin РіРѕС‚РѕРІРЅРѕСЃС‚СЊ','Р­РєСЃРїРѕСЂС‚']
+   29:         self._build()
+   30:         self.show('РљРѕРјР°РЅРґРЅС‹Р№ С†РµРЅС‚СЂ')
+   31: 
+   32:     def _build(self):
+   33:         top = tk.Frame(self,bg='#020617',height=42); top.pack(fill='x')
+   34:         tk.Label(top,text='ATLAS ZERO ENTERPRISE RC1',bg='#020617',fg=TEXT,font=('Segoe UI',11,'bold')).pack(side='left',padx=14)
+   35:         tk.Label(top,text='Franklin В· Alpha 2.4 В· Director AI / quality / tasks',bg='#020617',fg=MUTED,font=('Segoe UI',8)).pack(side='left')
+   36:         tk.Button(top,text='Р—Р°РїСѓСЃС‚РёС‚СЊ РєРѕРЅРІРµР№РµСЂ',command=self.run_pipeline,bg='#075985',fg='white',font=('Segoe UI',8),relief='flat').pack(side='right',padx=6,pady=6)
+   37:         tk.Button(top,text='РћС‚РєСЂС‹С‚СЊ СЌРєСЃРїРѕСЂС‚',command=self.open_exports,bg='#334155',fg='white',font=('Segoe UI',8),relief='flat').pack(side='right',padx=6,pady=6)
+   38:         body = tk.Frame(self,bg=BG); body.pack(fill='both',expand=True)
+   39:         side = tk.Frame(body,bg=PANEL,width=218); side.pack(side='left',fill='y'); side.pack_propagate(False)
+   40: 
+   41:         # Scrollable menu: no hidden items on 1366x768 screens.
+   42:         menu_canvas = tk.Canvas(side, bg=PANEL, highlightthickness=0, width=218)
+   43:         menu_scroll = ttk.Scrollbar(side, orient='vertical', command=menu_canvas.yview)
+   44:         menu_canvas.configure(yscrollcommand=menu_scroll.set)
+   45:         menu_canvas.pack(side='left', fill='both', expand=True)
+   46:         menu_scroll.pack(side='right', fill='y')
+   47:         menu_frame = tk.Frame(menu_canvas, bg=PANEL)
+   48:         menu_canvas.create_window((0, 0), window=menu_frame, anchor='nw')
+   49:         menu_frame.bind('<Configure>', lambda e: menu_canvas.configure(scrollregion=menu_canvas.bbox('all')))
+   50:         menu_canvas.bind_all('<MouseWheel>', lambda e: menu_canvas.yview_scroll(int(-1*(e.delta/120)), 'units'))
+   51: 
+   52:         self.nav_buttons = {}
+   53:         for section_name in self.sections:
+   54:             b = tk.Button(menu_frame, text=section_name, anchor='w', command=lambda x=section_name:self.show(x),
+   55:                           bg=PANEL, fg=TEXT, activebackground=CARD, activeforeground='white',
+   56:                           font=('Segoe UI',7), relief='flat', padx=8, pady=4)
+   57:             b.pack(fill='x', padx=6, pady=1)
+   58:             self.nav_buttons[section_name] = b
+   59:         self.main = tk.Frame(body,bg=BG); self.main.pack(side='left',fill='both',expand=True)
+   60:         self.status = tk.Label(self,bg='#020617',fg=MUTED,text='Р“РѕС‚РѕРІРѕ',anchor='w',font=('Segoe UI',8)); self.status.pack(fill='x')
+   61: 
+   62:     def clear(self):
+   63:         for w in self.main.winfo_children(): w.destroy()
+   64:         if hasattr(self, 'nav_buttons'):
+   65:             for b in self.nav_buttons.values(): b.configure(bg=PANEL, fg=TEXT)
+   66: 
+   67:     def title_label(self, text):
+   68:         tk.Label(self.main,text=text,bg=BG,fg=TEXT,font=('Segoe UI',13,'bold')).pack(anchor='w',padx=16,pady=(14,8))
+   69: 
+   70:     def card(self, parent, title, value, note=''):
+   71:         f=tk.Frame(parent,bg=CARD,highlightbackground='#334155',highlightthickness=1)
+   72:         tk.Label(f,text=title,bg=CARD,fg=MUTED,font=('Segoe UI',8)).pack(anchor='w',padx=10,pady=(8,0))
+   73:         tk.Label(f,text=value,bg=CARD,fg=TEXT,font=('Segoe UI',14,'bold')).pack(anchor='w',padx=10)
+   74:         tk.Label(f,text=note,bg=CARD,fg=MUTED,font=('Segoe UI',8)).pack(anchor='w',padx=10,pady=(0,8))
+   75:         return f
+   76: 
+   77:     def table(self, columns, rows):
+   78:         frame=tk.Frame(self.main,bg=BG); frame.pack(fill='both',expand=True,padx=16,pady=8)
+   79:         tree=ttk.Treeview(frame,columns=columns,show='headings')
+   80:         vs=ttk.Scrollbar(frame,orient='vertical',command=tree.yview); tree.configure(yscrollcommand=vs.set)
+   81:         for c in columns:
+   82:             tree.heading(c,text=c); tree.column(c,width=140,anchor='w')
+   83:         for r in rows:
+   84:             tree.insert('', 'end', values=r)
+   85:         tree.pack(side='left',fill='both',expand=True); vs.pack(side='right',fill='y')
+   86: 
+   87:     def show(self, name):
+   88:         self.clear(); self.title_label(name)
+   89:         if hasattr(self, 'nav_buttons') and name in self.nav_buttons:
+   90:             self.nav_buttons[name].configure(bg=CARD2, fg=ACCENT)
+   91:         if name=='РљРѕРјР°РЅРґРЅС‹Р№ С†РµРЅС‚СЂ': self.command_center()
+   92:         elif name=='РџСЂРѕРµРєС‚РЅС‹Р№ РјРѕР·Рі': self.project_brain()
+   93:         elif name=='Р“СЂР°С„ РєРѕРЅРІРµР№РµСЂР°': self.pipeline_graph()
+   94:         elif name=='Story Engine': self.story_runtime()
+   95:         elif name=='Director AI 2.4': self.director_ai_2_4()
+   96:         elif name=='Native Viewer Pro': self.native_viewer_pro()
+   97:         elif name=='Franklin E2E': self.franklin_e2e_runtime()
+   98:         elif name=='РљРѕРЅРІРµР№РµСЂ': self.workflow()
+   99:         elif name=='Live Run Console': self.live_run_console()
+  100:         elif name=='РњРµРЅРµРґР¶РµСЂ Р·Р°РґР°С‡': self.task_manager()
+  101:         elif name=='РњР°С‚РµСЂРёР°Р»С‹': self.assets()
+  102:         elif name=='Р’РёР·СѓР°Р»СЊРЅС‹Р№ Р°РЅР°Р»РёР·': self.visual_analysis()
+  103:         elif name=='РЁРѕС‚С‹': self.shots()
+  104:         elif name=='Р РµС€РµРЅРёСЏ': self.decisions()
+  105:         elif name=='РРЅС‚РµРіСЂР°С†РёРё': self.integrations()
+  106:         elif name=='API-РѕС‡РµСЂРµРґСЊ': self.api_jobs()
+  107:         elif name=='API-Р·Р°РїСѓСЃРєРё': self.api_runs()
+  108:         elif name=='Preflight': self.preflight()
+  109:         elif name=='РћРїРµСЂР°С‚РѕСЂ': self.operator_console()
+  110:         elif name=='Р Р°Р±РѕС‡РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ': self.working_state()
+  111:         elif name=='Live API': self.live_api()
+  112:         elif name=='РћРїРµСЂР°С‚РѕСЂСЃРєРёР№ С‚Р°Р№РјР»Р°Р№РЅ': self.operator_timeline()
+  113:         elif name=='РњРѕРЅС‚Р°Р¶РЅР°СЏ РјР°СЃС‚РµСЂСЃРєР°СЏ': self.montage_workbench()
+  114:         elif name=='Local Autopilot': self.local_autopilot()
+  115:         elif name=='Native Timeline': self.native_timeline()
+  116:         elif name=='Native Viewer RC': self.native_viewer_rc()
+  117:         elif name=='CV Runtime 2.2': self.cv_model()
+  118:         elif name=='Live Connectors': self.live_connectors()
+  119:         elif name=='Live API Test': self.live_api_test()
+  120:         elif name=='CV Review Board': self.cv_review_board()
+  121:         elif name=='Timeline Viewer 2': self.timeline_viewer_2()
+  122:         elif name=='Р¦РµРЅС‚СЂ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ': self.test_center()
+  123:         elif name=='Final Assembly Pack': self.final_assembly_pack()
+  124:         elif name=='CapCut Bridge': self.capcut_bridge()
+  125:         elif name=='РџР»Р°РЅ RC1': self.rc1_plan()
+  126:         elif name=='Р“РѕС‚РѕРІРЅРѕСЃС‚СЊ RC1': self.readiness()
+  127:         elif name=='Production State': self.production_state()
+  128:         elif name=='Franklin РіРѕС‚РѕРІРЅРѕСЃС‚СЊ': self.franklin_acceptance()
+  129:         elif name=='РЎРѕР±С‹С‚РёСЏ': self.events()
+  130:         elif name=='Р­РєСЃРїРѕСЂС‚': self.exports()
+  131: 
+  132:     def command_center(self):
+  133:         # Professional dashboard: current runtime, last run and production readiness.
+  134:         assets=self.db.one('SELECT COUNT(*) c FROM assets')['c'] if self.db.one('SELECT name FROM sqlite_master WHERE type="table" AND name="assets"') else 0
+  135:         shots=self.db.one('SELECT COUNT(*) c FROM shots')['c'] if self.db.one('SELECT name FROM sqlite_master WHERE type="table" AND name="shots"') else 0
+  136:         missing=self.db.one("SELECT COUNT(*) c FROM shots WHERE status='missing'")['c'] if shots else 0
+  137:         qc=self.db.one('SELECT readiness FROM quality_reports ORDER BY id DESC LIMIT 1')
+  138:         last=self.db.one('SELECT id,run_uid,status,progress,current_step,started_at,finished_at FROM pipeline_runs ORDER BY id DESC LIMIT 1') if self.db.one('SELECT name FROM sqlite_master WHERE type="table" AND name="pipeline_runs"') else None
+  139:         cv=self.db.one('SELECT COUNT(*) c, AVG(cinematic_grade) g, SUM(face_count) faces, SUM(scene_count) scenes FROM cv_asset_metadata WHERE project_id=?',('franklin',)) if self.db.one('SELECT name FROM sqlite_master WHERE type="table" AND name="cv_asset_metadata"') else None
+  140:         row=tk.Frame(self.main,bg=BG); row.pack(fill='x',padx=14,pady=6)
+  141:         cards=[('РњР°С‚РµСЂРёР°Р»С‹',str(assets),'РІ Р±РёР±Р»РёРѕС‚РµРєРµ'),('РЁРѕС‚С‹',str(shots),'СЃС‚СЂСѓРєС‚СѓСЂР° С„РёР»СЊРјР°'),('Р”РµС„РёС†РёС‚',str(missing),'РЅСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ'),('QC',f"{qc['readiness'] if qc else 0}%",'РіРѕС‚РѕРІРЅРѕСЃС‚СЊ'),('Runtime', (last['status'] if last else 'idle'), (last['run_uid'] if last else 'РЅРµС‚ Р·Р°РїСѓСЃРєРѕРІ'))]
+  142:         for t,v,n in cards: self.card(row,t,v,n).pack(side='left',fill='x',expand=True,padx=4)
+  143:         row2=tk.Frame(self.main,bg=BG); row2.pack(fill='x',padx=14,pady=6)
+  144:         self.card(row2,'CV Runtime', 'РіРѕС‚РѕРІ' if cv else 'РЅРµС‚ РґР°РЅРЅС‹С…', f"grade {round(cv['g'] or 0,2) if cv else 0} В· faces {cv['faces'] or 0 if cv else 0} В· scenes {cv['scenes'] or 0 if cv else 0}").pack(side='left',fill='x',expand=True,padx=4)
+  145:         self.card(row2,'РџРѕСЃР»РµРґРЅРёР№ Run', str(last['id']) if last else 'вЂ”', f"{last['progress'] if last else 0}% В· {last['current_step'] if last else 'idle'}").pack(side='left',fill='x',expand=True,padx=4)
+  146:         self.card(row2,'Director AI', self._director_ai_summary()[0], self._director_ai_summary()[1]).pack(side='left',fill='x',expand=True,padx=4)
+  147:         self.card(row2,'Live API', self._api_summary()[0], self._api_summary()[1]).pack(side='left',fill='x',expand=True,padx=4)
+  148:         graph=tk.Frame(self.main,bg=CARD,highlightbackground='#24364e',highlightthickness=1); graph.pack(fill='both',expand=True,padx=14,pady=8)
+  149:         tk.Label(graph,text='Р“Р РђР¤ РљРћРќР’Р•Р™Р•Р Рђ',bg=CARD,fg=TEXT,font=('Segoe UI',9,'bold')).pack(anchor='w',padx=10,pady=(8,4))
+  150:         self._draw_pipeline_graph(graph, last['id'] if last else None, compact=True)
+  151: 
+  152:     def _api_summary(self):
+  153:         try:
+  154:             rows=self.db.rows('SELECT status FROM integration_profiles')
+  155:             if not rows: return ('РЅРµ РЅР°СЃС‚СЂРѕРµРЅ','0 СЃРµСЂРІРёСЃРѕРІ')
+  156:             ok=sum(1 for r in rows if r['status'] in ('configured','connected'))
+  157:             return (f'{ok}/{len(rows)}', 'configured/connected')
+  158:         except Exception:
+  159:             return ('вЂ”','РЅРµС‚ РґР°РЅРЅС‹С…')
+  160: 
+  161:     def _director_ai_summary(self):
+  162:         try:
+  163:             missing=self.db.one("SELECT COUNT(*) c FROM shots WHERE project_id=? AND status='missing'", ('franklin',))['c']
+  164:             tasks=self.db.one('SELECT COUNT(*) c FROM director_tasks WHERE project_id=?', ('franklin',))['c']
+  165:             issues=self.db.one('SELECT COUNT(*) c FROM director_issues WHERE project_id=?', ('franklin',))['c']
+  166:             return (f'{tasks} Р·Р°РґР°С‡ В· {missing} missing', f'{issues} РїСЂРѕР±Р»РµРј РґР»СЏ РёСЃРїСЂР°РІР»РµРЅРёСЏ')
+  167:         except Exception:
+  168:             return ('вЂ”','РЅРµС‚ РґР°РЅРЅС‹С…')
+  169: 
+  170:     def _draw_pipeline_graph(self, parent, run_id=None, compact=False):
+  171:         """Render pipeline graph safely. This method is intentionally self-contained
+  172:         so the UI can never crash if graph data is missing or the DB is old."""
+  173:         try:
+  174:             if run_id:
+  175:                 rows = self.db.rows(
+  176:                     "SELECT step_order,title,status,progress FROM pipeline_stage_graph WHERE run_id=? ORDER BY step_order",
+  177:                     (run_id,),
+  178:                 )
+  179:             else:
+  180:                 rows = []
+  181:             if not rows:
+  182:                 rows = [
+  183:                     {"step_order":1,"title":"Preflight","status":"queued","progress":0},
+  184:                     {"step_order":2,"title":"РђРЅР°Р»РёР· РјР°С‚РµСЂРёР°Р»РѕРІ","status":"queued","progress":0},
+  185:                     {"step_order":3,"title":"CV Runtime","status":"queued","progress":0},
+  186:                     {"step_order":4,"title":"Director AI","status":"queued","progress":0},
+  187:                     {"step_order":5,"title":"Timeline","status":"queued","progress":0},
+  188:                     {"step_order":6,"title":"Р­РєСЃРїРѕСЂС‚","status":"queued","progress":0},
+  189:                 ]
+  190:             wrap = tk.Frame(parent, bg=CARD)
+  191:             wrap.pack(fill='both', expand=True, padx=8, pady=6)
+  192:             max_cols = 4 if compact else 3
+  193:             color = {'queued':'#334155','running':'#0ea5e9','completed':'#16a34a','done':'#16a34a','failed':'#dc2626','error':'#dc2626'}
+  194:             for idx, r in enumerate(rows):
+  195:                 status = (r['status'] if isinstance(r, dict) else r['status']) or 'queued'
+  196:                 title = (r['title'] if isinstance(r, dict) else r['title']) or ''
+  197:                 order = (r['step_order'] if isinstance(r, dict) else r['step_order']) or idx+1
+  198:                 progress = (r['progress'] if isinstance(r, dict) else r['progress']) or 0
+  199:                 box = tk.Frame(wrap, bg='#0b1220', highlightbackground=color.get(status, '#334155'), highlightthickness=2)
+  200:                 box.grid(row=idx//max_cols, column=idx%max_cols, sticky='nsew', padx=5, pady=5)
+  201:                 tk.Label(box, text=f"{int(order):02d}", bg='#0b1220', fg=ACCENT, font=('Segoe UI',9,'bold')).pack(anchor='w', padx=8, pady=(6,0))
+  202:                 tk.Label(box, text=title[:48], bg='#0b1220', fg=TEXT, font=('Segoe UI',8,'bold'), wraplength=260, justify='left').pack(anchor='w', padx=8)
+  203:                 tk.Label(box, text=f"{status} В· {float(progress):.1f}%", bg='#0b1220', fg=MUTED, font=('Segoe UI',7)).pack(anchor='w', padx=8, pady=(0,6))
+  204:             for col in range(max_cols):
+  205:                 wrap.grid_columnconfigure(col, weight=1)
+  206:         except Exception as e:
+  207:             tk.Label(parent, text=f'Р“СЂР°С„ РєРѕРЅРІРµР№РµСЂР° РЅРµРґРѕСЃС‚СѓРїРµРЅ: {e}', bg=CARD, fg=BAD, font=('Segoe UI',8)).pack(anchor='w', padx=10, pady=8)
+  208: 
+  209:     def pipeline_graph(self):
+  210:         try:
+  211:             last = self.db.one('SELECT id,run_uid,status,progress,current_step FROM pipeline_runs ORDER BY id DESC LIMIT 1')
+  212:         except Exception:
+  213:             last = None
+  214:         header = tk.Frame(self.main, bg=CARD, highlightbackground='#334155', highlightthickness=1)
+  215:         header.pack(fill='x', padx=16, pady=8)
+  216:         if last:
+  217:             txt = f"РџРѕСЃР»РµРґРЅРёР№ Р·Р°РїСѓСЃРє: {last['run_uid']} В· {last['status']} В· {last['progress']}% В· {last['current_step']}"
+  218:         else:
+  219:             txt = 'Р—Р°РїСѓСЃРєРѕРІ РїРѕРєР° РЅРµС‚. РќР°Р¶РјРёС‚Рµ В«Р—Р°РїСѓСЃС‚РёС‚СЊ РєРѕРЅРІРµР№РµСЂВ».'
+  220:         tk.Label(header, text=txt, bg=CARD, fg=TEXT, font=('Segoe UI',9,'bold')).pack(anchor='w', padx=10, pady=10)
+  221:         graph = tk.Frame(self.main, bg=CARD, highlightbackground='#24364e', highlightthickness=1)
+  222:         graph.pack(fill='both', expand=True, padx=16, pady=8)
+  223:         self._draw_pipeline_graph(graph, last['id'] if last else None, compact=False)
+  224: 
+  225: 
+  226:     def story_runtime(self):
+  227:         try:
+  228:             from az_enterprise.core.story_engine_runtime import StoryEngineRuntime
+  229:             report = StoryEngineRuntime(self.db).build()
+  230:             rows=[
+  231:                 ('Р’РµСЂСЃРёСЏ', report.get('version','2.3')),
+  232:                 ('РЎС†РµРЅ РїРѕСЃС‚СЂРѕРµРЅРѕ', report['scenes']),
+  233:                 ('РЁРѕС‚РѕРІ РІ РјРѕРЅС‚Р°Р¶РЅРѕРј Р»РёСЃС‚Рµ', report['shots']),
+  234:                 ('РќР°Р·РЅР°С‡РµРЅРѕ РјР°С‚РµСЂРёР°Р»РѕРІ', report['assigned']),
+  235:                 ('РќРµРґРѕСЃС‚Р°С‘С‚ РјР°С‚РµСЂРёР°Р»РѕРІ', report['missing']),
+  236:                 ('Р“РѕС‚РѕРІРЅРѕСЃС‚СЊ Story Engine', str(report['readiness'])+'%'),
+  237:                 ('CV', f"assets {report['cv_summary']['assets_with_cv']} В· faces {report['cv_summary']['faces_total']} В· scenes {report['cv_summary']['scene_candidates_total']} В· grade {report['cv_summary']['avg_cinematic_grade']}"),
+  238:             ]
+  239:             rows += [(f"РЎС†РµРЅР° {s['scene_id']} В· {s['title']}", f"{s['shot_count']} С€РѕС‚РѕРІ В· РїРѕРєСЂС‹С‚РёРµ {s['coverage']}% В· РґРµС„РёС†РёС‚ {s['missing_count']} В· {s['risk']}") for s in report['scene_reports']]
+  240:             rows += [('Р РµРєРѕРјРµРЅРґР°С†РёСЏ', x) for x in report['recommendations']]
+  241:             rows += [('HTML', str(EXPORTS/'franklin'/'story_engine_2_3.html'))]
+  242:             rows += [('РњРѕРЅС‚Р°Р¶РЅС‹Р№ Р»РёСЃС‚ CSV', str(EXPORTS/'franklin'/'montage_sheet.csv'))]
+  243:             rows += [('РќРµРґРѕСЃС‚Р°СЋС‰РёРµ РјР°С‚РµСЂРёР°Р»С‹', str(EXPORTS/'franklin'/'missing_story_requirements.md'))]
+  244:             self.table(['РџСѓРЅРєС‚','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  245:         except Exception as e:
+  246:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  247: 
+  248:     def native_viewer_pro(self):
+  249:         try:
+  250:             from az_enterprise.core.native_viewer_pro import NativeViewerPro
+  251:             report = NativeViewerPro(self.db).build()
+  252:             rows=[('РЁРѕС‚РѕРІ',report['shots']),('РќР°Р·РЅР°С‡РµРЅРѕ',report['assigned']),('Р”РµС„РёС†РёС‚',report['missing']),('HTML',report['html']),('JSON',report['json']),('Р”РµР№СЃС‚РІРёРµ','РћС‚РєСЂРѕР№С‚Рµ native_viewer_pro.html РёР· СЌРєСЃРїРѕСЂС‚Р° РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° С„РёР»СЊРјР° СЃ CV-РјРµС‚Р°РґР°РЅРЅС‹РјРё')]
+  253:             self.table(['РџСѓРЅРєС‚','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  254:         except Exception as e:
+  255:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  256: 
+  257:     def franklin_e2e_runtime(self):
+  258:         try:
+  259:             from az_enterprise.core.franklin_e2e_runtime import FranklinE2ERuntime
+  260:             report = FranklinE2ERuntime(self.db).evaluate()
+  261:             rows=[('E2E РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', str(report['score'])+'%'),('Local E2E Ready','Р”Р°' if report['local_e2e_ready'] else 'РќРµС‚'),('РњР°С‚РµСЂРёР°Р»С‹',report['assets']),('РЁРѕС‚С‹',report['shots']),('РќР°Р·РЅР°С‡РµРЅРѕ',report['assigned']),('Р”РµС„РёС†РёС‚',report['missing']),('CV assets',report['cv_assets'])]
+  262:             rows += [(f"РђСЂС‚РµС„Р°РєС‚ {k}", 'OK' if v else 'MISSING') for k,v in report['artifacts'].items()]
+  263:             rows += [('РЎР»РµРґСѓСЋС‰РµРµ РґРµР№СЃС‚РІРёРµ', a) for a in report['next_actions']]
+  264:             rows += [('HTML', str(EXPORTS/'franklin'/'franklin_e2e_runtime.html'))]
+  265:             self.table(['РџСѓРЅРєС‚','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  266:         except Exception as e:
+  267:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  268: 
+  269:     def project_brain(self):
+  270:         rows=self.db.rows('SELECT criterion,score,passed,comment FROM readiness_checks ORDER BY id')
+  271:         self.table(['РљСЂРёС‚РµСЂРёР№','РћС†РµРЅРєР°','РџСЂРѕР№РґРµРЅ','РљРѕРјРјРµРЅС‚Р°СЂРёР№'], [(r['criterion'], f"{r['score']:.2f}", 'Р”Р°' if r['passed'] else 'РќРµС‚', r['comment']) for r in rows])
+  272: 
+  273:     def workflow(self):
+  274:         rows=self.db.rows('SELECT stage,status,details,created_at FROM workflow_jobs ORDER BY id DESC LIMIT 100')
+  275:         self.table(['Р­С‚Р°Рї','РЎС‚Р°С‚СѓСЃ','Р”РµС‚Р°Р»Рё','Р’СЂРµРјСЏ'], [(r['stage'],r['status'],r['details'],r['created_at']) for r in rows])
+  276: 
+  277: 
+  278:     def task_manager(self):
+  279:         top=tk.Frame(self.main,bg=BG); top.pack(fill='x',padx=14,pady=4)
+  280:         tk.Button(top,text='РћР±РЅРѕРІРёС‚СЊ',command=lambda:self.show('РњРµРЅРµРґР¶РµСЂ Р·Р°РґР°С‡'),bg='#24364e',fg='white',font=('Segoe UI',7),relief='flat').pack(side='left')
+  281:         tk.Button(top,text='РџРѕРІС‚РѕСЂРёС‚СЊ РѕС€РёР±РєРё РїРѕСЃР»РµРґРЅРµРіРѕ Run',command=self.retry_failed_last_run,bg='#7c2d12',fg='white',font=('Segoe UI',7),relief='flat').pack(side='left',padx=6)
+  282:         rows=self.db.rows('''SELECT q.run_id,q.task_uid,q.step_order,q.title,q.status,q.attempts,q.progress,q.started_at,q.finished_at,substr(coalesce(q.error,''),1,120) err
+  283:                              FROM pipeline_task_queue q ORDER BY q.run_id DESC, q.step_order LIMIT 500''')
+  284:         self.table(['Run','Task ID','в„–','Р­С‚Р°Рї','РЎС‚Р°С‚СѓСЃ','РџРѕРїС‹С‚РєРё','РџСЂРѕРіСЂРµСЃСЃ','РЎС‚Р°СЂС‚','Р¤РёРЅРёС€','РћС€РёР±РєР°'],
+  285:                    [(r['run_id'],r['task_uid'],r['step_order'],r['title'],r['status'],r['attempts'],r['progress'],r['started_at'] or '',r['finished_at'] or '',r['err']) for r in rows])
+  286: 
+  287:     def retry_failed_last_run(self):
+  288:         try:
+  289:             last=self.db.one('SELECT id FROM pipeline_runs ORDER BY id DESC LIMIT 1')
+  290:             if not last:
+  291:                 self.status.config(text='РќРµС‚ Р·Р°РїСѓСЃРєРѕРІ РґР»СЏ РїРѕРІС‚РѕСЂР°')
+  292:                 return
+  293:             result=PipelineRunManager(Database()).retry_failed_tasks(last['id'])
+  294:             self.status.config(text=f"РџРѕРІС‚РѕСЂРµРЅРѕ Р·Р°РґР°С‡: {result.get('retried',0)}")
+  295:             self.show('РњРµРЅРµРґР¶РµСЂ Р·Р°РґР°С‡')
+  296:         except Exception as e:
+  297:             self.status.config(text=f'РћС€РёР±РєР° РїРѕРІС‚РѕСЂР°: {e}')
+  298: 
+  299:     def assets(self):
+  300:         rows=self.db.rows('SELECT filename,media_type,category,emotion,quality,duplicate_of FROM assets ORDER BY media_type, filename LIMIT 500')
+  301:         self.table(['Р¤Р°Р№Р»','РўРёРї','РљР°С‚РµРіРѕСЂРёСЏ','Р­РјРѕС†РёСЏ','РљР°С‡РµСЃС‚РІРѕ','Р”СѓР±Р»РёРєР°С‚'], [(r['filename'],r['media_type'],r['category'],r['emotion'],r['quality'],r['duplicate_of'] or '') for r in rows])
+  302: 
+  303: 
+  304:     def visual_analysis(self):
+  305:         rows=self.db.rows("""SELECT a.filename,a.media_type,v.plan_type,v.palette,v.style_score,v.profile_json FROM visual_profiles v JOIN assets a ON a.id=v.asset_id ORDER BY v.style_score DESC LIMIT 500""")
+  306:         self.table(['Р¤Р°Р№Р»','РўРёРї','РџР»Р°РЅ','РџР°Р»РёС‚СЂР°','РЎС‚РёР»СЊ','РџСЂРѕС„РёР»СЊ'], [(r['filename'],r['media_type'],r['plan_type'],r['palette'],r['style_score'],r['profile_json']) for r in rows])
+  307: 
+  308:     def api_runs(self):
+  309:         rows=self.db.rows('SELECT service,mode,status,response_json,created_at FROM integration_runs ORDER BY id DESC LIMIT 300')
+  310:         self.table(['РЎРµСЂРІРёСЃ','Р РµР¶РёРј','РЎС‚Р°С‚СѓСЃ','РћС‚РІРµС‚','Р’СЂРµРјСЏ'], [(r['service'],r['mode'],r['status'],r['response_json'],r['created_at']) for r in rows])
+  311: 
+  312:     def shots(self):
+  313:         rows=self.db.rows('''SELECT s.idx,s.start_sec,s.end_sec,s.block,s.visual_need,s.status,a.filename asset FROM shots s LEFT JOIN assets a ON s.assigned_asset_id=a.id ORDER BY s.idx LIMIT 500''')
+  314:         self.table(['в„–','РќР°С‡Р°Р»Рѕ','РљРѕРЅРµС†','Р‘Р»РѕРє','РџРѕС‚СЂРµР±РЅРѕСЃС‚СЊ','РЎС‚Р°С‚СѓСЃ','РњР°С‚РµСЂРёР°Р»'], [(r['idx'],r['start_sec'],r['end_sec'],r['block'],r['visual_need'],r['status'],r['asset'] or '') for r in rows])
+  315: 
+  316:     def decisions(self):
+  317:         if self.db.one('SELECT name FROM sqlite_master WHERE type="table" AND name="director_decision_matrix"'):
+  318:             rows=self.db.rows('SELECT scene_id,shot_id,asset_id,decision,score,reason,action FROM director_decision_matrix WHERE project_id=? ORDER BY id DESC LIMIT 500', ('franklin',))
+  319:             self.table(['РЎС†РµРЅР°','РЁРѕС‚','РђСЃСЃРµС‚','Р РµС€РµРЅРёРµ','РћС†РµРЅРєР°','РџСЂРёС‡РёРЅР°','Р”РµР№СЃС‚РІРёРµ'], [(r['scene_id'],r['shot_id'],r['asset_id'],r['decision'],r['score'],r['reason'],r['action']) for r in rows])
+  320:         else:
+  321:             rows=self.db.rows('SELECT shot_id,score,reason,alternatives FROM director_decisions ORDER BY id LIMIT 500')
+  322:             self.table(['РЁРѕС‚','РћС†РµРЅРєР°','РџСЂРёС‡РёРЅР°','РђР»СЊС‚РµСЂРЅР°С‚РёРІС‹'], [(r['shot_id'],r['score'],r['reason'],r['alternatives']) for r in rows])
+  323: 
+  324:     def director_ai_2_4(self):
+  325:         try:
+  326:             from az_enterprise.core.director_ai_runtime import DirectorAIRuntime
+  327:             report = DirectorAIRuntime(self.db).analyze()
+  328:             q=report['quality']; s=report['summary']
+  329:             rows=[
+  330:                 ('РћР±С‰РµРµ РєР°С‡РµСЃС‚РІРѕ', str(q['overall'])+'%'),
+  331:                 ('РџРѕРєСЂС‹С‚РёРµ', str(q['coverage'])+'%'),
+  332:                 ('Р Р°Р·РЅРѕРѕР±СЂР°Р·РёРµ', str(q['diversity'])+'%'),
+  333:                 ('CV РєР°С‡РµСЃС‚РІРѕ', str(q['cv_quality'])+'%'),
+  334:                 ('РџРѕРІС‚РѕСЂС‹', str(q['repetition'])+'%'),
+  335:                 ('API РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', str(q['api'])+'%'),
+  336:                 ('РџСЂРѕР±Р»РµРј', s['issues']),
+  337:                 ('Р—Р°РґР°С‡ СЃРѕР·РґР°РЅРѕ', s['tasks']),
+  338:                 ('Р‘Р»РѕРєРёСЂСѓСЋС‰РёС…', s['blocking']),
+  339:                 ('High', s['high']),
+  340:                 ('Medium', s['medium']),
+  341:                 ('HTML', str(EXPORTS/'franklin'/'director_ai_2_4.html')),
+  342:                 ('Р—Р°РґР°С‡Рё CSV', str(EXPORTS/'franklin'/'director_tasks.csv')),
+  343:             ]
+  344:             rows += [('РЎР»РµРґСѓСЋС‰РµРµ РґРµР№СЃС‚РІРёРµ', a) for a in report.get('next_actions', [])]
+  345:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  346:         except Exception as e:
+  347:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  348: 
+  349:     def integrations(self):
+  350:         rows=self.db.rows('SELECT service,status,env_key,capabilities,last_check FROM integration_profiles ORDER BY service')
+  351:         self.table(['РЎРµСЂРІРёСЃ','РЎС‚Р°С‚СѓСЃ','ENV','Р’РѕР·РјРѕР¶РЅРѕСЃС‚Рё','РџСЂРѕРІРµСЂРєР°'], [(r['service'],r['status'],r['env_key'],r['capabilities'],r['last_check']) for r in rows])
+  352: 
+  353:     def api_jobs(self):
+  354:         rows=self.db.rows('SELECT service,job_type,status,payload,created_at FROM api_jobs ORDER BY id DESC LIMIT 300')
+  355:         self.table(['РЎРµСЂРІРёСЃ','РўРёРї','РЎС‚Р°С‚СѓСЃ','Р—Р°РґР°РЅРёРµ','Р’СЂРµРјСЏ'], [(r['service'],r['job_type'],r['status'],r['payload'],r['created_at']) for r in rows])
+  356: 
+  357: 
+  358:     def preflight(self):
+  359:         try:
+  360:             from az_enterprise.core.preflight import PreflightCenter
+  361:             report = PreflightCenter(self.db).run()
+  362:             rows = [('РС‚РѕРіРѕРІР°СЏ РѕС†РµРЅРєР°', str(report['score'])+'%'), ('Р›РѕРєР°Р»СЊРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', 'Р”Р°' if report['local_ready'] else 'РќРµС‚'), ('РђРІС‚РѕРЅРѕРјРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', 'Р”Р°' if report['autonomous_ready'] else 'РќРµС‚')]
+  363:             rows += [(c['title'], ('Р”Р°' if c['passed'] else 'РќРµС‚') + ' В· ' + c['detail']) for c in report['checks']]
+  364:             rows += [('РЎР»РµРґСѓСЋС‰РµРµ РґРµР№СЃС‚РІРёРµ', a) for a in report['next_actions']]
+  365:             self.table(['РџСЂРѕРІРµСЂРєР°','Р РµР·СѓР»СЊС‚Р°С‚'], rows)
+  366:         except Exception as e:
+  367:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  368: 
+  369: 
+  370:     def operator_console(self):
+  371:         try:
+  372:             from az_enterprise.core.operator_console import OperatorConsole
+  373:             report = OperatorConsole(self.db).build_operator_plan()
+  374:             tasks = self.db.rows('SELECT priority,title,status,details FROM operator_tasks ORDER BY priority,id LIMIT 200')
+  375:             header=[('РћРїРµСЂР°С‚РѕСЂСЃРєР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ','Р”Р°' if report['operator_ready'] else 'РќРµС‚'),('Р—Р°РґР°С‡','%s' % report['tasks']),('РќРµРґРѕСЃС‚Р°СЋС‰РёС… С€РѕС‚РѕРІ','%s' % report['missing']),('API-РєР»СЋС‡РµР№ РЅР°Р№РґРµРЅРѕ','%s' % report['api_credentials_found'])]
+  376:             rows=header + [(f"P{t['priority']} В· {t['title']}", t['details']) for t in tasks]
+  377:             self.table(['РџСѓРЅРєС‚','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  378:         except Exception as e:
+  379:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  380: 
+  381: 
+  382:     def working_state(self):
+  383:         try:
+  384:             from az_enterprise.core.working_state_auditor import WorkingStateAuditor
+  385:             report = WorkingStateAuditor(self.db).audit()
+  386:             rows=[
+  387:                 ('Р›РѕРєР°Р»СЊРЅР°СЏ production-РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', 'Р”Р°' if report['local_production_ready'] else 'РќРµС‚'),
+  388:                 ('РџРѕР»РЅР°СЏ Р°РІС‚РѕРЅРѕРјРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', 'Р”Р°' if report['full_autonomous_ready'] else 'РќРµС‚'),
+  389:                 ('РњР°С‚РµСЂРёР°Р»С‹', report['assets']), ('РЁРѕС‚С‹', report['shots']),
+  390:                 ('РќР°Р·РЅР°С‡РµРЅРѕ', report['assigned_shots']), ('РџРѕРєСЂС‹С‚РёРµ', str(report['coverage_pct'])+'%'),
+  391:                 ('Live API', 'Р”Р°' if report['live_api_ready'] else 'РќРµС‚'),
+  392:                 ('Р­РєСЃРїРµСЂС‚РЅС‹Р№ СЃС‚Р°С‚СѓСЃ', report['expert_status'])
+  393:             ]
+  394:             rows += [('РЎР»РµРґСѓСЋС‰РµРµ РґРµР№СЃС‚РІРёРµ', a) for a in report['next_actions']]
+  395:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  396:         except Exception as e:
+  397:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  398: 
+  399:     def live_api(self):
+  400:         try:
+  401:             from az_enterprise.core.live_api_layer import LiveApiLayer
+  402:             report = LiveApiLayer(self.db).inspect()
+  403:             rows=[('Live enabled', 'Р”Р°' if report['live_enabled'] else 'РќРµС‚'), ('РљР»СЋС‡РµР№ РЅР°Р№РґРµРЅРѕ', report['credentials_present']), ('РЎРµСЂРІРёСЃРѕРІ', report['services'])]
+  404:             rows += [(r['service'], r['status'] + ' В· ' + r['env_key']) for r in report['rows']]
+  405:             self.table(['РЎРµСЂРІРёСЃ','РЎС‚Р°С‚СѓСЃ'], rows)
+  406:         except Exception as e:
+  407:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  408: 
+  409:     def operator_timeline(self):
+  410:         try:
+  411:             from az_enterprise.core.final_timeline_viewer import FinalTimelineViewer
+  412:             report = FinalTimelineViewer(self.db).build()
+  413:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], [('РЁРѕС‚РѕРІ', report['shots']), ('HTML', report['html']), ('JSON', report['json']), ('Р”РµР№СЃС‚РІРёРµ', 'РћС‚РєСЂРѕР№С‚Рµ timeline_operator_view.html РёР· РїР°РїРєРё exports/franklin')])
+  414:         except Exception as e:
+  415:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  416: 
+  417: 
+  418: 
+  419:     def montage_workbench(self):
+  420:         try:
+  421:             from az_enterprise.core.montage_workbench import MontageWorkbench
+  422:             report = MontageWorkbench(self.db).build()
+  423:             rows=[('РЁРѕС‚РѕРІ', report['shots']), ('РќР°Р·РЅР°С‡РµРЅРѕ', report['assigned']), ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', report['missing']), ('РџРѕРєСЂС‹С‚РёРµ', str(report['coverage_pct'])+'%'), ('HTML', report['workbench_html']), ('CSV', report['operator_csv'])]
+  424:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  425:         except Exception as e:
+  426:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  427: 
+  428:     def local_autopilot(self):
+  429:         try:
+  430:             from az_enterprise.core.local_autopilot import LocalAutopilot
+  431:             report = LocalAutopilot(self.db).build()
+  432:             rows=[('РњРѕР¶РЅРѕ Р»РѕРєР°Р»СЊРЅРѕ РґРѕРІРµСЃС‚Рё Franklin РґРѕ С‡РµСЂРЅРѕРІРёРєР°', 'Р”Р°' if report['local_finishable'] else 'РќРµС‚'), ('РџРѕРєСЂС‹С‚РёРµ', str(report['coverage_pct'])+'%'), ('РЁРѕС‚РѕРІ', report['shots']), ('РќР°Р·РЅР°С‡РµРЅРѕ', report['assigned']), ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', report['missing']), ('РЎС‚Р°С‚СѓСЃ', report['expert_status'])]
+  433:             rows += [(f"Р”РµР№СЃС‚РІРёРµ {i+1}", a) for i,a in enumerate(report['next_30_minutes'])]
+  434:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  435:         except Exception as e:
+  436:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  437: 
+  438: 
+  439:     def native_timeline(self):
+  440:         try:
+  441:             from az_enterprise.core.native_timeline import NativeTimelineModel
+  442:             report = NativeTimelineModel(self.db).build()
+  443:             rows=[('Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ', str(report['duration_sec'])+' СЃРµРє'), ('РЁРѕС‚РѕРІ', report['shots']), ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', report['missing']), ('JSON', report['json']), ('HTML', report['html']), ('РџРѕРєСЂС‹С‚РёРµ', str(report['stats'].get('coverage_pct'))+'%')]
+  444:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  445:         except Exception as e:
+  446:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  447: 
+  448: 
+  449:     def cv_model(self):
+  450:         try:
+  451:             from az_enterprise.core.cv_model import CVModel
+  452:             report = CVModel(self.db).analyze()
+  453:             rows=[
+  454:                 ('Р”РІРёР¶РѕРє', report['engine']),
+  455:                 ('OpenCV', 'Р”Р°' if report.get('opencv_ready') else 'РќРµС‚'),
+  456:                 ('Pillow fallback', 'Р”Р°' if report.get('pillow_ready') else 'РќРµС‚'),
+  457:                 ('OCR', 'Р”Р°' if report.get('ocr_ready') else 'РќРµС‚'),
+  458:                 ('РР·РѕР±СЂР°Р¶РµРЅРёР№', report['images']),
+  459:                 ('Р’РёРґРµРѕ', report.get('videos',0)),
+  460:                 ('РњР°С‚РµСЂРёР°Р»РѕРІ РїСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°РЅРѕ', report.get('assets_analyzed',0)),
+  461:                 ('РЎС†РµРЅ-РєР°РЅРґРёРґР°С‚РѕРІ', report.get('scene_candidates',0)),
+  462:                 ('РџРѕС…РѕР¶РёРµ РїР°СЂС‹', report['duplicate_pairs']),
+  463:                 ('РљР°РґСЂРѕРІ СЃ Р»РёС†Р°РјРё', report.get('assets_with_faces',0)),
+  464:                 ('РџСЂРѕР±Р»РµРјРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ', report.get('bad_assets',0)),
+  465:                 ('Р Р°Р·РјС‹С‚С‹С…', report.get('blur_assets',0)),
+  466:                 ('РўС‘РјРЅС‹С…', report.get('dark_assets',0)),
+  467:                 ('РџРµСЂРµСЃРІРµС‚', report.get('overexposed_assets',0)),
+  468:                 ('РЎСЂРµРґРЅРёР№ cinematic grade', report['avg_cinematic_grade']),
+  469:                 ('JSON', str(EXPORTS/'franklin'/'cv_model_report.json')),
+  470:                 ('CSV', str(EXPORTS/'franklin'/'cv_asset_metadata.csv')),
+  471:                 ('HTML', str(EXPORTS/'franklin'/'cv_runtime_report.html')),
+  472:             ]
+  473:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  474:         except Exception as e:
+  475:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  476: 
+  477:     def live_connectors(self):
+  478:         try:
+  479:             from az_enterprise.core.live_connectors import LiveConnectorHub
+  480:             report = LiveConnectorHub(self.db).export_report()
+  481:             rows=[('Validated/reachable', report['summary']['validated_or_reachable']), ('Credentials + live enabled', report['summary']['credential_live_enabled']), ('Paid allowed', 'Р”Р°' if report['summary']['paid_allowed'] else 'РќРµС‚'), ('JSON', report['json']), ('Guide', report['guide'])]
+  482:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  483:         except Exception as e:
+  484:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  485: 
+  486:     def native_viewer_rc(self):
+  487:         try:
+  488:             from az_enterprise.core.native_viewer_rc import NativeViewerRC
+  489:             report = NativeViewerRC(self.db).build_model()
+  490:             rows=[('РљР»РёРїРѕРІ', report['clips']), ('QC-РјР°СЂРєРµСЂРѕРІ', report['qc_markers']), ('РњРѕРґРµР»СЊ', report['model']), ('HTML', report['html']), ('CSV', report['csv']), ('РќР°С‚РёРІРЅС‹Р№ РїСЂРѕСЃРјРѕС‚СЂ', 'Р—Р°РїСѓСЃС‚РёС‚Рµ start_timeline_viewer.bat')]
+  491:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  492:         except Exception as e:
+  493:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  494: 
+  495: 
+  496:     def live_api_test(self):
+  497:         try:
+  498:             from az_enterprise.core.live_api_test_suite import LiveApiTestSuite
+  499:             report = LiveApiTestSuite(self.db).run()
+  500:             rows=[('Р РµР¶РёРј', report['mode']), ('РЎРєРѕРЅС„РёРіСѓСЂРёСЂРѕРІР°РЅРѕ', f"{report['configured']}/{report['services_total']}"), ('Reachable', report['reachable']), ('РџР»Р°С‚РЅС‹Рµ РІС‹Р·РѕРІС‹', 'Р”Р°' if report['paid_calls_allowed'] else 'РќРµС‚'), ('Р“РѕС‚РѕРІРѕ Рє live-generation', 'Р”Р°' if report['ready_for_live_generation'] else 'РќРµС‚')]
+  501:             rows += [(r['service'], r['status'] + ' В· ' + r.get('detail','')) for r in report['rows']]
+  502:             self.table(['РџСѓРЅРєС‚','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  503:         except Exception as e:
+  504:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  505: 
+  506:     def cv_review_board(self):
+  507:         try:
+  508:             from az_enterprise.core.cv_review_board import CVReviewBoard
+  509:             report = CVReviewBoard(self.db).build()
+  510:             rows=[('РњР°С‚РµСЂРёР°Р»РѕРІ', report['items']), ('Р¤Р»Р°РіРё', report['flagged']), ('CSV', report['csv']), ('HTML', report['html'])]
+  511:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  512:         except Exception as e:
+  513:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  514: 
+  515:     def timeline_viewer_2(self):
+  516:         try:
+  517:             from az_enterprise.core.timeline_viewer_2 import TimelineViewer2
+  518:             report = TimelineViewer2(self.db).build()
+  519:             rows=[('РЁРѕС‚РѕРІ', report['shots']), ('Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ', str(report['duration_sec'])+' СЃРµРє'), ('QC-РјР°СЂРєРµСЂРѕРІ', report['qc_markers']), ('JSON', report['json']), ('HTML', report['html'])]
+  520:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  521:         except Exception as e:
+  522:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  523: 
+  524: 
+  525:     def test_center(self):
+  526:         try:
+  527:             from az_enterprise.core.test_center import TestCenter
+  528:             report = TestCenter(self.db).run()
+  529:             rows=[('Р›РѕРєР°Р»СЊРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ Рє С‚РµСЃС‚Сѓ','Р”Р°' if report['local_ready_for_testing'] else 'РќРµС‚'),('РџРѕР»РЅР°СЏ Р°РІС‚РѕРЅРѕРјРЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ','Р”Р°' if report['full_autonomous_ready'] else 'РќРµС‚'),('РўРµСЃС‚РѕРІ',report['cases_total']),('РџСЂРѕР№РґРµРЅРѕ',report['passed']),('РџСЂРѕРІР°Р»РµРЅРѕ',report['failed']),('QC',str(report['qc_readiness'])+'%'),('РџРѕРєСЂС‹С‚РёРµ',str(report['coverage_pct'])+'%')]
+  530:             rows += [(c['suite']+' В· '+c['title'], c['status']+' В· '+str(c['actual'])) for c in report['cases']]
+  531:             self.table(['РџСЂРѕРІРµСЂРєР°','Р РµР·СѓР»СЊС‚Р°С‚'], rows)
+  532:         except Exception as e:
+  533:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  534: 
+  535:     def final_assembly_pack(self):
+  536:         try:
+  537:             from az_enterprise.core.final_assembly_pack import FinalAssemblyPack
+  538:             report = FinalAssemblyPack(self.db).build()
+  539:             rows=[('РЁРѕС‚РѕРІ', report['shots']), ('РќР°Р·РЅР°С‡РµРЅРѕ', report['assigned']), ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', report['missing']), ('РџРѕРєСЂС‹С‚РёРµ', str(report['coverage_pct'])+'%'), ('РџР°РїРєР°', report['pack_dir']), ('Р›РѕРєР°Р»СЊРЅС‹Р№ С‡РµСЂРЅРѕРІРёРє', 'Р”Р°' if report['ready_for_local_rough_cut'] else 'РќРµС‚')]
+  540:             rows += [('Р‘Р»РѕРєРµСЂ', b) for b in report['blockers']]
+  541:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  542:         except Exception as e:
+  543:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  544: 
+  545:     def capcut_bridge(self):
+  546:         try:
+  547:             from az_enterprise.core.capcut_bridge import CapCutBridge
+  548:             report = CapCutBridge(self.db).build()
+  549:             rows=[('РЁРѕС‚РѕРІ', report['shots']), ('РќР°Р·РЅР°С‡РµРЅРѕ', report['assigned']), ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', report['missing']), ('HTML', report['html']), ('CSV', report['cut_list']), ('Bins', report['bins'])]
+  550:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  551:         except Exception as e:
+  552:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  553: 
+  554:     def rc1_plan(self):
+  555:         try:
+  556:             from az_enterprise.core.rc1_completion_planner import RC1CompletionPlanner
+  557:             report = RC1CompletionPlanner(self.db).plan()
+  558:             rows=[('Р—Р°РґР°С‡', report['tasks']), ('Missing', report['missing']), ('QC', str(report['qc'])+'%'), ('HTML', report['html']), ('CSV', report['csv'])]
+  559:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows)
+  560:         except Exception as e:
+  561:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  562: 
+  563:     def readiness(self):
+  564:         self.project_brain()
+  565: 
+  566:     def events(self):
+  567:         rows=self.db.rows('SELECT type,payload,created_at FROM events ORDER BY id DESC LIMIT 300')
+  568:         self.table(['РЎРѕР±С‹С‚РёРµ','Р”Р°РЅРЅС‹Рµ','Р’СЂРµРјСЏ'], [(r['type'],r['payload'],r['created_at']) for r in rows])
+  569: 
+  570: 
+  571:     def production_state(self):
+  572:         try:
+  573:             from az_enterprise.core.production_state import ProductionState
+  574:             ps = ProductionState(self.db).summarize()
+  575:             rows = [
+  576:                 ('РњР°С‚РµСЂРёР°Р»С‹', ps['assets']), ('РЁРѕС‚С‹', ps['shots']), ('РќР°Р·РЅР°С‡РµРЅРѕ', ps['assigned']),
+  577:                 ('РќСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ', ps['missing']), ('РџРѕРєСЂС‹С‚РёРµ', str(ps['coverage_pct'])+'%'),
+  578:                 ('QC', str(ps['qc_readiness'])+'%'), ('API Р·Р°РґР°РЅРёР№', ps['api_jobs_ready']),
+  579:                 ('РџРѕР»РЅР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', 'Р”Р°' if ps['full_work_ready'] else 'РќРµС‚')
+  580:             ]
+  581:             self.table(['РџРѕРєР°Р·Р°С‚РµР»СЊ','Р—РЅР°С‡РµРЅРёРµ'], rows + [('Р‘Р»РѕРєРµСЂ: '+b['title'], b['comment']) for b in ps.get('blockers', [])])
+  582:         except Exception as e:
+  583:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  584: 
+  585: 
+  586:     def franklin_acceptance(self):
+  587:         try:
+  588:             from az_enterprise.core.acceptance_center import AcceptanceCenter
+  589:             report = AcceptanceCenter(self.db).evaluate_franklin_working_state()
+  590:             rows = [(c['criterion'], 'Р”Р°' if c['passed'] else 'РќРµС‚') for c in report['checks']]
+  591:             rows = [('РС‚РѕРіРѕРІР°СЏ РіРѕС‚РѕРІРЅРѕСЃС‚СЊ', str(report['score'])+'%'), ('РЎС‚Р°С‚СѓСЃ', 'Р“РѕС‚РѕРІ Рє Р»РѕРєР°Р»СЊРЅРѕР№ СЂР°Р±РѕС‚Рµ' if report['franklin_local_working_ready'] else 'РќРµ РіРѕС‚РѕРІ')] + rows
+  592:             self.table(['РљСЂРёС‚РµСЂРёР№','Р—РЅР°С‡РµРЅРёРµ'], rows + [('РЎР»РµРґСѓСЋС‰РµРµ РґРµР№СЃС‚РІРёРµ', a) for a in report['next_actions']])
+  593:         except Exception as e:
+  594:             self.table(['РћС€РёР±РєР°'], [(str(e),)])
+  595: 
+  596:     def exports(self):
+  597:         exp=EXPORTS/'franklin'
+  598:         files=sorted(exp.glob('*')) if exp.exists() else []
+  599:         self.table(['Р¤Р°Р№Р»','РџСѓС‚СЊ'], [(f.name,str(f)) for f in files])
+  600: 
+  601:     def live_run_console(self):
+  602:         # Rebuild a live console. If a run is active it will continue receiving updates.
+  603:         panel = tk.Frame(self.main, bg=CARD, highlightbackground='#334155', highlightthickness=1)
+  604:         panel.pack(fill='x', padx=16, pady=8)
+  605:         self.run_status_label = tk.Label(panel, text='РљРѕРЅРІРµР№РµСЂ РЅРµ Р·Р°РїСѓС‰РµРЅ', bg=CARD, fg=TEXT, font=('Segoe UI',9,'bold'))
+  606:         self.run_status_label.pack(anchor='w', padx=10, pady=(8,4))
+  607:         self.run_progress = ttk.Progressbar(panel, orient='horizontal', mode='determinate', maximum=100)
+  608:         self.run_progress.pack(fill='x', padx=10, pady=(0,8))
+  609:         btnrow = tk.Frame(panel,bg=CARD); btnrow.pack(fill='x', padx=10, pady=(0,8))
+  610:         tk.Button(btnrow,text='Р—Р°РїСѓСЃС‚РёС‚СЊ РїРѕР»РЅС‹Р№ РєРѕРЅРІРµР№РµСЂ',command=self.run_pipeline,bg='#075985',fg='white',font=('Segoe UI',8),relief='flat').pack(side='left',padx=(0,8))
+  611:         tk.Button(btnrow,text='РћС‚РєСЂС‹С‚СЊ СЌРєСЃРїРѕСЂС‚',command=self.open_exports,bg='#334155',fg='white',font=('Segoe UI',8),relief='flat').pack(side='left')
+  612:         self.run_log_text = tk.Text(self.main,bg='#020617',fg=TEXT,insertbackground=TEXT,font=('Consolas',7),height=24,relief='flat')
+  613:         self.run_log_text.pack(fill='both',expand=True,padx=16,pady=8)
+  614:         self.run_log_text.insert('end','Live Run Console РіРѕС‚РѕРІ. РќР°Р¶РјРёС‚Рµ В«Р—Р°РїСѓСЃС‚РёС‚СЊ РїРѕР»РЅС‹Р№ РєРѕРЅРІРµР№РµСЂВ».\n')
+  615:         # show recent logs if present
+  616:         try:
+  617:             last = self.db.one('SELECT id,status,progress FROM pipeline_runs ORDER BY id DESC LIMIT 1')
+  618:             if last:
+  619:                 self.run_log_text.insert('end', f"РџРѕСЃР»РµРґРЅРёР№ Р·Р°РїСѓСЃРє: #{last['id']} / {last['status']} / {last['progress']}%\n")
+  620:                 logs=self.db.rows('SELECT level,message,created_at FROM pipeline_logs WHERE run_id=? ORDER BY id DESC LIMIT 25',(last['id'],))
+  621:                 for r in reversed(logs):
+  622:                     self.run_log_text.insert('end', f"{r['created_at']} [{r['level']}] {r['message']}\n")
+  623:         except Exception:
+  624:             pass
+  625: 
+  626:     def run_pipeline(self):
+  627:         if self.pipeline_running:
+  628:             self.status.config(text='РљРѕРЅРІРµР№РµСЂ СѓР¶Рµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ')
+  629:             return
+  630:         self.show('Live Run Console')
+  631:         self.pipeline_running = True
+  632:         self.status.config(text='РљРѕРЅРІРµР№РµСЂ Р·Р°РїСѓС‰РµРЅ...')
+  633:         if hasattr(self, 'run_status_label'):
+  634:             self.run_status_label.config(text='РљРѕРЅРІРµР№РµСЂ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ...')
+  635:         if hasattr(self, 'run_progress'):
+  636:             self.run_progress['value']=0
+  637:         if hasattr(self, 'run_log_text'):
+  638:             self.run_log_text.insert('end','\n=== РќРѕРІС‹Р№ Р·Р°РїСѓСЃРє РєРѕРЅРІРµР№РµСЂР° ===\n')
+  639:             self.run_log_text.see('end')
+  640: 
+  641:         def cb(event):
+  642:             self.pipeline_queue.put(event)
+  643: 
+  644:         def worker():
+  645:             try:
+  646:                 PipelineRunManager(Database()).run(cb=cb)
+  647:             except Exception as e:
+  648:                 self.pipeline_queue.put({'type':'error','message':str(e)})
+  649: 
+  650:         threading.Thread(target=worker, daemon=True).start()
+  651:         self.after(150, self._poll_pipeline_queue)
+  652: 
+  653:     def _poll_pipeline_queue(self):
+  654:         try:
+  655:             while True:
+  656:                 ev = self.pipeline_queue.get_nowait()
+  657:                 typ = ev.get('type')
+  658:                 if typ == 'run_started':
+  659:                     if hasattr(self,'run_log_text'):
+  660:                         self.run_log_text.insert('end', f"{ev.get('time','')} [RUN] {ev.get('message','')}\n"); self.run_log_text.see('end')
+  661:                 elif typ in ('step_start','step_done'):
+  662:                     pct = float(ev.get('progress',0))
+  663:                     if hasattr(self,'run_progress'): self.run_progress['value']=pct
+  664:                     if hasattr(self,'run_status_label'): self.run_status_label.config(text=f"{pct:.1f}% вЂ” {ev.get('title','')}")
+  665:                     if hasattr(self,'run_log_text'):
+  666:                         marker = 'в–¶' if typ=='step_start' else 'вњ“'
+  667:                         self.run_log_text.insert('end', f"{marker} {ev.get('title','')} вЂ” {pct:.1f}%\n")
+  668:                         self.run_log_text.see('end')
+  669:                 elif typ == 'task_progress':
+  670:                     pct = float(ev.get('progress',0))
+  671:                     if hasattr(self,'run_progress'): self.run_progress['value']=pct
+  672:                     if hasattr(self,'run_status_label'): self.run_status_label.config(text=f"{pct:.1f}% вЂ” {ev.get('message','')}")
+  673:                     if hasattr(self,'run_log_text'):
+  674:                         self.run_log_text.insert('end', f"{ev.get('time','')} [PROGRESS] {ev.get('message','')} вЂ” {pct:.1f}%\n")
+  675:                         self.run_log_text.see('end')
+  676:                 elif typ == 'task_started':
+  677:                     if hasattr(self,'run_log_text'):
+  678:                         self.run_log_text.insert('end', f"{ev.get('time','')} [TASK] в–¶ {ev.get('message','')}\n")
+  679:                         self.run_log_text.see('end')
+  680:                 elif typ == 'task_failed':
+  681:                     if hasattr(self,'run_log_text'):
+  682:                         self.run_log_text.insert('end', f"{ev.get('time','')} [FAILED] {ev.get('message','')}\n"); self.run_log_text.see('end')
+  683:                 elif typ == 'task_completed':
+  684:                     if hasattr(self,'run_log_text'):
+  685:                         self.run_log_text.insert('end', f"{ev.get('time','')} [TASK] вњ“ {ev.get('message','')}\n")
+  686:                         self.run_log_text.see('end')
+  687:                 elif typ == 'log':
+  688:                     if hasattr(self,'run_log_text'):
+  689:                         self.run_log_text.insert('end', f"{ev.get('time','')} [{ev.get('level','')}] {ev.get('message','')}\n")
+  690:                         self.run_log_text.see('end')
+  691:                 elif typ == 'finished':
+  692:                     self.pipeline_running = False
+  693:                     if hasattr(self,'run_progress'): self.run_progress['value']=100
+  694:                     if hasattr(self,'run_status_label'): self.run_status_label.config(text='100% вЂ” РєРѕРЅРІРµР№РµСЂ Р·Р°РІРµСЂС€С‘РЅ')
+  695:                     self.status.config(text='РљРѕРЅРІРµР№РµСЂ Р·Р°РІРµСЂС€С‘РЅ. РћС‚С‡С‘С‚С‹ СЃРѕС…СЂР°РЅРµРЅС‹ РІ 06_Export / workspace/exports/franklin.')
+  696:                     self._refresh_dashboard_after_run()
+  697:                     return
+  698:                 elif typ == 'error':
+  699:                     self.pipeline_running = False
+  700:                     msg = ev.get('message','РћС€РёР±РєР°')
+  701:                     if hasattr(self,'run_status_label'): self.run_status_label.config(text=f'РћС€РёР±РєР°: {msg}')
+  702:                     if hasattr(self,'run_log_text'):
+  703:                         self.run_log_text.insert('end', f"ERROR: {msg}\n{ev.get('traceback','')}\n")
+  704:                         self.run_log_text.see('end')
+  705:                     self.status.config(text='РћС€РёР±РєР° РєРѕРЅРІРµР№РµСЂР°')
+  706:                     return
+  707:         except queue.Empty:
+  708:             pass
+  709:         if self.pipeline_running:
+  710:             self.after(150, self._poll_pipeline_queue)
+  711: 
+  712:     def _refresh_dashboard_after_run(self):
+  713:         try:
+  714:             self.db = Database(); self.db.init()
+  715:         except Exception:
+  716:             pass
+  717: 
+  718:     def open_exports(self):
+  719:         exp=EXPORTS/'franklin'; exp.mkdir(parents=True,exist_ok=True)
+  720:         webbrowser.open(str(exp))
+  721: 
+  722: if __name__ == '__main__':
+  723:     App().mainloop()

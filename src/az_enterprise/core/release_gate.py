@@ -7,7 +7,7 @@ class ReleaseGate:
     def __init__(self, db: Database, project_id='franklin'):
         self.db=db; self.project_id=project_id; self.bus=EventBus(db, project_id)
 
-    def evaluate_rc1(self) -> dict:
+    def evaluate_release(self) -> dict:
         assets=self.db.one('SELECT COUNT(*) c FROM assets WHERE project_id=?',(self.project_id,))['c']
         shots=self.db.one('SELECT COUNT(*) c FROM shots WHERE project_id=?',(self.project_id,))['c']
         missing=self.db.one("SELECT COUNT(*) c FROM shots WHERE project_id=? AND status!='assigned'",(self.project_id,))['c']
@@ -35,5 +35,9 @@ class ReleaseGate:
         for name,passed,sc in checks:
             self.db.execute('INSERT INTO readiness_checks(project_id,criterion,score,passed,comment) VALUES(?,?,?,?,?)',
                             (self.project_id,name,float(sc),1 if passed else 0,'OK' if passed else 'Требует доработки'))
-        self.bus.emit('RC1_RELEASE_GATE_EVALUATED', {'score':score,'ready':ready})
+        self.bus.emit('RELEASE_GATE_EVALUATED', {'score':score,'ready':ready})
         return {'ready':ready,'score':score,'checks':[{'criterion':c[0],'passed':c[1],'score':round(c[2],1)} for c in checks], 'blocking':['live_api' if not live_api_ok else None]}
+
+    def evaluate_rc1(self) -> dict:
+        """Deprecated compatibility alias. Use evaluate_release()."""
+        return self.evaluate_release()

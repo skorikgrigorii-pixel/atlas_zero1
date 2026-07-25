@@ -1,0 +1,119 @@
+﻿  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:11:from .project_state import ProjectState, PROJECT_STATES
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:12:from .job_queue import JobQueue
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:13:from .movie_runtime_rc1 import run_movie as run_movie
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:14:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:15:PIPELINE_STAGES = [
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:16:    ("research", "Research", "RESEARCH"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\media_orchestrator.py:17:    ("script_ready", "Production Script", "SCRIPT_READY"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:39:        self.export_dir = EXPORTS / project_id
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:40:        self.export_dir.mkdir(parents=True, exist_ok=True)
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:41:        self.runtime_dir = self.export_dir / "movie_runtime_rc1"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:42:        self.runtime_dir.mkdir(parents=True, exist_ok=True)
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:43:        self.project_dir = PROJECTS / project_id
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:44:        self._ensure_project()
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:45:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:486:            (final_state, self.project_id),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:487:        )
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:488:        self.bus.emit("MOVIE_RUNTIME_RC1_COMPLETED", {"final_state": final_state, "package": package})
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:489:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:490:        return {
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:491:            "project_id": self.project_id,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\movie_runtime_rc1.py:492:            "final_state": final_state,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:39:        missing_story_requirements = self._read_json(self.export_dir / "missing_story_requirements.json")
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:40:        director_tasks = self._read_csv_rows(self.export_dir / "director_tasks.csv")
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:41:        asset_inventory = self._read_json(self.export_dir / "movie_runtime_rc1" / "asset_inventory.json") or {}
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:42:        render_report = self._read_json(self.export_dir / "render_rc1" / "render_report.json")
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:43:        render_manifest = self._read_json(self.export_dir / "render_rc1" / "render_manifest.json") or {}
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:44:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:45:        script_ready = bool(production_state.get("shots", 0)) or bool(director_tasks)
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:46:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:47:        inventory_counts = asset_inventory.get("counts", {}) if isinstance(asset_inventory, dict) else {}
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:157:                "render missing",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:158:                "Run RC1 render to produce MP4 and render reports.",
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:159:                "RenderEngineRC1",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:160:            )
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:161:        if render_incomplete:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:162:            return (
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:163:                "incomplete visual coverage",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:169:                "render missing",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:170:                "Re-run render pipeline to complete final MP4 output.",
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:171:                "RenderEngineRC1",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:172:            )
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:173:        return (
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:174:            "none",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\production_director.py:175:            "Assemble final release package and hand off for delivery.",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:53:    @property
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:54:    def timeline_path(self) -> Path:
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:55:        return self.export_dir / "movie_runtime_rc1" / "timeline.json"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:56:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:57:    @property
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:58:    def temporal_summary_path(self) -> Path:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:59:        return (
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:69:    @property
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:70:    def legacy_render_path(self) -> Path:
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:71:        return self.export_dir / "render_rc1" / f"{self.project_id}_render_rc1.mp4"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:72:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:73:    @property
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:74:    def franklin_legacy_render_path(self) -> Path:
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:75:        return self.export_dir / "render_rc1" / "franklin_render_rc1.mp4"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:76:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:77:    @property
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:78:    def canonical_render_path(self) -> Path:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\project_config_rc2.py:79:        return self.rc2_dir / "render" / f"{self.project_id}_RC2.mp4"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:27:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:28:
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:29:class RenderEngineRC1:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:30:    """Local-first renderer for Franklin RC1 timeline export."""
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:31:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:32:    def __init__(self, project_id: str = "franklin", root_dir: Path | None = None) -> None:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:33:        self.project_id = project_id
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:35:        self.workspace_dir = self.root_dir / "workspace"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:36:        self.export_dir = self.workspace_dir / "exports" / project_id
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:37:        self.runtime_timeline_path = self.export_dir / "movie_runtime_rc1" / "timeline.json"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:38:        self.fallback_timeline_path = self.export_dir / "native_timeline_model.json"
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:39:        self.output_dir = self.export_dir / "render_rc1"
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:40:        self.output_mp4 = self.output_dir / "franklin_render_rc1.mp4"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:41:        self.report_path = self.output_dir / "render_report.json"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:42:        self.manifest_path = self.output_dir / "render_manifest.json"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:43:        self.skipped_path = self.output_dir / "skipped_missing_assets.json"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:44:        self.temp_dir = self.output_dir / "_tmp"
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:377:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:378:def run_render(project_id: str = "franklin") -> dict[str, Any]:
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc1.py:379:    return RenderEngineRC1(project_id=project_id).run()
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:9:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:10:from .project_config_rc2 import ProjectConfigRC2
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:11:from .render_engine_rc1 import RenderEngineRC1
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:12:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:13:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:14:ProgressCallback = Callable[[dict[str, Any]], None]
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:15:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:63:    def run(self) -> dict[str, Any]:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:64:        self._emit("RENDER_START")
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:65:        # RenderEngineRC1 is an internal FFmpeg backend only.
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:66:        # RenderEngineRC2 owns the canonical production render stage.
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:67:        backend = RenderEngineRC1(
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:68:            project_id=self.config.project_id,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:69:            root_dir=self.config.root_dir,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:70:        )
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:71:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:72:        self._emit(
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:73:            "BACKEND_START",
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:74:            backend="RenderEngineRC1",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:75:        )
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:76:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:77:        report = backend.run()
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:78:
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:79:        self._emit(
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:80:            "BACKEND_COMPLETE",
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:81:            backend="RenderEngineRC1",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:82:            state=report.get("state"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:83:            clips_total=report.get("clips_total"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:84:            clips_renderable=report.get("clips_renderable"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:85:            clips_skipped=report.get("clips_skipped"),
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:121:            "media_probe": final_probe,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:122:            "authority": "RenderEngineRC2",
+> C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:123:            "backend": "RenderEngineRC1",
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:124:            "backend_report": report,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:125:            # Compatibility key retained during RC2.5 migration.
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:126:            "legacy_report": report,
+  C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_enterprise\core\render_engine_rc2.py:127:        }
