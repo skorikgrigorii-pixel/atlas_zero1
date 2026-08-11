@@ -43,6 +43,8 @@ class AudioRendererRC2:
         events: Iterable[AudioEventRC2],
         *,
         target_duration_sec: float,
+        video_timeline_hash: str | None = None,
+        rebind_report: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         events = AudioTimelineValidatorRC2.validate(events)
         if target_duration_sec <= 0:
@@ -58,19 +60,34 @@ class AudioRendererRC2:
 
         report = {
             "state": "AUDIO_RENDERED",
-            "schema": "atlas_zero.audio_render.rc2.v1",
+            "schema": "atlas_zero.audio_render.rc2.v2",
             "migration_phase": "PHASE_7_NATIVE_AUDIO_COMPOSER",
             "project_id": self.project_id,
             "output_audio": str(self.audio_master),
             "output_exists": self.audio_master.exists(),
             "output_size_bytes": self.audio_master.stat().st_size,
             "target_duration_sec": target_duration_sec,
+            "video_timeline_hash": video_timeline_hash,
+            "audio_map_built_for_timeline_hash": video_timeline_hash,
             "sample_rate": self.sample_rate,
             "channels": self.channels,
             "events_total": len(events),
             "voice_events": sum(1 for e in events if e.kind == "voice"),
             "music_events": sum(1 for e in events if e.kind == "music"),
             "sfx_events": sum(1 for e in events if e.kind == "sfx"),
+            "synchronized_events": sum(
+                1 for e in events if e.preserve_sync
+            ),
+            "rebound_events": sum(
+                1 for e in events if e.rebind_status == "rebound"
+            ),
+            "unresolved_events": sum(
+                1
+                for e in events
+                if e.preserve_sync
+                and e.rebind_status not in {"rebound", "already_current"}
+            ),
+            "rebind_report": rebind_report or {},
             "ducking": self.ducking_profile.to_dict(),
             "loudness": self.loudness_profile.to_dict(),
             "final_filter_label": final_label,
@@ -115,10 +132,18 @@ class AudioRendererRC2:
                     f"volume={event.gain_db}dB"
                 )
                 if event.fade_in_sec > 0:
-                    chain += f",afade=t=in:st=0:d={event.fade_in_sec:.6f}"
+                    chain += (
+                        f",afade=t=in:st=0:d={event.fade_in_sec:.6f}"
+                    )
                 if event.fade_out_sec > 0:
-                    fade_start = max(0.0, event.duration_sec - event.fade_out_sec)
-                    chain += f",afade=t=out:st={fade_start:.6f}:d={event.fade_out_sec:.6f}"
+                    fade_start = max(
+                        0.0,
+                        event.duration_sec - event.fade_out_sec,
+                    )
+                    chain += (
+                        f",afade=t=out:st={fade_start:.6f}:"
+                        f"d={event.fade_out_sec:.6f}"
+                    )
                 chain += f",adelay={delay_ms}|{delay_ms}[a{idx}]"
                 filters.append(chain)
                 input_labels[event.kind].append(f"[a{idx}]")
@@ -134,7 +159,8 @@ class AudioRendererRC2:
                 out = f"[mix_{kind}]"
                 filters.append(
                     "".join(labels)
-                    + f"amix=inputs={len(labels)}:duration=longest:dropout_transition=0"
+                    + f"amix=inputs={len(labels)}:"
+                    + "duration=longest:dropout_transition=0"
                     + out
                 )
                 mixed[kind] = out
@@ -144,7 +170,6 @@ class AudioRendererRC2:
         sfx = mixed["sfx"]
 
         if music and voice:
-            DuckingEngineRC2.build_filter
             filters.append(
                 DuckingEngineRC2.build_filter(
                     music_label=music,
@@ -163,7 +188,8 @@ class AudioRendererRC2:
         else:
             filters.append(
                 "".join(mix_labels)
-                + f"amix=inputs={len(mix_labels)}:duration=longest:dropout_transition=0[mix_all]"
+                + f"amix=inputs={len(mix_labels)}:"
+                + "duration=longest:dropout_transition=0[mix_all]"
             )
 
         filters.append(
@@ -208,10 +234,16 @@ class AudioRendererRC2:
             raise RuntimeError(f"Invalid audio output: {path}")
         process = subprocess.run(
             [
-                self.ffprobe, "-v", "error",
-                "-show_entries", "format=duration,size",
-                "-show_entries", "stream=codec_type,sample_rate,channels",
-                "-of", "json", str(path),
+                self.ffprobe,
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration,size",
+                "-show_entries",
+                "stream=codec_type,sample_rate,channels",
+                "-of",
+                "json",
+                str(path),
             ],
             capture_output=True,
             text=True,
@@ -220,11 +252,17 @@ class AudioRendererRC2:
         if process.returncode != 0:
             raise RuntimeError(process.stderr.strip())
         payload = json.loads(process.stdout or "{}")
-        if not any(s.get("codec_type") == "audio" for s in payload.get("streams", [])):
+        if not any(
+            stream.get("codec_type") == "audio"
+            for stream in payload.get("streams", [])
+        ):
             raise RuntimeError(f"No audio stream: {path}")
 
     @staticmethod
     def _write_json(path: Path, payload: dict[str, Any]) -> None:
         temporary = path.with_suffix(path.suffix + ".partial")
-        temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        temporary.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
         os.replace(temporary, path)

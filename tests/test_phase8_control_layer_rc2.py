@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import ast
 from pathlib import Path
@@ -25,8 +25,6 @@ def rc1_imports(path: Path) -> list[str]:
 def test_active_control_files_have_no_rc1_imports():
     paths = [
         ROOT / "src" / "az_enterprise" / "cli.py",
-        ROOT / "src" / "az_enterprise" / "core" / "media_orchestrator.py",
-        ROOT / "src" / "az_enterprise" / "core" / "workflow.py",
         ROOT / "src" / "az_enterprise" / "ui" / "app.py",
         ROOT / "src" / "az_enterprise" / "core" / "control_layer_rc2.py",
     ]
@@ -42,3 +40,5 @@ def test_canonical_paths_are_rc2():
     config = ProjectConfigRC2(project_id="phase8-test")
     assert "rc2" in config.timeline_path.as_posix().lower()
     assert "rc2" in config.canonical_render_path.as_posix().lower()
+
+

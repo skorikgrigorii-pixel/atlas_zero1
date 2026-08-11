@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import json
 import os
 from contextlib import contextmanager
@@ -28,6 +30,12 @@ from .story_engine import StoryEngine
 from .story_strategy_engine_rc2 import StoryStrategyEngineRC2
 from .timeline_engine_rc2 import TimelineEngineRC2
 from .visual_semantic_analyzer_rc2 import VisualSemanticAnalyzerRC2
+from .voice_production_engine_rc2 import VoiceProductionEngineRC2
+from .narrative_runtime_rc2 import NarrativeRuntimeRC2
+from .external_script_importer_rc2 import ExternalScriptImporterRC2
+from .production_script_regenerator_rc2 import (
+    ProductionScriptRegeneratorRC2,
+)
 
 
 ProgressCallback = Callable[[dict[str, Any]], None]
@@ -64,12 +72,11 @@ class DirectorCoreRC2:
     RC2 now has two explicit execution modes:
 
     - production build: assets -> story -> assignment -> timeline ->
-      render_prepare;
-    - release build: production stages -> render -> quality.
+      voice -> render_prepare -> render;
+    - release build: production stages -> quality.
 
-    ``run`` performs the production build and therefore does not require a
-    narration master. ``run_release`` performs the final render and release
-    validation. ``run_supervised`` always operates in release mode.
+    Both production and release builds create the canonical narration
+    master before rendering. ``run_supervised`` operates in release mode.
     """
 
     STAGES = (
@@ -77,6 +84,7 @@ class DirectorCoreRC2:
         StageDefinition("story"),
         StageDefinition("assignment"),
         StageDefinition("timeline"),
+        StageDefinition("voice"),
         StageDefinition("render_prepare"),
         StageDefinition("render", resumable=False),
         StageDefinition("quality", resumable=False),
@@ -87,13 +95,16 @@ class DirectorCoreRC2:
         "story",
         "assignment",
         "timeline",
+        "voice",
         "render_prepare",
+        "render",
     )
     _RELEASE_STAGE_ORDER = (
         "assets",
         "story",
         "assignment",
         "timeline",
+        "voice",
         "render_prepare",
         "render",
         "quality",
@@ -104,6 +115,8 @@ class DirectorCoreRC2:
         "editorial": "story",
         "script": "story",
         "montage": "timeline",
+        "narration": "voice",
+        "voiceover": "voice",
         "preflight": "render_prepare",
         "render_preflight": "render_prepare",
         "postproduction": "render",
@@ -234,22 +247,326 @@ class DirectorCoreRC2:
             semantic_report,
         )
 
-        event_discovery = EventDiscoveryEngineRC2().run(semantic_report)
-        event_clusters = event_discovery.get("event_clusters")
-        if not isinstance(event_clusters, list) or not event_clusters:
-            raise RuntimeError(
-                "EventDiscoveryEngineRC2 produced no event clusters"
-            )
-
-        self._write_json_artifact(
-            self.config.event_discovery_result_path,
-            event_discovery,
+        approved_script = (
+            self._discover_approved_external_script()
         )
 
-        strategy_result = StoryStrategyEngineRC2(
-            project_id=self.config.project_id,
-        ).run(event_discovery)
-        strategy_payload = strategy_result.to_dict()
+        if approved_script is not None:
+
+            # ---------------------------------------------------------
+            # APPROVED EXTERNAL SCRIPT AUTHORITY MODE
+            #
+            # The script controls story structure.
+            # Semantic analysis remains visual evidence only.
+            # ---------------------------------------------------------
+
+            importer = ExternalScriptImporterRC2(
+                project_id=self.config.project_id,
+            )
+
+            external_text = (
+                approved_script.read_text(
+                    encoding="utf-8-sig",
+                    errors="replace",
+                )
+            )
+
+            external_title, external_scenes = (
+                importer._parse(
+                    external_text,
+                    suffix=(
+                        approved_script
+                        .suffix
+                        .lower()
+                    ),
+                )
+            )
+
+            if not external_scenes:
+                raise RuntimeError(
+                    "Approved external script "
+                    "contains no scenes"
+                )
+
+            visual_asset_ids = [
+                str(row.get("asset_id"))
+                for row in semantic_results
+                if str(
+                    row.get("asset_id")
+                    or ""
+                ).strip()
+            ]
+
+            # ---------------------------------------------------------
+            # Approved-script authority still needs a canonical
+            # Event Discovery contract because EditorialPackageRC2
+            # consumes event clusters.
+            #
+            # These clusters describe screenplay structure, NOT inferred
+            # visual semantics. Therefore Hogueras-specific semantic
+            # labels can never redefine the approved screenplay.
+            # ---------------------------------------------------------
+
+            event_clusters = []
+
+            for index, external_scene in enumerate(
+                external_scenes,
+                start=1,
+            ):
+
+                scene_id = str(
+                    external_scene.scene_id
+                    or f"scene_{index:03d}"
+                ).strip()
+
+                scene_title = str(
+                    external_scene.title
+                    or f"????? {index}"
+                ).strip()
+
+                narration = str(
+                    external_scene.narration_ru
+                    or ""
+                ).strip()
+
+                word_count = max(
+                    1,
+                    len(
+                        narration.split()
+                    ),
+                )
+
+                scene_duration = round(
+                    word_count
+                    * 60.0
+                    / 120.0,
+                    3,
+                )
+
+                if visual_asset_ids:
+
+                    cluster_assets = [
+                        visual_asset_ids[
+                            (index - 1)
+                            % len(
+                                visual_asset_ids
+                            )
+                        ]
+                    ]
+
+                else:
+
+                    cluster_assets = []
+
+                event_clusters.append({
+                    "cluster_id":
+                        (
+                            "approved_external_script:"
+                            + scene_id
+                        ),
+
+                    "event_type":
+                        "approved_external_script_scene",
+
+                    "title_ru":
+                        scene_title,
+
+                    "description_ru":
+                        (
+                            "???????????? ????? "
+                            "???????? ?????????? ????????."
+                        ),
+
+                    "asset_ids":
+                        cluster_assets,
+
+                    "confidence":
+                        1.0,
+
+                    "time_period":
+                        "script_order",
+
+                    "chronology_order":
+                        index,
+
+                    "total_duration_sec":
+                        scene_duration,
+
+                    "story_value":
+                        1.0,
+
+                    "authority":
+                        "approved_external_script",
+                })
+
+
+            event_discovery = {
+                "engine":
+                    "approved_external_script_authority_rc2",
+
+                "project_id":
+                    self.config.project_id,
+
+                "authority_mode":
+                    "approved_external_script",
+
+                "source_script":
+                    str(
+                        approved_script
+                    ),
+
+                "source_assets_total":
+                    analyzed,
+
+                "included_assets_total":
+                    analyzed,
+
+                "excluded_assets_total":
+                    0,
+
+                "review_assets_total":
+                    0,
+
+                "event_clusters":
+                    event_clusters,
+
+                "off_topic_assets":
+                    [],
+
+                "review_assets":
+                    [],
+
+                "cluster_statistics": {
+                    "clusters_total":
+                        len(
+                            event_clusters
+                        ),
+
+                    "assets_clustered":
+                        sum(
+                            len(
+                                cluster[
+                                    "asset_ids"
+                                ]
+                            )
+                            for cluster
+                            in event_clusters
+                        ),
+
+                    "duration_sec":
+                        round(
+                            sum(
+                                float(
+                                    cluster[
+                                        "total_duration_sec"
+                                    ]
+                                )
+                                for cluster
+                                in event_clusters
+                            ),
+                            3,
+                        ),
+
+                    "event_types":
+                        [
+                            "approved_external_script_scene"
+                        ],
+
+                    "time_periods":
+                        [
+                            "script_order"
+                        ],
+                },
+            }
+
+            self._write_json_artifact(
+                self.config.event_discovery_result_path,
+                event_discovery,
+            )
+
+            strategy_result = (
+                StoryStrategyEngineRC2(
+                    project_id=(
+                        self.config.project_id
+                    ),
+                ).run_from_external_script(
+                    external_scenes,
+
+                    title=external_title,
+
+                    asset_ids=(
+                        visual_asset_ids
+                    ),
+                )
+            )
+
+            strategy_payload = (
+                strategy_result.to_dict()
+            )
+
+            strategy_payload[
+                "authority_mode"
+            ] = (
+                "approved_external_script"
+            )
+
+            strategy_payload[
+                "approved_external_script"
+            ] = str(
+                approved_script
+            )
+
+        else:
+
+            # ---------------------------------------------------------
+            # ORIGINAL RC2 MODE
+            # No approved script -> infer story from media.
+            # ---------------------------------------------------------
+
+            event_discovery = (
+                EventDiscoveryEngineRC2()
+                .run(
+                    semantic_report
+                )
+            )
+
+            event_clusters = (
+                event_discovery.get(
+                    "event_clusters"
+                )
+            )
+
+            if (
+                not isinstance(
+                    event_clusters,
+                    list,
+                )
+                or not event_clusters
+            ):
+                raise RuntimeError(
+                    "EventDiscoveryEngineRC2 "
+                    "produced no event clusters"
+                )
+
+            self._write_json_artifact(
+                self.config.event_discovery_result_path,
+                event_discovery,
+            )
+
+            strategy_result = (
+                StoryStrategyEngineRC2(
+                    project_id=(
+                        self.config.project_id
+                    ),
+                ).run(
+                    event_discovery
+                )
+            )
+
+            strategy_payload = (
+                strategy_result.to_dict()
+            )
+
 
         if strategy_payload.get("state") != "STORY_STRATEGY_READY":
             raise RuntimeError(
@@ -302,6 +619,69 @@ class DirectorCoreRC2:
         )
         return result
 
+    def _discover_approved_external_script(self) -> Path | None:
+        script_dir = self.config.project_dir / "script"
+        candidates = (
+            script_dir / "approved_external_script.json",
+            script_dir / "approved_external_script.md",
+            script_dir / "approved_external_script.txt",
+            script_dir / "external_script.json",
+            script_dir / "external_script.md",
+            script_dir / "external_script.txt",
+        )
+        for path in candidates:
+            if path.exists() and path.is_file():
+                return path
+        return None
+
+    def _run_voice_stage(self) -> dict[str, Any]:
+        external_script = self._discover_approved_external_script()
+        if external_script is None:
+            raise RuntimeError(
+                "VOICE_BLOCKED_APPROVED_SCRIPT_REQUIRED: "
+                "No approved external script was found in "
+                f"{self.config.project_dir / 'script'}. "
+                "Expected approved_external_script.json/.md/.txt "
+                "or external_script.json/.md/.txt."
+            )
+
+        narrative_report = NarrativeRuntimeRC2(
+            self.config,
+            mode="external_script",
+            allow_paid=False,
+            external_script_path=external_script,
+        ).run()
+
+        if (
+            narrative_report.get("provider_status")
+            != "external_script_loaded"
+            or bool(narrative_report.get("fallback_used"))
+        ):
+            raise RuntimeError(
+                "External narration import did not produce "
+                "an approved canonical result."
+            )
+
+        production_script_report = (
+            ProductionScriptRegeneratorRC2(
+                self.config,
+            ).run()
+        )
+
+        voice_report = VoiceProductionEngineRC2(
+            self.config,
+        ).run()
+
+        return {
+            "state": voice_report.get("state", "VOICE_READY"),
+            "project_id": self.config.project_id,
+            "authority": "DirectorCoreRC2",
+            "policy": "approved_external_script_only",
+            "external_script": str(external_script),
+            "narrative_report": narrative_report,
+            "production_script_report": production_script_report,
+            "voice_report": voice_report,
+        }
     def _stage_services(self) -> dict[str, Callable[[], dict[str, Any]]]:
         return {
             "assets": lambda: AssetEngineRC2(self.db, self.config).run(),
@@ -314,6 +694,7 @@ class DirectorCoreRC2:
                 self.db,
                 self.config,
             ).run(),
+            "voice": self._run_voice_stage,
             "render_prepare": lambda: RenderEngineRC2(
                 self.config,
                 progress=self.progress,
@@ -349,7 +730,7 @@ class DirectorCoreRC2:
             if target not in cls._RELEASE_STAGE_ORDER:
                 raise ValueError(f"Unknown RC2 rework target: {raw_target!r}")
 
-            if not release and target in {"render", "quality"}:
+            if not release and target == "quality":
                 raise ValueError(
                     f"Stage {target!r} requires release=True or run_release()"
                 )
@@ -419,12 +800,34 @@ class DirectorCoreRC2:
                             "Production execution must include render_prepare"
                         )
 
-                    ready = preflight.get("state") == "RENDER_PREFLIGHT_READY"
-                    state.status = "PREPARED" if ready else "REVIEW"
+                    render = results.get("render")
+                    if render is None:
+                        raise RuntimeError(
+                            "Production execution must include render"
+                        )
+
+                    preflight_ready = (
+                        preflight.get("state") == "RENDER_PREFLIGHT_READY"
+                    )
+                    render_ready = render.get("state") in {
+                        "RENDER_PREVIEW_VERIFIED",
+                        "RENDERED_VERIFIED",
+                    }
+                    ready = preflight_ready and render_ready
+
+                    if ready:
+                        state.status = (
+                            "RENDERED"
+                            if render.get("state") == "RENDERED_VERIFIED"
+                            else "PREVIEW_RENDERED"
+                        )
+                    else:
+                        state.status = "REVIEW"
+
                     state.quality = {}
                     state.release_authorized = False
                     result_state = (
-                        "PRODUCTION_PREPARED"
+                        "PRODUCTION_RENDERED"
                         if ready
                         else "PRODUCTION_REWORK_REQUIRED"
                     )
@@ -432,6 +835,7 @@ class DirectorCoreRC2:
                 state.current_stage = None
                 artifacts = {
                     "timeline": str(self.config.timeline_path),
+                    "voice_master": str(self.config.master_audio_path),
                     "render_preflight": str(
                         self.config.render_preflight_report_path
                     ),
@@ -471,7 +875,7 @@ class DirectorCoreRC2:
                 raise
 
     def run(self, *, resume: bool = True, force: bool = False) -> dict[str, Any]:
-        """Run the production build without requiring narration or release."""
+        """Run production with canonical narration and verified rendering."""
 
         del resume
         result = self.run_targets(
@@ -479,8 +883,8 @@ class DirectorCoreRC2:
             force=force,
             release=False,
         )
-        if result["state"] != "PRODUCTION_PREPARED":
-            raise RuntimeError("RC2 production preflight blocked completion")
+        if result["state"] != "PRODUCTION_RENDERED":
+            raise RuntimeError("RC2 production render blocked completion")
         return result
 
     def run_release(
@@ -875,6 +1279,7 @@ class DirectorCoreRC2:
                 "story",
                 "assignment",
                 "timeline",
+                "voice",
                 "render_prepare",
                 "render",
                 "quality",

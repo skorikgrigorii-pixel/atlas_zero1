@@ -432,13 +432,44 @@ class AssignmentPolicyRC2:
 
         return round(max(score, 0.0), 4)
 
+
+    def _alternative_payload(
+        self,
+        asset: Any,
+        *,
+        score: float,
+        provenance: str,
+    ) -> dict[str, Any]:
+        """Serialize a verified alternative for downstream RC2 stages."""
+        try:
+            duration_sec = float(asset["duration_sec"] or 0.0)
+        except (TypeError, ValueError, KeyError):
+            duration_sec = 0.0
+
+        try:
+            quality = float(asset["quality"] or 0.0)
+        except (TypeError, ValueError, KeyError):
+            quality = 0.0
+
+        return {
+            "asset_id": str(asset["id"]),
+            "asset_name": str(asset["filename"] or ""),
+            "asset_path": str(asset["path"] or ""),
+            "media_type": str(asset["media_type"] or "").strip().lower(),
+            "duration_sec": round(max(0.0, duration_sec), 3),
+            "quality": round(max(0.0, quality), 4),
+            "assignment_score": round(max(0.0, float(score)), 4),
+            "provenance": provenance,
+            "verified": True,
+        }
+
     def _write_assignment(
         self,
         shot: Any,
         asset: Any,
         score: float,
         reason: str,
-        alternatives: list[str],
+        alternatives: list[Any],
     ) -> None:
         asset_id = str(asset["id"])
         self.usage[asset_id] += 1
@@ -585,11 +616,29 @@ class AssignmentPolicyRC2:
 
             if story_asset is not None:
                 story_asset_id = str(story_asset["id"])
-                alternatives = [
-                    str(asset["filename"])
+                verified_story_alternatives = [
+                    asset
                     for asset in preferred_assets
                     if str(asset["id"]) != story_asset_id
-                ][:3]
+                    and self._asset_is_semantically_allowed(asset)
+                    and self.usage[str(asset["id"])] < self._max_use(asset)
+                    and self._asset_fits_shot(shot, asset)
+                ]
+                verified_story_alternatives.sort(
+                    key=lambda candidate: (
+                        self.usage[str(candidate["id"])],
+                        -float(candidate["quality"] or 0.0),
+                        str(candidate["id"]),
+                    )
+                )
+                alternatives = [
+                    self._alternative_payload(
+                        candidate,
+                        score=1.0,
+                        provenance="story_engine",
+                    )
+                    for candidate in verified_story_alternatives[:3]
+                ]
 
                 reason = (
                     f"Assigned explicit Story Engine asset "
@@ -637,9 +686,15 @@ class AssignmentPolicyRC2:
                 )
 
                 alternatives = [
-                    str(candidate[1]["filename"])
-                    for candidate in ranked[1:4]
-                ]
+                    self._alternative_payload(
+                        candidate_asset,
+                        score=candidate_score,
+                        provenance="fallback_semantic",
+                    )
+                    for candidate_score, candidate_asset in ranked[1:]
+                    if candidate_score >= self.ACCEPTANCE_THRESHOLD
+                    and str(candidate_asset["id"]) != asset_id
+                ][:3]
 
                 self._write_assignment(
                     shot=shot,

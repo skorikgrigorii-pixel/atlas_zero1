@@ -1,60 +1,56 @@
+﻿from __future__ import annotations
+
+import ast
 from pathlib import Path
 
 
+RENDER_ENGINE = Path(
+    "src/az_enterprise/core/render_engine_rc2.py"
+)
+
+
+def _rc1_runtime_references() -> list[str]:
+    source = RENDER_ENGINE.read_text(encoding="utf-8-sig")
+    tree = ast.parse(source)
+
+    references: list[str] = []
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for item in node.names:
+                if "render_engine_rc1" in item.name.lower():
+                    references.append(item.name)
+
+        elif isinstance(node, ast.ImportFrom):
+            module = node.module or ""
+            if "render_engine_rc1" in module.lower():
+                references.append(module)
+
+    return references
+
+
 def test_render_engine_rc2_is_canonical_authority():
-    source = Path(
-        "src/az_enterprise/core/render_engine_rc2.py"
-    ).read_text(encoding="utf-8")
+    source = RENDER_ENGINE.read_text(encoding="utf-8-sig")
 
     assert '"authority": "RenderEngineRC2"' in source
-    assert '"backend": "RenderEngineRC1"' in source
-    assert "root_dir=self.config.root_dir" in source
     assert "RENDER_COMPLETE" in source
     assert "self.probe(partial)" in source
     assert "os.replace(partial, destination)" in source
 
 
-def test_rc1_is_used_only_as_backend_by_rc2():
-    source = Path(
-        "src/az_enterprise/core/render_engine_rc2.py"
-    ).read_text(encoding="utf-8")
-
-    assert "backend = RenderEngineRC1(" in source
-    assert "report = backend.run()" in source
-    assert "BACKEND_START" in source
-    assert "BACKEND_COMPLETE" in source
+def test_render_engine_rc2_does_not_import_retired_rc1_backend():
+    assert _rc1_runtime_references() == []
 
 
-def test_cli_exposes_canonical_rc2_render():
+def test_cli_uses_rc2_control_layer():
     source = Path(
         "src/az_enterprise/cli.py"
-    ).read_text(encoding="utf-8")
+    ).read_text(encoding="utf-8-sig")
 
-    assert "'render-rc2'" in source
-    assert "RenderEngineRC2(" in source
-    assert "ProjectConfigRC2(" in source
-    assert "use render-rc2 for canonical production runs" in source
+    assert "RC2ControlLayer" in source
 
 
-def test_render_authority_does_not_change_missing_policy():
-    rc2_source = Path(
-        "src/az_enterprise/core/render_engine_rc2.py"
-    ).read_text(encoding="utf-8")
-
-    rc1_source = Path(
+def test_retired_render_engine_rc1_is_absent():
+    assert not Path(
         "src/az_enterprise/core/render_engine_rc1.py"
-    ).read_text(encoding="utf-8")
-
-    assert "skipped_missing_assets" in rc1_source
-    assert "_collect_assigned_clips" in rc1_source
-
-    forbidden = (
-        "TIMELINE_INCOMPLETE",
-        "missing > 0",
-        "incomplete > 0",
-        "status != 'assigned'",
-        'status != "assigned"',
-    )
-
-    for token in forbidden:
-        assert token not in rc2_source
+    ).exists()

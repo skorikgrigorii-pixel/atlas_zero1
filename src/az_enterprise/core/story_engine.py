@@ -233,10 +233,11 @@ class StoryEngine:
                 3,
             )
 
-            scene_id = str(
+            local_scene_id = str(
                 scene.get("scene_id")
                 or f"SC{scene_index:02d}"
             )
+            scene_id = f"{self.project_id}_{local_scene_id}"
             act_id = str(
                 scene.get("act_id")
                 or "ACT00"
@@ -497,4 +498,601 @@ class StoryEngine:
         if local_idx == count - 1:
             return 'soft dissolve'
         return 'cut'
+
+
+    def export_generation_pack(
+        self,
+        production_plan_path=None,
+        output_dir=None,
+    ):
+        """
+        Export a canonical image-generation package from the current
+        Franklin visual production plan.
+
+        The method creates one generation job for each unique
+        scene + visual_need combination marked CREATE_NEW_ASSET.
+        """
+        import csv
+        import json
+        from collections import defaultdict
+        from datetime import datetime, timezone
+        from pathlib import Path
+
+        root = Path.cwd()
+        project_id = str(self.project_id).strip()
+
+        if production_plan_path is None:
+            production_plan_path = (
+                root
+                / "workspace"
+                / "exports"
+                / project_id
+                / "rc2"
+                / "FRANKLIN_VISUAL_PRODUCTION_PLAN.csv"
+            )
+        else:
+            production_plan_path = Path(
+                production_plan_path
+            )
+
+        if output_dir is None:
+            output_dir = (
+                root
+                / "workspace"
+                / "exports"
+                / project_id
+                / "rc2"
+                / "generation_pack"
+            )
+        else:
+            output_dir = Path(output_dir)
+
+        if not production_plan_path.is_file():
+            raise FileNotFoundError(
+                production_plan_path
+            )
+
+        output_dir.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        with production_plan_path.open(
+            "r",
+            encoding="utf-8-sig",
+            newline="",
+        ) as stream:
+            rows = list(csv.DictReader(stream))
+
+        missing_rows = [
+            row
+            for row in rows
+            if row.get("production_decision")
+            == "CREATE_NEW_ASSET"
+        ]
+
+        grouped = defaultdict(list)
+
+        for row in missing_rows:
+            scene = " ".join(
+                str(row.get("scene") or "")
+                .strip()
+                .split()
+            )
+
+            visual_need = " ".join(
+                str(row.get("visual_need") or "")
+                .strip()
+                .split()
+            )
+
+            grouped[
+                (
+                    scene,
+                    visual_need,
+                )
+            ].append(row)
+
+        negative_prompt = (
+            "cartoon, anime, illustration, painting, CGI, "
+            "3D render, fantasy elements unless required by the story, "
+            "objects inconsistent with the scene period, "
+            "clothing inconsistent with the scene period, "
+            "inaccurate cultural or historical details, "
+            "text overlay, subtitles, captions, watermark, logo, "
+            "duplicate people, malformed hands, distorted anatomy, "
+            "blur, low resolution, oversaturated colors"
+        )
+
+        def normalize_prompt_value(value):
+            """Return a compact single-line string."""
+            return " ".join(
+                str(value or "").strip().split()
+            )
+
+        def contains_cyrillic(value):
+            """Detect Cyrillic characters without external dependencies."""
+            return any(
+                (
+                    "\u0400" <= character <= "\u04ff"
+                    or "\u0500" <= character <= "\u052f"
+                )
+                for character in str(value or "")
+            )
+
+        def english_value(row, *field_names):
+            """
+            Return the first populated non-Cyrillic value.
+
+            Explicit *_en fields have priority. Existing English source
+            values remain valid. Non-English source text is preserved in
+            the job metadata but is not inserted into provider prompts.
+            """
+            for field_name in field_names:
+                value = normalize_prompt_value(
+                    row.get(field_name)
+                )
+
+                if value and not contains_cyrillic(value):
+                    return value
+
+            return ""
+
+        jobs = []
+
+        for number, (
+            (
+                scene,
+                visual_need,
+            ),
+            group_rows,
+        ) in enumerate(
+            sorted(
+                grouped.items(),
+                key=lambda item: (
+                    int(
+                        item[1][0].get(
+                            "shot_index"
+                        )
+                        or 0
+                    ),
+                    item[0][1],
+                ),
+            ),
+            start=1,
+        ):
+            first = group_rows[0]
+
+            story_goal = " ".join(
+                str(
+                    first.get("story_goal")
+                    or ""
+                )
+                .strip()
+                .split()
+            )
+
+            emotion = " ".join(
+                str(
+                    first.get("emotion")
+                    or ""
+                )
+                .strip()
+                .split()
+            )
+
+            shot_indexes = [
+                int(row["shot_index"])
+                for row in group_rows
+                if str(
+                    row.get("shot_index")
+                    or ""
+                ).strip()
+            ]
+
+            scene_code = (
+                scene.split("|", 1)[0].strip()
+                if "|" in scene
+                else f"SCENE_{number:02d}"
+            )
+
+            safe_need = "".join(
+                character.lower()
+                if character.isalnum()
+                else "_"
+                for character in visual_need
+            )
+
+            safe_need = "_".join(
+                token
+                for token in safe_need.split("_")
+                if token
+            )
+
+            job_id = (
+                f"{project_id}_"
+                f"{scene_code.lower()}_"
+                f"{safe_need or number:}"
+            )
+
+            generation_prompt_en = english_value(
+                first,
+                "generation_prompt_en",
+                "prompt_en",
+            )
+
+            scene_context_en = english_value(
+                first,
+                "scene_description_en",
+                "scene_context_en",
+                "scene_en",
+                "scene",
+            )
+
+            visual_need_en = english_value(
+                first,
+                "visual_need_en",
+                "required_visual_en",
+                "visual_need",
+            )
+
+            story_goal_en = english_value(
+                first,
+                "story_goal_en",
+                "narrative_purpose_en",
+                "story_goal",
+            )
+
+            emotion_en = english_value(
+                first,
+                "emotion_en",
+                "emotional_tone_en",
+                "emotion",
+            )
+
+            if generation_prompt_en:
+                prompt_parts = [
+                    generation_prompt_en,
+                ]
+            else:
+                prompt_parts = [
+                    (
+                        "Ultra photorealistic cinematic documentary "
+                        "frame."
+                    ),
+                    (
+                        "A coherent premium documentary image with "
+                        "a clear subject, readable composition, and "
+                        "realistic visual storytelling."
+                    ),
+                ]
+
+                if scene_context_en:
+                    prompt_parts.append(
+                        f"Scene context: {scene_context_en}."
+                    )
+                elif visual_need_en:
+                    prompt_parts.append(
+                        "Scene context: A documentary scene showing "
+                        f"{visual_need_en}."
+                    )
+                else:
+                    prompt_parts.append(
+                        "Scene context: A visually specific documentary "
+                        "moment consistent with the source story."
+                    )
+
+                if story_goal_en:
+                    prompt_parts.append(
+                        f"Narrative purpose: {story_goal_en}."
+                    )
+
+                if visual_need_en:
+                    prompt_parts.append(
+                        f"Required visual: {visual_need_en}."
+                    )
+
+                if emotion_en:
+                    prompt_parts.append(
+                        f"Emotional tone: {emotion_en}."
+                    )
+                else:
+                    prompt_parts.append(
+                        "Emotional tone: restrained, serious, "
+                        "observational documentary realism."
+                    )
+
+            prompt_parts.extend([
+                (
+                    "Respect the time period, geography, culture, "
+                    "architecture, clothing, tools, vehicles, weather, "
+                    "and technology implied by the source scene."
+                ),
+                (
+                    "Use realistic materials, natural atmospheric "
+                    "lighting, credible scale, detailed textures, "
+                    "and subtle cinematic depth."
+                ),
+                (
+                    "Create one clear composition suitable for slow "
+                    "camera movement, reframing, or parallax animation "
+                    "in a documentary edit."
+                ),
+                (
+                    "Keep the main subject away from the extreme frame "
+                    "edges and preserve usable visual space."
+                ),
+                (
+                    "No visible written words, captions, subtitles, "
+                    "logos, watermarks, or decorative borders."
+                ),
+                "Landscape frame, 16:9 aspect ratio.",
+                f"Avoid: {negative_prompt}.",
+            ])
+
+            final_prompt = " ".join(
+                normalize_prompt_value(part)
+                for part in prompt_parts
+                if normalize_prompt_value(part)
+            )
+
+            if contains_cyrillic(final_prompt):
+                raise ValueError(
+                    "Generation prompt contains Cyrillic characters "
+                    f"for job {job_id}"
+                )
+
+            priority = (
+                "HIGH"
+                if len(group_rows) >= 3
+                else (
+                    "MEDIUM"
+                    if len(group_rows) == 2
+                    else "NORMAL"
+                )
+            )
+
+            target_filename = (
+                f"{number:02d}_"
+                f"{scene_code}_"
+                f"{safe_need or 'visual'}.png"
+            )
+
+            jobs.append({
+                "job_index": number,
+                "job_id": job_id,
+                "project_id": project_id,
+                "scene": scene,
+                "visual_need": visual_need,
+                "story_goal": story_goal,
+                "emotion": emotion,
+                "usage_count": len(group_rows),
+                "shot_indexes": shot_indexes,
+                "priority": priority,
+                "aspect_ratio": "16:9",
+                "width": 1344,
+                "height": 768,
+                "number_of_images": 1,
+                "target_filename": target_filename,
+                "prompt": final_prompt,
+                "negative_prompt": negative_prompt,
+                "status": "PENDING_MANUAL_GENERATION",
+            })
+
+        created_at = datetime.now(
+            timezone.utc
+        ).isoformat()
+
+        manifest = {
+            "schema": (
+                "atlas_zero.story_engine."
+                "generation_pack.rc2.v1"
+            ),
+            "state": "GENERATION_PACK_READY",
+            "project_id": project_id,
+            "created_at_utc": created_at,
+            "source_plan": str(
+                production_plan_path.resolve()
+            ),
+            "source_missing_shots": len(
+                missing_rows
+            ),
+            "unique_generation_jobs": len(jobs),
+            "generation_mode": "MANUAL",
+            "provider": "leonardo_web",
+            "jobs": jobs,
+        }
+
+        manifest_path = (
+            output_dir
+            / "generation_manifest.json"
+        )
+
+        csv_path = (
+            output_dir
+            / "leonardo_prompts.csv"
+        )
+
+        markdown_path = (
+            output_dir
+            / "leonardo_prompts.md"
+        )
+
+        report_path = (
+            output_dir
+            / "missing_materials_report.json"
+        )
+
+        manifest_path.write_text(
+            json.dumps(
+                manifest,
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+        csv_fields = [
+            "job_index",
+            "job_id",
+            "scene",
+            "visual_need",
+            "usage_count",
+            "shot_indexes",
+            "priority",
+            "aspect_ratio",
+            "width",
+            "height",
+            "target_filename",
+            "prompt",
+            "negative_prompt",
+            "status",
+        ]
+
+        with csv_path.open(
+            "w",
+            encoding="utf-8-sig",
+            newline="",
+        ) as stream:
+            writer = csv.DictWriter(
+                stream,
+                fieldnames=csv_fields,
+            )
+
+            writer.writeheader()
+
+            for job in jobs:
+                csv_row = {
+                    field: job.get(field, "")
+                    for field in csv_fields
+                }
+
+                csv_row["shot_indexes"] = ",".join(
+                    str(value)
+                    for value in job[
+                        "shot_indexes"
+                    ]
+                )
+
+                writer.writerow(csv_row)
+
+        markdown_lines = [
+            f"# ATLAS ZERO RC2 ? {project_id} Generation Pack",
+            "",
+            f"Project: `{project_id}`",
+            f"Created: `{created_at}`",
+            (
+                "Missing shots before grouping: "
+                f"**{len(missing_rows)}**"
+            ),
+            (
+                "Unique images to generate: "
+                f"**{len(jobs)}**"
+            ),
+            "",
+            (
+                "Generate one 16:9 image for every job and save "
+                "it using the specified target filename."
+            ),
+            "",
+        ]
+
+        for job in jobs:
+            markdown_lines.extend([
+                "---",
+                "",
+                (
+                    f"## {job['job_index']:02d}. "
+                    f"{job['scene']} ? "
+                    f"{job['visual_need']}"
+                ),
+                "",
+                f"**Priority:** {job['priority']}",
+                (
+                    "**Used in shots:** "
+                    + ", ".join(
+                        str(value)
+                        for value in job[
+                            "shot_indexes"
+                        ]
+                    )
+                ),
+                (
+                    "**Save as:** "
+                    f"`{job['target_filename']}`"
+                ),
+                "",
+                "### Prompt",
+                "",
+                job["prompt"],
+                "",
+                "### Negative prompt",
+                "",
+                job["negative_prompt"],
+                "",
+            ])
+
+        markdown_path.write_text(
+            "\n".join(markdown_lines),
+            encoding="utf-8",
+        )
+
+        missing_report = {
+            "schema": (
+                "atlas_zero.missing_visuals."
+                "report.rc2.v1"
+            ),
+            "state": "MISSING_VISUALS_GROUPED",
+            "project_id": project_id,
+            "missing_shots": len(missing_rows),
+            "unique_scene_visual_needs": len(jobs),
+            "saved_generation_jobs": (
+                len(missing_rows) - len(jobs)
+            ),
+            "priority_counts": {
+                priority: sum(
+                    1
+                    for job in jobs
+                    if job["priority"] == priority
+                )
+                for priority in (
+                    "HIGH",
+                    "MEDIUM",
+                    "NORMAL",
+                )
+            },
+            "output_directory": str(
+                output_dir.resolve()
+            ),
+        }
+
+        report_path.write_text(
+            json.dumps(
+                missing_report,
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+        return {
+            "state": "GENERATION_PACK_READY",
+            "project_id": project_id,
+            "missing_shots": len(missing_rows),
+            "generation_jobs": len(jobs),
+            "output_dir": str(
+                output_dir.resolve()
+            ),
+            "manifest": str(
+                manifest_path.resolve()
+            ),
+            "csv": str(csv_path.resolve()),
+            "markdown": str(
+                markdown_path.resolve()
+            ),
+            "report": str(
+                report_path.resolve()
+            ),
+        }
+
 

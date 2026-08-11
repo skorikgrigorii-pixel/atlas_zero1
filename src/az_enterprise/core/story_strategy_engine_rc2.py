@@ -80,14 +80,28 @@ class StoryStrategyEngineRC2:
     def __init__(
         self,
         project_id: str,
-        target_duration_sec: float = 810.0,
+        target_duration_sec: float | None = None,
         language: str = "ru",
         use_existing_assets_only: bool = True,
         allow_generated_visuals: bool = False,
     ) -> None:
         self.project_id = project_id
-        self.target_duration_sec = float(
-            target_duration_sec
+
+        if (
+            target_duration_sec is not None
+            and float(target_duration_sec) <= 0.0
+        ):
+            raise ValueError(
+                "target_duration_sec must be greater than zero"
+            )
+
+        # CHANGE-006A:
+        # An explicitly supplied duration remains authoritative.
+        # When omitted, run() derives it from the usable event clusters.
+        self.target_duration_sec = (
+            float(target_duration_sec)
+            if target_duration_sec is not None
+            else None
         )
         self.language = language
         self.use_existing_assets_only = (
@@ -131,11 +145,17 @@ class StoryStrategyEngineRC2:
             key=self._cluster_order_key,
         )
 
+        resolved_target_duration_sec = (
+            self._resolve_target_duration(
+                ordered_clusters
+            )
+        )
+
         strategy = StoryStrategyRC2(
             film_type="documentary",
             narrative_strategy="event_progression",
             language=self.language,
-            target_duration_sec=self.target_duration_sec,
+            target_duration_sec=resolved_target_duration_sec,
             target_audience="18-55",
             use_existing_assets_only=(
                 self.use_existing_assets_only
@@ -146,7 +166,8 @@ class StoryStrategyEngineRC2:
         )
 
         scene_durations = self._allocate_durations(
-            ordered_clusters
+            ordered_clusters,
+            resolved_target_duration_sec,
         )
 
         scenes: list[StorySceneRC2] = []
@@ -230,6 +251,467 @@ class StoryStrategyEngineRC2:
         result.validate()
         return result
 
+    def run_from_external_script(
+        self,
+        external_scenes,
+        *,
+        title: str = "",
+        asset_ids=(),
+        narration_words_per_minute: float = 120.0,
+    ) -> StoryStrategyResultRC2:
+        """Build canonical Story Strategy from an approved script.
+
+        Approved external narration is the story authority in this mode.
+        Visual-semantic analysis remains evidence/asset intelligence and
+        must not redefine the screenplay structure.
+
+        This path is project-independent.
+        """
+
+        rows = list(external_scenes)
+
+        if not rows:
+            raise ValueError(
+                "Approved external script contains no scenes"
+            )
+
+        words_per_minute = float(
+            narration_words_per_minute
+        )
+
+        if words_per_minute <= 0.0:
+            raise ValueError(
+                "narration_words_per_minute must be > 0"
+            )
+
+        normalized_assets = tuple(
+            str(asset_id)
+            for asset_id in asset_ids
+            if str(asset_id).strip()
+        )
+
+        scene_rows = []
+
+        for index, row in enumerate(
+            rows,
+            start=1,
+        ):
+
+            if isinstance(row, dict):
+                scene_id = str(
+                    row.get("scene_id")
+                    or ""
+                ).strip()
+
+                scene_title = str(
+                    row.get("title")
+                    or row.get("scene_title")
+                    or ""
+                ).strip()
+
+                narration = str(
+                    row.get("narration_ru")
+                    or row.get("voiceover")
+                    or row.get("text")
+                    or ""
+                ).strip()
+
+                raw_duration = row.get(
+                    "duration_sec"
+                )
+
+                explicit_duration = (
+                    float(raw_duration)
+                    if raw_duration not in (None, "")
+                    else None
+                )
+
+            else:
+                scene_id = str(
+                    getattr(
+                        row,
+                        "scene_id",
+                        "",
+                    )
+                ).strip()
+
+                scene_title = str(
+                    getattr(
+                        row,
+                        "title",
+                        "",
+                    )
+                ).strip()
+
+                narration = str(
+                    getattr(
+                        row,
+                        "narration_ru",
+                        "",
+                    )
+                ).strip()
+
+                raw_duration = getattr(
+                    row,
+                    "duration_sec",
+                    None,
+                )
+
+                explicit_duration = (
+                    float(raw_duration)
+                    if raw_duration not in (None, "")
+                    else None
+                )
+
+            if not scene_id:
+                scene_id = (
+                    f"scene_{index:03d}"
+                )
+
+            if not narration:
+                raise ValueError(
+                    f"Approved external script scene "
+                    f"{scene_id!r} has no narration"
+                )
+
+            if not scene_title:
+                scene_title = (
+                    f"????? {index}"
+                )
+
+            word_count = max(
+                1,
+                len(
+                    narration.split()
+                ),
+            )
+
+            if explicit_duration is not None:
+
+                if explicit_duration <= 0.0:
+                    raise ValueError(
+                        f"Approved external script scene "
+                        f"{scene_id!r} has invalid "
+                        f"duration_sec={explicit_duration!r}"
+                    )
+
+                duration_sec = float(
+                    explicit_duration
+                )
+
+                duration_authority = (
+                    "approved_external_script"
+                )
+
+            else:
+
+                duration_sec = max(
+                    8.0,
+                    word_count
+                    * 60.0
+                    / words_per_minute,
+                )
+
+                duration_authority = (
+                    "narration_estimate"
+                )
+
+            scene_rows.append({
+                "scene_id":
+                    scene_id,
+
+                "title":
+                    scene_title,
+
+                "narration":
+                    narration,
+
+                "word_count":
+                    word_count,
+
+                "duration_sec":
+                    duration_sec,
+
+                "duration_authority":
+                    duration_authority,
+            })
+
+
+        # -------------------------------------------------------------
+        # Optional explicit target duration remains authoritative.
+        # Otherwise narration itself determines documentary duration.
+        # -------------------------------------------------------------
+
+        natural_total = sum(
+            row["duration_sec"]
+            for row in scene_rows
+        )
+
+        if self.target_duration_sec is not None:
+
+            target_total = float(
+                self.target_duration_sec
+            )
+
+            scale = (
+                target_total
+                / natural_total
+            )
+
+            for row in scene_rows:
+                row["duration_sec"] *= scale
+
+        else:
+            target_total = natural_total
+
+
+        # -------------------------------------------------------------
+        # Build scenes preserving EXACT external-script scene IDs/order.
+        # -------------------------------------------------------------
+
+        scenes: list[StorySceneRC2] = []
+
+        scene_count = len(
+            scene_rows
+        )
+
+        for index, row in enumerate(
+            scene_rows,
+            start=1,
+        ):
+
+            if normalized_assets:
+
+                assigned_asset = (
+                    normalized_assets[
+                        (index - 1)
+                        % len(normalized_assets)
+                    ],
+                )
+
+            else:
+
+                assigned_asset = ()
+
+
+            scene = StorySceneRC2(
+                scene_id=row[
+                    "scene_id"
+                ],
+
+                act_id=self._act_id_for(
+                    index,
+                    scene_count,
+                ),
+
+                title_ru=row[
+                    "title"
+                ],
+
+                narrative_goal_ru=(
+                    "???????? ???????????? ?????? "
+                    "?????????? ????????."
+                ),
+
+                emotional_goal_ru=(
+                    "????????????????? ???????"
+                ),
+
+                visual_strategy_ru=(
+                    "????????? ?????????????? "
+                    "?????????? ??????????????, "
+                    "?????, ???????? ?????????, "
+                    "????????????? ? ????????, "
+                    "??????????????? ????????????? "
+                    "????????."
+                ),
+
+                order=index,
+
+                duration_sec=round(
+                    float(
+                        row["duration_sec"]
+                    ),
+                    3,
+                ),
+
+                cluster_ids=(
+                    "approved_external_script:"
+                    + row["scene_id"],
+                ),
+
+                asset_ids=assigned_asset,
+            )
+
+            scenes.append(
+                scene
+            )
+
+
+        # -------------------------------------------------------------
+        # Generic acts.
+        # Do NOT use the legacy Hogueras act titles.
+        # -------------------------------------------------------------
+
+        act_definitions = {
+            "ACT01": (
+                "?????? ?????????????",
+                "????????? ??????????? ?????? ?????? "
+                "? ??????????? ???????? ??????????????.",
+            ),
+
+            "ACT02": (
+                "???????? ?????????????",
+                "???????? ???????? ??????????????, "
+                "????? ? ????????????.",
+            ),
+
+            "ACT03": (
+                "??????",
+                "??????? ?????????????? ? ???????? "
+                "??????? ? ????????? ??????.",
+            ),
+        }
+
+        acts: list[StoryActRC2] = []
+
+        for order, act_id in enumerate(
+            (
+                "ACT01",
+                "ACT02",
+                "ACT03",
+            ),
+            start=1,
+        ):
+
+            members = [
+                scene
+                for scene in scenes
+                if scene.act_id
+                == act_id
+            ]
+
+            if not members:
+                continue
+
+            act_title, act_goal = (
+                act_definitions[
+                    act_id
+                ]
+            )
+
+            acts.append(
+                StoryActRC2(
+                    act_id=act_id,
+                    title_ru=act_title,
+                    narrative_goal_ru=(
+                        act_goal
+                    ),
+                    order=order,
+                    duration_sec=round(
+                        sum(
+                            scene.duration_sec
+                            for scene
+                            in members
+                        ),
+                        3,
+                    ),
+                )
+            )
+
+
+        # -------------------------------------------------------------
+        # Generic transitions preserving script order.
+        # -------------------------------------------------------------
+
+        transitions: list[
+            NarrativeTransitionRC2
+        ] = []
+
+        for current, following in zip(
+            scenes,
+            scenes[1:],
+        ):
+
+            act_changed = (
+                current.act_id
+                != following.act_id
+            )
+
+            transitions.append(
+                NarrativeTransitionRC2(
+                    from_scene_id=(
+                        current.scene_id
+                    ),
+
+                    to_scene_id=(
+                        following.scene_id
+                    ),
+
+                    transition_type=(
+                        "narrator_bridge"
+                        if act_changed
+                        else "visual_dissolve"
+                    ),
+
+                    rationale_ru=(
+                        "??????? ????? ????????? "
+                        "??????? ????????????? "
+                        "????????."
+                    ),
+
+                    narrator_bridge_required=(
+                        act_changed
+                    ),
+                )
+            )
+
+
+        strategy = StoryStrategyRC2(
+            film_type="documentary",
+
+            narrative_strategy=(
+                "event_progression"
+            ),
+
+            language=self.language,
+
+            target_duration_sec=round(
+                sum(
+                    scene.duration_sec
+                    for scene
+                    in scenes
+                ),
+                3,
+            ),
+
+            target_audience="18-55",
+
+            use_existing_assets_only=(
+                self.use_existing_assets_only
+            ),
+
+            allow_generated_visuals=(
+                self.allow_generated_visuals
+            ),
+        )
+
+
+        result = StoryStrategyResultRC2(
+            project_id=self.project_id,
+            strategy=strategy,
+            acts=tuple(acts),
+            scenes=tuple(scenes),
+            transitions=tuple(
+                transitions
+            ),
+        )
+
+        result.validate()
+
+        return result
+
+
     @staticmethod
     def _cluster_order_key(
         cluster: dict[str, Any],
@@ -273,9 +755,83 @@ class StoryStrategyEngineRC2:
             ),
         )
 
+    def _resolve_target_duration(
+        self,
+        clusters: list[dict[str, Any]],
+    ) -> float:
+        """Resolve one authoritative film duration for the strategy."""
+
+        if self.target_duration_sec is not None:
+            return self.target_duration_sec
+
+        cluster_count = len(clusters)
+
+        unique_asset_ids = {
+            str(asset_id)
+            for cluster in clusters
+            for asset_id in cluster.get(
+                "asset_ids",
+                [],
+            )
+        }
+        asset_count = len(unique_asset_ids)
+
+        story_values = [
+            max(
+                0.0,
+                min(
+                    float(
+                        cluster.get(
+                            "story_value",
+                            0.5,
+                        )
+                    ),
+                    1.5,
+                ),
+            )
+            for cluster in clusters
+        ]
+        average_story_value = (
+            sum(story_values)
+            / max(len(story_values), 1)
+        )
+
+        # Documentary duration model:
+        # - editorial setup and conclusion;
+        # - structural cost of every distinct event;
+        # - additional room for available visual evidence;
+        # - a modest complexity allowance for high-value material.
+        estimated_duration = (
+            180.0
+            + cluster_count * 30.0
+            + min(asset_count, 180) * 2.0
+            + average_story_value * 60.0
+        )
+
+        minimum_duration = max(
+            300.0,
+            cluster_count * 20.0,
+        )
+        maximum_duration = 1500.0
+
+        resolved_duration = min(
+            max(
+                estimated_duration,
+                minimum_duration,
+            ),
+            maximum_duration,
+        )
+
+        # Five-second precision keeps downstream scene allocation stable
+        # while avoiding an artificial frame-perfect strategy target.
+        return round(
+            resolved_duration / 5.0
+        ) * 5.0
+
     def _allocate_durations(
         self,
         clusters: list[dict[str, Any]],
+        target_duration_sec: float,
     ) -> list[float]:
         weights = []
 
@@ -304,7 +860,7 @@ class StoryStrategyEngineRC2:
         total_weight = sum(weights)
 
         raw = [
-            self.target_duration_sec
+            target_duration_sec
             * weight
             / total_weight
             for weight in weights
@@ -316,7 +872,7 @@ class StoryStrategyEngineRC2:
         ]
 
         difference = round(
-            self.target_duration_sec
+            target_duration_sec
             - sum(durations),
             3,
         )

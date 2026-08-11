@@ -1,12 +1,21 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+import json
+import os
+import re
+from dataclasses import asdict, dataclass, replace
 from typing import Any
 
 from .openai_adapter_rc2 import OpenAIAdapterRC2
 
 
 RUSSIAN_WORDS_PER_MINUTE = 132.0
+
+VALID_MODES = {
+    "local_fallback",
+    "openai_editorial",
+    "openai_documentary",
+}
 
 
 @dataclass(frozen=True)
@@ -63,6 +72,11 @@ class NarrativeResultRC2:
     total_target_words: int
     scenes: tuple[SceneNarrationRC2, ...]
     full_narration_ru: str
+    film_concept_ru: str = ""
+    generation_mode: str = "local_fallback"
+    provider_status: str = "not_requested"
+    provider_model: str = ""
+    fallback_used: bool = False
     engine: str = "narrative_writer_rc2"
     state: str = "NARRATIVE_READY"
 
@@ -80,6 +94,11 @@ class NarrativeResultRC2:
         if not self.scenes:
             raise ValueError(
                 "At least one narrated scene is required"
+            )
+        if self.generation_mode not in VALID_MODES:
+            raise ValueError(
+                f"Unsupported generation_mode: "
+                f"{self.generation_mode}"
             )
 
         previous_end = 0.0
@@ -114,6 +133,11 @@ class NarrativeResultRC2:
             "language": self.language,
             "target_duration_sec": self.target_duration_sec,
             "total_target_words": self.total_target_words,
+            "film_concept_ru": self.film_concept_ru,
+            "generation_mode": self.generation_mode,
+            "provider_status": self.provider_status,
+            "provider_model": self.provider_model,
+            "fallback_used": self.fallback_used,
             "scenes": [
                 scene.to_dict()
                 for scene in self.scenes
@@ -123,11 +147,15 @@ class NarrativeResultRC2:
 
 
 class NarrativeWriterRC2:
-    """Build a grounded Russian documentary narration draft.
+    """Create grounded Russian documentary narration.
 
-    The writer uses only story-strategy fields already present in the
-    payload. It does not invent people, events, interviews or visuals.
-    It does not pad narration with repeated boilerplate.
+    Primary RC2 mode is ``openai_documentary``. It sends the complete
+    editorial package and the semantic story strategy to GPT and expects
+    a structured per-scene documentary script.
+
+    ``local_fallback`` remains an emergency-only deterministic mode.
+    ``openai_editorial`` is retained for compatibility and now updates
+    the per-scene narration rather than only replacing full_narration_ru.
     """
 
     def __init__(
@@ -136,9 +164,9 @@ class NarrativeWriterRC2:
         project_id: str,
         words_per_minute: float =
             RUSSIAN_WORDS_PER_MINUTE,
-        mode: str = "local_fallback",
+        mode: str | None = None,
         openai_adapter: OpenAIAdapterRC2 | None = None,
-        allow_paid: bool = False,
+        allow_paid: bool | None = None,
     ) -> None:
         self.project_id = project_id
         self.words_per_minute = max(
@@ -146,24 +174,74 @@ class NarrativeWriterRC2:
             float(words_per_minute),
         )
 
-        if mode not in {
-            "local_fallback",
-            "openai_editorial",
-        }:
+        resolved_mode = (
+            mode
+            or os.getenv(
+                "ATLAS_ZERO_NARRATIVE_MODE",
+                "openai_documentary",
+            )
+        ).strip()
+
+        if resolved_mode not in VALID_MODES:
             raise ValueError(
-                f"Unsupported narrative mode: {mode}"
+                f"Unsupported narrative mode: "
+                f"{resolved_mode}"
             )
 
-        self.mode = mode
+        self.mode = resolved_mode
         self.openai_adapter = (
             openai_adapter
             if openai_adapter is not None
             else OpenAIAdapterRC2()
         )
-        self.allow_paid = bool(allow_paid)
+
+        if allow_paid is None:
+            self.allow_paid = self._env_flag(
+                "AZ_ALLOW_PAID_CALLS"
+            ) or self._env_flag(
+                "ATLAS_ZERO_ALLOW_PAID"
+            )
+        else:
+            self.allow_paid = bool(allow_paid)
+
         self.last_editorial_status = "not_requested"
+        self.last_provider_model = ""
 
     def run(
+        self,
+        strategy_payload: dict[str, Any],
+        *,
+        editorial_package: dict[str, Any] | None = None,
+        event_discovery: dict[str, Any] | None = None,
+        semantic_analysis: dict[str, Any] | None = None,
+    ) -> NarrativeResultRC2:
+        local_result = self._build_local_draft(
+            strategy_payload
+        )
+
+        if self.mode == "local_fallback":
+            self.last_editorial_status = "local_fallback"
+            return replace(
+                local_result,
+                generation_mode=self.mode,
+                provider_status=self.last_editorial_status,
+                fallback_used=True,
+            )
+
+        if self.mode == "openai_documentary":
+            return self._apply_openai_documentary(
+                local_result=local_result,
+                strategy_payload=strategy_payload,
+                editorial_package=editorial_package,
+                event_discovery=event_discovery,
+                semantic_analysis=semantic_analysis,
+            )
+
+        return self._apply_openai_editorial(
+            local_result
+        )
+
+    def _build_local_draft(
         self,
         strategy_payload: dict[str, Any],
     ) -> NarrativeResultRC2:
@@ -251,7 +329,6 @@ class NarrativeWriterRC2:
             closing = self._closing_line(
                 index=index,
                 total=len(scenes),
-                title=title,
             )
 
             transition = transitions.get(
@@ -302,13 +379,8 @@ class NarrativeWriterRC2:
             )
             current_time = end_sec
 
-        full_narration = "\n\n".join(
-            (
-                f"{scene.scene_id}. "
-                f"{scene.scene_title}\n"
-                f"{scene.narration_ru}"
-            )
-            for scene in narrated_scenes
+        full_narration = self._compose_full_narration(
+            narrated_scenes
         )
 
         result = NarrativeResultRC2(
@@ -326,16 +398,123 @@ class NarrativeWriterRC2:
             ),
             scenes=tuple(narrated_scenes),
             full_narration_ru=full_narration,
+            generation_mode="local_fallback",
+            provider_status="local_fallback",
+            fallback_used=True,
         )
-
         result.validate()
+        return result
 
-        if self.mode == "openai_editorial":
-            return self._apply_openai_editorial(
-                result
+    def _apply_openai_documentary(
+        self,
+        *,
+        local_result: NarrativeResultRC2,
+        strategy_payload: dict[str, Any],
+        editorial_package: dict[str, Any] | None,
+        event_discovery: dict[str, Any] | None,
+        semantic_analysis: dict[str, Any] | None,
+    ) -> NarrativeResultRC2:
+        if editorial_package is None:
+            self.last_editorial_status = (
+                "blocked_missing_editorial_package"
+            )
+            return replace(
+                local_result,
+                generation_mode=self.mode,
+                provider_status=self.last_editorial_status,
+                fallback_used=True,
             )
 
-        self.last_editorial_status = "local_fallback"
+        source_payload = {
+            "project_id": self.project_id,
+            "story_strategy": strategy_payload,
+            "editorial_package": editorial_package,
+            "event_discovery": event_discovery or {},
+            "semantic_analysis": semantic_analysis or {},
+            "required_scene_ids": [
+                scene.scene_id
+                for scene in local_result.scenes
+            ],
+            "scene_target_words": {
+                scene.scene_id: scene.target_words
+                for scene in local_result.scenes
+            },
+        }
+
+        instructions = (
+            "You are the principal documentary screenwriter for "
+            "ATLAS ZERO. Create the final Russian voice-over directly "
+            "from the supplied editorial package and verified source "
+            "data. Do not rewrite the emergency template draft and do "
+            "not mention technical production processes. Use only facts, "
+            "events, meanings, locations and visual evidence present in "
+            "the payload. Never invent people, interviews, dates, causes, "
+            "dialogue or unseen footage. Build one coherent authorial idea, "
+            "a strong opening hook, distinct scene development, natural "
+            "transitions and an accurate emotional ending. Avoid generic "
+            "phrases, repeated formulations and descriptions that merely "
+            "name what is visible. Leave room for natural festival sound. "
+            "Respect each scene's approximate target word count. "
+            "Return strict JSON only, without Markdown fences, with this "
+            "schema: "
+            '{"film_concept_ru":"...",'
+            '"scenes":[{"scene_id":"SC01",'
+            '"narration_ru":"...",'
+            '"opening_line_ru":"...",'
+            '"closing_line_ru":"...",'
+            '"narrator_bridge_ru":"..."}],'
+            '"full_narration_ru":"..."}. '
+            "Include every required scene exactly once and preserve scene IDs."
+        )
+
+        response = self.openai_adapter.generate_text(
+            instructions=instructions,
+            input_text=json.dumps(
+                source_payload,
+                ensure_ascii=False,
+                indent=2,
+            ),
+            allow_paid=self.allow_paid,
+            reasoning_effort="medium",
+        )
+
+        self.last_editorial_status = response.status
+        self.last_provider_model = response.model
+
+        if response.status != "completed":
+            return replace(
+                local_result,
+                generation_mode=self.mode,
+                provider_status=response.status,
+                provider_model=response.model,
+                fallback_used=True,
+            )
+
+        try:
+            payload = self._parse_json_object(
+                response.text
+            )
+            result = self._result_from_generated_payload(
+                base_result=local_result,
+                generated_payload=payload,
+                generation_mode=self.mode,
+                provider_status=response.status,
+                provider_model=response.model,
+            )
+        except (TypeError, ValueError, KeyError) as exc:
+            self.last_editorial_status = (
+                "fallback_invalid_documentary_output:"
+                f"{type(exc).__name__}"
+            )
+            return replace(
+                local_result,
+                generation_mode=self.mode,
+                provider_status=self.last_editorial_status,
+                provider_model=response.model,
+                fallback_used=True,
+            )
+
+        result.validate()
         return result
 
     def _apply_openai_editorial(
@@ -343,58 +522,262 @@ class NarrativeWriterRC2:
         result: NarrativeResultRC2,
     ) -> NarrativeResultRC2:
         instructions = (
-            "You are the senior documentary editor "
-            "for ATLAS ZERO. Rewrite the supplied "
-            "Russian narration into a coherent, vivid "
-            "and fact-conscious documentary voice-over. "
-            "Write only in Russian. Preserve all scene "
-            "headings in the exact format SC01., SC02. "
-            "and so on. Use only facts and meanings "
-            "already present in the supplied text. "
-            "Do not invent people, events, interviews, "
-            "dates, locations or visuals. Remove "
-            "repetition, production instructions and "
-            "generic filler. Strengthen the first "
-            "15 seconds with a concise hook. Keep the "
-            "overall structure and approximate length."
+            "You are the senior documentary editor for ATLAS ZERO. "
+            "Rewrite the supplied Russian narration into a coherent, "
+            "vivid and fact-conscious documentary voice-over. Use only "
+            "facts and meanings already present. Do not invent people, "
+            "events, interviews, dates, locations or visuals. Remove "
+            "repetition and generic filler. Return strict JSON only with "
+            'schema {"scenes":[{"scene_id":"SC01",'
+            '"narration_ru":"...","opening_line_ru":"...",'
+            '"closing_line_ru":"...","narrator_bridge_ru":"..."}],'
+            '"full_narration_ru":"..."}. Include every scene exactly once.'
         )
+
+        input_payload = {
+            "project_id": result.project_id,
+            "scenes": [
+                scene.to_dict()
+                for scene in result.scenes
+            ],
+            "full_narration_ru": result.full_narration_ru,
+        }
 
         response = self.openai_adapter.generate_text(
             instructions=instructions,
-            input_text=result.full_narration_ru,
+            input_text=json.dumps(
+                input_payload,
+                ensure_ascii=False,
+                indent=2,
+            ),
             allow_paid=self.allow_paid,
             reasoning_effort="low",
         )
 
         self.last_editorial_status = response.status
+        self.last_provider_model = response.model
+
         if response.status != "completed":
-            return result
-
-        edited_text = response.text.strip()
-        if not edited_text:
-            self.last_editorial_status = (
-                "fallback_empty_editorial"
+            return replace(
+                result,
+                generation_mode=self.mode,
+                provider_status=response.status,
+                provider_model=response.model,
+                fallback_used=True,
             )
-            return result
 
-        edited_result = NarrativeResultRC2(
-            project_id=result.project_id,
-            language=result.language,
-            target_duration_sec=(
-                result.target_duration_sec
-            ),
-            total_target_words=(
-                result.total_target_words
-            ),
-            scenes=result.scenes,
-            full_narration_ru=edited_text,
-        )
+        try:
+            payload = self._parse_json_object(
+                response.text
+            )
+            edited_result = self._result_from_generated_payload(
+                base_result=result,
+                generated_payload=payload,
+                generation_mode=self.mode,
+                provider_status=response.status,
+                provider_model=response.model,
+            )
+        except (TypeError, ValueError, KeyError) as exc:
+            self.last_editorial_status = (
+                "fallback_invalid_editorial_output:"
+                f"{type(exc).__name__}"
+            )
+            return replace(
+                result,
+                generation_mode=self.mode,
+                provider_status=self.last_editorial_status,
+                provider_model=response.model,
+                fallback_used=True,
+            )
+
         edited_result.validate()
         return edited_result
 
+    def _result_from_generated_payload(
+        self,
+        *,
+        base_result: NarrativeResultRC2,
+        generated_payload: dict[str, Any],
+        generation_mode: str,
+        provider_status: str,
+        provider_model: str,
+    ) -> NarrativeResultRC2:
+        generated_scenes = generated_payload.get(
+            "scenes"
+        )
+        if not isinstance(generated_scenes, list):
+            raise ValueError(
+                "Generated payload has no scenes list"
+            )
+
+        by_id: dict[str, dict[str, Any]] = {}
+        for item in generated_scenes:
+            if not isinstance(item, dict):
+                raise ValueError(
+                    "Generated scene must be an object"
+                )
+            scene_id = self._clean_text(
+                item.get("scene_id", "")
+            )
+            if not scene_id:
+                raise ValueError(
+                    "Generated scene_id is missing"
+                )
+            if scene_id in by_id:
+                raise ValueError(
+                    f"Duplicate generated scene_id: "
+                    f"{scene_id}"
+                )
+            by_id[scene_id] = item
+
+        expected_ids = [
+            scene.scene_id
+            for scene in base_result.scenes
+        ]
+        if set(by_id) != set(expected_ids):
+            raise ValueError(
+                "Generated scene IDs do not match "
+                "the strategy scene IDs"
+            )
+
+        rebuilt_scenes: list[SceneNarrationRC2] = []
+
+        for base_scene in base_result.scenes:
+            generated = by_id[base_scene.scene_id]
+            narration = self._clean_text(
+                generated.get("narration_ru", "")
+            )
+            if not narration:
+                raise ValueError(
+                    f"Empty narration for "
+                    f"{base_scene.scene_id}"
+                )
+
+            rebuilt_scenes.append(
+                replace(
+                    base_scene,
+                    narration_ru=narration,
+                    opening_line_ru=self._clean_text(
+                        generated.get(
+                            "opening_line_ru",
+                            "",
+                        )
+                    ),
+                    closing_line_ru=self._clean_text(
+                        generated.get(
+                            "closing_line_ru",
+                            "",
+                        )
+                    ),
+                    narrator_bridge_ru=self._clean_text(
+                        generated.get(
+                            "narrator_bridge_ru",
+                            "",
+                        )
+                    ),
+                )
+            )
+
+        full_narration = self._clean_multiline_text(
+            generated_payload.get(
+                "full_narration_ru",
+                "",
+            )
+        )
+        if not full_narration:
+            full_narration = self._compose_full_narration(
+                rebuilt_scenes
+            )
+
+        film_concept = self._clean_text(
+            generated_payload.get(
+                "film_concept_ru",
+                "",
+            )
+        )
+
+        return NarrativeResultRC2(
+            project_id=base_result.project_id,
+            language=base_result.language,
+            target_duration_sec=(
+                base_result.target_duration_sec
+            ),
+            total_target_words=(
+                base_result.total_target_words
+            ),
+            scenes=tuple(rebuilt_scenes),
+            full_narration_ru=full_narration,
+            film_concept_ru=film_concept,
+            generation_mode=generation_mode,
+            provider_status=provider_status,
+            provider_model=provider_model,
+            fallback_used=False,
+        )
+
+    @staticmethod
+    def _parse_json_object(
+        text: str,
+    ) -> dict[str, Any]:
+        cleaned = text.strip()
+
+        fenced = re.fullmatch(
+            r"```(?:json)?\s*(.*?)\s*```",
+            cleaned,
+            flags=re.DOTALL | re.IGNORECASE,
+        )
+        if fenced:
+            cleaned = fenced.group(1).strip()
+
+        try:
+            payload = json.loads(cleaned)
+        except json.JSONDecodeError:
+            start = cleaned.find("{")
+            end = cleaned.rfind("}")
+            if start < 0 or end <= start:
+                raise ValueError(
+                    "OpenAI output does not contain JSON"
+                )
+            payload = json.loads(
+                cleaned[start:end + 1]
+            )
+
+        if not isinstance(payload, dict):
+            raise ValueError(
+                "OpenAI output root must be an object"
+            )
+        return payload
+
+    @staticmethod
+    def _compose_full_narration(
+        scenes: list[SceneNarrationRC2]
+        | tuple[SceneNarrationRC2, ...],
+    ) -> str:
+        return "\n\n".join(
+            (
+                f"{scene.scene_id}. "
+                f"{scene.scene_title}\n"
+                f"{scene.narration_ru}"
+            )
+            for scene in scenes
+        )
+
     @staticmethod
     def _clean_text(value: Any) -> str:
-        return " ".join(str(value or "").split()).strip()
+        return " ".join(
+            str(value or "").split()
+        ).strip()
+
+    @staticmethod
+    def _clean_multiline_text(value: Any) -> str:
+        lines = [
+            " ".join(line.split()).strip()
+            for line in str(value or "").splitlines()
+        ]
+        return "\n".join(
+            line
+            for line in lines
+            if line
+        ).strip()
 
     @staticmethod
     def _opening_line(
@@ -465,7 +848,6 @@ class NarrativeWriterRC2:
         *,
         index: int,
         total: int,
-        title: str,
     ) -> str:
         if index == total:
             return (
@@ -491,10 +873,9 @@ class NarrativeWriterRC2:
         if not transition:
             return ""
 
-        rationale = cls._clean_text(
+        return cls._clean_text(
             transition.get("rationale_ru", "")
         )
-        return rationale
 
     @staticmethod
     def _join_unique(*parts: str) -> str:
@@ -525,10 +906,23 @@ class NarrativeWriterRC2:
         if len(words) <= target_words:
             return text.strip()
 
-        limited = " ".join(words[:target_words]).rstrip(
-            " ,;:-"
-        )
+        limited = " ".join(
+            words[:target_words]
+        ).rstrip(" ,;:-")
+
         if limited and limited[-1] not in ".!?":
             limited += "."
 
         return limited
+
+    @staticmethod
+    def _env_flag(name: str) -> bool:
+        return os.getenv(
+            name,
+            "",
+        ).strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }

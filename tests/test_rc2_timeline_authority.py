@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 from az_enterprise.core.database import Database
@@ -16,27 +16,10 @@ def test_timeline_engine_rc2_is_write_owner():
     assert "artifact_csv" in source
 
 
-def test_movie_runtime_delegates_to_timeline_engine():
-    source = Path(
+def test_retired_movie_runtime_rc1_is_absent():
+    assert not Path(
         "src/az_enterprise/core/movie_runtime_rc1.py"
-    ).read_text(encoding="utf-8")
-
-    method_start = source.index(
-        "    def _build_timeline("
-    )
-    method_end = source.index(
-        "    def _synchronize_audio(",
-        method_start,
-    )
-
-    method_source = source[
-        method_start:method_end
-    ]
-
-    assert "TimelineEngineRC2" in method_source
-    assert "timeline_json.write_text" not in method_source
-    assert "timeline_csv.open" not in method_source
-
+    ).exists()
 
 def test_timeline_engine_builds_canonical_artifacts(
     tmp_path,
@@ -136,3 +119,4 @@ def test_timeline_engine_builds_canonical_artifacts(
     assert rows[0]["shot_id"] == "shot_1"
     assert rows[0]["asset_name"] == "image.jpg"
     assert rows[0]["duration_sec"] == 5.0
+

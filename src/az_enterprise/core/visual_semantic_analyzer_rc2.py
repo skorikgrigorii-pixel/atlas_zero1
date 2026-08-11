@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from az_enterprise.core.visual_registry_writer_rc2 import (
+    persist_visual_profile_rc2,
+)
+
 import gc
 import json
 import math
@@ -439,6 +443,12 @@ class VisualSemanticAnalyzerRC2:
         for restored_result in restored_results:
             self._persist_semantic_payload(restored_result)
 
+            persist_visual_profile_rc2(
+                db=self.db,
+                project_id=self.project_id,
+                payload=restored_result,
+            )
+
         if results_by_id:
             print(
                 "[SEMANTIC][RESUME] "
@@ -546,10 +556,20 @@ class VisualSemanticAnalyzerRC2:
         self,
         result: AssetUnderstandingRC2,
     ) -> None:
-        """Persist one validated semantic result in the canonical assets row."""
+        """Persist semantic output in assets and Visual Registry."""
+
+        payload = result.to_dict()
+
         self._persist_semantic_payload(
-            result.to_dict()
+            payload
         )
+
+        persist_visual_profile_rc2(
+            db=self.db,
+            project_id=self.project_id,
+            payload=payload,
+        )
+
 
     def _persist_semantic_payload(
         self,
@@ -1444,3 +1464,4 @@ class VisualSemanticAnalyzerRC2:
                 "controlling_fire",
             ),
         }.get(event_type, ())
+

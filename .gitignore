@@ -54,3 +54,13 @@ workspace/exports/
 *.alpha25.bak
 *.alpha*.bak
 *.alpha*.*.bak
+
+workspace/secrets/
+# ATLAS ZERO local backups / temporary development artifacts
+*.bak_*
+*.before_*
+*.backup_*
+*.backup_before_*
+*.zip
+*.pyc
+*.pyo

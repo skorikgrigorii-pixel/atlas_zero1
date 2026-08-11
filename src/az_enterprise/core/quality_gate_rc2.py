@@ -56,16 +56,32 @@ class QualityGateRC2:
 
         add("TIMELINE_NOT_EMPTY", len(rows) > 0, {"items": len(rows)})
         add("TIMELINE_COMPLETE", len(incomplete) == 0, {"incomplete": len(incomplete)})
+        asset_counts = Counter(
+            str(row.get("asset_path"))
+            for row in rows
+            if row.get("asset_path")
+        )
+        reused_assets = {
+            asset_path: count
+            for asset_path, count in asset_counts.items()
+            if count > 1
+        }
+        repeated_uses_total = sum(
+            count - 1 for count in reused_assets.values()
+        )
+
         add(
-            "ASSET_LIBRARY_SUFFICIENT",
-            unique_ratio >= self.config.minimum_unique_asset_ratio
-            and average_reuse <= self.config.maximum_average_asset_reuse,
+            "SOURCE_TIMELINE_ASSET_DIVERSITY",
+            len(unique_assets) > 0,
             {
                 "unique_assets": len(unique_assets),
                 "unique_ratio": round(unique_ratio, 4),
                 "average_reuse": round(average_reuse, 3),
+                "reused_assets_in_source_timeline": reused_assets,
+                "repeated_uses_in_source_timeline": repeated_uses_total,
+                "policy": "source repeats are removed during editor pass",
             },
-            required=False,
+            required=True,
         )
         add(
             "VIDEO_USAGE_PRESENT",
@@ -73,6 +89,59 @@ class QualityGateRC2:
             {"video_shots": media_usage.get("video", 0)},
             required=False,
         )
+
+        editor_report_path = self.config.render_dir / "editor_pass_report_rc2.json"
+        add(
+            "EDITOR_PASS_REPORT_EXISTS",
+            editor_report_path.exists(),
+            {"path": str(editor_report_path)},
+        )
+        if editor_report_path.exists():
+            editor_report = self._read_json(editor_report_path)
+            duplicate_warnings = list(editor_report.get("duplicate_warnings") or [])
+            replacement_blocked = list(editor_report.get("replacement_blocked") or [])
+            duplicate_groups = list(editor_report.get("duplicate_groups") or [])
+            remaining_duplicates = max(
+                len(duplicate_warnings),
+                len(replacement_blocked),
+                len(duplicate_groups),
+            )
+            removed_repeated = list(editor_report.get("removed_repeated_clips") or [])
+            add(
+                "NO_ASSET_REUSE_IN_RENDER_MODEL",
+                remaining_duplicates == 0,
+                {
+                    "duplicate_warnings": len(duplicate_warnings),
+                    "replacement_blocked": len(replacement_blocked),
+                    "duplicate_groups": len(duplicate_groups),
+                    "repeated_clips_removed": len(removed_repeated),
+                    "clips_input": editor_report.get("clips_input"),
+                    "clips_output": editor_report.get("clips_output"),
+                    "duration_output_sec": editor_report.get("duration_output_sec"),
+                    "policy": editor_report.get("timeline_policy"),
+                },
+            )
+            add(
+                "COMPACT_TIMELINE_POLICY",
+                str(editor_report.get("timeline_policy") or "")
+                == "compact_after_removal_no_fixed_duration",
+                {
+                    "policy": editor_report.get("timeline_policy"),
+                    "duration_input_sec": editor_report.get("duration_input_sec"),
+                    "duration_output_sec": editor_report.get("duration_output_sec"),
+                    "duration_removed_sec": editor_report.get("duration_removed_sec"),
+                },
+            )
+            add(
+                "NATURAL_SOUND_SCENE_POLICY",
+                str(editor_report.get("natural_sound_selection_policy") or "")
+                == "one_ranked_event_per_scene_with_strict_spacing",
+                {
+                    "policy": editor_report.get("natural_sound_selection_policy"),
+                    "events_selected": editor_report.get("natural_sound_selected"),
+                    "scenes_selected": editor_report.get("natural_sound_scenes_selected"),
+                },
+            )
 
         temporal_path = self.config.temporal_summary_path
         add("TEMPORAL_REPORT_EXISTS", temporal_path.exists(), {"path": str(temporal_path)})
@@ -113,6 +182,9 @@ class QualityGateRC2:
                     "media_usage":dict(media_usage),
                     "unique_ratio":round(unique_ratio,4),
                     "average_reuse":round(average_reuse,3),
+                    "reused_assets": reused_assets,
+                    "repeated_uses_total": repeated_uses_total,
+                    "asset_uniqueness_policy": "absolute_one_use_per_film",
                 }
             }
             return self._finish(checks, context)

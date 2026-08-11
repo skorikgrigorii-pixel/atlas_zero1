@@ -175,6 +175,21 @@ class VisualRendererRC2:
                 left_duration_sec=durations[index],
                 right_duration_sec=durations[index + 1],
             )
+
+            # RC2 duration-preservation policy:
+            # visual transitions must never shorten the voice-led timeline.
+            # Until duration-compensated xfade is implemented, render
+            # overlapping transitions as hard cuts.
+            if profile.enabled:
+                from dataclasses import replace
+                profile = replace(
+                    profile,
+                    transition_type="cut",
+                    duration_sec=0.0,
+                    enabled=False,
+                    ffmpeg_name="cut",
+                )
+
             profiles.append(profile)
             self._emit(
                 "TRANSITION_PROFILE",
@@ -310,15 +325,28 @@ class VisualRendererRC2:
                 *common_output,
             ]
         else:
+            # RC2 SHORT VIDEO POLICY
+            #
+            # Editorial shot duration is authoritative.
+            # If a source video is shorter than the requested shot,
+            # FFmpeg loops the source until the complete timeline slot
+            # has been filled. The result is then trimmed exactly to
+            # the requested editorial duration.
+            #
+            # This is especially important for short AI-generated
+            # documentary inserts.
+
             requested_duration = duration
-            if source_out_raw is not None:
-                source_out = float(source_out_raw)
-                requested_duration = min(requested_duration, max(0.0, source_out - source_in))
+
             if requested_duration <= 0:
-                raise RuntimeError(f"Empty source range: {getattr(clip, 'shot_id', position)}")
+                raise RuntimeError(
+                    f"Empty source range: "
+                    f"{getattr(clip, 'shot_id', position)}"
+                )
 
             command = [
                 self.ffmpeg, "-y",
+                "-stream_loop", "-1",
                 "-ss", self._format_seconds(source_in),
                 "-i", str(asset_path),
                 "-t", self._format_seconds(requested_duration),

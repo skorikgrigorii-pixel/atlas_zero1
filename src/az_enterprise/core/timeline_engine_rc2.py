@@ -25,6 +25,91 @@ class TimelineEngineRC2:
         self.db = db
         self.config = config
 
+    def _parse_alternative_assets(
+        self,
+        value: Any,
+    ) -> list[dict[str, Any]]:
+        """Return verified alternative assets from director decisions.
+
+        Structured RC2 payloads are preferred. Legacy filename-only lists are
+        resolved through the canonical assets table for backward compatibility.
+        """
+        if value in (None, ""):
+            return []
+
+        if isinstance(value, list):
+            raw_items = value
+        else:
+            try:
+                raw_items = json.loads(value)
+            except (TypeError, ValueError, json.JSONDecodeError):
+                return []
+
+        if not isinstance(raw_items, list):
+            return []
+
+        structured: list[dict[str, Any]] = []
+        legacy_names: list[str] = []
+
+        for item in raw_items:
+            if isinstance(item, dict):
+                asset_path = str(item.get("asset_path") or item.get("path") or "").strip()
+                asset_name = str(item.get("asset_name") or item.get("filename") or "").strip()
+                media_type = str(item.get("media_type") or "").strip().lower()
+                if asset_path and asset_name and media_type in {"image", "video"}:
+                    structured.append({
+                        "asset_id": str(item.get("asset_id") or item.get("id") or ""),
+                        "asset_name": asset_name,
+                        "asset_path": asset_path,
+                        "media_type": media_type,
+                        "duration_sec": float(item.get("duration_sec") or 0.0),
+                        "quality": float(item.get("quality") or 0.0),
+                        "assignment_score": float(item.get("assignment_score") or item.get("score") or 0.0),
+                        "provenance": str(item.get("provenance") or "director_decision"),
+                        "verified": bool(item.get("verified", True)),
+                    })
+            elif str(item or "").strip():
+                legacy_names.append(str(item).strip())
+
+        if legacy_names:
+            placeholders = ",".join("?" for _ in legacy_names)
+            rows = self.db.rows(
+                f"""
+                SELECT id, filename, path, media_type, duration_sec, quality
+                FROM assets
+                WHERE project_id=?
+                  AND filename IN ({placeholders})
+                  AND media_type IN ('image','video')
+                """,
+                (self.config.project_id, *legacy_names),
+            )
+            by_name = {str(row["filename"]): row for row in rows}
+            for name in legacy_names:
+                asset = by_name.get(name)
+                if asset is None:
+                    continue
+                structured.append({
+                    "asset_id": str(asset["id"]),
+                    "asset_name": str(asset["filename"]),
+                    "asset_path": str(asset["path"]),
+                    "media_type": str(asset["media_type"] or "").strip().lower(),
+                    "duration_sec": float(asset["duration_sec"] or 0.0),
+                    "quality": float(asset["quality"] or 0.0),
+                    "assignment_score": 0.0,
+                    "provenance": "legacy_director_decision",
+                    "verified": True,
+                })
+
+        unique: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for item in structured:
+            identity = str(item.get("asset_path") or item.get("asset_id") or "").strip().lower()
+            if not identity or identity in seen:
+                continue
+            seen.add(identity)
+            unique.append(item)
+        return unique[:3]
+
     def _load_rows(self) -> list[dict[str, Any]]:
         rows = self.db.rows(
             """
@@ -42,7 +127,15 @@ class TimelineEngineRC2:
                 s.camera_motion,
                 a.filename AS asset,
                 a.path AS asset_path,
-                a.media_type AS media_type
+                a.media_type AS media_type,
+                (
+                    SELECT dd.alternatives
+                    FROM director_decisions dd
+                    WHERE dd.project_id=s.project_id
+                      AND dd.shot_id=s.id
+                    ORDER BY dd.id DESC
+                    LIMIT 1
+                ) AS assignment_alternatives
             FROM shots s
             LEFT JOIN assets a
                 ON a.id=s.assigned_asset_id
@@ -57,6 +150,43 @@ class TimelineEngineRC2:
         for row in rows:
             start_sec = float(row["start_sec"] or 0.0)
             end_sec = float(row["end_sec"] or start_sec)
+            duration_sec = round(
+                max(0.0, end_sec - start_sec),
+                3,
+            )
+
+            media_type = str(
+                row["media_type"] or ""
+            ).strip().lower()
+
+            asset_path = str(
+                row["asset_path"] or ""
+            ).strip()
+
+            status = str(
+                row["status"] or ""
+            ).strip().lower()
+
+            # CHANGE-005:
+            # Timeline only identifies whether the clip is a potential
+            # source-audio candidate. The final editorial decision belongs
+            # exclusively to RenderEngineRC2.
+            natural_sound_candidate = bool(
+                media_type == "video"
+                and asset_path
+                and status == "assigned"
+                and duration_sec > 0.0
+            )
+
+            natural_sound_windows = (
+                [[0.0, duration_sec]]
+                if natural_sound_candidate
+                else []
+            )
+
+            alternative_assets = self._parse_alternative_assets(
+                row["assignment_alternatives"]
+            )
 
             timeline_rows.append(
                 {
@@ -64,10 +194,7 @@ class TimelineEngineRC2:
                     "shot_index": row["idx"],
                     "start_sec": start_sec,
                     "end_sec": end_sec,
-                    "duration_sec": round(
-                        max(0.0, end_sec - start_sec),
-                        3,
-                    ),
+                    "duration_sec": duration_sec,
                     "block": row["block"],
                     "story_goal": row["story_goal"],
                     "visual_need": row["visual_need"],
@@ -78,6 +205,29 @@ class TimelineEngineRC2:
                     "asset_name": row["asset"],
                     "asset_path": row["asset_path"],
                     "media_type": row["media_type"],
+                    "alternative_assets": alternative_assets,
+                    "natural_sound_candidate":
+                        natural_sound_candidate,
+
+                    # Compatibility field:
+                    # this no longer represents the final editorial decision.
+                    # RenderEngineRC2 recalculates natural_sound_enabled.
+                    "natural_sound_enabled":
+                        natural_sound_candidate,
+
+                    "natural_sound_window":
+                        natural_sound_candidate,
+                    "natural_sound_windows":
+                        natural_sound_windows,
+                    "natural_sound_reason": (
+                        "embedded_source_audio_candidate"
+                        if natural_sound_candidate
+                        else ""
+                    ),
+
+                    # Timeline does not assign editorial priority.
+                    "natural_sound_priority": 0,
+                    "source_mode": "canonical_database",
                 }
             )
 
@@ -133,6 +283,7 @@ class TimelineEngineRC2:
                     "media_type",
                     "asset_name",
                     "asset_path",
+                    "alternative_assets",
                     "story_goal",
                     "visual_need",
                     "scene_id",
@@ -143,6 +294,11 @@ class TimelineEngineRC2:
                     "camera_motion",
                     "voiceover_text",
                     "natural_sound_window",
+                    "natural_sound_candidate",
+                    "natural_sound_enabled",
+                    "natural_sound_windows",
+                    "natural_sound_reason",
+                    "natural_sound_priority",
                     "source_mode",
                 ]
             )
@@ -157,6 +313,10 @@ class TimelineEngineRC2:
                         row["media_type"],
                         row["asset_name"],
                         row["asset_path"],
+                        json.dumps(
+                            row.get("alternative_assets", []),
+                            ensure_ascii=False,
+                        ),
                         row["story_goal"],
                         row["visual_need"],
                         row.get("scene_id"),
@@ -167,6 +327,14 @@ class TimelineEngineRC2:
                         row.get("camera_motion"),
                         row.get("voiceover_text"),
                         row.get("natural_sound_window"),
+                        row.get("natural_sound_candidate"),
+                        row.get("natural_sound_enabled"),
+                        json.dumps(
+                            row.get("natural_sound_windows", []),
+                            ensure_ascii=False,
+                        ),
+                        row.get("natural_sound_reason"),
+                        row.get("natural_sound_priority"),
                         row.get("source_mode"),
                     ]
                 )
@@ -180,20 +348,69 @@ class TimelineEngineRC2:
         minimum_shot_duration_sec: float = 2.0,
         maximum_shot_duration_sec: float = 12.0,
     ) -> dict[str, Any]:
-        """Build the current project timeline from canonical SQLite shots.
+        """Build the current project timeline from canonical Production Script.
 
-        The RC2 project timeline authority is the shots table produced by
-        StoryStrategyEngineRC2 and StoryEngine. Production-script discovery is
-        intentionally not used here, because an obsolete script may contain a
-        legacy duration such as 1500 seconds.
+        RC2 Production Script is the timeline authority when running from a
+        project. Scene IDs, scene order and scene durations therefore remain
+        stable across narration, voice, timeline and render stages.
+
+        This behavior is project-independent.
         """
-        del average_shot_duration_sec
-        del minimum_shot_duration_sec
-        del maximum_shot_duration_sec
 
-        result = self.run()
-        result["mode"] = "canonical_database"
-        result["discovery_mode"] = "canonical_database"
+        script_path = (
+            self._discover_production_script_path()
+        )
+
+        if script_path is None:
+            raise FileNotFoundError(
+                "Production script JSON was not found "
+                f"for project {self.config.project_id!r}"
+            )
+
+        try:
+            production_script = json.loads(
+                script_path.read_text(
+                    encoding="utf-8-sig"
+                )
+            )
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                "Production script JSON is invalid: "
+                f"{script_path}"
+            ) from exc
+
+        if not isinstance(
+            production_script,
+            dict,
+        ):
+            raise ValueError(
+                "Production script JSON root "
+                "must be an object"
+            )
+
+        result = (
+            self.run_from_production_script(
+                production_script,
+                average_shot_duration_sec=(
+                    average_shot_duration_sec
+                ),
+                minimum_shot_duration_sec=(
+                    minimum_shot_duration_sec
+                ),
+                maximum_shot_duration_sec=(
+                    maximum_shot_duration_sec
+                ),
+            )
+        )
+
+        result["discovery_mode"] = (
+            "project_auto_discovery"
+        )
+
+        result["production_script_path"] = (
+            str(script_path)
+        )
+
         return result
 
     def _discover_production_script_path(
@@ -508,14 +725,20 @@ class TimelineEngineRC2:
                     3,
                 )
 
-                # Each production asset may be used only once in a scene.
-                # When the scene requires more shots than available assets,
-                # keep the shot explicitly missing instead of cyclically
-                # repeating existing material. This exposes the coverage gap
-                # to AssignmentEngineRC2 and Director AI.
+                # Production Script is the timeline authority.
+                #
+                # A scene may require several editorial shots while having
+                # fewer source assets. Reuse is therefore permitted inside
+                # the scene. Static images can support different crop, zoom,
+                # pan and camera-motion treatments. Video safety remains
+                # protected by the physical source-duration calculation
+                # performed above.
                 asset_id = (
-                    asset_ids[local_index]
-                    if local_index < len(asset_ids)
+                    asset_ids[
+                        local_index
+                        % len(asset_ids)
+                    ]
+                    if asset_ids
                     else None
                 )
 
@@ -591,6 +814,7 @@ class TimelineEngineRC2:
                         if asset is not None
                         else None
                     ),
+                    "alternative_assets": [],
                     "voiceover_text": (
                         voiceover.get(
                             "text",
