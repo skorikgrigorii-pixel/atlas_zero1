@@ -2,6 +2,10 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import shutil
+import struct
+import subprocess
 import time
 import urllib.error
 import urllib.parse
@@ -200,12 +204,32 @@ class ElevenLabsVoiceProviderRC2:
                         "ElevenLabs returned empty audio"
                     )
 
-                temporary_path = destination.with_suffix(
-                    destination.suffix + ".partial"
+                temporary_path = destination.with_name(
+                    destination.stem
+                    + ".partial"
+                    + destination.suffix
                 )
 
-                temporary_path.write_bytes(audio_bytes)
-                temporary_path.replace(destination)
+                temporary_path.write_bytes(
+                    audio_bytes
+                )
+
+                try:
+                    audio_signal_qc = (
+                        self.validate_audio_signal(
+                            temporary_path
+                        )
+                    )
+
+                except Exception:
+                    temporary_path.unlink(
+                        missing_ok=True
+                    )
+                    raise
+
+                temporary_path.replace(
+                    destination
+                )
 
                 return {
                     "provider": "elevenlabs",
@@ -216,7 +240,23 @@ class ElevenLabsVoiceProviderRC2:
                     "bytes": len(audio_bytes),
                     "output_path": str(destination),
                     "attempt": attempt,
+
+                    # Historical compatibility:
+                    # status=ready still means a valid
+                    # audio artifact exists.
+                    #
+                    # It does NOT yet mean speech content
+                    # was verified.
                     "status": "ready",
+
+                    "audio_signal_qc":
+                        audio_signal_qc,
+
+                    "readiness_scope":
+                        "AUDIO_SIGNAL_ONLY",
+
+                    "speech_content_status":
+                        "UNKNOWN",
                 }
 
             except (
@@ -241,6 +281,335 @@ class ElevenLabsVoiceProviderRC2:
             "ElevenLabs speech synthesis failed: "
             + self._format_error(last_error)
         ) from last_error
+
+    def validate_audio_signal(
+        self,
+        audio_path: Path,
+        *,
+        minimum_duration_sec: float = 0.25,
+        minimum_peak_db: float = -50.0,
+        minimum_mean_db: float = -60.0,
+        minimum_significant_ratio: float = 0.001,
+    ) -> dict[str, Any]:
+        """
+        Validate that an ElevenLabs output is a real,
+        decodable audio signal.
+
+        IMPORTANT:
+        This validates AUDIO SIGNAL only.
+
+        It does NOT prove that the signal contains
+        intelligible human speech. Speech-content QC
+        is a separate higher-level gate.
+        """
+
+        path = Path(audio_path)
+
+        if not path.exists():
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "audio file does not exist"
+            )
+
+        if path.stat().st_size <= 0:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "audio file is empty"
+            )
+
+        ffmpeg = shutil.which("ffmpeg")
+        ffprobe = shutil.which("ffprobe")
+
+        if not ffmpeg:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "ffmpeg is not available"
+            )
+
+        if not ffprobe:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "ffprobe is not available"
+            )
+
+        # -------------------------------------------------------------
+        # 1. CONTAINER / DURATION VALIDATION
+        # -------------------------------------------------------------
+
+        probe = subprocess.run(
+            [
+                ffprobe,
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "default=noprint_wrappers=1:nokey=1",
+                str(path),
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        if probe.returncode != 0:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "audio container cannot be decoded by ffprobe: "
+                + probe.stderr[-1000:]
+            )
+
+        try:
+            duration_sec = float(
+                probe.stdout.strip()
+            )
+        except Exception as exc:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "unable to determine audio duration"
+            ) from exc
+
+        if duration_sec < float(
+            minimum_duration_sec
+        ):
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                f"duration too short: {duration_sec:.3f}s"
+            )
+
+        # -------------------------------------------------------------
+        # 2. FULL DECODE VALIDATION
+        # -------------------------------------------------------------
+
+        decode = subprocess.run(
+            [
+                ffmpeg,
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                str(path),
+                "-f",
+                "null",
+                "-",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        if decode.returncode != 0:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "ffmpeg decode failed: "
+                + decode.stderr[-1000:]
+            )
+
+        # -------------------------------------------------------------
+        # 3. VOLUME VALIDATION
+        # -------------------------------------------------------------
+
+        volume = subprocess.run(
+            [
+                ffmpeg,
+                "-hide_banner",
+                "-i",
+                str(path),
+                "-af",
+                "volumedetect",
+                "-f",
+                "null",
+                "-",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        volume_text = (
+            volume.stdout
+            + "\n"
+            + volume.stderr
+        )
+
+        mean_match = re.search(
+            r"mean_volume:\s*([-\d.]+)\s*dB",
+            volume_text,
+        )
+
+        peak_match = re.search(
+            r"max_volume:\s*([-\d.]+)\s*dB",
+            volume_text,
+        )
+
+        if not mean_match or not peak_match:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "unable to measure audio volume"
+            )
+
+        mean_volume_db = float(
+            mean_match.group(1)
+        )
+
+        peak_volume_db = float(
+            peak_match.group(1)
+        )
+
+        if peak_volume_db < float(
+            minimum_peak_db
+        ):
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                f"peak level is effectively silent: "
+                f"{peak_volume_db:.1f} dB"
+            )
+
+        if mean_volume_db < float(
+            minimum_mean_db
+        ):
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                f"mean level is effectively silent: "
+                f"{mean_volume_db:.1f} dB"
+            )
+
+        # -------------------------------------------------------------
+        # 4. RAW PCM SIGNAL VALIDATION
+        # -------------------------------------------------------------
+
+        pcm = subprocess.run(
+            [
+                ffmpeg,
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                str(path),
+                "-ac",
+                "1",
+                "-ar",
+                "16000",
+                "-f",
+                "s16le",
+                "-",
+            ],
+            capture_output=True,
+        )
+
+        if pcm.returncode != 0:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "PCM extraction failed"
+            )
+
+        pcm_bytes = pcm.stdout
+
+        if not pcm_bytes:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "decoded PCM stream is empty"
+            )
+
+        sample_count = (
+            len(pcm_bytes) // 2
+        )
+
+        if sample_count <= 0:
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                "decoded PCM contains no samples"
+            )
+
+        significant_samples = 0
+
+        for offset in range(
+            0,
+            len(pcm_bytes) - 1,
+            2,
+        ):
+            sample = struct.unpack_from(
+                "<h",
+                pcm_bytes,
+                offset,
+            )[0]
+
+            if abs(sample) >= 64:
+                significant_samples += 1
+
+        significant_ratio = (
+            significant_samples
+            / sample_count
+        )
+
+        if significant_ratio < float(
+            minimum_significant_ratio
+        ):
+            raise RuntimeError(
+                "ELEVENLABS_AUDIO_SIGNAL_QC_FAILED: "
+                f"meaningful PCM signal ratio too low: "
+                f"{significant_ratio:.6f}"
+            )
+
+        return {
+            "state":
+                "AUDIO_SIGNAL_VALID",
+
+            "scope":
+                "SIGNAL_ONLY",
+
+            "speech_content_status":
+                "UNKNOWN",
+
+            "duration_sec":
+                round(
+                    duration_sec,
+                    3,
+                ),
+
+            "mean_volume_db":
+                round(
+                    mean_volume_db,
+                    3,
+                ),
+
+            "peak_volume_db":
+                round(
+                    peak_volume_db,
+                    3,
+                ),
+
+            "pcm_sample_count":
+                sample_count,
+
+            "pcm_significant_samples":
+                significant_samples,
+
+            "pcm_significant_ratio":
+                round(
+                    significant_ratio,
+                    6,
+                ),
+
+            "thresholds":
+                {
+                    "minimum_duration_sec":
+                        minimum_duration_sec,
+
+                    "minimum_peak_db":
+                        minimum_peak_db,
+
+                    "minimum_mean_db":
+                        minimum_mean_db,
+
+                    "minimum_significant_ratio":
+                        minimum_significant_ratio,
+                },
+        }
+
 
     def _post(
         self,

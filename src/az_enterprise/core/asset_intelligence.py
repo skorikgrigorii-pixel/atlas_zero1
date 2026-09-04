@@ -232,7 +232,34 @@ class AssetIntelligence:
         if self.direct_root_scan:
             return [self.root]
 
-        return [self.root / rel for rel in MEDIA_DIRS.values()]
+        folders = [
+            self.root / rel
+            for rel in MEDIA_DIRS.values()
+        ]
+
+        # RC2 visual production structure.
+        # Scan production media only; rights/manifests stay excluded.
+        rc2_visuals = self.root / "02_Visuals"
+
+        folders.extend(
+            [
+                rc2_visuals / "real",
+                rc2_visuals / "generated",
+            ]
+        )
+
+        # Preserve legacy media directories while avoiding duplicate roots.
+        result: list[Path] = []
+        seen: set[Path] = set()
+
+        for folder in folders:
+            if folder in seen:
+                continue
+
+            seen.add(folder)
+            result.append(folder)
+
+        return result
 
     @staticmethod
     def _probe_video(path: Path) -> dict[str, Any]:

@@ -368,6 +368,148 @@ class YouTubeChannelCollectorRC1:
             )
         }
 
+
+    # ------------------------------------------------------------------
+    # AZ_CHANNEL_ANALYTICS_RC1
+    # Channel-level Analytics API breakdowns
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _analytics_rows(
+        payload: dict[str, Any],
+    ) -> list[dict[str, Any]]:
+
+        columns = [
+            str(
+                column.get(
+                    "name",
+                    "",
+                )
+            )
+            for column in (
+                payload.get(
+                    "columnHeaders"
+                )
+                or []
+            )
+        ]
+
+        result = []
+
+        for row in (
+            payload.get("rows")
+            or []
+        ):
+
+            result.append({
+                columns[index]:
+                    row[index]
+
+                for index
+                in range(
+                    min(
+                        len(columns),
+                        len(row),
+                    )
+                )
+            })
+
+        return result
+
+
+    def fetch_channel_analytics(
+        self,
+        *,
+        start_date: str,
+        end_date: str,
+    ) -> tuple[
+        dict[str, Any],
+        list[dict[str, str]],
+    ]:
+
+        specs = {
+            "traffic_source": {
+                "metrics":
+                    "views,estimatedMinutesWatched",
+                "dimensions":
+                    "insightTrafficSourceType",
+            },
+
+            "device_type": {
+                "metrics":
+                    "views,estimatedMinutesWatched",
+                "dimensions":
+                    "deviceType",
+            },
+
+            "geography": {
+                "metrics":
+                    "views,estimatedMinutesWatched",
+                "dimensions":
+                    "country",
+            },
+
+            "subscribed_status": {
+                "metrics":
+                    "views,estimatedMinutesWatched",
+                "dimensions":
+                    "subscribedStatus",
+            },
+
+            "day_timeseries": {
+                "metrics": (
+                    "views,"
+                    "estimatedMinutesWatched,"
+                    "subscribersGained,"
+                    "subscribersLost"
+                ),
+                "dimensions":
+                    "day",
+            },
+        }
+
+        result = {}
+        failures = []
+
+        for name, spec in specs.items():
+
+            try:
+
+                payload = (
+                    self.connector
+                    .analytics_report(
+                        start_date=start_date,
+                        end_date=end_date,
+                        metrics=spec["metrics"],
+                        dimensions=
+                            spec["dimensions"],
+                    )
+                )
+
+                result[name] = (
+                    self._analytics_rows(
+                        payload
+                    )
+                )
+
+            except Exception as exc:
+
+                result[name] = []
+
+                failures.append({
+                    "breakdown":
+                        name,
+
+                    "error":
+                        str(exc),
+                })
+
+        return (
+            result,
+            failures,
+        )
+
+
     # ------------------------------------------------------------------
     # Full channel collection
     # ------------------------------------------------------------------
@@ -408,6 +550,14 @@ class YouTubeChannelCollectorRC1:
         ] = []
 
         analytics_failures = []
+
+        (
+            channel_analytics,
+            channel_analytics_failures,
+        ) = self.fetch_channel_analytics(
+            start_date=start_date,
+            end_date=end_date,
+        )
 
         for video_id in video_ids:
 
@@ -523,6 +673,12 @@ class YouTubeChannelCollectorRC1:
 
             "analytics_failures":
                 analytics_failures,
+
+            "channel_analytics":
+                channel_analytics,
+
+            "channel_analytics_failures":
+                channel_analytics_failures,
         }
 
         self._save(

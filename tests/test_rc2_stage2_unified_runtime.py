@@ -29,3 +29,29 @@ def test_project_paths_are_project_agnostic(tmp_path: Path):
     assert "another_film" in str(config.project_dir)
     assert config.canonical_render_path.name == "another_film_RC2.mp4"
     assert "franklin" not in str(config.canonical_render_path)
+
+
+def test_change_value_gate_is_canonical_governance_contract():
+    report = governance_report()
+
+    assert report["schema_version"] == "2.2"
+
+    gate = report["change_value_gate"]
+
+    assert gate["rule_id"] == "AZ_CHANGE_VALUE_GATE_V1"
+    assert gate["status"] == "MANDATORY"
+    assert gate["principle"] == "NO_CHANGE_WITHOUT_VALUE_GATE"
+
+    questions = gate["required_questions"]
+    keys = [item["key"] for item in questions]
+
+    assert keys == [
+        "CURRENT_STATE",
+        "FILM_IMPACT",
+        "SYSTEM_VALUE",
+        "MEASURABLE_EXIT",
+    ]
+
+    assert "current film toward release" in gate["decision_rule"]
+    assert "reusable system improvement" in gate["decision_rule"]
+

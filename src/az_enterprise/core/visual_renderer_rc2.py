@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import os
@@ -317,6 +317,7 @@ class VisualRendererRC2:
         if media_type == "image":
             command = [
                 self.ffmpeg, "-y",
+                "-f", "image2",
                 "-loop", "1",
                 "-framerate", str(self.target_fps),
                 "-i", str(asset_path),

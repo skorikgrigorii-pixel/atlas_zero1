@@ -311,6 +311,7 @@ class StoryStrategyEngineRC2:
 
                 narration = str(
                     row.get("narration_ru")
+                    or row.get("narration")
                     or row.get("voiceover")
                     or row.get("text")
                     or ""
@@ -349,6 +350,11 @@ class StoryStrategyEngineRC2:
                         "narration_ru",
                         "",
                     )
+                    or getattr(
+                        row,
+                        "narration",
+                        "",
+                    )
                 ).strip()
 
                 raw_duration = getattr(
@@ -363,15 +369,71 @@ class StoryStrategyEngineRC2:
                     else None
                 )
 
+            if isinstance(row, dict):
+                storytelling_mode = str(
+                    row.get("storytelling_mode")
+                    or "NARRATION"
+                ).strip().upper()
+
+                visual_direction = str(
+                    row.get("visual_direction")
+                    or ""
+                ).strip()
+            else:
+                storytelling_mode = str(
+                    getattr(
+                        row,
+                        "storytelling_mode",
+                        "NARRATION",
+                    )
+                    or "NARRATION"
+                ).strip().upper()
+
+                visual_direction = str(
+                    getattr(
+                        row,
+                        "visual_direction",
+                        "",
+                    )
+                    or ""
+                ).strip()
+
             if not scene_id:
                 scene_id = (
                     f"scene_{index:03d}"
                 )
 
-            if not narration:
+            valid_modes = {
+                "NARRATION",
+                "VISUAL_MUSIC",
+                "VISUAL_SFX",
+                "MUSIC_ONLY",
+            }
+
+            if storytelling_mode not in valid_modes:
+                raise ValueError(
+                    f"Approved external script scene "
+                    f"{scene_id!r} has unsupported "
+                    f"storytelling_mode={storytelling_mode!r}"
+                )
+
+            if (
+                storytelling_mode == "NARRATION"
+                and not narration
+            ):
                 raise ValueError(
                     f"Approved external script scene "
                     f"{scene_id!r} has no narration"
+                )
+
+            if (
+                storytelling_mode != "NARRATION"
+                and explicit_duration is None
+            ):
+                raise ValueError(
+                    f"Approved external non-narration "
+                    f"scene {scene_id!r} requires "
+                    f"explicit duration_sec"
                 )
 
             if not scene_title:
@@ -379,11 +441,10 @@ class StoryStrategyEngineRC2:
                     f"????? {index}"
                 )
 
-            word_count = max(
-                1,
-                len(
-                    narration.split()
-                ),
+            word_count = (
+                len(narration.split())
+                if narration
+                else 0
             )
 
             if explicit_duration is not None:
@@ -434,6 +495,15 @@ class StoryStrategyEngineRC2:
 
                 "duration_authority":
                     duration_authority,
+
+                # Directorial metadata must survive
+                # the normalization pass and remain
+                # bound to this exact scene.
+                "storytelling_mode":
+                    storytelling_mode,
+
+                "visual_direction":
+                    visual_direction,
             })
 
 
@@ -518,12 +588,17 @@ class StoryStrategyEngineRC2:
                 ),
 
                 visual_strategy_ru=(
-                    "????????? ?????????????? "
-                    "?????????? ??????????????, "
-                    "?????, ???????? ?????????, "
-                    "????????????? ? ????????, "
-                    "??????????????? ????????????? "
-                    "????????."
+                    str(
+                        row.get(
+                            "visual_direction",
+                            "",
+                        )
+                    ).strip()
+                    or (
+                        "Follow the approved external "
+                        "script visual direction while "
+                        "preserving documentary integrity."
+                    )
                 ),
 
                 order=index,

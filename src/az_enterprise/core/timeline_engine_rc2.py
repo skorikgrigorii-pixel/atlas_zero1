@@ -341,6 +341,83 @@ class TimelineEngineRC2:
 
         return path
 
+    def _load_voice_scene_durations(
+        self,
+    ) -> dict[str, float]:
+        """Return real rendered voice durations by scene.
+
+        When a canonical VoiceProductionEngineRC2 report exists,
+        narration timing becomes the master clock for documentary
+        picture editing.
+
+        Production Script duration remains the fallback when no
+        completed voice timing exists.
+        """
+
+        report_path = (
+            self.config.project_dir
+            / "01_Audio"
+            / "voice_report.json"
+        )
+
+        if not report_path.exists():
+            return {}
+
+        try:
+            payload = json.loads(
+                report_path.read_text(
+                    encoding="utf-8-sig"
+                )
+            )
+        except (
+            OSError,
+            json.JSONDecodeError,
+        ):
+            return {}
+
+        if payload.get("state") != "VOICE_READY":
+            return {}
+
+        scene_results = payload.get(
+            "scene_results",
+            [],
+        )
+
+        if not isinstance(
+            scene_results,
+            list,
+        ):
+            return {}
+
+        durations: dict[str, float] = {}
+
+        for row in scene_results:
+            if not isinstance(row, dict):
+                continue
+
+            scene_id = str(
+                row.get("scene_id")
+                or ""
+            ).strip()
+
+            try:
+                duration = float(
+                    row.get(
+                        "final_duration_sec"
+                    )
+                    or 0.0
+                )
+            except (
+                TypeError,
+                ValueError,
+            ):
+                duration = 0.0
+
+            if scene_id and duration > 0.0:
+                durations[scene_id] = duration
+
+        return durations
+
     def run_from_project(
         self,
         *,
@@ -510,6 +587,16 @@ class TimelineEngineRC2:
         shot_index = 1
         current_time = 0.0
 
+
+        voice_scene_durations = (
+            self._load_voice_scene_durations()
+        )
+
+        timing_authority = (
+            "voice_report"
+            if voice_scene_durations
+            else "production_script"
+        )
         for scene in scenes:
             scene_id = str(
                 scene.get(
@@ -525,10 +612,17 @@ class TimelineEngineRC2:
                 )
             )
 
-            scene_duration = float(
+            script_scene_duration = float(
                 scene.get(
                     "duration_sec",
                     0.0,
+                )
+            )
+
+            scene_duration = float(
+                voice_scene_durations.get(
+                    scene_id,
+                    script_scene_duration,
                 )
             )
 
@@ -892,6 +986,10 @@ class TimelineEngineRC2:
             ),
             "authority":
                 "TimelineEngineRC2",
+            "timing_authority":
+                timing_authority,
+            "voice_timed_scenes":
+                len(voice_scene_durations),
         }
 
     def _resolve_assets(
@@ -1005,3 +1103,4 @@ class TimelineEngineRC2:
             "artifact_csv": str(csv_path),
             "authority": "TimelineEngineRC2",
         }
+

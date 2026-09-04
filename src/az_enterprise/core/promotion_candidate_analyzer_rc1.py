@@ -32,18 +32,25 @@ class PromotionCandidateScoreRC1:
     duration_score: float
     diversity_score: float
 
-    total_score: float
+    # RC1 story-arc extension.
+    # Defaults preserve compatibility for any external code constructing
+    # PromotionCandidateScoreRC1 with the legacy contract.
+    semantic_target_score: float = 0.0
+    story_completeness_score: float = 0.0
+    story_gate_passed: bool = True
 
-    opening_text: str
-    story_summary: str
-    visual_summary: str
-    emotion_summary: str
+    total_score: float = 0.0
 
-    first_shot_id: str
-    last_shot_id: str
-    shot_count: int
+    opening_text: str = ""
+    story_summary: str = ""
+    visual_summary: str = ""
+    emotion_summary: str = ""
 
-    reason: str
+    first_shot_id: str = ""
+    last_shot_id: str = ""
+    shot_count: int = 0
+
+    reason: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -394,6 +401,8 @@ class PromotionCandidateAnalyzerRC1:
         target_duration_sec: float | None = None,
         max_duration_sec: float | None = None,
         maximum_overlap_ratio: float = 0.55,
+        semantic_target: str | None = None,
+        story_arc_mode: bool | None = None,
     ) -> dict[str, Any]:
 
         shots = self.load_timeline()
@@ -440,6 +449,16 @@ class PromotionCandidateAnalyzerRC1:
                 "Expected 0 < minimum <= target <= maximum"
             )
 
+        semantic_target_text = str(
+            semantic_target or ""
+        ).strip()
+
+        use_story_arc = (
+            bool(story_arc_mode)
+            if story_arc_mode is not None
+            else bool(semantic_target_text)
+        )
+
         windows = self._build_windows(
             shots=shots,
             minimum=minimum,
@@ -452,13 +471,41 @@ class PromotionCandidateAnalyzerRC1:
                 window,
                 target_duration_sec=target,
                 narration_scenes=narration_scenes,
+                semantic_target=semantic_target_text,
+                story_arc_mode=use_story_arc,
             )
             for window in windows
         ]
 
+        if use_story_arc:
+            gated = [
+                item
+                for item in scored
+                if item.story_gate_passed
+            ]
+
+            # Fail soft:
+            # target-driven mode should not destroy legacy availability.
+            # If no candidate passes the gate, retain all scored candidates
+            # but their semantic/story scores remain visible for diagnosis.
+            if gated:
+                scored = gated
+
         scored.sort(
             key=lambda item:
                 (
+                    item.story_gate_passed
+                    if use_story_arc
+                    else True,
+
+                    item.semantic_target_score
+                    if use_story_arc
+                    else item.total_score,
+
+                    item.story_completeness_score
+                    if use_story_arc
+                    else item.hook_score,
+
                     item.total_score,
                     item.hook_score,
                     item.visual_score,
@@ -510,6 +557,19 @@ class PromotionCandidateAnalyzerRC1:
 
             "content_class":
                 "FILM_PROMOTION",
+
+            "selection_mode":
+                (
+                    "STORY_ARC"
+                    if use_story_arc
+                    else "DISCOVERY"
+                ),
+
+            "semantic_target":
+                semantic_target_text,
+
+            "story_gate_enabled":
+                bool(use_story_arc),
 
             "production_target_per_platform":
                 3,
@@ -659,6 +719,8 @@ class PromotionCandidateAnalyzerRC1:
         *,
         target_duration_sec: float,
         narration_scenes: list[Any],
+        semantic_target: str = "",
+        story_arc_mode: bool = False,
     ) -> PromotionCandidateScoreRC1:
 
         first = window[0]
@@ -795,6 +857,44 @@ class PromotionCandidateAnalyzerRC1:
             )
         )
 
+        semantic_target_score = (
+            self._semantic_target_score(
+                target=semantic_target,
+                story=story,
+                editorial_context=" ".join(
+                    editorial_context
+                ),
+            )
+            if story_arc_mode
+            and semantic_target
+            else 0.0
+        )
+
+        story_completeness_score = (
+            self._story_completeness_score(
+                story=story,
+                story_parts=story_parts,
+                editorial_context=editorial_context,
+                shot_count=len(window),
+            )
+            if story_arc_mode
+            else standalone_score
+        )
+
+        story_gate_passed = (
+            self._story_arc_gate(
+                semantic_target_score=
+                    semantic_target_score,
+                story_completeness_score=
+                    story_completeness_score,
+                story=story,
+                story_parts=story_parts,
+                shot_count=len(window),
+            )
+            if story_arc_mode
+            else True
+        )
+
         total = (
             hook_score
             * self.WEIGHTS["hook"]
@@ -818,6 +918,15 @@ class PromotionCandidateAnalyzerRC1:
             * self.WEIGHTS["diversity"]
         )
 
+        if story_arc_mode:
+            # Existing editorial quality remains useful, but target relevance
+            # and narrative completeness become the dominant decision signals.
+            total = (
+                total * 0.40
+                + semantic_target_score * 0.35
+                + story_completeness_score * 0.25
+            )
+
         candidate_id = (
             f"{self.project_id}"
             f"__promo_"
@@ -837,7 +946,13 @@ class PromotionCandidateAnalyzerRC1:
             "standalone="
             f"{standalone_score:.2f}; "
             "duration="
-            f"{duration_score:.2f}"
+            f"{duration_score:.2f}; "
+            "semantic_target="
+            f"{semantic_target_score:.2f}; "
+            "story_complete="
+            f"{story_completeness_score:.2f}; "
+            "story_gate="
+            f"{int(story_gate_passed)}"
         )
 
         return PromotionCandidateScoreRC1(
@@ -873,6 +988,15 @@ class PromotionCandidateAnalyzerRC1:
 
             diversity_score=
                 diversity_score,
+
+            semantic_target_score=
+                semantic_target_score,
+
+            story_completeness_score=
+                story_completeness_score,
+
+            story_gate_passed=
+                story_gate_passed,
 
             total_score=
                 total,
@@ -1150,6 +1274,303 @@ class PromotionCandidateAnalyzerRC1:
         return selected
 
     @staticmethod
+    def _semantic_tokens(
+        value: str,
+    ) -> set[str]:
+
+        words = re.findall(
+            r"[A-Za-z?-??-???0-9]+",
+            str(value).lower(),
+        )
+
+        stop = {
+            "?", "?", "??", "??", "?", "??",
+            "?", "??", "??", "??", "??", "??",
+            "??", "???", "??", "??", "???",
+            "???", "???", "??", "???", "???",
+            "??", "??", "???", "??", "??",
+            "??", "?", "?", "??", "?",
+            "the", "a", "an", "of", "and",
+            "to", "in", "is", "that", "with",
+            "for", "on", "from", "by",
+            "this", "these", "those", "it",
+            "as", "at", "was", "were", "be",
+            "been", "are",
+        }
+
+        return {
+            word
+            for word in words
+            if (
+                len(word) >= 3
+                and word not in stop
+            )
+        }
+
+
+    @classmethod
+    def _semantic_target_score(
+        cls,
+        *,
+        target: str,
+        story: str,
+        editorial_context: str,
+    ) -> float:
+
+        target_tokens = cls._semantic_tokens(
+            target
+        )
+
+        if not target_tokens:
+            return 0.0
+
+        candidate_tokens = cls._semantic_tokens(
+            " ".join(
+                (
+                    story,
+                    editorial_context,
+                )
+            )
+        )
+
+        if not candidate_tokens:
+            return 0.0
+
+        matched = (
+            target_tokens
+            & candidate_tokens
+        )
+
+        coverage = (
+            len(matched)
+            / len(target_tokens)
+        )
+
+        # Reward coverage of the requested concept.
+        # Exact token repetition beyond target coverage
+        # deliberately does not increase the score.
+        return max(
+            0.0,
+            min(
+                1.0,
+                coverage,
+            ),
+        )
+
+
+    @classmethod
+    def _story_completeness_score(
+        cls,
+        *,
+        story: str,
+        story_parts: list[str],
+        editorial_context: list[str],
+        shot_count: int,
+    ) -> float:
+
+        text = str(story).strip()
+
+        if not text:
+            return 0.0
+
+        tokens = cls._semantic_tokens(
+            " ".join(
+                [
+                    text,
+                    *editorial_context,
+                ]
+            )
+        )
+
+        word_count = len(
+            re.findall(
+                r"[A-Za-z?-??-???0-9]+",
+                text,
+            )
+        )
+
+        part_count = len(
+            [
+                item
+                for item in story_parts
+                if str(item).strip()
+            ]
+        )
+
+        # Generic narrative-development signals.
+        # These are language-level discourse markers,
+        # not Film10 topic words.
+        development_patterns = (
+            "but ",
+            "however",
+            "then ",
+            "after ",
+            "before ",
+            "because",
+            "so ",
+            "when ",
+            "while ",
+            "until ",
+            "instead",
+            "finally",
+            "therefore",
+            "yet ",
+            "?? ",
+            "??????",
+            "?????",
+            "????? ",
+            "?? ????",
+            "??????",
+            "???????",
+            "????? ",
+            "???? ",
+            "???????",
+            "sin embargo",
+            "pero ",
+            "entonces",
+            "despu?s",
+            "antes ",
+            "porque",
+            "cuando ",
+            "mientras",
+            "hasta ",
+            "finalmente",
+            "por eso",
+        )
+
+        payoff_patterns = (
+            "saved",
+            "survived",
+            "escaped",
+            "destroyed",
+            "collapsed",
+            "reached",
+            "became",
+            "left ",
+            "result",
+            "meaning",
+            "which meant",
+            "that meant",
+            "????",
+            "?????",
+            "?????",
+            "??????",
+            "??????",
+            "??????",
+            "??????",
+            "???????",
+            "??????",
+            "salv",
+            "sobreviv",
+            "escap",
+            "destr",
+            "colaps",
+            "alcanz",
+            "resultado",
+        )
+
+        low = (
+            " "
+            + text.lower()
+            + " "
+        )
+
+        development_hits = sum(
+            1
+            for pattern in development_patterns
+            if pattern in low
+        )
+
+        payoff_hits = sum(
+            1
+            for pattern in payoff_patterns
+            if pattern in low
+        )
+
+        lexical = min(
+            1.0,
+            len(tokens) / 38.0,
+        )
+
+        narration_span = min(
+            1.0,
+            word_count / 65.0,
+        )
+
+        multipart = min(
+            1.0,
+            part_count / 3.0,
+        )
+
+        visual_span = min(
+            1.0,
+            max(0, int(shot_count)) / 7.0,
+        )
+
+        development = min(
+            1.0,
+            development_hits / 2.0,
+        )
+
+        payoff = min(
+            1.0,
+            payoff_hits / 1.0,
+        )
+
+        score = (
+            lexical * 0.15
+            + narration_span * 0.15
+            + multipart * 0.15
+            + visual_span * 0.10
+            + development * 0.20
+            + payoff * 0.25
+        )
+
+        return max(
+            0.0,
+            min(
+                1.0,
+                score,
+            ),
+        )
+
+
+    @staticmethod
+    def _story_arc_gate(
+        *,
+        semantic_target_score: float,
+        story_completeness_score: float,
+        story: str,
+        story_parts: list[str],
+        shot_count: int,
+    ) -> bool:
+
+        if semantic_target_score < 0.34:
+            return False
+
+        if story_completeness_score < 0.42:
+            return False
+
+        if len(story_parts) < 1:
+            return False
+
+        if int(shot_count) < 3:
+            return False
+
+        word_count = len(
+            re.findall(
+                r"[A-Za-z?-??-???0-9]+",
+                str(story),
+            )
+        )
+
+        if word_count < 18:
+            return False
+
+        return True
+
+
+    @staticmethod
     def _semantic_similarity(
         left: str,
         right: str,
@@ -1158,17 +1579,20 @@ class PromotionCandidateAnalyzerRC1:
         def tokens(value: str) -> set[str]:
 
             words = re.findall(
-                r"[A-Za-z?-??-???0-9]+",
+                r"[A-Za-zА-Яа-яЁё0-9]+",
                 str(value).lower(),
             )
 
             stop = {
-                "?", "?", "??", "?", "???",
-                "???", "???", "??", "??",
-                "?", "??", "??", "?", "??",
-                "???", "the", "a", "an",
-                "of", "and", "to", "in",
-                "is", "that", "with",
+                "и", "в", "во", "на", "с", "со",
+                "к", "ко", "из", "по", "за", "от",
+                "до", "для", "не", "но", "это",
+                "как", "что", "он", "она", "они",
+                "мы", "вы", "его", "ее", "её",
+                "их", "у", "о", "об", "а",
+                "the", "a", "an", "of", "and",
+                "to", "in", "is", "that", "with",
+                "for", "on", "from", "by",
             }
 
             return {

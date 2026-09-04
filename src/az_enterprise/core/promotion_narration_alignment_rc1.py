@@ -174,6 +174,97 @@ class PromotionNarrationAlignmentRC1:
             self.audio_dir
         )
 
+        # ------------------------------------------------------------
+        # Canonical RC2 scene audio authority
+        # ------------------------------------------------------------
+        #
+        # Final documentary timing is built from SCxx.wav scene files.
+        # Promotion must use the same clock as the rendered film.
+        # MP3 voice_blocks remain a compatibility fallback.
+        #
+
+        scene_dir = (
+            base_dir
+            / "scenes"
+        )
+
+        scene_first = (
+            scene_dir
+            / "SC01.wav"
+        )
+
+        if scene_first.is_file():
+
+            discovered_scene_audio: dict[
+                int,
+                Path,
+            ] = {}
+
+            for path in sorted(
+                scene_dir.glob(
+                    "SC*.wav"
+                )
+            ):
+
+                match = re.fullmatch(
+                    r"SC(\d+)\.wav",
+                    path.name,
+                    flags=re.IGNORECASE,
+                )
+
+                if match is None:
+                    continue
+
+                number = int(
+                    match.group(1)
+                )
+
+                discovered_scene_audio[
+                    number
+                ] = path
+
+            if discovered_scene_audio:
+
+                expected = set(
+                    range(
+                        1,
+                        max(
+                            discovered_scene_audio
+                        )
+                        + 1,
+                    )
+                )
+
+                actual = set(
+                    discovered_scene_audio
+                )
+
+                if actual != expected:
+
+                    missing = sorted(
+                        expected
+                        - actual
+                    )
+
+                    raise RuntimeError(
+                        "RC2 scene WAV sequence mismatch. "
+                        f"missing={missing}"
+                    )
+
+                for number in sorted(
+                    discovered_scene_audio
+                ):
+
+                    result[
+                        number
+                    ] = self._probe_duration(
+                        discovered_scene_audio[
+                            number
+                        ]
+                    )
+
+                return result
+
         rc2_dir = (
             base_dir
             / "voice_blocks"
@@ -190,28 +281,78 @@ class PromotionNarrationAlignmentRC1:
 
         if rc2_first.is_file():
 
-            for number in range(
-                1,
-                36,
+            discovered: dict[
+                int,
+                Path,
+            ] = {}
+
+            for path in sorted(
+                rc2_dir.glob(
+                    "voice_block_*.mp3"
+                )
             ):
 
-                path = (
-                    rc2_dir
-                    / (
-                        f"voice_block_"
-                        f"{number:02d}.mp3"
+                match = re.fullmatch(
+                    r"voice_block_(\d+)\.mp3",
+                    path.name,
+                )
+
+                if match is None:
+                    continue
+
+                number = int(
+                    match.group(
+                        1
                     )
                 )
 
-                if not path.is_file():
+                discovered[
+                    number
+                ] = path
 
-                    raise FileNotFoundError(
-                        path
+            if not discovered:
+
+                raise FileNotFoundError(
+                    rc2_first
+                )
+
+            expected = set(
+                range(
+                    1,
+                    max(
+                        discovered
                     )
+                    + 1,
+                )
+            )
 
-                result[number] = (
+            actual = set(
+                discovered
+            )
+
+            if actual != expected:
+
+                missing = sorted(
+                    expected
+                    - actual
+                )
+
+                raise RuntimeError(
+                    "RC2 voice block sequence mismatch. "
+                    f"missing={missing}"
+                )
+
+            for number in sorted(
+                discovered
+            ):
+
+                result[
+                    number
+                ] = (
                     self._probe_duration(
-                        path
+                        discovered[
+                            number
+                        ]
                     )
                 )
 
@@ -265,6 +406,9 @@ class PromotionNarrationAlignmentRC1:
             "\u0434\u0438\u043a\u0442\u043e\u0440\u0430"
         )
 
+        if normalized == "voiceover":
+            return True
+
         return (
             normalized.startswith("3.")
             or normalized.startswith("4.")
@@ -280,6 +424,19 @@ class PromotionNarrationAlignmentRC1:
                 line.strip().split()
             )
         )
+
+        # RC2 textual Production Script:
+        # scene_001, scene_002, ...
+        rc2_match = re.fullmatch(
+            r"scene[_\s-]?(\d+)",
+            value,
+            flags=re.IGNORECASE,
+        )
+
+        if rc2_match:
+            return int(
+                rc2_match.group(1)
+            )
 
         prefix = "\u0441\u0446\u0435\u043d\u0430"
 
@@ -649,7 +806,43 @@ class PromotionNarrationAlignmentRC1:
         # Legacy six-block projects continue below unchanged.
         # ------------------------------------------------------------
 
-        if len(block_durations) == 35:
+        rc2_scene_level = (
+            (
+                Path(
+                    self.audio_dir
+                )
+                / "voice_blocks"
+                / "voice_block_01.mp3"
+            ).is_file()
+        )
+
+        if rc2_scene_level:
+
+            narration_keys = set(
+                narration
+            )
+
+            duration_keys = set(
+                block_durations
+            )
+
+            if duration_keys != narration_keys:
+
+                missing_audio = sorted(
+                    narration_keys
+                    - duration_keys
+                )
+
+                extra_audio = sorted(
+                    duration_keys
+                    - narration_keys
+                )
+
+                raise RuntimeError(
+                    "RC2 narration/audio scene mismatch. "
+                    f"missing_audio={missing_audio}; "
+                    f"extra_audio={extra_audio}"
+                )
 
             aligned: list[
                 NarrationAlignedSceneRC1
@@ -657,9 +850,8 @@ class PromotionNarrationAlignmentRC1:
 
             cursor = 0.0
 
-            for scene_number in range(
-                1,
-                36,
+            for scene_number in sorted(
+                narration
             ):
 
                 duration = float(

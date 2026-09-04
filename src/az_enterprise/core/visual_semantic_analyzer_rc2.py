@@ -19,6 +19,9 @@ from typing import Any, Protocol, Sequence
 import numpy as np
 
 from .database import Database
+from .project_semantic_context_rc2 import (
+    ProjectSemanticContextBuilderRC2,
+)
 from .visual_understanding_contract_rc2 import (
     AssetUnderstandingRC2,
 )
@@ -113,7 +116,7 @@ TIME_LABELS: dict[str, tuple[str, ...]] = {
     ),
     "night": (
         "a dark nighttime outdoor scene with artificial lights",
-        "a night event with fireworks or illuminated streets",
+        "a nighttime documentary scene in low light or artificial illumination",
     ),
 }
 
@@ -265,6 +268,8 @@ class HuggingFaceClipBackendRC2:
                     images=image,
                     return_tensors="pt",
                     padding=True,
+                    truncation=True,
+                    max_length=77,
                 )
 
                 inputs = {
@@ -370,6 +375,53 @@ class VisualSemanticAnalyzerRC2:
     ) -> None:
         self.db = db
         self.project_id = project_id
+
+        # ------------------------------------------------------------
+        # PROJECT-SPECIFIC SEMANTIC CONTEXT
+        #
+        # Semantic vocabulary is derived from the current project's
+        # approved script instead of a hard-coded film taxonomy.
+        # Legacy EVENT_LABELS / TOPIC_LABELS remain fallback only.
+        # ------------------------------------------------------------
+        try:
+            self.semantic_context = (
+                ProjectSemanticContextBuilderRC2(
+                    project_id=self.project_id,
+                    root_dir=".",
+                ).build()
+            )
+
+            self.event_labels = (
+                self.semantic_context.event_labels
+                or EVENT_LABELS
+            )
+
+            self.topic_labels = (
+                self.semantic_context.topic_labels
+                or TOPIC_LABELS
+            )
+
+            self.semantic_source_path = (
+                self.semantic_context.source_path
+            )
+
+            self.location_hint = getattr(
+                self.semantic_context,
+                "location_hint",
+                None,
+            )
+
+        except Exception as exc:
+            print(
+                "[SEMANTIC][CONTEXT][FALLBACK] "
+                f"{type(exc).__name__}: {exc}"
+            )
+
+            self.semantic_context = None
+            self.event_labels = EVENT_LABELS
+            self.topic_labels = TOPIC_LABELS
+            self.semantic_source_path = None
+            self.location_hint = None
         self.backend = (
             backend
             if backend is not None
@@ -1009,6 +1061,7 @@ class VisualSemanticAnalyzerRC2:
             FROM assets a
             {cv_join}
             WHERE a.project_id=?
+              AND a.media_type IN ('image', 'video')
         """
 
         if asset_ids:
@@ -1053,7 +1106,7 @@ class VisualSemanticAnalyzerRC2:
 
         event = self.backend.classify(
             images,
-            EVENT_LABELS,
+            self.event_labels,
         )
         period = self.backend.classify(
             images,
@@ -1061,7 +1114,7 @@ class VisualSemanticAnalyzerRC2:
         )
         topic = self.backend.classify(
             images,
-            TOPIC_LABELS,
+            self.topic_labels,
         )
 
         relevant_score = float(
@@ -1147,11 +1200,7 @@ class VisualSemanticAnalyzerRC2:
             story_value=story_value,
             detected_objects=detected_objects,
             detected_actions=detected_actions,
-            location_hint=(
-                "Alicante"
-                if relevance_status != "OFF_TOPIC"
-                else None
-            ),
+            location_hint=(self.location_hint if relevance_status != "OFF_TOPIC" else None),
             chronology_timestamp=timestamp,
             evidence=evidence,
         )
@@ -1273,7 +1322,7 @@ class VisualSemanticAnalyzerRC2:
             or (
                 event_type
                 == "unrelated_private_content"
-                and off_topic_score >= 0.42
+                and off_topic_score >= 0.50
             )
         ):
             return "OFF_TOPIC"
@@ -1296,23 +1345,22 @@ class VisualSemanticAnalyzerRC2:
         relevant_score: float,
         cinematic_grade: Any,
     ) -> float:
-        event_importance = {
-            "crema": 1.0,
-            "fireworks": 0.94,
-            "mascleta": 0.94,
-            "monument": 0.90,
-            "parade": 0.84,
-            "flower_offering": 0.82,
-            "preparation": 0.82,
-            "firefighters": 0.82,
-            "music_band": 0.72,
-            "street_festival": 0.70,
-            "crowd_reaction": 0.66,
-            "city_context": 0.62,
-            "beach_event": 0.60,
-            "unrelated_private_content": 0.0,
-        }.get(event_type, 0.45)
-
+        # Project-independent story importance.
+        #
+        # The semantic meaning of scene_* labels is derived from the
+        # approved script by ProjectSemanticContextBuilderRC2.
+        # This function therefore evaluates importance generically and
+        # contains no film-specific event vocabulary.
+        if event_type == "unrelated_private_content":
+            event_importance = 0.0
+        elif event_type == "generic_context":
+            event_importance = 0.55
+        elif event_type == "project_context":
+            event_importance = 0.72
+        elif event_type.startswith("scene_"):
+            event_importance = 0.82
+        else:
+            event_importance = 0.65
         try:
             grade = float(cinematic_grade)
         except (TypeError, ValueError):
@@ -1464,4 +1512,9 @@ class VisualSemanticAnalyzerRC2:
                 "controlling_fire",
             ),
         }.get(event_type, ())
+
+
+
+
+
 

@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
@@ -414,6 +414,21 @@ class YouTubeChannelIntelligenceRC1:
             captured_at=captured_at,
         )
 
+        # Channel-level analytics discovered by Collector.
+        report['channel_analytics'] = dict(
+            snapshot.get('channel_analytics') or {}
+        )
+
+        report['channel_analytics_failures'] = list(
+            snapshot.get('channel_analytics_failures') or []
+        )
+
+        report['channel_signals'] = (
+            self._build_channel_signals(
+                report['channel_analytics']
+            )
+        )
+
         self._save_report(report)
         self._update_learning(report)
 
@@ -481,9 +496,978 @@ class YouTubeChannelIntelligenceRC1:
             for row in rows
         ]
 
+
+    # ------------------------------------------------------------------
+    # AZ_CHANNEL_SIGNALS_RC1
+    # Derived channel-wide signals for Director / Learning.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _build_channel_signals(
+        analytics: dict[str, Any],
+    ) -> dict[str, Any]:
+
+        def integer(
+            value: Any,
+        ) -> int:
+
+            try:
+                return int(value or 0)
+            except (
+                TypeError,
+                ValueError,
+            ):
+                return 0
+
+
+        def number(
+            value: Any,
+        ) -> float:
+
+            try:
+                return float(value or 0)
+            except (
+                TypeError,
+                ValueError,
+            ):
+                return 0.0
+
+
+        traffic = list(
+            analytics.get(
+                "traffic_source"
+            )
+            or []
+        )
+
+        devices = list(
+            analytics.get(
+                "device_type"
+            )
+            or []
+        )
+
+        geography = list(
+            analytics.get(
+                "geography"
+            )
+            or []
+        )
+
+        subscribed = list(
+            analytics.get(
+                "subscribed_status"
+            )
+            or []
+        )
+
+        days = list(
+            analytics.get(
+                "day_timeseries"
+            )
+            or []
+        )
+
+        traffic_views = sum(
+            integer(
+                x.get("views")
+            )
+            for x in traffic
+        )
+
+        traffic_watch = sum(
+            integer(
+                x.get(
+                    "estimatedMinutesWatched"
+                )
+            )
+            for x in traffic
+        )
+
+        traffic_ranked = sorted(
+            traffic,
+            key=lambda x: integer(
+                x.get(
+                    "estimatedMinutesWatched"
+                )
+            ),
+            reverse=True,
+        )
+
+        traffic_map = {
+            str(
+                x.get(
+                    "insightTrafficSourceType"
+                )
+            ):
+                x
+
+            for x in traffic
+        }
+
+        def source_share(
+            source: str,
+            metric: str,
+            total: int,
+        ) -> float:
+
+            item = (
+                traffic_map.get(source)
+                or {}
+            )
+
+            return (
+                integer(
+                    item.get(metric)
+                )
+                / total
+                if total > 0
+                else 0.0
+            )
+
+
+        subscribed_rows = {
+            str(
+                x.get(
+                    "subscribedStatus"
+                )
+            ):
+                x
+
+            for x in subscribed
+        }
+
+        audience = {}
+
+        for state in (
+            "UNSUBSCRIBED",
+            "SUBSCRIBED",
+        ):
+
+            row = (
+                subscribed_rows.get(state)
+                or {}
+            )
+
+            views = integer(
+                row.get("views")
+            )
+
+            watch = integer(
+                row.get(
+                    "estimatedMinutesWatched"
+                )
+            )
+
+            audience[state.lower()] = {
+                "views":
+                    views,
+
+                "watch_minutes":
+                    watch,
+
+                "average_minutes_per_view":
+                    (
+                        watch / views
+                        if views > 0
+                        else 0.0
+                    ),
+            }
+
+
+        device_ranked = sorted(
+            devices,
+            key=lambda x: integer(
+                x.get(
+                    "estimatedMinutesWatched"
+                )
+            ),
+            reverse=True,
+        )
+
+        device_summary = []
+
+        for row in device_ranked:
+
+            views = integer(
+                row.get("views")
+            )
+
+            watch = integer(
+                row.get(
+                    "estimatedMinutesWatched"
+                )
+            )
+
+            device_summary.append({
+                "device":
+                    row.get("deviceType"),
+
+                "views":
+                    views,
+
+                "watch_minutes":
+                    watch,
+
+                "average_minutes_per_view":
+                    (
+                        watch / views
+                        if views > 0
+                        else 0.0
+                    ),
+            })
+
+
+        country_ranked = sorted(
+            geography,
+            key=lambda x: integer(
+                x.get(
+                    "estimatedMinutesWatched"
+                )
+            ),
+            reverse=True,
+        )
+
+
+        day_ranked_views = sorted(
+            days,
+            key=lambda x:
+                integer(
+                    x.get("views")
+                ),
+            reverse=True,
+        )
+
+        day_ranked_subs = sorted(
+            days,
+            key=lambda x:
+                (
+                    integer(
+                        x.get(
+                            "subscribersGained"
+                        )
+                    )
+                    - integer(
+                        x.get(
+                            "subscribersLost"
+                        )
+                    )
+                ),
+            reverse=True,
+        )
+
+        return {
+            "traffic": {
+                "total_views":
+                    traffic_views,
+
+                "total_watch_minutes":
+                    traffic_watch,
+
+                "top_by_watch":
+                    (
+                        traffic_ranked[0]
+                        if traffic_ranked
+                        else None
+                    ),
+
+                "related_video_view_share":
+                    source_share(
+                        "RELATED_VIDEO",
+                        "views",
+                        traffic_views,
+                    ),
+
+                "related_video_watch_share":
+                    source_share(
+                        "RELATED_VIDEO",
+                        "estimatedMinutesWatched",
+                        traffic_watch,
+                    ),
+
+                "shorts_view_share":
+                    source_share(
+                        "SHORTS",
+                        "views",
+                        traffic_views,
+                    ),
+
+                "shorts_watch_share":
+                    source_share(
+                        "SHORTS",
+                        "estimatedMinutesWatched",
+                        traffic_watch,
+                    ),
+
+                "youtube_search_view_share":
+                    source_share(
+                        "YT_SEARCH",
+                        "views",
+                        traffic_views,
+                    ),
+            },
+
+            "audience_subscription":
+                audience,
+
+            "devices":
+                device_summary,
+
+            "top_countries_by_watch":
+                country_ranked[:10],
+
+            "daily": {
+                "peak_view_day":
+                    (
+                        day_ranked_views[0]
+                        if day_ranked_views
+                        else None
+                    ),
+
+                "peak_subscriber_day":
+                    (
+                        day_ranked_subs[0]
+                        if day_ranked_subs
+                        else None
+                    ),
+
+                "days_observed":
+                    len(days),
+            },
+        }
+
+
     # ------------------------------------------------------------------
     # Channel report
     # ------------------------------------------------------------------
+
+
+    def _build_release_trajectories(
+        self,
+        *,
+        captured_at: str | None = None,
+    ) -> dict[str, Any]:
+        """
+        Build release-age-normalized trajectories from historical
+        youtube_video_snapshots.
+
+        RC2 integrity rules:
+        - project mapping may be resolved from youtube_project_links
+        - checkpoints use nearest observations inside explicit tolerances
+        - stale observations are never carried into distant checkpoints
+        - missing analytics remain missing
+        """
+
+        checkpoint_hours = (
+            1,
+            6,
+            12,
+            24,
+            48,
+            72,
+            168,
+        )
+
+        checkpoint_tolerance_hours = {
+            1: 1.0,
+            6: 2.0,
+            12: 3.0,
+            24: 6.0,
+            48: 8.0,
+            72: 12.0,
+            168: 24.0,
+        }
+
+        def parse_time(value: Any):
+            if not value:
+                return None
+
+            text = str(value).strip()
+
+            if not text:
+                return None
+
+            if text.endswith("Z"):
+                text = text[:-1] + "+00:00"
+
+            try:
+                dt = datetime.fromisoformat(text)
+            except ValueError:
+                return None
+
+            if dt.tzinfo is None:
+                dt = dt.replace(
+                    tzinfo=timezone.utc
+                )
+
+            return dt.astimezone(
+                timezone.utc
+            )
+
+        now = (
+            parse_time(captured_at)
+            or datetime.now(timezone.utc)
+        )
+
+        cursor = self.db.conn.execute(
+            """
+            SELECT
+                video_id,
+                project_id,
+                captured_at,
+                title,
+                published_at,
+                analytics_state,
+                views,
+                average_view_duration_sec,
+                average_view_percentage,
+                subscribers_gained,
+                subscribers_lost
+            FROM youtube_video_snapshots
+            WHERE privacy_status IS NULL
+               OR privacy_status='public'
+            ORDER BY
+                video_id,
+                captured_at,
+                id
+            """
+        )
+
+        columns = [
+            description[0]
+            for description
+            in cursor.description
+        ]
+
+        rows = [
+            dict(
+                zip(
+                    columns,
+                    row,
+                )
+            )
+            for row in cursor.fetchall()
+        ]
+
+        grouped = {}
+
+        for row in rows:
+
+            video_id = str(
+                row.get("video_id")
+                or ""
+            ).strip()
+
+            if not video_id:
+                continue
+
+            grouped.setdefault(
+                video_id,
+                [],
+            ).append(row)
+
+        videos = []
+
+        for video_id, history in grouped.items():
+
+            history = sorted(
+                history,
+                key=lambda item:
+                    parse_time(
+                        item.get(
+                            "captured_at"
+                        )
+                    )
+                    or datetime.min.replace(
+                        tzinfo=timezone.utc
+                    ),
+            )
+
+            latest = history[-1]
+
+            project_id = (
+                latest.get(
+                    "project_id"
+                )
+                or self.project_for_video(
+                    video_id
+                )
+            )
+
+            published = parse_time(
+                latest.get(
+                    "published_at"
+                )
+            )
+
+            if published is None:
+
+                for item in history:
+
+                    published = parse_time(
+                        item.get(
+                            "published_at"
+                        )
+                    )
+
+                    if published is not None:
+                        break
+
+            if published is None:
+
+                videos.append({
+                    "video_id":
+                        video_id,
+
+                    "project_id":
+                        project_id,
+
+                    "title":
+                        latest.get(
+                            "title"
+                        ),
+
+                    "state":
+                        "PUBLISHED_AT_UNAVAILABLE",
+
+                    "checkpoints":
+                        {},
+                })
+
+                continue
+
+            observations = []
+
+            for item in history:
+
+                observed = parse_time(
+                    item.get(
+                        "captured_at"
+                    )
+                )
+
+                if observed is None:
+                    continue
+
+                age_hours = (
+                    observed - published
+                ).total_seconds() / 3600.0
+
+                if age_hours < 0:
+                    continue
+
+                views = int(
+                    item.get(
+                        "views"
+                    )
+                    or 0
+                )
+
+                gained_raw = item.get(
+                    "subscribers_gained"
+                )
+
+                lost_raw = item.get(
+                    "subscribers_lost"
+                )
+
+                subscriber_metrics_available = (
+                    gained_raw is not None
+                    or lost_raw is not None
+                )
+
+                if subscriber_metrics_available:
+
+                    gained = int(
+                        gained_raw
+                        or 0
+                    )
+
+                    lost = int(
+                        lost_raw
+                        or 0
+                    )
+
+                    net_subscribers = (
+                        gained - lost
+                    )
+
+                    net_subscribers_per_1000 = (
+                        net_subscribers
+                        / views
+                        * 1000.0
+                        if views > 0
+                        else None
+                    )
+
+                else:
+
+                    net_subscribers = None
+
+                    net_subscribers_per_1000 = None
+
+                observations.append({
+                    "captured_at":
+                        observed.isoformat(),
+
+                    "release_age_hours":
+                        age_hours,
+
+                    "views":
+                        views,
+
+                    "views_per_hour":
+                        (
+                            views / age_hours
+                            if age_hours > 0
+                            else None
+                        ),
+
+                    "average_view_duration_sec":
+                        item.get(
+                            "average_view_duration_sec"
+                        ),
+
+                    "average_view_percentage":
+                        item.get(
+                            "average_view_percentage"
+                        ),
+
+                    "net_subscribers":
+                        net_subscribers,
+
+                    "net_subscribers_per_1000":
+                        net_subscribers_per_1000,
+
+                    "subscriber_metrics_available":
+                        subscriber_metrics_available,
+
+                    "analytics_state":
+                        item.get(
+                            "analytics_state"
+                        ),
+                })
+
+            checkpoints = {}
+
+            checkpoint_quality = {}
+
+            for checkpoint in checkpoint_hours:
+
+                tolerance = (
+                    checkpoint_tolerance_hours[
+                        checkpoint
+                    ]
+                )
+
+                eligible = [
+                    item
+                    for item in observations
+                    if abs(
+                        item[
+                            "release_age_hours"
+                        ]
+                        - checkpoint
+                    )
+                    <= tolerance
+                ]
+
+                if not eligible:
+
+                    checkpoints[
+                        f"{checkpoint}h"
+                    ] = None
+
+                    checkpoint_quality[
+                        f"{checkpoint}h"
+                    ] = {
+                        "state":
+                            "NO_OBSERVATION_IN_WINDOW",
+
+                        "target_hours":
+                            checkpoint,
+
+                        "tolerance_hours":
+                            tolerance,
+                    }
+
+                    continue
+
+                selected = min(
+                    eligible,
+                    key=lambda item:
+                        abs(
+                            item[
+                                "release_age_hours"
+                            ]
+                            - checkpoint
+                        ),
+                )
+
+                selected_copy = dict(
+                    selected
+                )
+
+                selected_copy[
+                    "checkpoint_target_hours"
+                ] = checkpoint
+
+                selected_copy[
+                    "checkpoint_distance_hours"
+                ] = abs(
+                    selected[
+                        "release_age_hours"
+                    ]
+                    - checkpoint
+                )
+
+                selected_copy[
+                    "checkpoint_tolerance_hours"
+                ] = tolerance
+
+                checkpoints[
+                    f"{checkpoint}h"
+                ] = selected_copy
+
+                checkpoint_quality[
+                    f"{checkpoint}h"
+                ] = {
+                    "state":
+                        "OBSERVATION_IN_WINDOW",
+
+                    "target_hours":
+                        checkpoint,
+
+                    "source_age_hours":
+                        selected[
+                            "release_age_hours"
+                        ],
+
+                    "distance_hours":
+                        abs(
+                            selected[
+                                "release_age_hours"
+                            ]
+                            - checkpoint
+                        ),
+
+                    "tolerance_hours":
+                        tolerance,
+                }
+
+            velocity_windows = []
+
+            for previous, current in zip(
+                observations,
+                observations[1:],
+            ):
+
+                delta_hours = (
+                    current[
+                        "release_age_hours"
+                    ]
+                    - previous[
+                        "release_age_hours"
+                    ]
+                )
+
+                delta_views = (
+                    current[
+                        "views"
+                    ]
+                    - previous[
+                        "views"
+                    ]
+                )
+
+                if delta_hours <= 0:
+                    continue
+
+                velocity_windows.append({
+                    "start_age_hours":
+                        previous[
+                            "release_age_hours"
+                        ],
+
+                    "end_age_hours":
+                        current[
+                            "release_age_hours"
+                        ],
+
+                    "delta_hours":
+                        delta_hours,
+
+                    "delta_views":
+                        delta_views,
+
+                    "views_per_hour":
+                        delta_views
+                        / delta_hours,
+                })
+
+            latest_observation = (
+                observations[-1]
+                if observations
+                else None
+            )
+
+            previous_velocity = (
+                velocity_windows[-2][
+                    "views_per_hour"
+                ]
+                if len(
+                    velocity_windows
+                ) >= 2
+                else None
+            )
+
+            latest_velocity = (
+                velocity_windows[-1][
+                    "views_per_hour"
+                ]
+                if velocity_windows
+                else None
+            )
+
+            acceleration_ratio = None
+
+            if (
+                previous_velocity
+                not in (
+                    None,
+                    0,
+                )
+                and latest_velocity
+                is not None
+            ):
+
+                acceleration_ratio = (
+                    latest_velocity
+                    / previous_velocity
+                )
+
+            release_age_now = max(
+                0.0,
+                (
+                    now - published
+                ).total_seconds()
+                / 3600.0,
+            )
+
+            analytics_complete = bool(
+                latest_observation
+                and latest_observation.get(
+                    "average_view_percentage"
+                ) is not None
+                and latest_observation.get(
+                    "subscriber_metrics_available"
+                )
+            )
+
+            videos.append({
+                "video_id":
+                    video_id,
+
+                "project_id":
+                    project_id,
+
+                "title":
+                    latest.get(
+                        "title"
+                    ),
+
+                "published_at":
+                    published.isoformat(),
+
+                "release_age_hours":
+                    release_age_now,
+
+                "observation_count":
+                    len(
+                        observations
+                    ),
+
+                "state":
+                    (
+                        "TRAJECTORY_READY"
+                        if observations
+                        else
+                        "INSUFFICIENT_DATA"
+                    ),
+
+                "analytics_complete":
+                    analytics_complete,
+
+                "latest":
+                    latest_observation,
+
+                "checkpoints":
+                    checkpoints,
+
+                "checkpoint_quality":
+                    checkpoint_quality,
+
+                "velocity_windows":
+                    velocity_windows,
+
+                "latest_velocity_views_per_hour":
+                    latest_velocity,
+
+                "acceleration_ratio":
+                    acceleration_ratio,
+            })
+
+        ready = [
+            item
+            for item in videos
+            if item.get(
+                "state"
+            )
+            == "TRAJECTORY_READY"
+        ]
+
+        analytics_complete = [
+            item
+            for item in ready
+            if item.get(
+                "analytics_complete"
+            )
+        ]
+
+        return {
+            "schema":
+                "atlas_zero.youtube_release_trajectory.rc2",
+
+            "captured_at":
+                now.isoformat(),
+
+            "checkpoint_hours":
+                list(
+                    checkpoint_hours
+                ),
+
+            "checkpoint_tolerance_hours":
+                checkpoint_tolerance_hours,
+
+            "video_count":
+                len(
+                    videos
+                ),
+
+            "trajectory_ready_count":
+                len(
+                    ready
+                ),
+
+            "analytics_complete_count":
+                len(
+                    analytics_complete
+                ),
+
+            "videos":
+                videos,
+        }
+
 
     def build_channel_report(
         self,
@@ -493,6 +1477,12 @@ class YouTubeChannelIntelligenceRC1:
 
         videos = (
             self.latest_video_snapshots()
+        )
+
+        release_trajectories = (
+            self._build_release_trajectories(
+                captured_at=captured_at,
+            )
         )
 
         public_videos = [
@@ -821,6 +1811,9 @@ class YouTubeChannelIntelligenceRC1:
 
             "baseline":
                 baseline,
+
+            "release_trajectories":
+                release_trajectories,
 
             "ranking":
                 ranked,

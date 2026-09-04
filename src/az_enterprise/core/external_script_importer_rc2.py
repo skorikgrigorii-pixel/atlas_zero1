@@ -14,8 +14,17 @@ RUSSIAN_WORDS_PER_MINUTE = 132.0
 class ExternalScriptSceneRC2:
     scene_id: str
     title: str
-    narration_ru: str
+    narration_ru: str = ""
     duration_sec: float | None = None
+
+    # RC2 directorial handoff extension.
+    # narration_ru remains for backward compatibility.
+    narration: str = ""
+    storytelling_mode: str = "NARRATION"
+    visual_direction: str = ""
+    audio_direction: str = ""
+    voice_direction: str = ""
+    pronunciation_hints: tuple[str, ...] = ()
 
 
 class ExternalScriptImporterRC2:
@@ -98,13 +107,58 @@ class ExternalScriptImporterRC2:
                 raise ValueError("External script contains an empty scene_id")
             if scene_id in by_id:
                 raise ValueError(f"Duplicate external scene_id: {scene_id}")
-            narration = self._clean_narration(scene.narration_ru)
-            if not narration:
-                raise ValueError(f"External scene contains no narration: {scene_id}")
+            narration = self._clean_narration(
+                scene.narration or scene.narration_ru
+            )
+
+            storytelling_mode = str(
+                scene.storytelling_mode or "NARRATION"
+            ).strip().upper()
+
+            valid_modes = {
+                "NARRATION",
+                "VISUAL_MUSIC",
+                "VISUAL_SFX",
+                "MUSIC_ONLY",
+            }
+
+            if storytelling_mode not in valid_modes:
+                raise ValueError(
+                    f"Unsupported storytelling_mode "
+                    f"{storytelling_mode!r} for {scene_id}"
+                )
+
+            if (
+                storytelling_mode == "NARRATION"
+                and not narration
+            ):
+                raise ValueError(
+                    f"External narration scene contains no "
+                    f"narration: {scene_id}"
+                )
+
+            if (
+                storytelling_mode != "NARRATION"
+                and scene.duration_sec is None
+            ):
+                raise ValueError(
+                    f"Non-narration scene {scene_id} "
+                    f"requires explicit duration_sec"
+                )
+
             by_id[scene_id] = ExternalScriptSceneRC2(
                 scene_id=scene_id,
                 title=scene.title.strip(),
                 narration_ru=narration,
+                duration_sec=scene.duration_sec,
+                narration=narration,
+                storytelling_mode=storytelling_mode,
+                visual_direction=scene.visual_direction.strip(),
+                audio_direction=scene.audio_direction.strip(),
+                voice_direction=scene.voice_direction.strip(),
+                pronunciation_hints=tuple(
+                    scene.pronunciation_hints
+                ),
             )
 
         required_ids = [str(scene.get("scene_id") or "").strip() for scene in strategy_scenes]
@@ -129,18 +183,45 @@ class ExternalScriptImporterRC2:
         for index, strategy_scene in enumerate(strategy_scenes, start=1):
             scene_id = required_ids[index - 1]
             imported = by_id[scene_id]
+            duration_source = (
+                imported.duration_sec
+                if imported.duration_sec is not None
+                else strategy_scene.get("duration_sec")
+            )
+
             duration = self._positive_float(
-                strategy_scene.get("duration_sec"),
+                duration_source,
                 field=f"duration_sec for {scene_id}",
             )
             start_sec = round(current_time, 3)
             end_sec = round(start_sec + duration, 3)
-            actual_words = self._word_count(imported.narration_ru)
-            planned_words = max(1, round(duration / 60.0 * self.words_per_minute))
-            estimated_voice_sec = round(actual_words / self.words_per_minute * 60.0, 3)
-            utilization = round(estimated_voice_sec / duration, 3)
+            actual_words = (
+                self._word_count(imported.narration_ru)
+                if imported.narration_ru.strip()
+                else 0
+            )
+            planned_words = max(
+                1,
+                round(
+                    duration / 60.0
+                    * self.words_per_minute
+                ),
+            )
+            estimated_voice_sec = round(
+                actual_words
+                / self.words_per_minute
+                * 60.0,
+                3,
+            )
+            utilization = round(
+                estimated_voice_sec / duration,
+                3,
+            )
 
-            if utilization > 1.10:
+            if (
+                imported.storytelling_mode == "NARRATION"
+                and utilization > 1.10
+            ):
                 warnings.append({
                     "scene_id": scene_id,
                     "code": "VOICEOVER_LONGER_THAN_SCENE",
@@ -149,7 +230,10 @@ class ExternalScriptImporterRC2:
                     "actual_words": actual_words,
                     "planned_words": planned_words,
                 })
-            elif utilization < 0.45:
+            elif (
+                imported.storytelling_mode == "NARRATION"
+                and utilization < 0.45
+            ):
                 warnings.append({
                     "scene_id": scene_id,
                     "code": "VOICEOVER_USES_LESS_THAN_45_PERCENT",
@@ -180,6 +264,17 @@ class ExternalScriptImporterRC2:
                 "opening_line_ru": sentences[0] if sentences else imported.narration_ru,
                 "closing_line_ru": sentences[-1] if sentences else imported.narration_ru,
                 "narrator_bridge_ru": "",
+                "storytelling_mode":
+                    imported.storytelling_mode,
+                "visual_direction":
+                    imported.visual_direction,
+                "audio_direction":
+                    imported.audio_direction,
+                "voice_direction":
+                    imported.voice_direction,
+                "pronunciation_hints": list(
+                    imported.pronunciation_hints
+                ),
                 "source_cluster_ids": [
                     str(value) for value in strategy_scene.get("cluster_ids", [])
                 ] or [f"external:{scene_id}"],
@@ -259,33 +354,53 @@ class ExternalScriptImporterRC2:
                 )
 
                 scenes.append(ExternalScriptSceneRC2(
-
-                    scene_id=str(item.get("scene_id") or "").strip(),
-
-                    title=str(
-
-                        item.get("title")
-
-                        or item.get("scene_title")
-
-                        or ""
-
+                    scene_id=str(
+                        item.get("scene_id") or ""
                     ).strip(),
-
-                    narration_ru=str(
-
-                        item.get("narration_ru")
-
-                        or item.get("voiceover")
-
-                        or item.get("text")
-
+                    title=str(
+                        item.get("title")
+                        or item.get("scene_title")
                         or ""
-
+                    ).strip(),
+                    narration_ru=str(
+                        item.get("narration_ru")
+                        or item.get("narration")
+                        or item.get("voiceover")
+                        or item.get("text")
+                        or ""
                     ),
-
                     duration_sec=duration_sec,
-
+                    narration=str(
+                        item.get("narration")
+                        or item.get("narration_ru")
+                        or item.get("voiceover")
+                        or item.get("text")
+                        or ""
+                    ),
+                    storytelling_mode=str(
+                        item.get("storytelling_mode")
+                        or "NARRATION"
+                    ).strip().upper(),
+                    visual_direction=str(
+                        item.get("visual_direction")
+                        or ""
+                    ).strip(),
+                    audio_direction=str(
+                        item.get("audio_direction")
+                        or ""
+                    ).strip(),
+                    voice_direction=str(
+                        item.get("voice_direction")
+                        or ""
+                    ).strip(),
+                    pronunciation_hints=tuple(
+                        str(value).strip()
+                        for value in (
+                            item.get("pronunciation_hints")
+                            or []
+                        )
+                        if str(value).strip()
+                    ),
                 ))
         else:
             ignored = {
@@ -316,39 +431,54 @@ class ExternalScriptImporterRC2:
                     )
 
                     scenes.append(ExternalScriptSceneRC2(
-
                         scene_id=str(
-
                             value.get("scene_id")
-
                             or key
-
                         ).strip(),
-
                         title=str(
-
                             value.get("title")
-
                             or value.get("scene_title")
-
                             or ""
-
                         ).strip(),
-
                         narration_ru=str(
-
                             value.get("narration_ru")
-
+                            or value.get("narration")
                             or value.get("voiceover")
-
                             or value.get("text")
-
                             or ""
-
                         ),
-
                         duration_sec=duration_sec,
-
+                        narration=str(
+                            value.get("narration")
+                            or value.get("narration_ru")
+                            or value.get("voiceover")
+                            or value.get("text")
+                            or ""
+                        ),
+                        storytelling_mode=str(
+                            value.get("storytelling_mode")
+                            or "NARRATION"
+                        ).strip().upper(),
+                        visual_direction=str(
+                            value.get("visual_direction")
+                            or ""
+                        ).strip(),
+                        audio_direction=str(
+                            value.get("audio_direction")
+                            or ""
+                        ).strip(),
+                        voice_direction=str(
+                            value.get("voice_direction")
+                            or ""
+                        ).strip(),
+                        pronunciation_hints=tuple(
+                            str(item).strip()
+                            for item in (
+                                value.get("pronunciation_hints")
+                                or []
+                            )
+                            if str(item).strip()
+                        ),
                     ))
 
         if not scenes:

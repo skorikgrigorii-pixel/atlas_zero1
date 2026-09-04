@@ -97,6 +97,12 @@ class ProductionScriptAssemblerRC2:
                 "start_sec": start_sec,
                 "end_sec": end_sec,
                 "duration_sec": duration,
+                "storytelling_mode": str(
+                    narration.get(
+                        "storytelling_mode",
+                        "NARRATION",
+                    )
+                ).strip().upper(),
                 "video": {
                     "asset_ids": list(
                         scene.get(
@@ -110,10 +116,20 @@ class ProductionScriptAssemblerRC2:
                             [],
                         )
                     ),
-                    "visual_strategy": scene.get(
-                        "visual_strategy_ru",
-                        "",
+                    "visual_strategy": (
+                        narration.get(
+                            "visual_direction"
+                        )
+                        or scene.get(
+                            "visual_strategy_ru",
+                            "",
+                        )
                     ),
+                    "storytelling_mode":
+                        narration.get(
+                            "storytelling_mode",
+                            "NARRATION",
+                        ),
                     "available_assets": scene.get(
                         "available_assets",
                         len(
@@ -143,8 +159,21 @@ class ProductionScriptAssemblerRC2:
                         "target_words",
                         0,
                     ),
+                    "direction": narration.get(
+                        "voice_direction",
+                        "",
+                    ),
+                    "pronunciation_hints":
+                        narration.get(
+                            "pronunciation_hints",
+                            [],
+                        ),
                 },
                 "sound": {
+                    "direction": narration.get(
+                        "audio_direction",
+                        "",
+                    ),
                     "sfx": (
                         "Use natural production sound "
                         "from assigned source assets."
@@ -264,9 +293,20 @@ class ProductionScriptAssemblerRC2:
             )
 
         for scene in result["scenes"]:
-            if not scene["voiceover"]["text"].strip():
+            storytelling_mode = str(
+                scene["video"].get(
+                    "storytelling_mode",
+                    "NARRATION",
+                )
+            ).strip().upper()
+
+            if (
+                storytelling_mode == "NARRATION"
+                and not scene["voiceover"]["text"].strip()
+            ):
                 raise ValueError(
-                    f"Empty voice-over in {scene['scene_id']}"
+                    f"Empty voice-over in narration "
+                    f"scene {scene['scene_id']}"
                 )
 
             if not scene["video"]["asset_ids"]:

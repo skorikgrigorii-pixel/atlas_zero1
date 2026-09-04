@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import json
 import shutil
 import subprocess
@@ -196,22 +197,13 @@ class VoiceProductionEngineRC2:
 
         narration_texts = [
             (
-                ""
-                if (
-                    str(
-                        dict(
-                            scene.get(
-                                "voiceover",
-                                {},
-                            )
-                        ).get(
-                            "mode",
-                            "",
-                        )
-                    ).strip().lower()
-                    == "silence"
+                self._scene_text(
+                    scene
                 )
-                else self._scene_text(scene)
+                if self._scene_requires_voice(
+                    scene
+                )
+                else ""
             )
             for scene in scenes
         ]
@@ -409,6 +401,44 @@ class VoiceProductionEngineRC2:
                 str(scene_dir),
             "scene_results":
                 scene_results,
+
+            "speech_content_validation":
+                {
+                    "enabled":
+                        True,
+
+                    "engine":
+                        "faster-whisper",
+
+                    "model":
+                        getattr(
+                            self,
+                            "_speech_content_qc_model_name",
+                            "small",
+                        ),
+
+                    "required_for_voice_ready":
+                        True,
+
+                    "validated_narration_scenes":
+                        sum(
+                            1
+                            for row
+                            in scene_results
+                            if row.get(
+                                "speech_content_status"
+                            )
+                            == "EXPECTED_SPEECH_CONFIRMED"
+                        ),
+                },
+
+            "voice_ready_contract":
+                (
+                    "AUDIO_SIGNAL_VALID"
+                    "+"
+                    "EXPECTED_SPEECH_CONFIRMED"
+                ),
+
             "authority":
                 "VoiceProductionEngineRC2",
         }
@@ -508,26 +538,62 @@ class VoiceProductionEngineRC2:
                 {},
             )
         )
-        text = str(
+
+        requires_voice = (
+            self._scene_requires_voice(
+                scene
+            )
+        )
+
+        editorial_text = str(
             voiceover.get(
                 "text",
                 "",
             )
         ).strip()
+
         is_silence = (
-            str(
-                voiceover.get(
-                    "mode",
-                    "",
-                )
-            ).strip().lower()
-            == "silence"
+            not requires_voice
         )
 
-        if not text and not is_silence:
+        if (
+            requires_voice
+            and not editorial_text
+        ):
             raise ValueError(
                 f"Empty voice-over in {scene_id}"
             )
+
+        if requires_voice:
+
+            tts_text, pronunciation_applied = (
+                self._prepare_tts_text(
+                    editorial_text
+                )
+            )
+
+            previous_tts_text = (
+                self._prepare_tts_text(
+                    previous_text
+                )[0]
+                if previous_text
+                else None
+            )
+
+            next_tts_text = (
+                self._prepare_tts_text(
+                    next_text
+                )[0]
+                if next_text
+                else None
+            )
+
+        else:
+
+            tts_text = ""
+            pronunciation_applied = []
+            previous_tts_text = None
+            next_tts_text = None
 
         target_duration = float(
             target_duration_override
@@ -618,10 +684,65 @@ class VoiceProductionEngineRC2:
         # production material. Never regenerate it automatically.
         # ---------------------------------------------------------
 
-        existing_block = (
+        block_meta_path = (
+            block_path.with_suffix(
+                block_path.suffix
+                + ".meta.json"
+            )
+        )
+
+        expected_fingerprint = (
+            self._voice_block_fingerprint(
+                voice_id=
+                    provider.voice_id,
+
+                model_id=
+                    provider.model_id,
+
+                output_format=
+                    provider.output_format,
+
+                language_code=
+                    self.language_code,
+
+                tts_text=
+                    tts_text,
+
+                voice_settings=
+                    self.voice_settings,
+            )
+        )
+
+        existing_block = False
+        existing_meta = {}
+
+        if (
             block_path.is_file()
             and block_path.stat().st_size > 1000
-        )
+            and block_meta_path.is_file()
+        ):
+
+            try:
+
+                existing_meta = (
+                    self._read_json(
+                        block_meta_path
+                    )
+                )
+
+            except Exception:
+
+                existing_meta = {}
+
+            existing_block = (
+                str(
+                    existing_meta.get(
+                        "fingerprint",
+                        "",
+                    )
+                ).strip()
+                == expected_fingerprint
+            )
 
         if existing_block:
 
@@ -639,7 +760,7 @@ class VoiceProductionEngineRC2:
                     provider.output_format,
 
                 "characters":
-                    len(text),
+                    len(tts_text),
 
                 "bytes":
                     block_path.stat().st_size,
@@ -657,13 +778,81 @@ class VoiceProductionEngineRC2:
         else:
 
             provider_result = provider.synthesize(
-                text=text,
+                text=tts_text,
                 output_path=block_path,
                 language_code=
                     self.language_code,
-                previous_text=previous_text,
-                next_text=next_text,
+                previous_text=
+                    previous_tts_text,
+                next_text=
+                    next_tts_text,
             )
+
+            block_meta_path.write_text(
+                json.dumps(
+                    {
+                        "schema":
+                            "atlas_zero.voice_block_cache.v2_3",
+
+                        "scene_id":
+                            scene_id,
+
+                        "voice_id":
+                            provider.voice_id,
+
+                        "model_id":
+                            provider.model_id,
+
+                        "output_format":
+                            provider.output_format,
+
+                        "language_code":
+                            self.language_code,
+
+                        "fingerprint":
+                            expected_fingerprint,
+
+                        "editorial_text":
+                            editorial_text,
+
+                        "tts_text":
+                            tts_text,
+
+                        "pronunciation_applied":
+                            pronunciation_applied,
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+
+        # ---------------------------------------------------------
+        # CANONICAL SPEECH CONTENT QUALITY GATE
+        #
+        # Applies to newly generated and reused provider blocks.
+        # ---------------------------------------------------------
+
+        speech_content_qc = (
+            self.validate_speech_content(
+                block_path,
+                editorial_text,
+                language_code=
+                    self.language_code,
+            )
+        )
+
+        provider_result[
+            "speech_content_qc"
+        ] = speech_content_qc
+
+        provider_result[
+            "speech_content_status"
+        ] = "EXPECTED_SPEECH_CONFIRMED"
+
+        provider_result[
+            "readiness_scope"
+        ] = "AUDIO_SIGNAL_AND_SPEECH_CONTENT"
 
         raw_duration = self._probe_duration(
             ffprobe,
@@ -777,8 +966,951 @@ class VoiceProductionEngineRC2:
                 str(block_path),
             "output_path":
                 str(output_path),
+
+            "audio_signal_qc":
+                provider_result.get(
+                    "audio_signal_qc"
+                ),
+
+            "editorial_text":
+                editorial_text,
+
+            "tts_text":
+                tts_text,
+
+            "pronunciation_applied":
+                pronunciation_applied,
+
+            "voice_block_fingerprint":
+                expected_fingerprint,
+
+            "voice_block_meta_path":
+                str(
+                    block_meta_path
+                ),
+
+            "speech_content_qc":
+                speech_content_qc,
+
+            "speech_content_status":
+                "EXPECTED_SPEECH_CONFIRMED",
+
+            "readiness_scope":
+                "AUDIO_SIGNAL_AND_SPEECH_CONTENT",
+
             "status": "ready",
         }
+
+    @classmethod
+    def _speech_qc_model(
+        cls,
+    ):
+        """
+        Return one cached local faster-whisper model.
+
+        Local ASR only.
+        No remote transcription API.
+        """
+
+        existing = getattr(
+            cls,
+            "_speech_content_qc_model",
+            None,
+        )
+
+        if existing is not None:
+            return existing
+
+        try:
+            from faster_whisper import (
+                WhisperModel,
+            )
+        except Exception as exc:
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                "faster-whisper is unavailable"
+            ) from exc
+
+        model_name = (
+            os.environ.get(
+                "AZ_SPEECH_CONTENT_QC_MODEL",
+                "small",
+            ).strip()
+            or "small"
+        )
+
+        model = WhisperModel(
+            model_name,
+            device="cpu",
+            compute_type="int8",
+        )
+
+        setattr(
+            cls,
+            "_speech_content_qc_model",
+            model,
+        )
+
+        setattr(
+            cls,
+            "_speech_content_qc_model_name",
+            model_name,
+        )
+
+        return model
+
+
+    @staticmethod
+    def _speech_qc_normalize(
+        value: str,
+    ) -> str:
+
+        text = str(
+            value
+            or ""
+        ).lower()
+
+        # Unicode-safe yo -> e normalization.
+        # U+0451 = Cyrillic small letter io
+        # U+0435 = Cyrillic small letter ie
+        text = text.replace(
+            chr(0x0451),
+            chr(0x0435),
+        )
+
+        normalized = []
+        previous_space = False
+
+        for character in text:
+
+            if character.isalnum():
+
+                normalized.append(
+                    character
+                )
+
+                previous_space = False
+
+            else:
+
+                if (
+                    normalized
+                    and not previous_space
+                ):
+                    normalized.append(
+                        " "
+                    )
+                    previous_space = True
+
+        return "".join(
+            normalized
+        ).strip()
+
+
+    @classmethod
+    def validate_speech_content(
+        cls,
+        audio_path: Path,
+        expected_text: str,
+        *,
+        language_code: str | None = None,
+    ) -> dict[str, Any]:
+
+        from difflib import (
+            SequenceMatcher,
+        )
+
+        path = Path(
+            audio_path
+        )
+
+        if not path.is_file():
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                f"audio file does not exist: {path}"
+            )
+
+        expected_original = str(
+            expected_text
+            or ""
+        ).strip()
+
+        if not expected_original:
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                "expected narration text is empty"
+            )
+
+        expected = (
+            cls._speech_qc_normalize(
+                expected_original
+            )
+        )
+
+        expected_words = (
+            expected.split()
+        )
+
+        if not expected_words:
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                "expected narration has no comparable words"
+            )
+
+        model = (
+            cls._speech_qc_model()
+        )
+
+        requested_language = str(
+            language_code
+            or ""
+        ).strip()
+
+        if not requested_language:
+            requested_language = None
+
+        segments, info = model.transcribe(
+            str(path),
+            language=requested_language,
+            beam_size=5,
+            vad_filter=True,
+            condition_on_previous_text=False,
+        )
+
+        transcript_parts = []
+        segment_rows = []
+
+        for segment in segments:
+
+            segment_text = str(
+                segment.text
+                or ""
+            ).strip()
+
+            if segment_text:
+                transcript_parts.append(
+                    segment_text
+                )
+
+            segment_rows.append(
+                {
+                    "start_sec":
+                        round(
+                            float(segment.start),
+                            3,
+                        ),
+
+                    "end_sec":
+                        round(
+                            float(segment.end),
+                            3,
+                        ),
+
+                    "text":
+                        segment_text,
+
+                    "avg_logprob":
+                        (
+                            float(segment.avg_logprob)
+                            if getattr(
+                                segment,
+                                "avg_logprob",
+                                None,
+                            )
+                            is not None
+                            else None
+                        ),
+
+                    "no_speech_prob":
+                        (
+                            float(segment.no_speech_prob)
+                            if getattr(
+                                segment,
+                                "no_speech_prob",
+                                None,
+                            )
+                            is not None
+                            else None
+                        ),
+                }
+            )
+
+        transcript_original = (
+            " ".join(
+                transcript_parts
+            ).strip()
+        )
+
+        transcript = (
+            cls._speech_qc_normalize(
+                transcript_original
+            )
+        )
+
+        transcript_words = (
+            transcript.split()
+        )
+
+        if not transcript_words:
+
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                "NO_RECOGNIZABLE_SPEECH"
+            )
+
+        expected_set = set(
+            expected_words
+        )
+
+        transcript_set = set(
+            transcript_words
+        )
+
+        intersection = (
+            expected_set
+            & transcript_set
+        )
+
+        word_recall = (
+            len(intersection)
+            / max(
+                1,
+                len(expected_set),
+            )
+        )
+
+        word_precision = (
+            len(intersection)
+            / max(
+                1,
+                len(transcript_set),
+            )
+        )
+
+        char_similarity = (
+            SequenceMatcher(
+                None,
+                expected,
+                transcript,
+            ).ratio()
+        )
+
+        word_sequence_similarity = (
+            SequenceMatcher(
+                None,
+                expected_words,
+                transcript_words,
+            ).ratio()
+        )
+
+        expected_word_count = len(
+            expected_words
+        )
+
+        transcript_word_count = len(
+            transcript_words
+        )
+
+        length_ratio = (
+            transcript_word_count
+            / max(
+                1,
+                expected_word_count,
+            )
+        )
+
+        confirmed = (
+            char_similarity >= 0.65
+            or
+            word_sequence_similarity >= 0.70
+            or
+            (
+                word_recall >= 0.72
+                and
+                word_precision >= 0.60
+            )
+        )
+
+        sensible_length = (
+            0.45
+            <= length_ratio
+            <= 1.55
+        )
+
+        if not (
+            confirmed
+            and sensible_length
+        ):
+
+            diagnostic = {
+                "state":
+                    "SPEECH_CONTENT_INVALID",
+
+                "expected_word_count":
+                    expected_word_count,
+
+                "transcript_word_count":
+                    transcript_word_count,
+
+                "word_recall":
+                    round(
+                        word_recall,
+                        6,
+                    ),
+
+                "word_precision":
+                    round(
+                        word_precision,
+                        6,
+                    ),
+
+                "char_similarity":
+                    round(
+                        char_similarity,
+                        6,
+                    ),
+
+                "word_sequence_similarity":
+                    round(
+                        word_sequence_similarity,
+                        6,
+                    ),
+
+                "length_ratio":
+                    round(
+                        length_ratio,
+                        6,
+                    ),
+
+                "transcript":
+                    transcript_original,
+            }
+
+            raise RuntimeError(
+                "ELEVENLABS_SPEECH_CONTENT_QC_FAILED: "
+                + json.dumps(
+                    diagnostic,
+                    ensure_ascii=True,
+                )
+            )
+
+        return {
+            "state":
+                "EXPECTED_SPEECH_CONFIRMED",
+
+            "scope":
+                "SPEECH_CONTENT",
+
+            "engine":
+                "faster-whisper",
+
+            "model":
+                getattr(
+                    cls,
+                    "_speech_content_qc_model_name",
+                    "small",
+                ),
+
+            "requested_language":
+                requested_language,
+
+            "detected_language":
+                getattr(
+                    info,
+                    "language",
+                    None,
+                ),
+
+            "language_probability":
+                (
+                    float(
+                        info.language_probability
+                    )
+                    if getattr(
+                        info,
+                        "language_probability",
+                        None,
+                    )
+                    is not None
+                    else None
+                ),
+
+            "expected_word_count":
+                expected_word_count,
+
+            "transcript_word_count":
+                transcript_word_count,
+
+            "word_recall":
+                round(
+                    word_recall,
+                    6,
+                ),
+
+            "word_precision":
+                round(
+                    word_precision,
+                    6,
+                ),
+
+            "char_similarity":
+                round(
+                    char_similarity,
+                    6,
+                ),
+
+            "word_sequence_similarity":
+                round(
+                    word_sequence_similarity,
+                    6,
+                ),
+
+            "length_ratio":
+                round(
+                    length_ratio,
+                    6,
+                ),
+
+            "transcript":
+                transcript_original,
+
+            "segments":
+                segment_rows,
+
+            "thresholds":
+                {
+                    "char_similarity":
+                        0.65,
+
+                    "word_sequence_similarity":
+                        0.70,
+
+                    "word_recall":
+                        0.72,
+
+                    "word_precision":
+                        0.60,
+
+                    "minimum_length_ratio":
+                        0.45,
+
+                    "maximum_length_ratio":
+                        1.55,
+                },
+
+            "artistic_voice_quality":
+                "NOT_EVALUATED",
+
+            "pronunciation_quality":
+                "NOT_EVALUATED",
+        }
+
+
+    @staticmethod
+    def _storytelling_mode(
+        scene: dict[str, Any],
+    ) -> str:
+        """
+        Resolve the canonical storytelling mode.
+
+        Resolution order:
+
+        1. scene-level storytelling_mode
+           Current canonical production contract.
+
+        2. video.storytelling_mode
+           Backward compatibility with production
+           scripts assembled before contract V2.2.
+
+        3. voiceover.mode == silence
+           Legacy no-voice compatibility.
+
+        4. NARRATION
+           Legacy default.
+        """
+
+        top_level = str(
+            scene.get(
+                "storytelling_mode",
+                "",
+            )
+        ).strip().upper()
+
+        if top_level:
+            return top_level
+
+        video = dict(
+            scene.get(
+                "video",
+                {},
+            )
+        )
+
+        video_mode = str(
+            video.get(
+                "storytelling_mode",
+                "",
+            )
+        ).strip().upper()
+
+        if video_mode:
+            return video_mode
+
+        voiceover = dict(
+            scene.get(
+                "voiceover",
+                {},
+            )
+        )
+
+        legacy_voice_mode = str(
+            voiceover.get(
+                "mode",
+                "",
+            )
+        ).strip().lower()
+
+        if legacy_voice_mode == "silence":
+            return "MUSIC_ONLY"
+
+        return "NARRATION"
+
+
+    @classmethod
+    def _scene_requires_voice(
+        cls,
+        scene: dict[str, Any],
+    ) -> bool:
+        mode = cls._storytelling_mode(
+            scene
+        )
+
+        allowed = {
+            "NARRATION",
+            "VISUAL_MUSIC",
+            "VISUAL_SFX",
+            "MUSIC_ONLY",
+        }
+
+        if mode not in allowed:
+            scene_id = str(
+                scene.get(
+                    "scene_id",
+                    "UNKNOWN",
+                )
+            )
+
+            raise ValueError(
+                "Unsupported storytelling_mode "
+                f"{mode!r} in {scene_id}"
+            )
+
+        return mode == "NARRATION"
+
+
+    # PRONUNCIATION_RUNTIME_V2_3
+
+    def _pronunciation_map_path(
+        self,
+    ) -> Path:
+        return (
+            self.config.project_dir
+            / "voice"
+            / "RU_PRONUNCIATION_MAP_V3.json"
+        )
+
+
+    def _load_pronunciation_rules(
+        self,
+    ) -> list[dict[str, Any]]:
+        """
+        Load the project-specific TTS pronunciation map.
+
+        Editorial narration remains immutable.
+        This layer affects TTS input only.
+        """
+
+        cached = getattr(
+            self,
+            "_pronunciation_rules_cache",
+            None,
+        )
+
+        if cached is not None:
+            return cached
+
+        path = (
+            self._pronunciation_map_path()
+        )
+
+        if not path.is_file():
+
+            rules = []
+
+        else:
+
+            payload = self._read_json(
+                path
+            )
+
+            raw_rules = payload.get(
+                "rules",
+                [],
+            )
+
+            if not isinstance(
+                raw_rules,
+                list,
+            ):
+                raise ValueError(
+                    "Pronunciation map 'rules' "
+                    "must be a list"
+                )
+
+            rules = []
+
+            for index, row in enumerate(
+                raw_rules,
+                start=1,
+            ):
+
+                if not isinstance(
+                    row,
+                    dict,
+                ):
+                    raise ValueError(
+                        "Invalid pronunciation rule "
+                        f"at index {index}"
+                    )
+
+                source = str(
+                    row.get(
+                        "source",
+                        "",
+                    )
+                ).strip()
+
+                target = str(
+                    row.get(
+                        "tts",
+                        "",
+                    )
+                ).strip()
+
+                if not source:
+                    raise ValueError(
+                        "Pronunciation rule source "
+                        f"is empty at index {index}"
+                    )
+
+                if not target:
+                    raise ValueError(
+                        "Pronunciation rule TTS value "
+                        f"is empty at index {index}"
+                    )
+
+                rules.append(
+                    {
+                        "source":
+                            source,
+
+                        "tts":
+                            target,
+
+                        "type":
+                            str(
+                                row.get(
+                                    "type",
+                                    "",
+                                )
+                            ).strip(),
+                    }
+                )
+
+        setattr(
+            self,
+            "_pronunciation_rules_cache",
+            rules,
+        )
+
+        return rules
+
+
+    def _prepare_tts_text(
+        self,
+        editorial_text: str,
+    ) -> tuple[
+        str,
+        list[dict[str, Any]],
+    ]:
+        """
+        Convert immutable editorial narration into provider TTS text.
+
+        Returns:
+            tts_text
+            applied pronunciation rule metadata
+        """
+
+        import re
+
+        editorial = str(
+            editorial_text
+            or ""
+        )
+
+        result = editorial
+        applied = []
+
+        for rule in (
+            self._load_pronunciation_rules()
+        ):
+
+            source = rule[
+                "source"
+            ]
+
+            target = rule[
+                "tts"
+            ]
+
+            if source == "AI":
+
+                pattern = re.compile(
+                    r"(?<![A-Za-z])AI(?![A-Za-z])"
+                )
+
+                result, count = (
+                    pattern.subn(
+                        target,
+                        result,
+                    )
+                )
+
+            else:
+
+                count = result.count(
+                    source
+                )
+
+                if count:
+
+                    result = result.replace(
+                        source,
+                        target,
+                    )
+
+            if count:
+
+                applied.append(
+                    {
+                        "source":
+                            source,
+
+                        "tts":
+                            target,
+
+                        "type":
+                            rule.get(
+                                "type",
+                                "",
+                            ),
+
+                        "count":
+                            count,
+                    }
+                )
+
+        return (
+            result,
+            applied,
+        )
+
+
+    @staticmethod
+    def _voice_block_fingerprint(
+        *,
+        voice_id: str | None,
+        model_id: str,
+        output_format: str,
+        language_code: str | None,
+        tts_text: str,
+        voice_settings: Any,
+    ) -> str:
+        """
+        Stable identity of one provider voice block.
+
+        Old MP3 files may only be reused when the exact
+        provider/text/settings contract matches.
+        """
+
+        import hashlib
+
+        settings_payload = {
+            "stability":
+                getattr(
+                    voice_settings,
+                    "stability",
+                    None,
+                ),
+
+            "similarity_boost":
+                getattr(
+                    voice_settings,
+                    "similarity_boost",
+                    None,
+                ),
+
+            "style":
+                getattr(
+                    voice_settings,
+                    "style",
+                    None,
+                ),
+
+            "use_speaker_boost":
+                getattr(
+                    voice_settings,
+                    "use_speaker_boost",
+                    None,
+                ),
+        }
+
+        payload = {
+            "voice_id":
+                voice_id,
+
+            "model_id":
+                model_id,
+
+            "output_format":
+                output_format,
+
+            "language_code":
+                language_code,
+
+            "tts_text":
+                tts_text,
+
+            "voice_settings":
+                settings_payload,
+        }
+
+        encoded = json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(
+                ",",
+                ":",
+            ),
+        ).encode(
+            "utf-8"
+        )
+
+        return hashlib.sha256(
+            encoded
+        ).hexdigest()
+
 
     @staticmethod
     def _scene_text(
@@ -875,13 +2007,27 @@ class VoiceProductionEngineRC2:
             if not scene_id:
                 raise ValueError("Scene ID is required")
 
-            voiceover = dict(scene.get("voiceover", {}))
-            is_silence = (
-                str(voiceover.get("mode", "")).strip().lower()
-                == "silence"
+            requires_voice = self._scene_requires_voice(
+                scene
             )
-            text = "" if is_silence else self._scene_text(scene)
-            rows.append((scene_id, len(text.split()), is_silence))
+
+            text = (
+                self._scene_text(
+                    scene
+                )
+                if requires_voice
+                else ""
+            )
+
+            is_silence = not requires_voice
+
+            rows.append(
+                (
+                    scene_id,
+                    len(text.split()),
+                    is_silence,
+                )
+            )
 
         total_words = sum(
             words

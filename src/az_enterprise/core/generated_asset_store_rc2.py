@@ -489,6 +489,213 @@ class GeneratedAssetStoreRC2:
 
         return dict(row)
 
+    # ========================================================================
+    # ATLAS_ZERO_CONTINUITY_WINNER_GATE_RC2
+    # ========================================================================
+    #
+    # Final generated-asset continuity safety gate.
+    #
+    # temporal_score is produced by the canonical continuity layer and must
+    # be present before a generated visual candidate can become a winner.
+    #
+    # Explicit continuity BLOCK violations always prevent acceptance.
+    # ========================================================================
+
+    @staticmethod
+    def _continuity_score_is_valid(
+        temporal_score: object,
+    ) -> bool:
+
+        if temporal_score is None:
+            return False
+
+        try:
+            score = float(
+                temporal_score
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            return False
+
+        return (
+            0.0
+            <= score
+            <= 1.0
+        )
+
+
+    @staticmethod
+    def _continuity_review_is_compatible(
+        review_json: object,
+    ) -> bool:
+
+        if review_json is None:
+            return True
+
+
+        if isinstance(
+            review_json,
+            str,
+        ):
+
+            if not review_json.strip():
+                return True
+
+            try:
+
+                payload = json.loads(
+                    review_json
+                )
+
+            except Exception:
+                return True
+
+
+        elif isinstance(
+            review_json,
+            dict,
+        ):
+
+            payload = review_json
+
+        else:
+
+            return True
+
+
+        if not isinstance(
+            payload,
+            dict,
+        ):
+
+            return True
+
+
+        possible_sections = [
+            payload
+        ]
+
+
+        for key in (
+            "continuity",
+            "continuity_evaluation",
+            "visual_continuity",
+        ):
+
+            section = payload.get(
+                key
+            )
+
+            if isinstance(
+                section,
+                dict,
+            ):
+
+                possible_sections.append(
+                    section
+                )
+
+
+        for section in (
+            possible_sections
+        ):
+
+            if (
+                "compatible"
+                in section
+                and
+                section.get(
+                    "compatible"
+                )
+                is False
+            ):
+
+                return False
+
+
+            violations = section.get(
+                "violations",
+                [],
+            )
+
+
+            if isinstance(
+                violations,
+                list,
+            ):
+
+                for violation in (
+                    violations
+                ):
+
+                    if not isinstance(
+                        violation,
+                        dict,
+                    ):
+
+                        continue
+
+
+                    severity = str(
+                        violation.get(
+                            "severity",
+                            "",
+                        )
+                    ).strip().upper()
+
+
+                    if severity == "BLOCK":
+
+                        return False
+
+
+        return True
+
+
+    def _require_candidate_continuity(
+        self,
+        candidate: object,
+    ) -> None:
+
+        temporal_score = (
+            candidate[
+                "temporal_score"
+            ]
+        )
+
+
+        if not self._continuity_score_is_valid(
+            temporal_score
+        ):
+
+            raise RuntimeError(
+                "VISUAL_CONTINUITY_BLOCKED: "
+                "generated candidate has no valid "
+                "temporal_score"
+            )
+
+
+        review_json = (
+            candidate[
+                "review_json"
+            ]
+        )
+
+
+        if not self._continuity_review_is_compatible(
+            review_json
+        ):
+
+            raise RuntimeError(
+                "VISUAL_CONTINUITY_BLOCKED: "
+                "generated candidate contains "
+                "continuity incompatibility"
+            )
+
+
     def select_winner(
         self,
         *,
@@ -524,6 +731,17 @@ class GeneratedAssetStoreRC2:
                 "Candidate must pass review "
                 "before winner selection"
             )
+
+
+        # ------------------------------------------------------------
+        # Canonical continuity winner gate.
+        #
+        # Must execute before selected_as_winner / ACCEPTED mutation.
+        # ------------------------------------------------------------
+
+        self._require_candidate_continuity(
+            candidate
+        )
 
         self.db.execute(
             """

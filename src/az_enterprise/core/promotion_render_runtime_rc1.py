@@ -274,12 +274,18 @@ class PromotionRenderRuntimeRC1:
         """
         Build the canonical promotion render command.
 
-        Vertical policy:
-        - preserve the complete documentary frame;
-        - create a blurred 9:16 background;
-        - overlay the complete original frame;
+        Vertical policy v2:
+        - fill the complete 9:16 canvas;
+        - preserve original aspect ratio before cropping;
+        - remove blurred letterbox/background treatment;
+        - use centered documentary-safe crop as current
+          autonomous fallback;
         - preserve source audio;
         - encode H.264/AAC.
+
+        Future semantic reframing may override the crop
+        position per shot. This renderer provides the
+        canonical full-screen vertical baseline.
         """
 
         ffmpeg = self.resolve_ffmpeg()
@@ -308,19 +314,14 @@ class PromotionRenderRuntimeRC1:
             )
 
         filter_graph = (
-            "[0:v]split=2[bg][fg];"
-            f"[bg]"
+            f"[0:v]"
             f"scale={width}:{height}:"
-            "force_original_aspect_ratio=increase,"
-            f"crop={width}:{height},"
-            "boxblur=20:1"
-            "[bgv];"
-            f"[fg]"
-            f"scale={width}:{height}:"
-            "force_original_aspect_ratio=decrease"
-            "[fgv];"
-            "[bgv][fgv]"
-            "overlay=(W-w)/2:(H-h)/2,"
+            "force_original_aspect_ratio=increase:"
+            "flags=lanczos,"
+            f"crop={width}:{height}:"
+            "(in_w-out_w)/2:"
+            "(in_h-out_h)/2,"
+            "setsar=1,"
             "format=yuv420p"
             "[vout]"
         )
