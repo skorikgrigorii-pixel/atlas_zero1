@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 import os
@@ -60,6 +60,83 @@ class VisualRendererRC2:
         self.report_path = self.output_dir / "visual_render_report_rc2.json"
         self.concat_manifest_path = self.temp_dir / "concat_input.txt"
 
+    @staticmethod
+    def _require_render_eligible(
+        clip: Any,
+    ) -> None:
+        """
+        Hard final-render safety gate.
+
+        REFERENCE_ONLY media may exist in semantic/reference pipelines
+        but must never reach FFmpeg rendering.
+        """
+
+        explicit_values: list[str] = []
+
+        for attr in (
+            "rights_status",
+            "rights_decision",
+            "source_mode",
+            "production_use",
+        ):
+            value = getattr(
+                clip,
+                attr,
+                None,
+            )
+
+            if isinstance(value, str):
+                explicit_values.append(
+                    value.strip().upper()
+                )
+
+            elif isinstance(value, dict):
+                for key in (
+                    "decision",
+                    "source_mode",
+                    "production_use",
+                ):
+                    nested = value.get(
+                        key
+                    )
+
+                    if isinstance(
+                        nested,
+                        str,
+                    ):
+                        explicit_values.append(
+                            nested.strip().upper()
+                        )
+
+        blocked_tokens = {
+            "REFERENCE_ONLY",
+            "EDITORIAL_REFERENCE",
+            "UNLICENSED_REFERENCE",
+            "RIGHTS_REFERENCE",
+        }
+
+        if any(
+            value in blocked_tokens
+            for value in explicit_values
+        ):
+            raise PermissionError(
+                "VISUAL_REFERENCE_ONLY_RENDER_BLOCKED: "
+                f"{getattr(clip, 'shot_id', 'UNKNOWN_SHOT')}"
+            )
+
+        final_render_eligible = getattr(
+            clip,
+            "final_render_eligible",
+            None,
+        )
+
+        if final_render_eligible is False:
+            raise PermissionError(
+                "VISUAL_RIGHTS_RENDER_BLOCKED: "
+                f"{getattr(clip, 'shot_id', 'UNKNOWN_SHOT')}"
+            )
+
+
     def run(self, clips: Iterable[Any]) -> dict[str, Any]:
         ordered = sorted(
             list(clips),
@@ -86,6 +163,7 @@ class VisualRendererRC2:
         records: list[dict[str, Any]] = []
 
         for position, clip in enumerate(ordered, start=1):
+            self._require_render_eligible(clip)
             profile = self.motion_engine.build_profile(clip)
             segment = self._render_segment(position, clip, profile)
             duration = float(getattr(clip, "duration_sec", 0.0))

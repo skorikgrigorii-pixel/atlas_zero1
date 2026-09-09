@@ -45,6 +45,12 @@ class ProductionUnitRC22:
 
     warnings: list[str] = field(default_factory=list)
 
+    # RC2 visual diversity policy.
+    # One generated source must not be recycled to cover a long unit.
+    required_unique_generated_assets: int = 0
+    generated_target_shot_sec: float = 0.0
+    generation_slot_ids: list[str] = field(default_factory=list)
+
 
 class VisualProductionPlannerRC2:
     def __init__(
@@ -53,6 +59,8 @@ class VisualProductionPlannerRC2:
         overlay_index: ProductionSemanticOverlayIndexRC2 | None = None,
         generated_master_target_sec: float = 24.0,
         generated_master_max_sec: float = 34.0,
+        generated_video_clip_target_sec: float = 6.0,
+        generated_still_target_sec: float = 4.0,
         manual_image_minutes: float = 5.0,
         manual_video_minutes: float = 8.0,
         manual_research_minutes: float = 2.0,
@@ -75,6 +83,16 @@ class VisualProductionPlannerRC2:
 
         self.generated_master_max_sec = (
             generated_master_max_sec
+        )
+
+        self.generated_video_clip_target_sec = max(
+            1.0,
+            float(generated_video_clip_target_sec),
+        )
+
+        self.generated_still_target_sec = max(
+            1.0,
+            float(generated_still_target_sec),
         )
 
         self.manual_image_minutes = (
@@ -450,6 +468,101 @@ class VisualProductionPlannerRC2:
             warnings=warnings,
         )
 
+    def _apply_generated_duration_policy(
+        self,
+        units: list[ProductionUnitRC22],
+    ) -> None:
+        """
+        RC2 generated visual diversity policy.
+
+        Generated screen duration must be covered by enough distinct
+        generated assets. A single generated image/video may not be
+        silently looped or recycled to fill a long editorial unit.
+
+        VIDEO_REQUIRED:
+            target ~= generated_video_clip_target_sec
+
+        Other generated visual units:
+            target ~= generated_still_target_sec
+        """
+
+        for unit in units:
+
+            if (
+                unit.acquisition_mode
+                != "GENERATED_MASTER_ASSET"
+            ):
+                continue
+
+            duration = max(
+                0.0,
+                float(unit.editorial_duration_sec),
+            )
+
+            if (
+                unit.motion_class
+                == "VIDEO_REQUIRED"
+            ):
+                target = (
+                    self.generated_video_clip_target_sec
+                )
+            else:
+                target = (
+                    self.generated_still_target_sec
+                )
+
+            if duration <= 0:
+                required = 1
+            else:
+                quotient = duration / target
+
+                required = int(quotient)
+
+                if (
+                    quotient
+                    - float(required)
+                    > 1e-9
+                ):
+                    required += 1
+
+                required = max(
+                    1,
+                    required,
+                )
+
+            unit.generated_target_shot_sec = round(
+                target,
+                3,
+            )
+
+            unit.required_unique_generated_assets = (
+                required
+            )
+
+            unit.generation_slot_ids = [
+                (
+                    f"{unit.production_asset_id}"
+                    f"_GEN_{index:03d}"
+                )
+                for index in range(
+                    1,
+                    required + 1,
+                )
+            ]
+
+            if required > 1:
+                unit.unique_generation_required = True
+
+                warning = (
+                    "GENERATED_DURATION_REQUIRES_"
+                    f"{required}_UNIQUE_ASSETS"
+                )
+
+                if warning not in unit.warnings:
+                    unit.warnings.append(
+                        warning
+                    )
+
     def plan_scene(
         self,
         scene: dict[str, Any],
@@ -636,6 +749,9 @@ class VisualProductionPlannerRC2:
                 )
             )
 
+        # Apply RC2 duration-aware generation diversity policy.
+        self._apply_generated_duration_policy(units)
+
         return {
             "scene_id": scene_id,
 
@@ -805,6 +921,21 @@ class VisualProductionPlannerRC2:
                     False,
 
                 "rights_gate_required":
+                    True,
+
+                "generated_duration_requires_unique_assets":
+                    True,
+
+                "generated_video_clip_target_sec":
+                    self.generated_video_clip_target_sec,
+
+                "generated_still_target_sec":
+                    self.generated_still_target_sec,
+
+                "generated_asset_repetition_allowed":
+                    False,
+
+                "reference_only_must_generate_original":
                     True,
             },
 

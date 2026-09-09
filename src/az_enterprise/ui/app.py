@@ -1,11 +1,10 @@
 from __future__ import annotations
-import json, subprocess, sys, webbrowser, threading, queue
+import json, subprocess, sys, webbrowser, threading, queue, os
 import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
 from az_enterprise.core.database import Database
-from az_enterprise.core.workflow import WorkflowEngine
-from az_enterprise.core.pipeline_runtime import PipelineRunManager
+from az_enterprise.core.director_core_rc2 import DirectorCoreRC2
 from az_enterprise.core.paths import EXPORTS, DB_PATH
 
 BG = '#08111f'; PANEL = '#0b1424'; CARD = '#101b2d'; CARD2 = '#14243a'; TEXT = '#e8eef8'; MUTED = '#91a3ba'; ACCENT = '#38bdf8'; GOOD='#22c55e'; WARN='#f59e0b'; BAD='#ef4444'
@@ -17,6 +16,14 @@ class App(tk.Tk):
         self.geometry('1366x820')
         self.configure(bg=BG)
         self.db = Database(); self.db.init()
+        self.project_id = (
+            os.getenv(
+                "AZ_PROJECT_ID",
+                "franklin",
+            ).strip()
+            or
+            "franklin"
+        )
         self.pipeline_queue = queue.Queue()
         self.pipeline_running = False
         self.style = ttk.Style(self)
@@ -224,26 +231,182 @@ class App(tk.Tk):
 
 
     def story_runtime(self):
+        """Read canonical Story state without mutating production data."""
+
         try:
-            from az_enterprise.core.story_engine_runtime import StoryEngineRuntime
-            report = StoryEngineRuntime(self.db).build()
-            rows=[
-                ('Версия', report.get('version','2.3')),
-                ('Сцен построено', report['scenes']),
-                ('Шотов в монтажном листе', report['shots']),
-                ('Назначено материалов', report['assigned']),
-                ('Недостаёт материалов', report['missing']),
-                ('Готовность Story Engine', str(report['readiness'])+'%'),
-                ('CV', f"assets {report['cv_summary']['assets_with_cv']} · faces {report['cv_summary']['faces_total']} · scenes {report['cv_summary']['scene_candidates_total']} · grade {report['cv_summary']['avg_cinematic_grade']}"),
+
+            project_id = self.project_id
+
+            scene_row = self.db.one(
+                """
+                SELECT COUNT(*) c
+                FROM story_scenes
+                WHERE project_id=?
+                """,
+                (
+                    project_id,
+                ),
+            )
+
+            shot_row = self.db.one(
+                """
+                SELECT
+                    COUNT(*) c,
+                    SUM(
+                        CASE
+                            WHEN assigned_asset_id IS NOT NULL
+                            THEN 1
+                            ELSE 0
+                        END
+                    ) assigned,
+                    SUM(
+                        CASE
+                            WHEN status='missing'
+                            THEN 1
+                            ELSE 0
+                        END
+                    ) missing
+                FROM shots
+                WHERE project_id=?
+                """,
+                (
+                    project_id,
+                ),
+            )
+
+            scenes = int(
+                (
+                    scene_row["c"]
+                    if scene_row
+                    else 0
+                )
+                or 0
+            )
+
+            shots = int(
+                (
+                    shot_row["c"]
+                    if shot_row
+                    else 0
+                )
+                or 0
+            )
+
+            assigned = int(
+                (
+                    shot_row["assigned"]
+                    if shot_row
+                    else 0
+                )
+                or 0
+            )
+
+            missing = int(
+                (
+                    shot_row["missing"]
+                    if shot_row
+                    else 0
+                )
+                or 0
+            )
+
+            readiness = round(
+                assigned
+                /
+                max(
+                    shots,
+                    1,
+                )
+                *
+                100.0,
+                2,
+            )
+
+            rows = [
+                (
+                    "??????",
+                    project_id,
+                ),
+                (
+                    "Authority",
+                    "DirectorCoreRC2",
+                ),
+                (
+                    "????? Story Engine",
+                    "READ ONLY / CANONICAL STATE",
+                ),
+                (
+                    "Canonical story_scenes",
+                    scenes,
+                ),
+                (
+                    "?????",
+                    shots,
+                ),
+                (
+                    "????????? ??????????",
+                    assigned,
+                ),
+                (
+                    "????????? ??????????",
+                    missing,
+                ),
+                (
+                    "????????",
+                    f"{readiness}%",
+                ),
             ]
-            rows += [(f"Сцена {s['scene_id']} · {s['title']}", f"{s['shot_count']} шотов · покрытие {s['coverage']}% · дефицит {s['missing_count']} · {s['risk']}") for s in report['scene_reports']]
-            rows += [('Рекомендация', x) for x in report['recommendations']]
-            rows += [('HTML', str(EXPORTS/'franklin'/'story_engine_2_3.html'))]
-            rows += [('Монтажный лист CSV', str(EXPORTS/'franklin'/'montage_sheet.csv'))]
-            rows += [('Недостающие материалы', str(EXPORTS/'franklin'/'missing_story_requirements.md'))]
-            self.table(['Пункт','Значение'], rows)
+
+            if scenes <= 0 and shots > 0:
+
+                rows.append(
+                    (
+                        "CONTRACT",
+                        (
+                            "PIPELINE_CONTRACT_VIOLATION: "
+                            "shots exist but canonical story_scenes are absent"
+                        ),
+                    )
+                )
+
+            elif scenes <= 0:
+
+                rows.append(
+                    (
+                        "CONTRACT",
+                        "Story is not materialized",
+                    )
+                )
+
+            else:
+
+                rows.append(
+                    (
+                        "CONTRACT",
+                        "STORY_MATERIALIZED",
+                    )
+                )
+
+            self.table(
+                [
+                    "?????",
+                    "????????",
+                ],
+                rows,
+            )
+
         except Exception as e:
-            self.table(['Ошибка'], [(str(e),)])
+
+            self.table(
+                [
+                    "??????",
+                ],
+                [
+                    (
+                        str(e),
+                    )
+                ],
+            )
 
     def native_viewer_pro(self):
         try:
@@ -285,16 +448,14 @@ class App(tk.Tk):
                    [(r['run_id'],r['task_uid'],r['step_order'],r['title'],r['status'],r['attempts'],r['progress'],r['started_at'] or '',r['finished_at'] or '',r['err']) for r in rows])
 
     def retry_failed_last_run(self):
-        try:
-            last=self.db.one('SELECT id FROM pipeline_runs ORDER BY id DESC LIMIT 1')
-            if not last:
-                self.status.config(text='Нет запусков для повтора')
-                return
-            result=PipelineRunManager(Database()).retry_failed_tasks(last['id'])
-            self.status.config(text=f"Повторено задач: {result.get('retried',0)}")
-            self.show('Менеджер задач')
-        except Exception as e:
-            self.status.config(text=f'Ошибка повтора: {e}')
+        """Legacy PipelineRunManager retries are not canonical RC2 authority."""
+
+        self.status.config(
+            text=(
+                "Legacy task retry ????????. "
+                "Canonical production ??????????? ?????? ????? DirectorCoreRC2."
+            )
+        )
 
     def assets(self):
         rows=self.db.rows('SELECT filename,media_type,category,emotion,quality,duplicate_of FROM assets ORDER BY media_type, filename LIMIT 500')
@@ -624,31 +785,275 @@ class App(tk.Tk):
             pass
 
     def run_pipeline(self):
-        if self.pipeline_running:
-            self.status.config(text='Конвейер уже выполняется')
-            return
-        self.show('Live Run Console')
-        self.pipeline_running = True
-        self.status.config(text='Конвейер запущен...')
-        if hasattr(self, 'run_status_label'):
-            self.run_status_label.config(text='Конвейер выполняется...')
-        if hasattr(self, 'run_progress'):
-            self.run_progress['value']=0
-        if hasattr(self, 'run_log_text'):
-            self.run_log_text.insert('end','\n=== Новый запуск конвейера ===\n')
-            self.run_log_text.see('end')
+        """Run canonical production exclusively through DirectorCoreRC2."""
 
-        def cb(event):
-            self.pipeline_queue.put(event)
+        if self.pipeline_running:
+
+            self.status.config(
+                text="Canonical pipeline ??? ???????????"
+            )
+
+            return
+
+        self.show(
+            "Live Run Console"
+        )
+
+        self.pipeline_running = True
+
+        self.status.config(
+            text=(
+                f"Canonical pipeline ???????: "
+                f"{self.project_id}"
+            )
+        )
+
+        if hasattr(
+            self,
+            "run_status_label",
+        ):
+
+            self.run_status_label.config(
+                text=(
+                    f"DirectorCoreRC2 ????????? "
+                    f"{self.project_id}"
+                )
+            )
+
+        if hasattr(
+            self,
+            "run_progress",
+        ):
+
+            self.run_progress[
+                "value"
+            ] = 0
+
+        if hasattr(
+            self,
+            "run_log_text",
+        ):
+
+            self.run_log_text.insert(
+                "end",
+                (
+                    "\n=== Canonical DirectorCoreRC2 run ===\n"
+                    f"Project: {self.project_id}\n"
+                ),
+            )
+
+            self.run_log_text.see(
+                "end"
+            )
+
+        stage_order = [
+            "ASSETS",
+            "STORY",
+            "ASSIGNMENT",
+            "TIMELINE",
+            "VOICE",
+            "RENDER_PREPARE",
+            "RENDER",
+        ]
+
+        def canonical_progress(
+            payload,
+        ):
+
+            payload = (
+                payload
+                if isinstance(
+                    payload,
+                    dict,
+                )
+                else {}
+            )
+
+            stage = str(
+                payload.get(
+                    "stage",
+                    "",
+                )
+            ).upper()
+
+            status = str(
+                payload.get(
+                    "status",
+                    "",
+                )
+            ).upper()
+
+            try:
+
+                index = stage_order.index(
+                    stage
+                )
+
+            except ValueError:
+
+                index = 0
+
+            if status == "COMPLETED":
+
+                progress = (
+                    (
+                        index + 1
+                    )
+                    /
+                    len(
+                        stage_order
+                    )
+                    *
+                    100.0
+                )
+
+                event_type = (
+                    "step_done"
+                )
+
+            elif status == "FAILED":
+
+                progress = (
+                    index
+                    /
+                    len(
+                        stage_order
+                    )
+                    *
+                    100.0
+                )
+
+                event_type = (
+                    "error"
+                )
+
+            else:
+
+                progress = (
+                    index
+                    /
+                    len(
+                        stage_order
+                    )
+                    *
+                    100.0
+                )
+
+                event_type = (
+                    "step_start"
+                )
+
+            event = {
+                "type":
+                    event_type,
+
+                "title":
+                    stage
+                    or
+                    "DirectorCoreRC2",
+
+                "stage":
+                    stage,
+
+                "status":
+                    status,
+
+                "progress":
+                    round(
+                        progress,
+                        2,
+                    ),
+
+                "message":
+                    str(
+                        payload.get(
+                            "error",
+                            "",
+                        )
+                        or
+                        ""
+                    ),
+            }
+
+            self.pipeline_queue.put(
+                event
+            )
 
         def worker():
-            try:
-                PipelineRunManager(Database()).run(cb=cb)
-            except Exception as e:
-                self.pipeline_queue.put({'type':'error','message':str(e)})
 
-        threading.Thread(target=worker, daemon=True).start()
-        self.after(150, self._poll_pipeline_queue)
+            try:
+
+                self.pipeline_queue.put(
+                    {
+                        "type":
+                            "run_started",
+
+                        "message":
+                            (
+                                "DirectorCoreRC2 canonical run "
+                                f"for {self.project_id}"
+                            ),
+
+                        "progress":
+                            0,
+                    }
+                )
+
+                result = (
+                    DirectorCoreRC2(
+                        self.project_id,
+                        progress=canonical_progress,
+                    )
+                    .run_targets(
+                        targets=None,
+                        force=False,
+                        release=False,
+                    )
+                )
+
+                self.pipeline_queue.put(
+                    {
+                        "type":
+                            "finished",
+
+                        "progress":
+                            100,
+
+                        "result":
+                            result,
+
+                        "message":
+                            (
+                                "Canonical DirectorCoreRC2 "
+                                "production completed"
+                            ),
+                    }
+                )
+
+            except Exception as e:
+
+                self.pipeline_queue.put(
+                    {
+                        "type":
+                            "error",
+
+                        "message":
+                            str(e),
+
+                        "progress":
+                            0,
+                    }
+                )
+
+        threading.Thread(
+            target=worker,
+            daemon=True,
+        ).start()
+
+        self.after(
+            150,
+            self._poll_pipeline_queue,
+        )
 
     def _poll_pipeline_queue(self):
         try:

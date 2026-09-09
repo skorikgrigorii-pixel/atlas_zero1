@@ -38,6 +38,7 @@ class PolicyDecisionEvaluator:
         policy: DirectorPolicy,
         *,
         knowledge_base: DirectorKnowledgeBaseRC2 | None = None,
+        preferred_targets: tuple[str, ...] = (),
     ) -> None:
         self._policy = policy
         self._evaluator = DirectorPolicyEvaluator()
@@ -46,6 +47,17 @@ class PolicyDecisionEvaluator:
         )
         self._pending_cycle_id: int | None = None
         self._pending_project_id: str | None = None
+
+        # PATCH 4B:
+        # Advisory preference only. This does not grant authority to a
+        # target and does not alter DirectorPolicy or QualityGate.
+        self._preferred_targets = tuple(
+            dict.fromkeys(
+                str(target).strip()
+                for target in preferred_targets
+                if str(target).strip()
+            )
+        )
 
     @staticmethod
     def _create_default_database() -> Database:
@@ -121,22 +133,115 @@ class PolicyDecisionEvaluator:
                     },
                 )
 
+            # PATCH 4B:
+            # Learning is a soft preference only.
+            #
+            # DirectorPolicy validation has already constrained the target
+            # set. Learning only establishes an advisory input order.
+            # DirectorKnowledgeBaseRC2 then remains responsible for the
+            # final historical effectiveness ranking.
+            preferred_index = {
+                target: index
+                for index, target in enumerate(
+                    self._preferred_targets
+                )
+            }
+
+            original_index = {
+                target: index
+                for index, target in enumerate(
+                    allowed_targets
+                )
+            }
+
+            learning_ordered_targets = tuple(
+                sorted(
+                    allowed_targets,
+                    key=lambda target: (
+                        0 if target in preferred_index else 1,
+                        preferred_index.get(
+                            target,
+                            len(preferred_index),
+                        ),
+                        original_index[target],
+                    ),
+                )
+            )
+
+            # PATCH 6B3 ? CANONICAL RUNTIME CONTEXT PROPAGATION
+            #
+            # PATCH 6B2 made DirectorKnowledgeBaseRC2 capable of
+            # context-aware cross-project ranking. The canonical evaluator
+            # must therefore provide the context BEFORE historical ranking.
+            #
+            # Policy remains authoritative:
+            #   - allowed_targets are already policy-validated;
+            #   - learning may only reorder that allowed set;
+            #   - QualityGate thresholds remain unchanged;
+            #   - context cannot create new rework targets.
+            #
+            # Runtime metadata contributes failure-domain/source context.
+            # Canonical policy contributes stable project_type/objective.
+            # Issue codes are resolved before ranking and are reused when
+            # opening the learning cycle so ranking and persistence observe
+            # exactly the same context.
+
+            issue_codes = self._issue_codes(
+                report
+            )
+
+            learning_runtime_metadata = dict(
+                report.metadata
+                or {}
+            )
+
+            policy_project_type = getattr(
+                self._policy.project_type,
+                "value",
+                self._policy.project_type,
+            )
+
+            policy_objective = getattr(
+                self._policy.objective,
+                "value",
+                self._policy.objective,
+            )
+
+            if policy_project_type is not None:
+                learning_runtime_metadata.setdefault(
+                    "project_type",
+                    str(
+                        policy_project_type
+                    ),
+                )
+
+            if policy_objective is not None:
+                learning_runtime_metadata.setdefault(
+                    "objective",
+                    str(
+                        policy_objective
+                    ),
+                )
+
             ranked_targets = self._knowledge.rank_targets(
                 project_id=project_id,
-                targets=allowed_targets,
+                targets=learning_ordered_targets,
+                runtime_metadata=learning_runtime_metadata,
+                issue_codes=issue_codes,
             )
+
             experience = self._knowledge.target_experience(
                 project_id,
                 ranked_targets,
             )
-            issue_codes = self._issue_codes(report)
+
             self._pending_cycle_id = self._knowledge.begin_cycle(
                 project_id=project_id,
                 cycle=cycle,
                 score_before=evaluation.score,
                 targets=ranked_targets,
                 issue_codes=issue_codes,
-                runtime_metadata=report.metadata,
+                runtime_metadata=learning_runtime_metadata,
             )
             self._pending_project_id = project_id
 
@@ -162,6 +267,24 @@ class PolicyDecisionEvaluator:
                     "cycle": cycle,
                     "learning_cycle_id": self._pending_cycle_id,
                     "learning_feedback": learning_feedback,
+
+                    "learning_preference": {
+                        "mode":
+                            "soft_tiebreak_before_historical_rank",
+
+                        "preferred_targets":
+                            list(self._preferred_targets),
+
+                        "policy_allowed_targets":
+                            list(allowed_targets),
+
+                        "learning_ordered_targets":
+                            list(learning_ordered_targets),
+
+                        "final_ranked_targets":
+                            list(ranked_targets),
+                    },
+
                     "target_experience": {
                         target: {
                             "attempts": item.attempts,

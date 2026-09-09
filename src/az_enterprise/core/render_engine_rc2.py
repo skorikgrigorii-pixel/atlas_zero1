@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 
 import hashlib
 import json
@@ -665,6 +666,125 @@ class RenderEngineRC2:
         raw_name = str(clip.asset_name or "").strip()
         return raw_name.casefold()
 
+
+    @staticmethod
+    def _source_lineage_identity(
+        clip_or_path,
+        asset_name: str | None = None,
+    ) -> str:
+        """Return the underlying source-media lineage.
+
+        Different extracted clips may have different physical paths while
+        originating from the same source video. For known harvested naming
+        conventions such as:
+
+            02__HOOK_01__00006.0s.mp4
+            03__HOOK_01__00108.0s.mp4
+
+        both clips resolve to the same lineage: HOOK_01.
+
+        Assets without a recognizable extraction lineage deliberately fall
+        back to physical asset identity. This avoids grouping unrelated
+        generated or independently acquired material.
+        """
+
+        if isinstance(clip_or_path, RenderClipRC2):
+            raw_path = str(
+                clip_or_path.asset_path or ""
+            ).strip()
+
+            raw_name = str(
+                clip_or_path.asset_name or ""
+            ).strip()
+
+        else:
+            raw_path = str(
+                clip_or_path or ""
+            ).strip()
+
+            raw_name = str(
+                asset_name or ""
+            ).strip()
+
+        filename = (
+            Path(raw_path).name
+            if raw_path
+            else raw_name
+        )
+
+        candidate = filename.casefold()
+
+        # Canonical harvested real-footage family:
+        #
+        #   02__HOOK_01__00006.0s.mp4
+        #   03__HOOK_01__00108.0s.mp4
+        #
+        match = re.search(
+            r"(?:^|__)hook[_-]?(\d+)(?:__|[_-])",
+            candidate,
+            flags=re.IGNORECASE,
+        )
+
+        if match:
+            return (
+                "HOOK_"
+                + match.group(1).zfill(2)
+            )
+
+        # Generic time-sliced derivative names.
+        #
+        # Keep the complete source stem and remove only a proven
+        # terminal editorial timestamp. This mirrors the Assignment
+        # source-lineage contract and prevents unrelated source families
+        # such as b03_water_border__02 and b01_security_boats__02 from
+        # collapsing into the same EXTRACTED:02 lineage.
+        stem = re.sub(
+            r"\.(?:mp4|mov|mkv|avi|webm|m4v|jpg|jpeg|png|webp)$",
+            "",
+            candidate,
+            flags=re.IGNORECASE,
+        )
+
+        generic = re.sub(
+            r"(?:__|[_\-])"
+            r"\d{2,6}(?:\.\d+)?s$",
+            "",
+            stem,
+            flags=re.IGNORECASE,
+        )
+
+        generic = re.sub(
+            r"(?:__|[_\-])"
+            r"(?:clip|segment|slice|cut)"
+            r"[_\-]?\d+$",
+            "",
+            generic,
+            flags=re.IGNORECASE,
+        )
+
+        generic = generic.strip("_- ")
+
+        if generic and generic != stem:
+            return (
+                "DERIVED_NAME:"
+                + generic[:160]
+            )
+
+        # No extraction lineage proven:
+        # keep the physical file independent.
+        if raw_path:
+            return (
+                "ASSET:"
+                + os.path.normcase(
+                    os.path.abspath(raw_path)
+                )
+            )
+
+        return (
+            "ASSET_NAME:"
+            + raw_name.casefold()
+        )
+
     @staticmethod
     def _event_category(clip: RenderClipRC2) -> str | None:
         """Classify documentary source sound from semantic clip metadata."""
@@ -1201,28 +1321,106 @@ class RenderEngineRC2:
 
         kept_clips: list[RenderClipRC2] = []
         used_assets: set[str] = set()
+
+        # RC2 source-lineage uniqueness.
+        #
+        # Physical file identity alone is insufficient because multiple
+        # extracted clips may originate from one source video.
+        used_source_lineages: set[str] = set()
+
         replacement_rows: list[dict[str, Any]] = []
         removed_rows: list[dict[str, Any]] = []
+
+        # A repeated physical asset or repeated source lineage that cannot
+        # be replaced by an unused verified alternative becomes a hard
+        # manual-editorial blocker. It is not silently accepted.
+        replacement_blocked: list[dict[str, Any]] = []
+
+        source_lineage_repetitions: list[dict[str, Any]] = []
+
         cursor_sec = 0.0
 
         for original in ordered:
             clip = original
             identity = self._asset_identity(clip)
+            lineage = self._source_lineage_identity(clip)
 
-            if identity and identity in used_assets:
+            repeated_asset = bool(
+                identity
+                and
+                identity in used_assets
+            )
+
+            repeated_lineage = bool(
+                lineage
+                and
+                lineage in used_source_lineages
+            )
+
+            if repeated_asset or repeated_lineage:
                 chosen: dict[str, Any] | None = None
                 rejection_reasons: list[dict[str, Any]] = []
-                for alternative in clip.alternative_assets:
-                    alt_identity = os.path.normcase(
-                        os.path.abspath(str(alternative.get("asset_path") or ""))
+
+                if repeated_lineage:
+                    source_lineage_repetitions.append(
+                        {
+                            "shot_id": clip.shot_id,
+                            "shot_index": clip.shot_index,
+                            "asset_name": clip.asset_name,
+                            "asset_path": clip.asset_path,
+                            "source_lineage": lineage,
+                            "physical_asset_repeat": repeated_asset,
+                        }
                     )
+                for alternative in clip.alternative_assets:
+                    alt_path = str(
+                        alternative.get("asset_path")
+                        or ""
+                    )
+
+                    alt_name = str(
+                        alternative.get("asset_name")
+                        or ""
+                    )
+
+                    alt_identity = (
+                        os.path.normcase(
+                            os.path.abspath(
+                                alt_path
+                            )
+                        )
+                        if alt_path
+                        else alt_name.casefold()
+                    )
+
+                    alt_lineage = (
+                        self._source_lineage_identity(
+                            alt_path,
+                            alt_name,
+                        )
+                    )
+
                     reason = None
-                    if not self._alternative_fits_clip(alternative, clip):
+
+                    if not self._alternative_fits_clip(
+                        alternative,
+                        clip,
+                    ):
                         reason = "incompatible_or_missing"
+
                     elif alt_identity == identity:
                         reason = "same_asset"
+
                     elif alt_identity in used_assets:
                         reason = "already_used_in_film"
+
+                    elif (
+                        alt_lineage
+                        and
+                        alt_lineage in used_source_lineages
+                    ):
+                        reason = "source_lineage_already_used_in_film"
+
                     if reason is None:
                         chosen = alternative
                         break
@@ -1252,6 +1450,8 @@ class RenderEngineRC2:
                         ),
                     )
                     identity = self._asset_identity(clip)
+                    lineage = self._source_lineage_identity(clip)
+
                     replacement_rows.append({
                         "shot_id": clip.shot_id,
                         "shot_index": clip.shot_index,
@@ -1261,18 +1461,41 @@ class RenderEngineRC2:
                         "new_asset_identity": identity,
                         "new_asset_name": clip.asset_name,
                         "new_asset_path": clip.asset_path,
+                        "new_source_lineage": lineage,
                         "assignment_score": chosen.get("assignment_score"),
                         "provenance": chosen.get("provenance"),
                         "status": "REPLACED_UNUSED_VERIFIED_ALTERNATIVE",
                     })
                 else:
+                    repeat_type = (
+                        "SOURCE_LINEAGE"
+                        if repeated_lineage
+                        else "PHYSICAL_ASSET"
+                    )
+
+                    replacement_blocked.append(
+                        {
+                            "shot_id": clip.shot_id,
+                            "shot_index": clip.shot_index,
+                            "asset_name": clip.asset_name,
+                            "asset_path": clip.asset_path,
+                            "asset_identity": identity,
+                            "source_lineage": lineage,
+                            "repeat_type": repeat_type,
+                            "alternative_rejections":
+                                rejection_reasons,
+                            "status":
+                                "MANUAL_EDITORIAL_REPLACEMENT",
+                        }
+                    )
+
                     clip = replace(
                         clip,
                         quality_flags=tuple(
                             dict.fromkeys(
                                 (
                                     *clip.quality_flags,
-                                    "editor_repeated_asset_allowed",
+                                    "editor_repeat_requires_manual_replacement",
                                 )
                             )
                         ),
@@ -1290,6 +1513,11 @@ class RenderEngineRC2:
             cursor_sec = compact_end
             if identity:
                 used_assets.add(identity)
+
+            if lineage:
+                used_source_lineages.add(
+                    lineage
+                )
 
         editor_overrides = self._load_editor_overrides()
         kept_clips, timeline_override_report = self._apply_editor_timeline_overrides(
@@ -1425,8 +1653,13 @@ class RenderEngineRC2:
             "clips_replaced": len(replacement_rows),
             "replacement_actions": replacement_rows,
             "removed_repeated_clips": removed_rows,
-            "replacement_blocked": [],
-            "duplicate_groups_total": 0,
+            "replacement_blocked": replacement_blocked,
+            "source_lineage_repetitions":
+                source_lineage_repetitions,
+            "source_lineages_used":
+                len(used_source_lineages),
+            "duplicate_groups_total":
+                len(replacement_blocked),
             "duplicate_groups": [],
             "duplicate_warnings": [],
             "natural_sound_candidates": len(candidates),
@@ -1438,7 +1671,10 @@ class RenderEngineRC2:
             "natural_sound_min_gap_sec": minimum_natural_gap_sec,
             "natural_sound_categories": category_counts,
             "selected_natural_sound": selected_rows,
-            "asset_uniqueness_policy": "first_use_kept_repeat_replaced_or_removed",
+            "asset_uniqueness_policy": "absolute_physical_and_source_lineage_uniqueness",
+            "source_lineage_policy": "first_lineage_use_kept_repeat_replaced_or_manual_block",
+            "manual_editorial_approval_required":
+                bool(replacement_blocked),
             "timeline_policy": "compact_after_removal_with_optional_editor_overrides",
             "editor_overrides_loaded": bool(editor_overrides),
             "editor_sound_overrides": sound_override_report,
@@ -1452,6 +1688,12 @@ class RenderEngineRC2:
             duplicate_candidates=report["duplicate_candidates"],
             duplicates_replaced=len(replacement_rows),
             duplicates_removed=len(removed_rows),
+            source_lineage_repetitions=len(
+                source_lineage_repetitions
+            ),
+            replacement_blocked=len(
+                replacement_blocked
+            ),
             clips_output=len(final_clips),
             expected_duration_sec=compact_duration,
             natural_sound_candidates=len(candidates),
@@ -1507,7 +1749,8 @@ class RenderEngineRC2:
                 len(replacement_blocked),
             )
             blocking.append(
-                f"{duplicate_count} visual asset reuses remain after editor pass"
+                f"{duplicate_count} physical/source-lineage visual reuses "
+                "remain after editor pass and require manual editorial replacement"
             )
 
         ordered = sorted(
@@ -1780,8 +2023,8 @@ class RenderEngineRC2:
         )
         if reused_assets:
             warnings.append(
-                f"{repeated_uses_total} visual asset reuses detected; "
-                "reuse allowed for voice-led documentary production"
+                f"{repeated_uses_total} exact source-range visual reuses "
+                "detected during final validation"
             )
 
         minimum_unique_ratio = float(
@@ -1845,7 +2088,8 @@ class RenderEngineRC2:
             "average_asset_reuse": round(average_reuse, 6),
             "reused_assets": reused_assets,
             "repeated_uses_total": repeated_uses_total,
-            "asset_uniqueness_policy": "absolute_one_use_per_film",
+            "asset_uniqueness_policy":
+                "absolute_physical_and_source_lineage_uniqueness",
             "timeline_gaps": timeline_gaps,
             "timeline_overlaps": timeline_overlaps,
             "voice_path": model.voice_path,

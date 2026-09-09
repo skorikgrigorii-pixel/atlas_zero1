@@ -204,6 +204,41 @@ class ApprovedAssetRegistryRC2:
         )
 
 
+    def reference_only(
+        self,
+        shot_id: str,
+    ) -> bool:
+
+        item = self.get(
+            shot_id
+        )
+
+        if not item:
+            return False
+
+        status = str(
+            item.get(
+                "approval_status",
+                "",
+            )
+        ).strip().upper()
+
+        rights = str(
+            item.get(
+                "rights_status",
+                item.get(
+                    "rights_decision",
+                    "",
+                ),
+            )
+        ).strip().upper()
+
+        return (
+            status == "REFERENCE_ONLY"
+            or rights == "REFERENCE_ONLY"
+        )
+
+
 class ProductionTruthIndexRC2:
     """
     Generic production-package reader.
@@ -347,7 +382,19 @@ class ProductionTruthEngineRC2:
             ) == "APPROVED"
         )
 
+        reference_only = (
+            self.approved_registry.reference_only(
+                shot_id
+            )
+        )
+
         warnings: list[str] = []
+
+        if reference_only:
+            warnings.append(
+                "REFERENCE_ONLY_SOURCE_AVAILABLE_"
+                "GENERATE_ORIGINAL_REPLACEMENT"
+            )
 
         if truth is not None:
             action = _norm(
@@ -539,7 +586,10 @@ class ProductionTruthEngineRC2:
             asset_requirement = (
                 "REUSE_APPROVED"
             )
-
+        elif reference_only:
+            asset_requirement = (
+                "NEW_GENERATED_REFERENCE_GUIDED"
+            )
         elif evidence_required:
             asset_requirement = (
                 "REAL_ASSET"

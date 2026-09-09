@@ -25,6 +25,10 @@ class VisualRightsDecisionRC2:
 
     final_render_eligible: bool
 
+    # Reference assets may be analyzed but never rendered.
+    reference_eligible: bool = False
+    production_use: str = "FINAL_RENDER"
+
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
@@ -54,6 +58,13 @@ class VisualRightsGateRC2:
         "INTERNAL",
         "OWNED",
         "ORIGINAL",
+    }
+
+    REFERENCE_ONLY_MODES = {
+        "REFERENCE_ONLY",
+        "EDITORIAL_REFERENCE",
+        "UNLICENSED_REFERENCE",
+        "RIGHTS_REFERENCE",
     }
 
     PUBLIC_DOMAIN_IDS = {
@@ -124,6 +135,35 @@ class VisualRightsGateRC2:
         license_url = str(
             license_url or ""
         ).strip()
+
+        # -----------------------------------------------------
+        # Reference-only visual material
+        #
+        # May be semantically/compositionally analyzed and used as
+        # editorial inspiration for ORIGINAL generation.
+        #
+        # It is NOT licensed production media and can never be rendered.
+        # -----------------------------------------------------
+
+        if mode in self.REFERENCE_ONLY_MODES:
+
+            return VisualRightsDecisionRC2(
+                allowed=False,
+                decision="REFERENCE_ONLY",
+                reason="reference_only_generation_guidance",
+                asset_id=asset_id,
+                source_mode=mode,
+                license_id=license_raw,
+                author=author,
+                source_url=source_url,
+                license_url=license_url,
+                commercial_use=False,
+                attribution_required=False,
+                attribution_complete=False,
+                final_render_eligible=False,
+                reference_eligible=True,
+                production_use="REFERENCE_ONLY",
+            )
 
         # -----------------------------------------------------
         # Internal / generated assets

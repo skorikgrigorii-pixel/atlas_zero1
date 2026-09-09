@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-22T20:02:16.075714+00:00",
+  "generated_at": "2026-07-29T09:56:04.135517+00:00",
   "root": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1\\src\\az_enterprise\\core",
   "summary": {
-    "modules_analyzed": 21,
+    "modules_analyzed": 18,
     "syntax_errors": 0
   },
   "canonical_orchestrator": "director_core_rc2.py",
@@ -18,15 +18,19 @@
     {
       "module": "visual_semantic_analyzer_rc2.py",
       "exists": true,
-      "imported_by_director_core": false,
-      "reads_json": false,
-      "writes_json": false,
-      "json_literals": []
+      "imported_by_director_core": true,
+      "reads_json": true,
+      "writes_json": true,
+      "json_literals": [
+        "visual_semantic_checkpoint.json",
+        "visual_semantic_report.json",
+        "visual_semantic_report.partial.json"
+      ]
     },
     {
       "module": "event_discovery_engine_rc2.py",
       "exists": true,
-      "imported_by_director_core": false,
+      "imported_by_director_core": true,
       "reads_json": true,
       "writes_json": false,
       "json_literals": []
@@ -34,7 +38,7 @@
     {
       "module": "story_strategy_engine_rc2.py",
       "exists": true,
-      "imported_by_director_core": false,
+      "imported_by_director_core": true,
       "reads_json": true,
       "writes_json": false,
       "json_literals": []
@@ -62,7 +66,6 @@
       "reads_json": true,
       "writes_json": true,
       "json_literals": [
-        ". Expected production_script.json in the project script directory.",
         "production_script*.json",
         "production_script.json"
       ]
@@ -94,7 +97,7 @@
       "reads_json": true,
       "writes_json": true,
       "json_literals": [
-        "native_timeline_model.json",
+        "editor_pass_report_rc2.json",
         "render_model_rc2.json",
         "render_report_rc2.json",
         "render_validation_rc2.json",
@@ -111,9 +114,6 @@
     }
   ],
   "missing_direct_imports": [
-    "visual_semantic_analyzer_rc2.py",
-    "event_discovery_engine_rc2.py",
-    "story_strategy_engine_rc2.py",
     "voice_production_engine_rc2.py",
     "audio_composer_rc2.py"
   ],
@@ -128,13 +128,16 @@
         ".director_policy_alpha293",
         ".director_policy_evaluator_alpha293",
         ".director_supervisor_alpha292",
+        ".event_discovery_engine_rc2",
         ".production_state_rc2",
         ".project_config_rc2",
         ".quality_gate_rc2",
         ".render_engine_rc2",
         ".runtime_governance_rc2",
         ".story_engine",
+        ".story_strategy_engine_rc2",
         ".timeline_engine_rc2",
+        ".visual_semantic_analyzer_rc2",
         "__future__",
         "contextlib",
         "dataclasses",
@@ -156,11 +159,13 @@
         "_first_incomplete_stage",
         "_exclusive_run",
         "_run_stage",
+        "_write_json_artifact",
         "_run_story_stage",
         "_stage_services",
         "_normalize_targets",
         "run_targets",
         "run",
+        "run_release",
         "_walk_mappings",
         "_collect_issue_codes",
         "_generate_temporal_report",
@@ -180,479 +185,123 @@
       "relevant_calls": [
         {
           "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "VisualSemanticAnalyzerRC2",
+          "line": 221
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "semantic_report.get",
+          "line": 226
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "semantic_report.get",
+          "line": 227
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "EventDiscoveryEngineRC2",
+          "line": 238
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "event_discovery.get",
+          "line": 239
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "StoryStrategyEngineRC2",
+          "line": 250
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
           "callee": "StoryEngine",
-          "line": 211
+          "line": 278
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "story_result.get",
+          "line": 283
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "AssetEngineRC2",
-          "line": 224
+          "line": 308
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "AssignmentEngineRC2",
-          "line": 226
+          "line": 310
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "TimelineEngineRC2",
-          "line": 230
+          "line": 314
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "RenderEngineRC2",
-          "line": 234
+          "line": 318
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "RenderEngineRC2",
+          "line": 322
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "QualityGateRC2",
-          "line": 238
+          "line": 326
         },
         {
           "scope": "DirectorCoreRC2.run_targets",
           "callee": "quality.get",
-          "line": 300
+          "line": 407
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "render.get",
+          "line": 432
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "render.get",
+          "line": 441
         },
         {
           "scope": "DirectorCoreRC2._generate_temporal_report",
           "callee": "timeline_path.exists",
-          "line": 365
+          "line": 553
         },
         {
           "scope": "DirectorCoreRC2._generate_temporal_report",
           "callee": "timeline_path.read_text",
-          "line": 370
+          "line": 558
         },
         {
           "scope": "DirectorCoreRC2._run_supervised_targets",
           "callee": "self._rewrite_timeline_duration",
-          "line": 508
+          "line": 696
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "quality.get",
-          "line": 647
+          "line": 836
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "self._recommended_targets_from_quality",
-          "line": 663
+          "line": 852
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "quality.get",
-          "line": 682
+          "line": 871
         },
         {
           "scope": "DirectorCoreRC2.default_supervisor_policy",
           "callee": "QualityProfile",
-          "line": 702
-        }
-      ]
-    },
-    "pipeline_runtime.py": {
-      "path": "pipeline_runtime.py",
-      "imports": [
-        ".acceptance_center",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".dependency_resolver_alpha31",
-        ".director_ai",
-        ".director_ai_runtime",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".franklin_e2e_runtime",
-        ".integrations",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".module_registry_alpha31",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_pro",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".story_engine_runtime",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".workflow",
-        ".working_state_auditor",
-        "__future__",
-        "datetime",
-        "json",
-        "os",
-        "pathlib",
-        "resource",
-        "time",
-        "traceback",
-        "typing",
-        "uuid"
-      ],
-      "classes": [
-        "PipelineRunManager"
-      ],
-      "functions": [
-        "__init__",
-        "_ensure_schema",
-        "_register_runtime_modules",
-        "_steps",
-        "module_registry_snapshot",
-        "_step_preflight",
-        "_step_scan_assets",
-        "_step_cv_model",
-        "_step_visual_intelligence",
-        "_step_build_shots",
-        "_step_story_runtime",
-        "_step_director_ai_runtime",
-        "_step_director_ai",
-        "_step_live_api_test",
-        "_step_integrations",
-        "_step_api_queue",
-        "_step_api_safe_run",
-        "_step_quality",
-        "_step_readiness_gate",
-        "_step_timeline_package",
-        "_step_native_timeline",
-        "_step_native_viewer",
-        "_step_native_viewer_pro",
-        "_step_timeline_viewer_2",
-        "_step_cv_review_board",
-        "_step_capcut_bridge",
-        "_step_final_assembly_pack",
-        "_step_montage_workbench",
-        "_step_local_autopilot",
-        "_step_operator_console",
-        "_step_acceptance",
-        "_step_test_center",
-        "_step_production_state",
-        "_step_working_state_audit",
-        "_step_franklin_e2e",
-        "_step_export_all",
-        "_counts",
-        "count",
-        "_log",
-        "_event",
-        "_resource_snapshot",
-        "_update_graph",
-        "_emit_subprogress",
-        "run",
-        "retry_failed_tasks",
-        "_safe_json",
-        "_export_pipeline_graph",
-        "_export_run_report"
-      ],
-      "json_literals": [
-        "pipeline_graph.json",
-        "pipeline_run_report.json",
-        "pipeline_task_events.json",
-        "pipeline_task_queue.json"
-      ],
-      "reads_json": false,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "PipelineRunManager._step_scan_assets",
-          "callee": "AssetIntelligence",
-          "line": 234
-        },
-        {
-          "scope": "PipelineRunManager._step_visual_intelligence",
-          "callee": "analyze_assets",
-          "line": 245
-        },
-        {
-          "scope": "PipelineRunManager._step_build_shots",
-          "callee": "StoryEngine",
-          "line": 249
-        },
-        {
-          "scope": "PipelineRunManager._step_story_runtime",
-          "callee": "StoryEngineRuntime",
-          "line": 253
-        },
-        {
-          "scope": "PipelineRunManager._step_director_ai",
-          "callee": "assign_assets",
-          "line": 259
-        },
-        {
-          "scope": "PipelineRunManager._step_quality",
-          "callee": "QualityCenter",
-          "line": 279
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_package",
-          "callee": "export_timeline_package",
-          "line": 285
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_package",
-          "callee": "TimelineStudio",
-          "line": 285
-        },
-        {
-          "scope": "PipelineRunManager._step_native_timeline",
-          "callee": "NativeTimelineModel",
-          "line": 288
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_viewer_2",
-          "callee": "TimelineViewer2",
-          "line": 297
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 452
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 469
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 490
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 501
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 513
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 526
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 538
-        }
-      ]
-    },
-    "media_orchestrator.py": {
-      "path": "media_orchestrator.py",
-      "imports": [
-        ".database",
-        ".events",
-        ".job_queue",
-        ".paths",
-        ".production_state",
-        ".project_config_rc2",
-        ".project_state",
-        ".render_engine_rc2",
-        ".timeline_engine_rc2",
-        "__future__",
-        "json",
-        "pathlib",
-        "typing"
-      ],
-      "classes": [],
-      "functions": [
-        "run_project",
-        "log",
-        "ensure_job",
-        "execute_stage",
-        "_run_stage_adapter"
-      ],
-      "json_literals": [
-        "/publish/status.json"
-      ],
-      "reads_json": false,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "run_project",
-          "callee": "EventBus",
-          "line": 37
-        },
-        {
-          "scope": "run_project.execute_stage",
-          "callee": "event_bus.emit",
-          "line": 73
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "TimelineEngineRC2",
-          "line": 121
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "RenderEngineRC2",
-          "line": 122
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "render.get",
-          "line": 128
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "render.get",
-          "line": 129
-        }
-      ]
-    },
-    "workflow.py": {
-      "path": "workflow.py",
-      "imports": [
-        ".acceptance_center",
-        ".api_gateway",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".control_layer_rc2",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".director_ai",
-        ".events",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".integrations",
-        ".live_api_layer",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".working_state_auditor",
-        "__future__",
-        "csv",
-        "json",
-        "pathlib"
-      ],
-      "classes": [
-        "WorkflowEngine"
-      ],
-      "functions": [
-        "__init__",
-        "_job",
-        "run_pipeline",
-        "export_all",
-        "_write_command_center_html"
-      ],
-      "json_literals": [
-        "api_готовность.json",
-        "api_запуски.json",
-        "cv_model_report.json",
-        "export_validation.json",
-        "franklin_acceptance_report.json",
-        "live_api_layer_report.json",
-        "live_api_test_suite.json",
-        "live_connectors_report.json",
-        "local_autopilot_report.json",
-        "montage_workbench.json",
-        "native_timeline_model.json",
-        "native_viewer_model_rc.json",
-        "preflight_report.json",
-        "production_state.json",
-        "rc1_completion_plan.json",
-        "rc1_test_report.json",
-        "timeline_operator_view.json",
-        "timeline_viewer_2_model.json",
-        "working_state_audit.json",
-        "готовность_rc1.json",
-        "интеграции.json",
-        "очередь_api.json",
-        "решения_режиссера.json"
-      ],
-      "reads_json": true,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "WorkflowEngine.__init__",
-          "callee": "EventBus",
-          "line": 41
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "AssetIntelligence",
-          "line": 53
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "analyze_assets",
-          "line": 54
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "StoryEngine",
-          "line": 55
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "assign_assets",
-          "line": 56
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "QualityCenter",
-          "line": 61
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "QualityCenter",
-          "line": 62
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "export_timeline_package",
-          "line": 63
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "TimelineStudio",
-          "line": 63
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "FinalTimelineViewer",
-          "line": 72
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "NativeTimelineModel",
-          "line": 78
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "TimelineViewer2",
-          "line": 85
-        },
-        {
-          "scope": "WorkflowEngine.export_all",
-          "callee": "timeline_csv.open",
-          "line": 97
+          "line": 891
         }
       ]
     },
@@ -660,6 +309,7 @@
       "path": "production_director.py",
       "imports": [
         ".paths",
+        ".project_config_rc2",
         "__future__",
         "csv",
         "json",
@@ -673,32 +323,83 @@
         "__init__",
         "run",
         "_build_status",
+        "_script_ready",
+        "_extract_timeline_rows",
+        "_count_timeline_media",
+        "_discover_voice_path",
+        "_timeline_duration",
+        "_render_duration",
         "_decide_next_step",
         "_build_brief",
         "_stage_name",
         "_read_json",
-        "_read_csv_rows"
+        "_read_csv_rows",
+        "_write_json"
       ],
       "json_literals": [
-        "asset_inventory.json",
         "missing_story_requirements.json",
         "production_director_status.json",
-        "production_state.json",
-        "render_manifest.json",
-        "render_report.json"
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json"
       ],
       "reads_json": true,
       "writes_json": true,
       "relevant_calls": [
         {
           "scope": "ProductionDirector._build_status",
-          "callee": "asset_inventory.get",
-          "line": 47
+          "callee": "self._extract_timeline_rows",
+          "line": 54
         },
         {
           "scope": "ProductionDirector._build_status",
-          "callee": "render_manifest.get",
-          "line": 58
+          "callee": "self._count_timeline_media",
+          "line": 80
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._discover_voice_path",
+          "line": 86
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._timeline_duration",
+          "line": 101
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_output.exists",
+          "line": 115
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_output.is_file",
+          "line": 116
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_validation.get",
+          "line": 148
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._render_duration",
+          "line": 160
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 365
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 369
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 366
         }
       ]
     },
@@ -709,6 +410,7 @@
         ".project_config_rc2",
         ".render_engine_rc2",
         ".timeline_engine_rc2",
+        ".voice_production_engine_rc2",
         "__future__",
         "datetime",
         "json",
@@ -725,9 +427,12 @@
         "_write_reports",
         "__init__",
         "build_timeline",
-        "render"
+        "build_voice",
+        "render",
+        "run"
       ],
       "json_literals": [
+        "production_run_rc2.json",
         "readiness_rc2.json"
       ],
       "reads_json": false,
@@ -736,47 +441,102 @@
         {
           "scope": "RC2ReadinessPlanner.evaluate",
           "callee": "self.config.timeline_path.exists",
-          "line": 21
+          "line": 24
+        },
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 25
         },
         {
           "scope": "RC2ReadinessPlanner.evaluate",
           "callee": "self.config.canonical_render_path.exists",
-          "line": 22
+          "line": 26
         },
         {
           "scope": "RC2ReadinessPlanner.plan",
           "callee": "self.evaluate",
-          "line": 42
+          "line": 46
         },
         {
           "scope": "RC2ControlLayer.build_timeline",
           "callee": "TimelineEngineRC2",
-          "line": 95
+          "line": 126
+        },
+        {
+          "scope": "RC2ControlLayer.build_voice",
+          "callee": "VoiceProductionEngineRC2",
+          "line": 129
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "self.config.timeline_path.exists",
-          "line": 99
+          "line": 144
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "self.build_timeline",
-          "line": 100
+          "line": 145
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 147
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.build_voice",
+          "line": 148
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "RenderEngineRC2",
-          "line": 101
+          "line": 150
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "render_report.get",
-          "line": 108
+          "line": 159
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "render_report.get",
-          "line": 109
+          "line": 160
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.config.timeline_path.exists",
+          "line": 175
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.build_timeline",
+          "line": 176
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 178
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.build_voice",
+          "line": 179
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "RenderEngineRC2",
+          "line": 181
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "render_report.get",
+          "line": 188
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "render_report.get",
+          "line": 198
         }
       ]
     }
@@ -858,10 +618,14 @@
         "_parse_required_assets",
         "_shot_belongs_to_scene",
         "_preferred_assets_for_shot",
+        "_row_value",
+        "_semantic_profile",
+        "_asset_is_semantically_allowed",
         "_max_use",
         "_asset_fits_shot",
         "_select_story_asset",
         "score",
+        "_alternative_payload",
         "_write_assignment",
         "_write_missing",
         "run"
@@ -873,42 +637,92 @@
         {
           "scope": "AssignmentPolicyRC2.__init__",
           "callee": "EventBus",
-          "line": 32
+          "line": 46
         },
         {
           "scope": "AssignmentPolicyRC2._preferred_assets_for_shot",
           "callee": "self._parse_required_assets",
-          "line": 144
+          "line": 158
+        },
+        {
+          "scope": "AssignmentPolicyRC2._asset_is_semantically_allowed",
+          "callee": "self._semantic_profile",
+          "line": 221
+        },
+        {
+          "scope": "AssignmentPolicyRC2._asset_is_semantically_allowed",
+          "callee": "semantic_class.startswith",
+          "line": 228
+        },
+        {
+          "scope": "AssignmentPolicyRC2._select_story_asset",
+          "callee": "self._asset_is_semantically_allowed",
+          "line": 282
         },
         {
           "scope": "AssignmentPolicyRC2._select_story_asset",
           "callee": "self._asset_fits_shot",
-          "line": 196
+          "line": 284
+        },
+        {
+          "scope": "AssignmentPolicyRC2.score",
+          "callee": "self._asset_is_semantically_allowed",
+          "line": 301
+        },
+        {
+          "scope": "AssignmentPolicyRC2.score",
+          "callee": "self._semantic_profile",
+          "line": 323
+        },
+        {
+          "scope": "AssignmentPolicyRC2.score",
+          "callee": "semantic_class.replace",
+          "line": 395
         },
         {
           "scope": "AssignmentPolicyRC2.run",
           "callee": "self._preferred_assets_for_shot",
-          "line": 426
+          "line": 607
         },
         {
           "scope": "AssignmentPolicyRC2.run",
           "callee": "self._select_story_asset",
-          "line": 431
+          "line": 612
         },
         {
           "scope": "AssignmentPolicyRC2.run",
-          "callee": "self._write_assignment",
-          "line": 454
+          "callee": "self._asset_is_semantically_allowed",
+          "line": 623
         },
         {
           "scope": "AssignmentPolicyRC2.run",
           "callee": "self._asset_fits_shot",
-          "line": 470
+          "line": 625
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "verified_story_alternatives.sort",
+          "line": 627
         },
         {
           "scope": "AssignmentPolicyRC2.run",
           "callee": "self._write_assignment",
-          "line": 493
+          "line": 653
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._asset_is_semantically_allowed",
+          "line": 668
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._asset_fits_shot",
+          "line": 670
+        },
+        {
+          "scope": "AssignmentPolicyRC2.run",
+          "callee": "self._write_assignment",
+          "line": 699
         }
       ]
     },
@@ -962,6 +776,7 @@
         ".project_config_rc2",
         ".render_engine_rc2",
         ".timeline_engine_rc2",
+        ".voice_production_engine_rc2",
         "__future__",
         "datetime",
         "json",
@@ -978,9 +793,12 @@
         "_write_reports",
         "__init__",
         "build_timeline",
-        "render"
+        "build_voice",
+        "render",
+        "run"
       ],
       "json_literals": [
+        "production_run_rc2.json",
         "readiness_rc2.json"
       ],
       "reads_json": false,
@@ -989,47 +807,102 @@
         {
           "scope": "RC2ReadinessPlanner.evaluate",
           "callee": "self.config.timeline_path.exists",
-          "line": 21
+          "line": 24
+        },
+        {
+          "scope": "RC2ReadinessPlanner.evaluate",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 25
         },
         {
           "scope": "RC2ReadinessPlanner.evaluate",
           "callee": "self.config.canonical_render_path.exists",
-          "line": 22
+          "line": 26
         },
         {
           "scope": "RC2ReadinessPlanner.plan",
           "callee": "self.evaluate",
-          "line": 42
+          "line": 46
         },
         {
           "scope": "RC2ControlLayer.build_timeline",
           "callee": "TimelineEngineRC2",
-          "line": 95
+          "line": 126
+        },
+        {
+          "scope": "RC2ControlLayer.build_voice",
+          "callee": "VoiceProductionEngineRC2",
+          "line": 129
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "self.config.timeline_path.exists",
-          "line": 99
+          "line": 144
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "self.build_timeline",
-          "line": 100
+          "line": 145
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 147
+        },
+        {
+          "scope": "RC2ControlLayer.render",
+          "callee": "self.build_voice",
+          "line": 148
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "RenderEngineRC2",
-          "line": 101
+          "line": 150
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "render_report.get",
-          "line": 108
+          "line": 159
         },
         {
           "scope": "RC2ControlLayer.render",
           "callee": "render_report.get",
-          "line": 109
+          "line": 160
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.config.timeline_path.exists",
+          "line": 175
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.build_timeline",
+          "line": 176
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.config.master_audio_path.exists",
+          "line": 178
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "self.build_voice",
+          "line": 179
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "RenderEngineRC2",
+          "line": 181
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "render_report.get",
+          "line": 188
+        },
+        {
+          "scope": "RC2ControlLayer.run",
+          "callee": "render_report.get",
+          "line": 198
         }
       ]
     },
@@ -1043,13 +916,16 @@
         ".director_policy_alpha293",
         ".director_policy_evaluator_alpha293",
         ".director_supervisor_alpha292",
+        ".event_discovery_engine_rc2",
         ".production_state_rc2",
         ".project_config_rc2",
         ".quality_gate_rc2",
         ".render_engine_rc2",
         ".runtime_governance_rc2",
         ".story_engine",
+        ".story_strategy_engine_rc2",
         ".timeline_engine_rc2",
+        ".visual_semantic_analyzer_rc2",
         "__future__",
         "contextlib",
         "dataclasses",
@@ -1071,11 +947,13 @@
         "_first_incomplete_stage",
         "_exclusive_run",
         "_run_stage",
+        "_write_json_artifact",
         "_run_story_stage",
         "_stage_services",
         "_normalize_targets",
         "run_targets",
         "run",
+        "run_release",
         "_walk_mappings",
         "_collect_issue_codes",
         "_generate_temporal_report",
@@ -1095,73 +973,123 @@
       "relevant_calls": [
         {
           "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "VisualSemanticAnalyzerRC2",
+          "line": 221
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "semantic_report.get",
+          "line": 226
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "semantic_report.get",
+          "line": 227
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "EventDiscoveryEngineRC2",
+          "line": 238
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "event_discovery.get",
+          "line": 239
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "StoryStrategyEngineRC2",
+          "line": 250
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
           "callee": "StoryEngine",
-          "line": 211
+          "line": 278
+        },
+        {
+          "scope": "DirectorCoreRC2._run_story_stage",
+          "callee": "story_result.get",
+          "line": 283
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "AssetEngineRC2",
-          "line": 224
+          "line": 308
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "AssignmentEngineRC2",
-          "line": 226
+          "line": 310
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "TimelineEngineRC2",
-          "line": 230
+          "line": 314
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "RenderEngineRC2",
-          "line": 234
+          "line": 318
+        },
+        {
+          "scope": "DirectorCoreRC2._stage_services",
+          "callee": "RenderEngineRC2",
+          "line": 322
         },
         {
           "scope": "DirectorCoreRC2._stage_services",
           "callee": "QualityGateRC2",
-          "line": 238
+          "line": 326
         },
         {
           "scope": "DirectorCoreRC2.run_targets",
           "callee": "quality.get",
-          "line": 300
+          "line": 407
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "render.get",
+          "line": 432
+        },
+        {
+          "scope": "DirectorCoreRC2.run_targets",
+          "callee": "render.get",
+          "line": 441
         },
         {
           "scope": "DirectorCoreRC2._generate_temporal_report",
           "callee": "timeline_path.exists",
-          "line": 365
+          "line": 553
         },
         {
           "scope": "DirectorCoreRC2._generate_temporal_report",
           "callee": "timeline_path.read_text",
-          "line": 370
+          "line": 558
         },
         {
           "scope": "DirectorCoreRC2._run_supervised_targets",
           "callee": "self._rewrite_timeline_duration",
-          "line": 508
+          "line": 696
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "quality.get",
-          "line": 647
+          "line": 836
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "self._recommended_targets_from_quality",
-          "line": 663
+          "line": 852
         },
         {
           "scope": "DirectorCoreRC2._build_supervisor_report",
           "callee": "quality.get",
-          "line": 682
+          "line": 871
         },
         {
           "scope": "DirectorCoreRC2.default_supervisor_policy",
           "callee": "QualityProfile",
-          "line": 702
+          "line": 891
         }
       ]
     },
@@ -1239,271 +1167,11 @@
         }
       ]
     },
-    "media_orchestrator.py": {
-      "path": "media_orchestrator.py",
-      "imports": [
-        ".database",
-        ".events",
-        ".job_queue",
-        ".paths",
-        ".production_state",
-        ".project_config_rc2",
-        ".project_state",
-        ".render_engine_rc2",
-        ".timeline_engine_rc2",
-        "__future__",
-        "json",
-        "pathlib",
-        "typing"
-      ],
-      "classes": [],
-      "functions": [
-        "run_project",
-        "log",
-        "ensure_job",
-        "execute_stage",
-        "_run_stage_adapter"
-      ],
-      "json_literals": [
-        "/publish/status.json"
-      ],
-      "reads_json": false,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "run_project",
-          "callee": "EventBus",
-          "line": 37
-        },
-        {
-          "scope": "run_project.execute_stage",
-          "callee": "event_bus.emit",
-          "line": 73
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "TimelineEngineRC2",
-          "line": 121
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "RenderEngineRC2",
-          "line": 122
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "render.get",
-          "line": 128
-        },
-        {
-          "scope": "_run_stage_adapter",
-          "callee": "render.get",
-          "line": 129
-        }
-      ]
-    },
-    "pipeline_runtime.py": {
-      "path": "pipeline_runtime.py",
-      "imports": [
-        ".acceptance_center",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".dependency_resolver_alpha31",
-        ".director_ai",
-        ".director_ai_runtime",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".franklin_e2e_runtime",
-        ".integrations",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".module_registry_alpha31",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_pro",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".story_engine_runtime",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".workflow",
-        ".working_state_auditor",
-        "__future__",
-        "datetime",
-        "json",
-        "os",
-        "pathlib",
-        "resource",
-        "time",
-        "traceback",
-        "typing",
-        "uuid"
-      ],
-      "classes": [
-        "PipelineRunManager"
-      ],
-      "functions": [
-        "__init__",
-        "_ensure_schema",
-        "_register_runtime_modules",
-        "_steps",
-        "module_registry_snapshot",
-        "_step_preflight",
-        "_step_scan_assets",
-        "_step_cv_model",
-        "_step_visual_intelligence",
-        "_step_build_shots",
-        "_step_story_runtime",
-        "_step_director_ai_runtime",
-        "_step_director_ai",
-        "_step_live_api_test",
-        "_step_integrations",
-        "_step_api_queue",
-        "_step_api_safe_run",
-        "_step_quality",
-        "_step_readiness_gate",
-        "_step_timeline_package",
-        "_step_native_timeline",
-        "_step_native_viewer",
-        "_step_native_viewer_pro",
-        "_step_timeline_viewer_2",
-        "_step_cv_review_board",
-        "_step_capcut_bridge",
-        "_step_final_assembly_pack",
-        "_step_montage_workbench",
-        "_step_local_autopilot",
-        "_step_operator_console",
-        "_step_acceptance",
-        "_step_test_center",
-        "_step_production_state",
-        "_step_working_state_audit",
-        "_step_franklin_e2e",
-        "_step_export_all",
-        "_counts",
-        "count",
-        "_log",
-        "_event",
-        "_resource_snapshot",
-        "_update_graph",
-        "_emit_subprogress",
-        "run",
-        "retry_failed_tasks",
-        "_safe_json",
-        "_export_pipeline_graph",
-        "_export_run_report"
-      ],
-      "json_literals": [
-        "pipeline_graph.json",
-        "pipeline_run_report.json",
-        "pipeline_task_events.json",
-        "pipeline_task_queue.json"
-      ],
-      "reads_json": false,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "PipelineRunManager._step_scan_assets",
-          "callee": "AssetIntelligence",
-          "line": 234
-        },
-        {
-          "scope": "PipelineRunManager._step_visual_intelligence",
-          "callee": "analyze_assets",
-          "line": 245
-        },
-        {
-          "scope": "PipelineRunManager._step_build_shots",
-          "callee": "StoryEngine",
-          "line": 249
-        },
-        {
-          "scope": "PipelineRunManager._step_story_runtime",
-          "callee": "StoryEngineRuntime",
-          "line": 253
-        },
-        {
-          "scope": "PipelineRunManager._step_director_ai",
-          "callee": "assign_assets",
-          "line": 259
-        },
-        {
-          "scope": "PipelineRunManager._step_quality",
-          "callee": "QualityCenter",
-          "line": 279
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_package",
-          "callee": "export_timeline_package",
-          "line": 285
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_package",
-          "callee": "TimelineStudio",
-          "line": 285
-        },
-        {
-          "scope": "PipelineRunManager._step_native_timeline",
-          "callee": "NativeTimelineModel",
-          "line": 288
-        },
-        {
-          "scope": "PipelineRunManager._step_timeline_viewer_2",
-          "callee": "TimelineViewer2",
-          "line": 297
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 452
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 469
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 490
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 501
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 513
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 526
-        },
-        {
-          "scope": "PipelineRunManager.run",
-          "callee": "self._event",
-          "line": 538
-        }
-      ]
-    },
     "production_director.py": {
       "path": "production_director.py",
       "imports": [
         ".paths",
+        ".project_config_rc2",
         "__future__",
         "csv",
         "json",
@@ -1517,32 +1185,83 @@
         "__init__",
         "run",
         "_build_status",
+        "_script_ready",
+        "_extract_timeline_rows",
+        "_count_timeline_media",
+        "_discover_voice_path",
+        "_timeline_duration",
+        "_render_duration",
         "_decide_next_step",
         "_build_brief",
         "_stage_name",
         "_read_json",
-        "_read_csv_rows"
+        "_read_csv_rows",
+        "_write_json"
       ],
       "json_literals": [
-        "asset_inventory.json",
         "missing_story_requirements.json",
         "production_director_status.json",
-        "production_state.json",
-        "render_manifest.json",
-        "render_report.json"
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json"
       ],
       "reads_json": true,
       "writes_json": true,
       "relevant_calls": [
         {
           "scope": "ProductionDirector._build_status",
-          "callee": "asset_inventory.get",
-          "line": 47
+          "callee": "self._extract_timeline_rows",
+          "line": 54
         },
         {
           "scope": "ProductionDirector._build_status",
-          "callee": "render_manifest.get",
-          "line": 58
+          "callee": "self._count_timeline_media",
+          "line": 80
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._discover_voice_path",
+          "line": 86
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._timeline_duration",
+          "line": 101
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_output.exists",
+          "line": 115
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_output.is_file",
+          "line": 116
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "render_validation.get",
+          "line": 148
+        },
+        {
+          "scope": "ProductionDirector._build_status",
+          "callee": "self._render_duration",
+          "line": 160
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 365
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 369
+        },
+        {
+          "scope": "ProductionDirector._render_duration",
+          "callee": "render_report.get",
+          "line": 366
         }
       ]
     },
@@ -1563,16 +1282,17 @@
         "effective_media_source_dir",
         "export_dir",
         "rc2_dir",
+        "visual_semantic_report_path",
+        "event_discovery_result_path",
         "story_strategy_result_path",
         "timeline_dir",
         "timeline_path",
-        "legacy_timeline_path",
         "native_timeline_model_path",
         "temporal_summary_path",
         "master_audio_path",
-        "legacy_master_audio_path",
-        "legacy_render_path",
-        "franklin_legacy_render_path",
+        "render_dir",
+        "render_preflight_report_path",
+        "preview_render_path",
         "canonical_render_path",
         "state_path",
         "run_lock_path",
@@ -1580,13 +1300,16 @@
         "quality_report_path"
       ],
       "json_literals": [
+        "event_discovery_result.json",
         "native_timeline_model.json",
         "production_state.json",
         "quality_report.json",
+        "render_preflight_rc2.json",
         "runtime_governance.json",
         "story_strategy_result.json",
         "temporal_assignment_summary.json",
-        "timeline.json"
+        "timeline.json",
+        "visual_semantic_report.json"
       ],
       "reads_json": false,
       "writes_json": false,
@@ -1630,32 +1353,32 @@
         {
           "scope": "QualityGateRC2.run",
           "callee": "render_path.exists",
-          "line": 98
+          "line": 121
         },
         {
           "scope": "QualityGateRC2.run",
           "callee": "render_path.exists",
-          "line": 100
+          "line": 123
         },
         {
           "scope": "QualityGateRC2.run",
           "callee": "RenderEngineRC2",
-          "line": 102
+          "line": 125
         },
         {
           "scope": "QualityGateRC2.run",
           "callee": "PostProductionQualityRC2",
-          "line": 107
+          "line": 130
         },
         {
           "scope": "QualityGateRC2._finish",
           "callee": "self.config.quality_report_path.parent.mkdir",
-          "line": 170
+          "line": 199
         },
         {
           "scope": "QualityGateRC2._finish",
           "callee": "self.config.quality_report_path.write_text",
-          "line": 171
+          "line": 200
         }
       ]
     },
@@ -1684,7 +1407,6 @@
     "render_engine_rc2.py": {
       "path": "render_engine_rc2.py",
       "imports": [
-        ".audio_composer_rc2",
         ".project_config_rc2",
         ".visual_renderer_rc2",
         "__future__",
@@ -1705,16 +1427,24 @@
         "to_dict",
         "to_dict",
         "__init__",
+        "prepare",
         "run",
         "load_timeline",
         "_timeline_candidates",
         "_extract_video_rows",
         "build_render_model",
         "_normalize_clip",
+        "_parse_alternative_assets",
+        "_alternative_fits_clip",
+        "_asset_identity",
+        "_event_category",
+        "_natural_sound_priority",
+        "_editor_pass",
         "validate_render_model",
         "_validate_audio_inputs",
         "_run_native_visual_backend",
         "_compose_phase4_audio",
+        "source_has_audio",
         "_run_ffmpeg",
         "_discover_voice_path",
         "_discover_music_path",
@@ -1738,7 +1468,7 @@
         "_write_json"
       ],
       "json_literals": [
-        "native_timeline_model.json",
+        "editor_pass_report_rc2.json",
         "render_model_rc2.json",
         "render_report_rc2.json",
         "render_validation_rc2.json",
@@ -1750,132 +1480,192 @@
         {
           "scope": "RenderEngineRC2.__init__",
           "callee": "self.render_dir.mkdir",
-          "line": 140
+          "line": 143
+        },
+        {
+          "scope": "RenderEngineRC2.prepare",
+          "callee": "self.load_timeline",
+          "line": 161
+        },
+        {
+          "scope": "RenderEngineRC2.prepare",
+          "callee": "self.build_render_model",
+          "line": 168
+        },
+        {
+          "scope": "RenderEngineRC2.prepare",
+          "callee": "self.validate_render_model",
+          "line": 173
         },
         {
           "scope": "RenderEngineRC2.run",
           "callee": "self.load_timeline",
-          "line": 153
+          "line": 218
         },
         {
           "scope": "RenderEngineRC2.run",
           "callee": "self.build_render_model",
-          "line": 160
+          "line": 225
         },
         {
           "scope": "RenderEngineRC2.run",
           "callee": "self.validate_render_model",
-          "line": 163
+          "line": 230
         },
         {
           "scope": "RenderEngineRC2.run",
           "callee": "self._compose_phase4_audio",
-          "line": 182
+          "line": 250
         },
         {
           "scope": "RenderEngineRC2.load_timeline",
           "callee": "self._timeline_candidates",
-          "line": 229
+          "line": 319
         },
         {
           "scope": "RenderEngineRC2.build_render_model",
           "callee": "self._discover_voice_path",
-          "line": 302
+          "line": 394
         },
         {
           "scope": "RenderEngineRC2.build_render_model",
           "callee": "RenderModelRC2",
-          "line": 335
-        },
-        {
-          "scope": "RenderEngineRC2._normalize_clip",
-          "callee": "self._normalize_quality_flags",
           "line": 427
         },
         {
           "scope": "RenderEngineRC2._normalize_clip",
+          "callee": "self._normalize_quality_flags",
+          "line": 538
+        },
+        {
+          "scope": "RenderEngineRC2._normalize_clip",
           "callee": "RenderClipRC2",
-          "line": 429
+          "line": 540
+        },
+        {
+          "scope": "RenderEngineRC2._normalize_clip",
+          "callee": "self._parse_alternative_assets",
+          "line": 565
+        },
+        {
+          "scope": "RenderEngineRC2._editor_pass",
+          "callee": "self._asset_identity",
+          "line": 755
+        },
+        {
+          "scope": "RenderEngineRC2._editor_pass",
+          "callee": "self._asset_identity",
+          "line": 823
+        },
+        {
+          "scope": "RenderEngineRC2._editor_pass",
+          "callee": "self._asset_identity",
+          "line": 860
+        },
+        {
+          "scope": "RenderEngineRC2._editor_pass",
+          "callee": "self._event_category",
+          "line": 915
+        },
+        {
+          "scope": "RenderEngineRC2._editor_pass",
+          "callee": "self._event_category",
+          "line": 964
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "timeline_overlaps.append",
-          "line": 619
+          "line": 1194
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "timeline_gaps.append",
-          "line": 630
+          "line": 1205
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "asset_use_count.get",
-          "line": 643
+          "line": 1218
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "asset_probes.append",
-          "line": 682
+          "line": 1257
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "asset_use_count.values",
-          "line": 719
+          "line": 1294
         },
         {
           "scope": "RenderEngineRC2.validate_render_model",
           "callee": "self._validate_audio_inputs",
-          "line": 764
+          "line": 1339
         },
         {
           "scope": "RenderEngineRC2._validate_audio_inputs",
           "callee": "voice.exists",
-          "line": 812
+          "line": 1387
         },
         {
           "scope": "RenderEngineRC2._validate_audio_inputs",
           "callee": "voice.is_file",
-          "line": 812
+          "line": 1387
         },
         {
           "scope": "RenderEngineRC2._validate_audio_inputs",
           "callee": "voice_probe.get",
-          "line": 818
+          "line": 1393
         },
         {
           "scope": "RenderEngineRC2._validate_audio_inputs",
           "callee": "voice_probe.get",
-          "line": 820
+          "line": 1395
         },
         {
           "scope": "RenderEngineRC2._run_native_visual_backend",
           "callee": "VisualRendererRC2",
-          "line": 881
+          "line": 1456
         },
         {
           "scope": "RenderEngineRC2._run_native_visual_backend",
           "callee": "renderer.run",
-          "line": 889
+          "line": 1464
+        },
+        {
+          "scope": "RenderEngineRC2._compose_phase4_audio.source_has_audio",
+          "callee": "subprocess.run",
+          "line": 1516
+        },
+        {
+          "scope": "RenderEngineRC2._compose_phase4_audio",
+          "callee": "self._event_category",
+          "line": 1550
+        },
+        {
+          "scope": "RenderEngineRC2._compose_phase4_audio",
+          "callee": "source_has_audio",
+          "line": 1559
         },
         {
           "scope": "RenderEngineRC2._run_ffmpeg",
           "callee": "subprocess.run",
-          "line": 1008
+          "line": 2001
         },
         {
           "scope": "RenderEngineRC2.probe_source",
           "callee": "subprocess.run",
-          "line": 1066
+          "line": 2074
         },
         {
           "scope": "RenderEngineRC2.probe",
           "callee": "subprocess.run",
-          "line": 1130
+          "line": 2138
         },
         {
           "scope": "RenderEngineRC2._clip_skip_reason",
           "callee": "clip.asset_name.upper",
-          "line": 1197
+          "line": 2205
         }
       ]
     },
@@ -2021,6 +1811,7 @@
       ],
       "functions": [
         "__init__",
+        "_parse_alternative_assets",
         "_load_rows",
         "_write_json",
         "_write_csv",
@@ -2032,7 +1823,6 @@
         "run"
       ],
       "json_literals": [
-        ". Expected production_script.json in the project script directory.",
         "production_script*.json",
         "production_script.json"
       ],
@@ -2041,48 +1831,58 @@
       "relevant_calls": [
         {
           "scope": "TimelineEngineRC2._load_rows",
+          "callee": "self._parse_alternative_assets",
+          "line": 183
+        },
+        {
+          "scope": "TimelineEngineRC2._load_rows",
           "callee": "timeline_rows.append",
-          "line": 61
+          "line": 187
         },
         {
           "scope": "TimelineEngineRC2._write_csv",
           "callee": "self.config.timeline_path.with_suffix",
-          "line": 111
+          "line": 249
+        },
+        {
+          "scope": "TimelineEngineRC2.run_from_project",
+          "callee": "self.run",
+          "line": 348
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "self._resolve_assets",
-          "line": 383
+          "line": 498
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "assets.get",
-          "line": 437
+          "line": 552
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "resolved_asset.get",
-          "line": 445
+          "line": 560
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "resolved_asset.get",
-          "line": 457
+          "line": 572
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "assets.get",
-          "line": 555
+          "line": 677
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "timeline_rows.append",
-          "line": 565
+          "line": 688
         },
         {
           "scope": "TimelineEngineRC2.run_from_production_script",
           "callee": "voiceover.get",
-          "line": 626
+          "line": 750
         }
       ]
     },
@@ -2096,12 +1896,16 @@
         "cv2",
         "dataclasses",
         "datetime",
+        "gc",
         "json",
         "math",
         "numpy",
+        "os",
         "pathlib",
         "re",
+        "time",
         "torch",
+        "traceback",
         "transformers",
         "typing"
       ],
@@ -2115,10 +1919,25 @@
         "classify",
         "__init__",
         "classify",
+        "cleanup",
+        "_cleanup_memory",
         "__init__",
         "analyze",
+        "_persist_semantic_result",
+        "_persist_semantic_payload",
+        "_classify_failure",
+        "_build_report",
+        "_save_progress",
+        "_load_checkpoint",
+        "_restore_results",
+        "_asset_signature",
+        "_atomic_write_json",
+        "_remove_progress_files",
+        "_safe_unlink",
+        "_env_flag",
         "_load_assets",
         "_analyze_asset",
+        "_cleanup_after_asset",
         "_extract_images",
         "_relevance_status",
         "_story_value",
@@ -2126,65 +1945,125 @@
         "_objects_for_event",
         "_actions_for_event"
       ],
-      "json_literals": [],
-      "reads_json": false,
-      "writes_json": false,
+      "json_literals": [
+        "visual_semantic_checkpoint.json",
+        "visual_semantic_report.json",
+        "visual_semantic_report.partial.json"
+      ],
+      "reads_json": true,
+      "writes_json": true,
       "relevant_calls": [
         {
           "scope": "HuggingFaceClipBackendRC2.classify",
           "callee": "SemanticPredictionRC2",
-          "line": 265
+          "line": 323
         },
         {
           "scope": "VisualSemanticAnalyzerRC2.analyze",
           "callee": "self._load_assets",
-          "line": 304
+          "line": 413
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2.analyze",
+          "callee": "self._persist_semantic_payload",
+          "line": 440
         },
         {
           "scope": "VisualSemanticAnalyzerRC2.analyze",
           "callee": "self._analyze_asset",
-          "line": 316
+          "line": 467
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2.analyze",
+          "callee": "self._persist_semantic_result",
+          "line": 468
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2.analyze",
+          "callee": "self._cleanup_after_asset",
+          "line": 505
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._persist_semantic_result",
+          "callee": "self._persist_semantic_payload",
+          "line": 550
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._classify_failure",
+          "callee": "asset.get",
+          "line": 713
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._classify_failure",
+          "callee": "asset.get",
+          "line": 714
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._classify_failure",
+          "callee": "asset.get",
+          "line": 715
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._classify_failure",
+          "callee": "asset.get",
+          "line": 716
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._save_progress",
+          "callee": "self._asset_signature",
+          "line": 781
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._restore_results",
+          "callee": "self._asset_signature",
+          "line": 841
+        },
+        {
+          "scope": "VisualSemanticAnalyzerRC2._asset_signature",
+          "callee": "asset.get",
+          "line": 869
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "self._story_value",
-          "line": 493
+          "line": 1069
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "asset.get",
-          "line": 497
+          "line": 1073
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "self._objects_for_event",
-          "line": 506
+          "line": 1082
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "self._actions_for_event",
-          "line": 509
+          "line": 1085
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "asset.get",
-          "line": 526
+          "line": 1102
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "asset.get",
-          "line": 529
+          "line": 1105
         },
         {
           "scope": "VisualSemanticAnalyzerRC2._analyze_asset",
           "callee": "AssetUnderstandingRC2",
-          "line": 534
+          "line": 1110
         }
       ]
     },
     "voice_production_engine_rc2.py": {
       "path": "voice_production_engine_rc2.py",
       "imports": [
+        ".elevenlabs_voice_provider_rc2",
         ".project_config_rc2",
         "__future__",
         "json",
@@ -2200,6 +2079,8 @@
         "__init__",
         "run",
         "_render_scene",
+        "_scene_text",
+        "_concat_entry",
         "_discover_production_script",
         "_read_json",
         "_probe_duration",
@@ -2214,179 +2095,44 @@
       "writes_json": true,
       "relevant_calls": [
         {
+          "scope": "VoiceProductionEngineRC2.__init__",
+          "callee": "ElevenLabsVoiceSettingsRC2",
+          "line": 57
+        },
+        {
+          "scope": "VoiceProductionEngineRC2.run",
+          "callee": "ElevenLabsVoiceProviderRC2",
+          "line": 102
+        },
+        {
           "scope": "VoiceProductionEngineRC2.run",
           "callee": "self._render_scene",
-          "line": 100
+          "line": 161
         },
         {
           "scope": "VoiceProductionEngineRC2._render_scene",
+          "callee": "audio_filters.append",
+          "line": 412
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._render_scene",
+          "callee": "audio_filters.extend",
+          "line": 416
+        },
+        {
+          "scope": "VoiceProductionEngineRC2._scene_text",
           "callee": "voiceover.get",
-          "line": 292
-        },
-        {
-          "scope": "VoiceProductionEngineRC2._render_scene",
-          "callee": "audio_filter_parts.append",
-          "line": 385
-        },
-        {
-          "scope": "VoiceProductionEngineRC2._render_scene",
-          "callee": "audio_filter_parts.extend",
-          "line": 389
+          "line": 503
         },
         {
           "scope": "VoiceProductionEngineRC2._probe_duration",
           "callee": "subprocess.run",
-          "line": 514
+          "line": 591
         },
         {
           "scope": "VoiceProductionEngineRC2._run_command",
           "callee": "subprocess.run",
-          "line": 543
-        }
-      ]
-    },
-    "workflow.py": {
-      "path": "workflow.py",
-      "imports": [
-        ".acceptance_center",
-        ".api_gateway",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".control_layer_rc2",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".director_ai",
-        ".events",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".integrations",
-        ".live_api_layer",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".working_state_auditor",
-        "__future__",
-        "csv",
-        "json",
-        "pathlib"
-      ],
-      "classes": [
-        "WorkflowEngine"
-      ],
-      "functions": [
-        "__init__",
-        "_job",
-        "run_pipeline",
-        "export_all",
-        "_write_command_center_html"
-      ],
-      "json_literals": [
-        "api_готовность.json",
-        "api_запуски.json",
-        "cv_model_report.json",
-        "export_validation.json",
-        "franklin_acceptance_report.json",
-        "live_api_layer_report.json",
-        "live_api_test_suite.json",
-        "live_connectors_report.json",
-        "local_autopilot_report.json",
-        "montage_workbench.json",
-        "native_timeline_model.json",
-        "native_viewer_model_rc.json",
-        "preflight_report.json",
-        "production_state.json",
-        "rc1_completion_plan.json",
-        "rc1_test_report.json",
-        "timeline_operator_view.json",
-        "timeline_viewer_2_model.json",
-        "working_state_audit.json",
-        "готовность_rc1.json",
-        "интеграции.json",
-        "очередь_api.json",
-        "решения_режиссера.json"
-      ],
-      "reads_json": true,
-      "writes_json": true,
-      "relevant_calls": [
-        {
-          "scope": "WorkflowEngine.__init__",
-          "callee": "EventBus",
-          "line": 41
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "AssetIntelligence",
-          "line": 53
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "analyze_assets",
-          "line": 54
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "StoryEngine",
-          "line": 55
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "assign_assets",
-          "line": 56
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "QualityCenter",
-          "line": 61
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "QualityCenter",
-          "line": 62
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "export_timeline_package",
-          "line": 63
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "TimelineStudio",
-          "line": 63
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "FinalTimelineViewer",
-          "line": 72
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "NativeTimelineModel",
-          "line": 78
-        },
-        {
-          "scope": "WorkflowEngine.run_pipeline",
-          "callee": "TimelineViewer2",
-          "line": 85
-        },
-        {
-          "scope": "WorkflowEngine.export_all",
-          "callee": "timeline_csv.open",
-          "line": 97
+          "line": 622
         }
       ]
     }

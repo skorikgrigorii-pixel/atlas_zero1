@@ -7,9 +7,9 @@ Root: `C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_ent
 | Module | Exists | Imported by DirectorCore | Reads JSON | Writes JSON |
 |---|---:|---:|---:|---:|
 | `asset_engine_rc2.py` | True | True | False | False |
-| `visual_semantic_analyzer_rc2.py` | True | False | False | False |
-| `event_discovery_engine_rc2.py` | True | False | True | False |
-| `story_strategy_engine_rc2.py` | True | False | True | False |
+| `visual_semantic_analyzer_rc2.py` | True | True | True | True |
+| `event_discovery_engine_rc2.py` | True | True | True | False |
+| `story_strategy_engine_rc2.py` | True | True | True | False |
 | `story_engine.py` | True | True | False | True |
 | `assignment_engine_rc2.py` | True | True | False | False |
 | `timeline_engine_rc2.py` | True | True | True | True |
@@ -20,9 +20,6 @@ Root: `C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_ent
 
 ## Missing direct imports
 
-- `visual_semantic_analyzer_rc2.py`
-- `event_discovery_engine_rc2.py`
-- `story_strategy_engine_rc2.py`
 - `voice_production_engine_rc2.py`
 - `audio_composer_rc2.py`
 
@@ -30,79 +27,64 @@ Root: `C:\Users\3dtool\OneDrive\Документы\GitHub\atlas_zero1\src\az_ent
 
 ### `director_core_rc2.py`
 
-- `DirectorCoreRC2._run_story_stage` → `StoryEngine` (line 211)
-- `DirectorCoreRC2._stage_services` → `AssetEngineRC2` (line 224)
-- `DirectorCoreRC2._stage_services` → `AssignmentEngineRC2` (line 226)
-- `DirectorCoreRC2._stage_services` → `TimelineEngineRC2` (line 230)
-- `DirectorCoreRC2._stage_services` → `RenderEngineRC2` (line 234)
-- `DirectorCoreRC2._stage_services` → `QualityGateRC2` (line 238)
-- `DirectorCoreRC2.run_targets` → `quality.get` (line 300)
-- `DirectorCoreRC2._generate_temporal_report` → `timeline_path.exists` (line 365)
-- `DirectorCoreRC2._generate_temporal_report` → `timeline_path.read_text` (line 370)
-- `DirectorCoreRC2._run_supervised_targets` → `self._rewrite_timeline_duration` (line 508)
-- `DirectorCoreRC2._build_supervisor_report` → `quality.get` (line 647)
-- `DirectorCoreRC2._build_supervisor_report` → `self._recommended_targets_from_quality` (line 663)
-- `DirectorCoreRC2._build_supervisor_report` → `quality.get` (line 682)
-- `DirectorCoreRC2.default_supervisor_policy` → `QualityProfile` (line 702)
-
-### `pipeline_runtime.py`
-
-- `PipelineRunManager._step_scan_assets` → `AssetIntelligence` (line 234)
-- `PipelineRunManager._step_visual_intelligence` → `analyze_assets` (line 245)
-- `PipelineRunManager._step_build_shots` → `StoryEngine` (line 249)
-- `PipelineRunManager._step_story_runtime` → `StoryEngineRuntime` (line 253)
-- `PipelineRunManager._step_director_ai` → `assign_assets` (line 259)
-- `PipelineRunManager._step_quality` → `QualityCenter` (line 279)
-- `PipelineRunManager._step_timeline_package` → `export_timeline_package` (line 285)
-- `PipelineRunManager._step_timeline_package` → `TimelineStudio` (line 285)
-- `PipelineRunManager._step_native_timeline` → `NativeTimelineModel` (line 288)
-- `PipelineRunManager._step_timeline_viewer_2` → `TimelineViewer2` (line 297)
-- `PipelineRunManager.run` → `self._event` (line 452)
-- `PipelineRunManager.run` → `self._event` (line 469)
-- `PipelineRunManager.run` → `self._event` (line 490)
-- `PipelineRunManager.run` → `self._event` (line 501)
-- `PipelineRunManager.run` → `self._event` (line 513)
-- `PipelineRunManager.run` → `self._event` (line 526)
-- `PipelineRunManager.run` → `self._event` (line 538)
-
-### `media_orchestrator.py`
-
-- `run_project` → `EventBus` (line 37)
-- `run_project.execute_stage` → `event_bus.emit` (line 73)
-- `_run_stage_adapter` → `TimelineEngineRC2` (line 121)
-- `_run_stage_adapter` → `RenderEngineRC2` (line 122)
-- `_run_stage_adapter` → `render.get` (line 128)
-- `_run_stage_adapter` → `render.get` (line 129)
-
-### `workflow.py`
-
-- `WorkflowEngine.__init__` → `EventBus` (line 41)
-- `WorkflowEngine.run_pipeline` → `AssetIntelligence` (line 53)
-- `WorkflowEngine.run_pipeline` → `analyze_assets` (line 54)
-- `WorkflowEngine.run_pipeline` → `StoryEngine` (line 55)
-- `WorkflowEngine.run_pipeline` → `assign_assets` (line 56)
-- `WorkflowEngine.run_pipeline` → `QualityCenter` (line 61)
-- `WorkflowEngine.run_pipeline` → `QualityCenter` (line 62)
-- `WorkflowEngine.run_pipeline` → `export_timeline_package` (line 63)
-- `WorkflowEngine.run_pipeline` → `TimelineStudio` (line 63)
-- `WorkflowEngine.run_pipeline` → `FinalTimelineViewer` (line 72)
-- `WorkflowEngine.run_pipeline` → `NativeTimelineModel` (line 78)
-- `WorkflowEngine.run_pipeline` → `TimelineViewer2` (line 85)
-- `WorkflowEngine.export_all` → `timeline_csv.open` (line 97)
+- `DirectorCoreRC2._run_story_stage` → `VisualSemanticAnalyzerRC2` (line 221)
+- `DirectorCoreRC2._run_story_stage` → `semantic_report.get` (line 226)
+- `DirectorCoreRC2._run_story_stage` → `semantic_report.get` (line 227)
+- `DirectorCoreRC2._run_story_stage` → `EventDiscoveryEngineRC2` (line 238)
+- `DirectorCoreRC2._run_story_stage` → `event_discovery.get` (line 239)
+- `DirectorCoreRC2._run_story_stage` → `StoryStrategyEngineRC2` (line 250)
+- `DirectorCoreRC2._run_story_stage` → `StoryEngine` (line 278)
+- `DirectorCoreRC2._run_story_stage` → `story_result.get` (line 283)
+- `DirectorCoreRC2._stage_services` → `AssetEngineRC2` (line 308)
+- `DirectorCoreRC2._stage_services` → `AssignmentEngineRC2` (line 310)
+- `DirectorCoreRC2._stage_services` → `TimelineEngineRC2` (line 314)
+- `DirectorCoreRC2._stage_services` → `RenderEngineRC2` (line 318)
+- `DirectorCoreRC2._stage_services` → `RenderEngineRC2` (line 322)
+- `DirectorCoreRC2._stage_services` → `QualityGateRC2` (line 326)
+- `DirectorCoreRC2.run_targets` → `quality.get` (line 407)
+- `DirectorCoreRC2.run_targets` → `render.get` (line 432)
+- `DirectorCoreRC2.run_targets` → `render.get` (line 441)
+- `DirectorCoreRC2._generate_temporal_report` → `timeline_path.exists` (line 553)
+- `DirectorCoreRC2._generate_temporal_report` → `timeline_path.read_text` (line 558)
+- `DirectorCoreRC2._run_supervised_targets` → `self._rewrite_timeline_duration` (line 696)
+- `DirectorCoreRC2._build_supervisor_report` → `quality.get` (line 836)
+- `DirectorCoreRC2._build_supervisor_report` → `self._recommended_targets_from_quality` (line 852)
+- `DirectorCoreRC2._build_supervisor_report` → `quality.get` (line 871)
+- `DirectorCoreRC2.default_supervisor_policy` → `QualityProfile` (line 891)
 
 ### `production_director.py`
 
-- `ProductionDirector._build_status` → `asset_inventory.get` (line 47)
-- `ProductionDirector._build_status` → `render_manifest.get` (line 58)
+- `ProductionDirector._build_status` → `self._extract_timeline_rows` (line 54)
+- `ProductionDirector._build_status` → `self._count_timeline_media` (line 80)
+- `ProductionDirector._build_status` → `self._discover_voice_path` (line 86)
+- `ProductionDirector._build_status` → `self._timeline_duration` (line 101)
+- `ProductionDirector._build_status` → `render_output.exists` (line 115)
+- `ProductionDirector._build_status` → `render_output.is_file` (line 116)
+- `ProductionDirector._build_status` → `render_validation.get` (line 148)
+- `ProductionDirector._build_status` → `self._render_duration` (line 160)
+- `ProductionDirector._render_duration` → `render_report.get` (line 365)
+- `ProductionDirector._render_duration` → `render_report.get` (line 369)
+- `ProductionDirector._render_duration` → `render_report.get` (line 366)
 
 ### `control_layer_rc2.py`
 
-- `RC2ReadinessPlanner.evaluate` → `self.config.timeline_path.exists` (line 21)
-- `RC2ReadinessPlanner.evaluate` → `self.config.canonical_render_path.exists` (line 22)
-- `RC2ReadinessPlanner.plan` → `self.evaluate` (line 42)
-- `RC2ControlLayer.build_timeline` → `TimelineEngineRC2` (line 95)
-- `RC2ControlLayer.render` → `self.config.timeline_path.exists` (line 99)
-- `RC2ControlLayer.render` → `self.build_timeline` (line 100)
-- `RC2ControlLayer.render` → `RenderEngineRC2` (line 101)
-- `RC2ControlLayer.render` → `render_report.get` (line 108)
-- `RC2ControlLayer.render` → `render_report.get` (line 109)
+- `RC2ReadinessPlanner.evaluate` → `self.config.timeline_path.exists` (line 24)
+- `RC2ReadinessPlanner.evaluate` → `self.config.master_audio_path.exists` (line 25)
+- `RC2ReadinessPlanner.evaluate` → `self.config.canonical_render_path.exists` (line 26)
+- `RC2ReadinessPlanner.plan` → `self.evaluate` (line 46)
+- `RC2ControlLayer.build_timeline` → `TimelineEngineRC2` (line 126)
+- `RC2ControlLayer.build_voice` → `VoiceProductionEngineRC2` (line 129)
+- `RC2ControlLayer.render` → `self.config.timeline_path.exists` (line 144)
+- `RC2ControlLayer.render` → `self.build_timeline` (line 145)
+- `RC2ControlLayer.render` → `self.config.master_audio_path.exists` (line 147)
+- `RC2ControlLayer.render` → `self.build_voice` (line 148)
+- `RC2ControlLayer.render` → `RenderEngineRC2` (line 150)
+- `RC2ControlLayer.render` → `render_report.get` (line 159)
+- `RC2ControlLayer.render` → `render_report.get` (line 160)
+- `RC2ControlLayer.run` → `self.config.timeline_path.exists` (line 175)
+- `RC2ControlLayer.run` → `self.build_timeline` (line 176)
+- `RC2ControlLayer.run` → `self.config.master_audio_path.exists` (line 178)
+- `RC2ControlLayer.run` → `self.build_voice` (line 179)
+- `RC2ControlLayer.run` → `RenderEngineRC2` (line 181)
+- `RC2ControlLayer.run` → `render_report.get` (line 188)
+- `RC2ControlLayer.run` → `render_report.get` (line 198)

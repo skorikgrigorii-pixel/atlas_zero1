@@ -13,6 +13,7 @@ from .assignment_engine_rc2 import AssignmentEngineRC2
 from .event_discovery_engine_rc2 import EventDiscoveryEngineRC2
 from .database import Database
 from .director_ai_runtime import DirectorAIRuntime
+from .director_learning_adapter_rc1 import DirectorLearningAdapterRC1
 from .director_policy_alpha293 import (
     DirectorPolicy,
     ProjectObjective,
@@ -193,6 +194,85 @@ class DirectorCoreRC2:
         finally:
             self.config.run_lock_path.unlink(missing_ok=True)
 
+    def _validate_stage_contract(
+        self,
+        state: ProductionStateRC2,
+        stage_name: str,
+    ) -> dict[str, Any]:
+        """Validate mandatory upstream contracts for canonical RC2 stages."""
+
+        contract = {
+            "state": "STAGE_CONTRACT_PASS",
+            "stage": stage_name,
+            "project_id": self.config.project_id,
+            "authority": "DirectorCoreRC2",
+        }
+
+        if stage_name != "assignment":
+            return contract
+
+        story_state = state.stages.get("story")
+
+        if (
+            story_state is None
+            or story_state.status != "COMPLETED"
+        ):
+            raise RuntimeError(
+                "PIPELINE_CONTRACT_VIOLATION: "
+                "assignment requires canonical Story stage COMPLETED"
+            )
+
+        scene_rows = self.db.rows(
+            """
+            SELECT id
+            FROM story_scenes
+            WHERE project_id=?
+            """,
+            (
+                self.config.project_id,
+            ),
+        )
+
+        shot_rows = self.db.rows(
+            """
+            SELECT id
+            FROM shots
+            WHERE project_id=?
+            """,
+            (
+                self.config.project_id,
+            ),
+        )
+
+        scene_count = len(scene_rows)
+        shot_count = len(shot_rows)
+
+        if scene_count <= 0:
+            raise RuntimeError(
+                "PIPELINE_CONTRACT_VIOLATION: "
+                "assignment requires story_scenes > 0 "
+                f"for project {self.config.project_id!r}"
+            )
+
+        if shot_count <= 0:
+            raise RuntimeError(
+                "PIPELINE_CONTRACT_VIOLATION: "
+                "assignment requires shots > 0 "
+                f"for project {self.config.project_id!r}"
+            )
+
+        contract.update(
+            {
+                "story_stage_status": story_state.status,
+                "story_scenes": scene_count,
+                "shots": shot_count,
+                "story_materialized": True,
+                "shots_materialized": True,
+            }
+        )
+
+        return contract
+
     def _run_stage(
         self,
         state: ProductionStateRC2,
@@ -202,7 +282,17 @@ class DirectorCoreRC2:
         self.store.start_stage(state, name)
         self.progress({"stage": name.upper(), "status": "RUNNING"})
         try:
+            stage_contract = self._validate_stage_contract(
+                state,
+                name,
+            )
             result = callable_()
+
+            if isinstance(result, dict):
+                result.setdefault(
+                    "stage_contract",
+                    stage_contract,
+                )
         except Exception as exc:
             self.store.fail_stage(state, name, str(exc))
             self.progress(
@@ -682,14 +772,703 @@ class DirectorCoreRC2:
             "production_script_report": production_script_report,
             "voice_report": voice_report,
         }
+    # ------------------------------------------------------------------
+    # PATCH 7B3A ? DIRECTOR PRE-ASSIGNMENT PRODUCTION BRIDGE
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _policy_enum_value(
+        value: Any,
+    ) -> str:
+        """
+        Return stable policy context value without depending on enum repr.
+        """
+        enum_value = getattr(
+            value,
+            "value",
+            None,
+        )
+
+        if enum_value is not None:
+            return str(
+                enum_value
+            )
+
+        return str(
+            value
+        )
+
+    @staticmethod
+    def _bounded_assignment_pressures(
+        pressures: Mapping[str, Any] | None,
+    ) -> dict[str, int]:
+        """
+        Defense-in-depth normalization for the Director -> Assignment bridge.
+
+        Director may forward bounded pressure only.
+        It never creates raw AssignmentPolicy parameters.
+        """
+        source = dict(
+            pressures
+            or {}
+        )
+
+        keys = (
+            "semantic_strictness",
+            "reuse_pressure",
+            "diversity_pressure",
+            "sequencing_pressure",
+            "coverage_pressure",
+        )
+
+        result: dict[str, int] = {}
+
+        for key in keys:
+
+            try:
+                value = int(
+                    source.get(
+                        key,
+                        0,
+                    )
+                    or 0
+                )
+            except (
+                TypeError,
+                ValueError,
+            ):
+                value = 0
+
+            result[
+                key
+            ] = max(
+                0,
+                min(
+                    2,
+                    value,
+                ),
+            )
+
+        return result
+
+    def _pre_assignment_production_policy_bridge(
+        self,
+    ) -> dict[str, Any]:
+        """
+        Build the production advisory available BEFORE the first assignment.
+
+        Important timing contract:
+
+        - no future QualityGate issue codes are fabricated;
+        - no DirectorAI findings are fabricated;
+        - first-pass context contains only information actually known now;
+        - PATCH 6 context filtering remains inside the learning adapter;
+        - local current-project pressure remains authoritative;
+        - Director only converts the merged advisory envelope into the
+          canonical ProductionPolicyAdvisory shape expected by
+          AssignmentEngineRC2 / AssignmentPolicyRC2.
+
+        AssignmentPolicyRC2 remains the sole owner of concrete thresholds.
+        """
+        active_policy = (
+            self.default_supervisor_policy()
+        )
+
+        project_type = (
+            self._policy_enum_value(
+                active_policy.project_type
+            )
+        )
+
+        objective = (
+            self._policy_enum_value(
+                active_policy.objective
+            )
+        )
+
+        runtime_metadata = {
+            "project_type":
+                project_type,
+
+            "objective":
+                objective,
+
+            "failure_domain":
+                "visual_assignment",
+
+            "target":
+                "assignment",
+
+            "source":
+                "pre_assignment",
+        }
+
+        trace: dict[str, Any] = {
+            "schema":
+                "atlas_zero.director_pre_assignment_policy_bridge.rc1",
+
+            "state":
+                "NO_APPLICABLE_PRODUCTION_LEARNING",
+
+            "project_id":
+                self.config.project_id,
+
+            "mode":
+                "canonical_director_bridge",
+
+            "runtime_metadata":
+                dict(
+                    runtime_metadata
+                ),
+
+            # First-pass rule:
+            # issue codes do not exist yet and are intentionally empty.
+            "issue_codes":
+                [],
+
+            "merged_advisory_state":
+                None,
+
+            "pressures": {
+                "semantic_strictness":
+                    0,
+
+                "reuse_pressure":
+                    0,
+
+                "diversity_pressure":
+                    0,
+
+                "sequencing_pressure":
+                    0,
+
+                "coverage_pressure":
+                    0,
+            },
+
+            "authority":
+                {},
+
+            "local_active_dimensions":
+                [],
+
+            "historical_active_dimensions":
+                [],
+
+            "historical_source_projects":
+                [],
+
+            "historical_experience_ids":
+                [],
+
+            "provenance":
+                [],
+
+            "canonical_advisory":
+                None,
+
+            "permissions": {
+                "override_director":
+                    False,
+
+                "rewrite_hard_policy":
+                    False,
+
+                "bypass_quality_gate":
+                    False,
+
+                "modify_stage_order":
+                    False,
+
+                "fabricate_issue_codes":
+                    False,
+
+                "create_raw_thresholds":
+                    False,
+
+                "forward_bounded_pressure":
+                    True,
+            },
+        }
+
+        try:
+
+            learning_adapter = (
+                DirectorLearningAdapterRC1(
+                    db=self.db,
+                    project_id=
+                        self.config.project_id,
+                )
+            )
+
+            merged = (
+                learning_adapter
+                .merged_production_policy_advisory(
+                    runtime_metadata=
+                        runtime_metadata,
+
+                    # No future quality evidence on first pass.
+                    issue_codes=(),
+
+                    target=
+                        "assignment",
+
+                    minimum_confidence=
+                        0.60,
+
+                    minimum_similarity=
+                        0.60,
+                )
+            )
+
+            pressures = (
+                self._bounded_assignment_pressures(
+                    merged.get(
+                        "pressures",
+                        {},
+                    )
+                )
+            )
+
+            active = (
+                merged.get(
+                    "state"
+                )
+                ==
+                "MERGED_PRODUCTION_POLICY_ADVISORY_READY"
+                and
+                any(
+                    value > 0
+                    for value
+                    in pressures.values()
+                )
+            )
+
+            local = dict(
+                merged.get(
+                    "local_advisory",
+                    {},
+                )
+                or {}
+            )
+
+            historical = dict(
+                merged.get(
+                    "historical_advisory",
+                    {},
+                )
+                or {}
+            )
+
+            local_dimensions = list(
+                merged.get(
+                    "local_active_dimensions",
+                    (),
+                )
+                or ()
+            )
+
+            historical_dimensions = list(
+                merged.get(
+                    "historical_active_dimensions",
+                    (),
+                )
+                or ()
+            )
+
+            confidence_sources = []
+
+            if local_dimensions:
+
+                try:
+                    local_confidence = float(
+                        local.get(
+                            "confidence",
+                            0.0,
+                        )
+                        or 0.0
+                    )
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+                    local_confidence = 0.0
+
+                confidence_sources.append(
+                    max(
+                        0.0,
+                        min(
+                            1.0,
+                            local_confidence,
+                        ),
+                    )
+                )
+
+            if historical_dimensions:
+
+                try:
+                    historical_confidence = float(
+                        historical.get(
+                            "confidence",
+                            0.0,
+                        )
+                        or 0.0
+                    )
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+                    historical_confidence = 0.0
+
+                confidence_sources.append(
+                    max(
+                        0.0,
+                        min(
+                            1.0,
+                            historical_confidence,
+                        ),
+                    )
+                )
+
+            #
+            # Conservative confidence rule:
+            # every pressure source contributing to the merged advisory
+            # must satisfy the canonical >= 0.60 production contract.
+            #
+            confidence = (
+                min(
+                    confidence_sources
+                )
+                if confidence_sources
+                else 0.0
+            )
+
+            local_evidence = [
+                str(item)
+                for item
+                in (
+                    local.get(
+                        "evidence",
+                        (),
+                    )
+                    or ()
+                )
+                if str(item)
+            ]
+
+            local_provenance = [
+                str(item)
+                for item
+                in (
+                    local.get(
+                        "provenance",
+                        (),
+                    )
+                    or ()
+                )
+                if str(item)
+            ]
+
+            historical_provenance = [
+                str(item)
+                for item
+                in (
+                    merged.get(
+                        "historical_provenance",
+                        (),
+                    )
+                    or ()
+                )
+                if str(item)
+            ]
+
+            provenance = list(
+                dict.fromkeys(
+                    (
+                        *local_provenance,
+                        *historical_provenance,
+                    )
+                )
+            )
+
+            historical_projects = list(
+                merged.get(
+                    "historical_source_projects",
+                    (),
+                )
+                or ()
+            )
+
+            historical_experience_ids = list(
+                merged.get(
+                    "historical_experience_ids",
+                    (),
+                )
+                or ()
+            )
+
+            evidence = list(
+                dict.fromkeys(
+                    (
+                        *local_evidence,
+
+                        *(
+                            "HISTORICAL_PRODUCTION_EXPERIENCE:"
+                            f"{project_id}"
+                            for project_id
+                            in historical_projects
+                        ),
+                    )
+                )
+            )
+
+            canonical_advisory = None
+
+            if (
+                active
+                and
+                confidence >= 0.60
+            ):
+
+                #
+                # Envelope normalization only.
+                #
+                # Concrete values such as 0.62/0.66, semantic confidence,
+                # recent windows and sequencing limits remain owned by
+                # AssignmentPolicyRC2.
+                #
+                canonical_advisory = {
+                    "schema":
+                        "atlas_zero.production_policy_advisory.rc1",
+
+                    "state":
+                        "PRODUCTION_POLICY_ADVISORY_READY",
+
+                    "mode":
+                        "advisory_only",
+
+                    "project_id":
+                        self.config.project_id,
+
+                    "source":
+                        "DirectorCoreRC2.pre_assignment",
+
+                    "source_scope":
+                        "local_plus_context_filtered_historical",
+
+                    "confidence":
+                        round(
+                            confidence,
+                            6,
+                        ),
+
+                    "pressures":
+                        pressures,
+
+                    "evidence":
+                        evidence,
+
+                    "provenance":
+                        provenance,
+
+                    "merge_authority":
+                        dict(
+                            merged.get(
+                                "authority",
+                                {},
+                            )
+                            or {}
+                        ),
+
+                    "local_active_dimensions":
+                        local_dimensions,
+
+                    "historical_active_dimensions":
+                        historical_dimensions,
+
+                    "historical_source_projects":
+                        historical_projects,
+
+                    "historical_experience_ids":
+                        historical_experience_ids,
+
+                    "runtime_context":
+                        dict(
+                            runtime_metadata
+                        ),
+
+                    "issue_codes":
+                        [],
+
+                    "permissions": {
+                        "override_director":
+                            False,
+
+                        "rewrite_hard_policy":
+                            False,
+
+                        "modify_source":
+                            False,
+
+                        "bypass_quality_gate":
+                            False,
+
+                        "lower_safety_threshold":
+                            False,
+
+                        "force_asset_selection":
+                            False,
+
+                        "modify_stage_order":
+                            False,
+
+                        "request_bounded_policy_pressure":
+                            True,
+                    },
+                }
+
+            trace.update(
+                {
+                    "state":
+                        (
+                            "PRE_ASSIGNMENT_PRODUCTION_ADVISORY_READY"
+                            if canonical_advisory is not None
+                            else "NO_APPLICABLE_PRODUCTION_LEARNING"
+                        ),
+
+                    "merged_advisory_state":
+                        merged.get(
+                            "state"
+                        ),
+
+                    "confidence":
+                        round(
+                            confidence,
+                            6,
+                        ),
+
+                    "pressures":
+                        pressures,
+
+                    "authority":
+                        dict(
+                            merged.get(
+                                "authority",
+                                {},
+                            )
+                            or {}
+                        ),
+
+                    "local_active_dimensions":
+                        local_dimensions,
+
+                    "historical_active_dimensions":
+                        historical_dimensions,
+
+                    "historical_source_projects":
+                        historical_projects,
+
+                    "historical_experience_ids":
+                        historical_experience_ids,
+
+                    "provenance":
+                        provenance,
+
+                    "canonical_advisory":
+                        canonical_advisory,
+                }
+            )
+
+        except Exception as exc:
+
+            #
+            # Learning may never make canonical production unavailable.
+            #
+            # Failure of the advisory path falls back to the exact historical
+            # AssignmentEngineRC2(db, config) invocation.
+            #
+            trace.update(
+                {
+                    "state":
+                        "PRODUCTION_LEARNING_UNAVAILABLE",
+
+                    "error":
+                        str(
+                            exc
+                        ),
+
+                    "canonical_advisory":
+                        None,
+                }
+            )
+
+        return trace
+
+    def _run_assignment_stage(
+        self,
+    ) -> dict[str, Any]:
+        """
+        Canonical assignment execution with optional bounded learning pressure.
+
+        Critical compatibility contract:
+        when no valid production advisory exists, AssignmentEngineRC2 is
+        constructed EXACTLY as before PATCH 7B3A:
+
+            AssignmentEngineRC2(self.db, self.config)
+        """
+        bridge = (
+            self._pre_assignment_production_policy_bridge()
+        )
+
+        advisory = bridge.get(
+            "canonical_advisory"
+        )
+
+        if not isinstance(
+            advisory,
+            dict,
+        ):
+
+            #
+            # Exact legacy/baseline constructor path.
+            #
+            result = (
+                AssignmentEngineRC2(
+                    self.db,
+                    self.config,
+                )
+                .run()
+            )
+
+        else:
+
+            result = (
+                AssignmentEngineRC2(
+                    self.db,
+                    self.config,
+                    production_policy_advisory=
+                        advisory,
+                )
+                .run()
+            )
+
+        if isinstance(
+            result,
+            dict,
+        ):
+
+            result.setdefault(
+                "director_production_policy_bridge",
+                bridge,
+            )
+
+        return result
+
     def _stage_services(self) -> dict[str, Callable[[], dict[str, Any]]]:
         return {
             "assets": lambda: AssetEngineRC2(self.db, self.config).run(),
             "story": self._run_story_stage,
-            "assignment": lambda: AssignmentEngineRC2(
-                self.db,
-                self.config,
-            ).run(),
+            "assignment": self._run_assignment_stage,
             "timeline": lambda: TimelineEngineRC2(
                 self.db,
                 self.config,
@@ -1301,38 +2080,234 @@ class DirectorCoreRC2:
         initial_targets: Sequence[str] | None = None,
         force: bool = False,
     ) -> dict[str, Any]:
-        """Run RC2 under DirectorSupervisor with bounded targeted rework."""
-        active_policy = policy or self.default_supervisor_policy()
+        """
+        Run RC2 under DirectorSupervisor with bounded targeted rework.
+
+        Learning is advisory-only. It may prefer already-allowed rework
+        targets but cannot add authority, rewrite policy, change thresholds,
+        bypass QualityGate, or modify stage order.
+        """
+
+        active_policy = (
+            policy
+            or self.default_supervisor_policy()
+        )
+
+        learning_policy_bridge: dict[str, Any] = {
+            "schema":
+                "atlas_zero.canonical_learning_policy_bridge.rc1",
+
+            "state":
+                "NO_APPLICABLE_LEARNING",
+
+            "project_id":
+                self.config.project_id,
+
+            "mode":
+                "advisory_only",
+
+            "minimum_confidence":
+                0.60,
+
+            "raw_targets":
+                [],
+
+            "policy_allowed_targets":
+                [],
+
+            "preferred_targets":
+                [],
+
+            "evidence":
+                [],
+
+            "protected_components":
+                [],
+
+            "permissions": {
+                "override_director": False,
+                "rewrite_policy": False,
+                "bypass_quality_gate": False,
+                "modify_stage_order": False,
+            },
+        }
+
+        preferred_targets: tuple[str, ...] = ()
+
+        try:
+            learning_adapter = DirectorLearningAdapterRC1(
+                db=self.db,
+                project_id=self.config.project_id,
+            )
+
+            preference = (
+                learning_adapter
+                .learning_target_preferences(
+                    minimum_confidence=0.60
+                )
+            )
+
+            raw_targets = tuple(
+                str(target).strip()
+                for target in preference.get(
+                    "ranked_targets",
+                    (),
+                )
+                if str(target).strip()
+            )
+
+            policy_allowed = tuple(
+                active_policy.allowed_rework_targets
+            )
+
+            if policy_allowed:
+                allowed_set = set(policy_allowed)
+
+                preferred_targets = tuple(
+                    target
+                    for target in raw_targets
+                    if target in allowed_set
+                )
+
+            else:
+                preferred_targets = raw_targets
+
+            learning_policy_bridge.update(
+                {
+                    "state":
+                        (
+                            "LEARNING_PREFERENCE_READY"
+                            if preferred_targets
+                            else "NO_APPLICABLE_LEARNING"
+                        ),
+
+                    "raw_targets":
+                        list(raw_targets),
+
+                    "policy_allowed_targets":
+                        list(policy_allowed),
+
+                    "preferred_targets":
+                        list(preferred_targets),
+
+                    "evidence":
+                        list(
+                            preference.get(
+                                "evidence",
+                                (),
+                            )
+                        ),
+
+                    "protected_components":
+                        list(
+                            preference.get(
+                                "protected_components",
+                                (),
+                            )
+                        ),
+                }
+            )
+
+        except Exception as exc:
+            # Advisory learning must never block canonical production.
+            learning_policy_bridge.update(
+                {
+                    "state":
+                        "LEARNING_ADVISORY_UNAVAILABLE",
+
+                    "error":
+                        str(exc),
+                }
+            )
+
+            preferred_targets = ()
+
+        evaluator = PolicyDecisionEvaluator(
+            active_policy,
+            preferred_targets=preferred_targets,
+        )
+
         supervisor = DirectorSupervisor(
-            _SupervisedRuntimeAdapter(self, force=force),
-            PolicyDecisionEvaluator(active_policy),
+            _SupervisedRuntimeAdapter(
+                self,
+                force=force,
+            ),
+            evaluator,
             max_rework_cycles=max_rework_cycles,
         )
-        result = supervisor.run_project(initial_targets=initial_targets)
+
+        # Learning is intentionally NOT injected into initial_targets.
+        # It may affect ordering only after the runtime has produced a
+        # legitimate rework recommendation and DirectorPolicy has allowed it.
+        result = supervisor.run_project(
+            initial_targets=initial_targets
+        )
 
         latest_runtime = result.runtime_results[-1]
-        execution = latest_runtime.get("metadata", {}).get("execution", {})
+
+        execution = (
+            latest_runtime
+            .get("metadata", {})
+            .get("execution", {})
+        )
+
         return {
-            "state": result.final_decision.status.value,
-            "project_id": self.config.project_id,
-            "cycles": result.cycles,
+            "state":
+                result.final_decision.status.value,
+
+            "project_id":
+                self.config.project_id,
+
+            "cycles":
+                result.cycles,
+
+            "learning_policy_bridge":
+                learning_policy_bridge,
+
             "final_decision": {
-                "status": result.final_decision.status.value,
-                "reason": result.final_decision.reason,
-                "confidence": result.final_decision.confidence,
-                "metadata": dict(result.final_decision.metadata),
+                "status":
+                    result.final_decision.status.value,
+
+                "reason":
+                    result.final_decision.reason,
+
+                "confidence":
+                    result.final_decision.confidence,
+
+                "metadata":
+                    dict(
+                        result.final_decision.metadata
+                    ),
             },
+
             "decisions": [
                 {
-                    "sequence": record.sequence,
-                    "created_at": record.created_at,
-                    "status": record.decision.status.value,
-                    "reason": record.decision.reason,
+                    "sequence":
+                        record.sequence,
+
+                    "created_at":
+                        record.created_at,
+
+                    "status":
+                        record.decision.status.value,
+
+                    "reason":
+                        record.decision.reason,
+
                     "targets": [
-                        action.target for action in record.decision.actions
+                        action.target
+                        for action
+                        in record.decision.actions
                     ],
+
+                    "metadata":
+                        dict(
+                            record.decision.metadata
+                        ),
                 }
                 for record in result.decisions
             ],
-            "latest_execution": execution,
+
+            "latest_execution":
+                execution,
         }

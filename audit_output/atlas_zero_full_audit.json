@@ -1,15 +1,51 @@
 {
-  "generated_at": "2026-07-22T19:18:10.706832+00:00",
+  "generated_at": "2026-07-29T09:55:34.034070+00:00",
   "root": "C:\\Users\\3dtool\\OneDrive\\Документы\\GitHub\\atlas_zero1",
   "summary": {
-    "python_modules": 239,
-    "python_lines": 44781,
-    "syntax_errors": 16,
-    "duplicate_symbols": 152,
-    "json_readers": 46,
-    "json_writers": 103
+    "python_modules": 253,
+    "python_lines": 55117,
+    "syntax_errors": 9,
+    "duplicate_symbols": 159,
+    "json_readers": 51,
+    "json_writers": 117
   },
   "syntax_errors": [
+    {
+      "path": "APPLY_RC2_SELECTIVE_SOURCE_AUDIO.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "AUDIT_HOGUERAS_RC2_OUTPUT.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "AUDIT_RC2_TIMELINE_SOURCE_AUDIO_CODE.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "DIAG_RC2_NATURAL_SOUND.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "DIAG_RC2_SELECTED_AUDIO_RANGES.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
+    {
+      "path": "EXTRACT_RC2_SOURCE_AUDIO_CODE.py",
+      "line": 1,
+      "column": 1,
+      "message": "invalid non-printable character U+FEFF"
+    },
     {
       "path": "audit_rc2_production\\target_files\\project_config_rc2.py",
       "line": 1,
@@ -24,84 +60,6 @@
     },
     {
       "path": "audit_rc2_production\\target_files\\story_engine.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "rcaz_enterprisecoredirector_ai.py",
-      "line": 2,
-      "column": 19,
-      "message": "unexpected indent"
-    },
-    {
-      "path": "src\\az_enterprise\\core\\dependency_resolver_alpha31.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "src\\az_enterprise\\core\\module_registry_alpha31.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "src\\az_enterprise\\core\\story_engine.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tests\\test_rc2_state_authority.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\audit_multimedia_assets.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\autonomy_audit_rc2.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\build_asset_contact_sheets.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\director_core_rc1.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\patch_render_nostdin.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\patch_semantic_director_clip.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\recover_franklin_multimedia_render.py",
-      "line": 1,
-      "column": 1,
-      "message": "invalid non-printable character U+FEFF"
-    },
-    {
-      "path": "tools\\visual_intelligence_v1_1_multimedia.py",
       "line": 1,
       "column": 1,
       "message": "invalid non-printable character U+FEFF"
@@ -137,6 +95,187 @@
       "uses_database": false,
       "uses_subprocess": false,
       "has_main": false
+    },
+    {
+      "path": "APPLY_RC2_RENDER_INTEGRATION.py",
+      "module": "APPLY_RC2_RENDER_INTEGRATION",
+      "lines": 201,
+      "classes": [],
+      "functions": [
+        "main",
+        "replace_once"
+      ],
+      "imports": [
+        "__future__",
+        "ast",
+        "datetime",
+        "pathlib",
+        "shutil"
+      ],
+      "states": [
+        "PREPARED",
+        "PREVIEW_RENDERED",
+        "PRODUCTION_PREPARED",
+        "PRODUCTION_RENDERED",
+        "PRODUCTION_REWORK_REQUIRED",
+        "RENDERED",
+        "RENDERED_VERIFIED",
+        "RENDER_PREFLIGHT_READY",
+        "RENDER_PREVIEW_VERIFIED",
+        "REVIEW"
+      ],
+      "json_literals": [
+        "render_preflight_rc2.json",
+        "render_report_rc2.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "story",
+        "assignment",
+        "timeline",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+      "module": "APPLY_RC2_RENDER_INTEGRATION_V2",
+      "lines": 52,
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "imports": [
+        "__future__",
+        "ast",
+        "datetime",
+        "pathlib",
+        "shutil"
+      ],
+      "states": [
+        "PREPARED",
+        "PREVIEW_RENDERED",
+        "PRODUCTION_PREPARED",
+        "PRODUCTION_RENDERED",
+        "PRODUCTION_REWORK_REQUIRED",
+        "RENDERED",
+        "RENDERED_VERIFIED",
+        "RENDER_PREFLIGHT_READY",
+        "RENDER_PREVIEW_VERIFIED",
+        "REVIEW"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "story",
+        "assignment",
+        "timeline",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+      "module": "APPLY_RC2_TIMELINE_NATURAL_SOUND",
+      "lines": 239,
+      "classes": [],
+      "functions": [
+        "main",
+        "replace_once"
+      ],
+      "imports": [
+        "__future__",
+        "datetime",
+        "pathlib",
+        "shutil"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "timeline",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "AUDIT_VOICE_INTEGRATION_RC2.py",
+      "module": "AUDIT_VOICE_INTEGRATION_RC2",
+      "lines": 638,
+      "classes": [
+        "ImportResult",
+        "ParseResult"
+      ],
+      "functions": [
+        "assignment_name",
+        "call_name",
+        "dotted_name",
+        "evaluate_chain",
+        "find_edges",
+        "find_symbol_references",
+        "import_check",
+        "is_excluded",
+        "main",
+        "module_import_ok",
+        "module_name_from_path",
+        "parse_python_file",
+        "rel",
+        "write_markdown"
+      ],
+      "imports": [
+        "__future__",
+        "ast",
+        "dataclasses",
+        "datetime",
+        "importlib",
+        "json",
+        "os",
+        "pathlib",
+        "re",
+        "sys",
+        "typing"
+      ],
+      "states": [
+        "COMPONENTS_HEALTHY_ENTRY_CHAIN_NOT_PROVEN",
+        "COMPONENTS_HEALTHY_INTEGRATION_NOT_PROVEN",
+        "COMPONENT_OR_IMPORT_FAILURE",
+        "DETECTED",
+        "FAIL",
+        "INTEGRATION_PRESENT_REQUIRES_RUNTIME_PROOF"
+      ],
+      "json_literals": [
+        "voice_integration_audit.json"
+      ],
+      "pipeline_hints": [
+        "assignment",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
     },
     {
       "path": "apply_atlas_zero_alpha_28.py",
@@ -917,6 +1056,57 @@
       "uses_database": false,
       "uses_subprocess": false,
       "has_main": false
+    },
+    {
+      "path": "atlas_zero_execution_chain_audit.py",
+      "module": "atlas_zero_execution_chain_audit",
+      "lines": 205,
+      "classes": [
+        "V"
+      ],
+      "functions": [
+        "__init__",
+        "analyze",
+        "dotted",
+        "imported",
+        "main",
+        "visit_Call",
+        "visit_ClassDef",
+        "visit_Constant",
+        "visit_FunctionDef",
+        "visit_Import",
+        "visit_ImportFrom"
+      ],
+      "imports": [
+        "__future__",
+        "argparse",
+        "datetime",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [
+        "execution_chain_audit.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story_strategy",
+        "story",
+        "assignment",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
     },
     {
       "path": "atlas_zero_full_audit.py",
@@ -3244,75 +3434,6 @@
       "has_main": false
     },
     {
-      "path": "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
-      "module": "atlas_zero_remove_rc1.APPLY_REMOVE_RC1",
-      "lines": 131,
-      "classes": [],
-      "functions": [
-        "find_repo_root",
-        "main",
-        "move_to_backup",
-        "read_audit"
-      ],
-      "imports": [
-        "__future__",
-        "datetime",
-        "json",
-        "pathlib",
-        "shutil"
-      ],
-      "states": [
-        "RC2_PRODUCTION_READY",
-        "REMOVE_RC1_FROM_ACTIVE_PROJECT"
-      ],
-      "json_literals": [
-        "rc1_removal_manifest.json",
-        "rc2_production_audit.json"
-      ],
-      "pipeline_hints": [
-        "render",
-        "director"
-      ],
-      "writes_json": true,
-      "reads_json": true,
-      "uses_database": false,
-      "uses_subprocess": false,
-      "has_main": true
-    },
-    {
-      "path": "atlas_zero_remove_rc1\\VERIFY_REMOVE_RC1.py",
-      "module": "atlas_zero_remove_rc1.VERIFY_REMOVE_RC1",
-      "lines": 116,
-      "classes": [],
-      "functions": [
-        "find_repo_root",
-        "ignored",
-        "main"
-      ],
-      "imports": [
-        "__future__",
-        "ast",
-        "pathlib",
-        "subprocess",
-        "sys"
-      ],
-      "states": [
-        "FAIL",
-        "PASS",
-        "RC2_AFTER_RC1_REMOVAL_OK"
-      ],
-      "json_literals": [],
-      "pipeline_hints": [
-        "timeline",
-        "render"
-      ],
-      "writes_json": false,
-      "reads_json": false,
-      "uses_database": false,
-      "uses_subprocess": true,
-      "has_main": true
-    },
-    {
       "path": "audit_rc2_production\\target_files\\asset_engine_rc2.py",
       "module": "audit_rc2_production.target_files.asset_engine_rc2",
       "lines": 62,
@@ -3946,43 +4067,45 @@
     {
       "path": "src\\az_enterprise\\cli.py",
       "module": "src.az_enterprise.cli",
-      "lines": 168,
+      "lines": 341,
       "classes": [],
       "functions": [
-        "main",
-        "progress"
+        "_print_progress",
+        "main"
       ],
       "imports": [
-        ".core.database",
-        ".core.pipeline_runtime",
+        ".core.control_layer_rc2",
         ".core.production_director",
         ".core.production_visual_manager",
         ".core.project_config_rc2",
         ".core.render_engine_rc2",
         ".core.visual_asset_registrar",
-        ".core.workflow",
         "__future__",
-        "argparse"
+        "argparse",
+        "json"
       ],
       "states": [
         "RENDER"
       ],
       "json_literals": [
-        "workspace/exports/{args.project_id}/production_director_status.json",
-        "workspace/exports/{args.project_id}/visual_generation_progress.json",
-        "workspace/exports/{args.project_id}/visual_generation_queue.json"
+        "production_director_status.json",
+        "visual_generation_progress.json",
+        "visual_generation_queue.json"
       ],
       "pipeline_hints": [
         "asset",
         "visual",
+        "timeline",
+        "voice",
+        "audio",
         "render",
         "director"
       ],
       "writes_json": false,
       "reads_json": false,
-      "uses_database": true,
+      "uses_database": false,
       "uses_subprocess": false,
-      "has_main": false
+      "has_main": true
     },
     {
       "path": "src\\az_enterprise\\core\\__init__.py",
@@ -4406,17 +4529,21 @@
     {
       "path": "src\\az_enterprise\\core\\assignment_policy_rc2.py",
       "module": "src.az_enterprise.core.assignment_policy_rc2",
-      "lines": 545,
+      "lines": 751,
       "classes": [
         "AssignmentPolicyRC2"
       ],
       "functions": [
         "__init__",
+        "_alternative_payload",
         "_asset_fits_shot",
+        "_asset_is_semantically_allowed",
         "_max_use",
         "_parse_required_assets",
         "_preferred_assets_for_shot",
+        "_row_value",
         "_select_story_asset",
+        "_semantic_profile",
         "_shot_belongs_to_scene",
         "_tokens",
         "_write_assignment",
@@ -4445,6 +4572,7 @@
         "event",
         "story",
         "assignment",
+        "timeline",
         "quality",
         "director"
       ],
@@ -4653,7 +4781,7 @@
     {
       "path": "src\\az_enterprise\\core\\control_layer_rc2.py",
       "module": "src.az_enterprise.core.control_layer_rc2",
-      "lines": 111,
+      "lines": 210,
       "classes": [
         "RC2ControlLayer",
         "RC2ReadinessPlanner"
@@ -4662,26 +4790,36 @@
         "__init__",
         "_write_reports",
         "build_timeline",
+        "build_voice",
         "evaluate",
         "plan",
-        "render"
+        "render",
+        "run"
       ],
       "imports": [
         ".database",
         ".project_config_rc2",
         ".render_engine_rc2",
         ".timeline_engine_rc2",
+        ".voice_production_engine_rc2",
         "__future__",
         "datetime",
         "json",
         "typing"
       ],
-      "states": [],
+      "states": [
+        "FAIL",
+        "PASS"
+      ],
       "json_literals": [
+        "production_run_rc2.json",
         "readiness_rc2.json"
       ],
       "pipeline_hints": [
+        "visual",
         "timeline",
+        "voice",
+        "audio",
         "render",
         "director"
       ],
@@ -4842,9 +4980,34 @@
       "has_main": false
     },
     {
+      "path": "src\\az_enterprise\\core\\dependency_resolver_alpha31.py",
+      "module": "src.az_enterprise.core.dependency_resolver_alpha31",
+      "lines": 49,
+      "classes": [
+        "DependencyResolverAlpha31"
+      ],
+      "functions": [
+        "__init__",
+        "resolve"
+      ],
+      "imports": [
+        ".module_registry_alpha31",
+        "__future__",
+        "collections"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
       "path": "src\\az_enterprise\\core\\director_ai.py",
       "module": "src.az_enterprise.core.director_ai",
-      "lines": 458,
+      "lines": 456,
       "classes": [
         "DirectorAI"
       ],
@@ -4880,7 +5043,6 @@
         ".database",
         ".director_ai_runtime",
         ".events",
-        ".story_engine_runtime",
         "__future__",
         "collections",
         "json",
@@ -5021,7 +5183,7 @@
     {
       "path": "src\\az_enterprise\\core\\director_core_rc2.py",
       "module": "src.az_enterprise.core.director_core_rc2",
-      "lines": 767,
+      "lines": 957,
       "classes": [
         "DirectorCoreRC2",
         "StageDefinition",
@@ -5046,9 +5208,11 @@
         "_stage_services",
         "_strengthen_opening",
         "_walk_mappings",
+        "_write_json_artifact",
         "default_supervisor_policy",
         "plan",
         "run",
+        "run_release",
         "run_supervised",
         "run_targets"
       ],
@@ -5060,13 +5224,16 @@
         ".director_policy_alpha293",
         ".director_policy_evaluator_alpha293",
         ".director_supervisor_alpha292",
+        ".event_discovery_engine_rc2",
         ".production_state_rc2",
         ".project_config_rc2",
         ".quality_gate_rc2",
         ".render_engine_rc2",
         ".runtime_governance_rc2",
         ".story_engine",
+        ".story_strategy_engine_rc2",
         ".timeline_engine_rc2",
+        ".visual_semantic_analyzer_rc2",
         "__future__",
         "contextlib",
         "dataclasses",
@@ -5097,7 +5264,14 @@
         "OPENING_REWORK",
         "OPENING_STRENGTHENED",
         "PASSED",
+        "PREVIEW_RENDERED",
+        "PRODUCTION_RENDERED",
+        "PRODUCTION_REWORK_REQUIRED",
         "QUALITY_REWORK_REQUIRED",
+        "RENDERED",
+        "RENDERED_VERIFIED",
+        "RENDER_PREFLIGHT_READY",
+        "RENDER_PREVIEW_VERIFIED",
         "REPEATED_VISUAL_PATTERN",
         "REVIEW",
         "RUNNING",
@@ -5117,6 +5291,7 @@
         "asset",
         "visual",
         "semantic",
+        "event",
         "story_strategy",
         "story",
         "assignment",
@@ -5377,6 +5552,55 @@
       "has_main": false
     },
     {
+      "path": "src\\az_enterprise\\core\\elevenlabs_voice_provider_rc2.py",
+      "module": "src.az_enterprise.core.elevenlabs_voice_provider_rc2",
+      "lines": 374,
+      "classes": [
+        "ElevenLabsHTTPErrorRC2",
+        "ElevenLabsVoiceProviderRC2",
+        "ElevenLabsVoiceSettingsRC2"
+      ],
+      "functions": [
+        "__init__",
+        "__str__",
+        "_bounded",
+        "_format_error",
+        "_is_retryable",
+        "_post",
+        "_request_url",
+        "_validate_configuration",
+        "synthesize",
+        "to_payload"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "json",
+        "os",
+        "pathlib",
+        "time",
+        "typing",
+        "urllib.error",
+        "urllib.parse",
+        "urllib.request"
+      ],
+      "states": [
+        "ELEVENLABS_API_KEY",
+        "ELEVENLABS_VOICE_ID",
+        "POST"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "voice",
+        "audio"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
       "path": "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
       "module": "src.az_enterprise.core.event_discovery_engine_rc2",
       "lines": 565,
@@ -5486,6 +5710,57 @@
       "pipeline_hints": [],
       "writes_json": false,
       "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "src\\az_enterprise\\core\\external_script_importer_rc2.py",
+      "module": "src.az_enterprise.core.external_script_importer_rc2",
+      "lines": 353,
+      "classes": [
+        "ExternalScriptImporterRC2",
+        "ExternalScriptSceneRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_clean_narration",
+        "_optional_float",
+        "_parse",
+        "_parse_json",
+        "_parse_markdown",
+        "_positive_float",
+        "_read_text",
+        "_sentences",
+        "_word_count",
+        "build",
+        "import_file"
+      ],
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "json",
+        "pathlib",
+        "re",
+        "typing"
+      ],
+      "states": [
+        "NARRATIVE_READY",
+        "NARRATIVE_READY_WITH_WARNINGS",
+        "SC01",
+        "SC02",
+        "VOICEOVER_LONGER_THAN_SCENE",
+        "VOICEOVER_USES_LESS_THAN_45_PERCENT"
+      ],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "story_strategy",
+        "story",
+        "voice"
+      ],
+      "writes_json": false,
+      "reads_json": true,
       "uses_database": false,
       "uses_subprocess": false,
       "has_main": false
@@ -5940,62 +6215,6 @@
       "has_main": false
     },
     {
-      "path": "src\\az_enterprise\\core\\media_orchestrator.py",
-      "module": "src.az_enterprise.core.media_orchestrator",
-      "lines": 138,
-      "classes": [],
-      "functions": [
-        "_run_stage_adapter",
-        "ensure_job",
-        "execute_stage",
-        "log",
-        "run_project"
-      ],
-      "imports": [
-        ".database",
-        ".events",
-        ".job_queue",
-        ".paths",
-        ".production_state",
-        ".project_config_rc2",
-        ".project_state",
-        ".render_engine_rc2",
-        ".timeline_engine_rc2",
-        "__future__",
-        "json",
-        "pathlib",
-        "typing"
-      ],
-      "states": [
-        "ANALYTICS",
-        "FAILED",
-        "IDEA",
-        "MEDIA_ORCHESTRATOR_LOG",
-        "PACKAGED",
-        "PUBLISHED",
-        "RESEARCH",
-        "SCRIPT_READY",
-        "VIDEO_READY",
-        "VISUAL_READY",
-        "VOICE_READY"
-      ],
-      "json_literals": [
-        "{project_id}/publish/status.json"
-      ],
-      "pipeline_hints": [
-        "visual",
-        "event",
-        "timeline",
-        "voice",
-        "render"
-      ],
-      "writes_json": true,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
-      "has_main": false
-    },
-    {
       "path": "src\\az_enterprise\\core\\module_registry_alpha29.py",
       "module": "src.az_enterprise.core.module_registry_alpha29",
       "lines": 57,
@@ -6016,6 +6235,38 @@
       "imports": [
         "__future__",
         "az_enterprise.core.project_context_alpha29",
+        "dataclasses",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "src\\az_enterprise\\core\\module_registry_alpha31.py",
+      "module": "src.az_enterprise.core.module_registry_alpha31",
+      "lines": 62,
+      "classes": [
+        "ModuleRegistryAlpha31",
+        "RuntimeModule"
+      ],
+      "functions": [
+        "__init__",
+        "all",
+        "disable",
+        "enable",
+        "enabled",
+        "get",
+        "has",
+        "register"
+      ],
+      "imports": [
+        "__future__",
         "dataclasses",
         "typing"
       ],
@@ -6111,9 +6362,71 @@
       "has_main": false
     },
     {
+      "path": "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
+      "module": "src.az_enterprise.core.narrative_runtime_rc2",
+      "lines": 358,
+      "classes": [
+        "NarrativeRuntimeRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_atomic_write_json",
+        "_atomic_write_text",
+        "_discover_editorial_package",
+        "_discover_title",
+        "_read_json",
+        "_target_duration",
+        "_to_markdown",
+        "_validate_result",
+        "_write_editorial_package",
+        "main",
+        "narrative_dir",
+        "narrative_markdown_path",
+        "narrative_report_path",
+        "narrative_result_path",
+        "run"
+      ],
+      "imports": [
+        ".editorial_package_rc2",
+        ".external_script_importer_rc2",
+        ".narrative_writer_rc2",
+        ".project_config_rc2",
+        "__future__",
+        "argparse",
+        "datetime",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [
+        "NARRATIVE_READY"
+      ],
+      "json_literals": [
+        "editorial_package*.json",
+        "editorial_package.json",
+        "editorial_package_{self.config.project_id}.json",
+        "narrative_report.json",
+        "narrative_result.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "event",
+        "story_strategy",
+        "story",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
       "path": "src\\az_enterprise\\core\\narrative_writer_rc2.py",
       "module": "src.az_enterprise.core.narrative_writer_rc2",
-      "lines": 535,
+      "lines": 929,
       "classes": [
         "NarrativeResultRC2",
         "NarrativeWriterRC2",
@@ -6121,12 +6434,19 @@
       ],
       "functions": [
         "__init__",
+        "_apply_openai_documentary",
         "_apply_openai_editorial",
+        "_build_local_draft",
+        "_clean_multiline_text",
         "_clean_text",
         "_closing_line",
+        "_compose_full_narration",
+        "_env_flag",
         "_join_unique",
         "_limit_to_target",
         "_opening_line",
+        "_parse_json_object",
+        "_result_from_generated_payload",
         "_scene_body",
         "_transition_bridge",
         "run",
@@ -6137,20 +6457,29 @@
         ".openai_adapter_rc2",
         "__future__",
         "dataclasses",
+        "json",
+        "os",
+        "re",
         "typing"
       ],
       "states": [
-        "NARRATIVE_READY"
+        "ATLAS_ZERO_ALLOW_PAID",
+        "ATLAS_ZERO_NARRATIVE_MODE",
+        "AZ_ALLOW_PAID_CALLS",
+        "NARRATIVE_READY",
+        "SC01"
       ],
       "json_literals": [],
       "pipeline_hints": [
         "asset",
         "visual",
+        "semantic",
         "event",
+        "story_strategy",
         "story",
         "voice"
       ],
-      "writes_json": false,
+      "writes_json": true,
       "reads_json": false,
       "uses_database": false,
       "uses_subprocess": false,
@@ -6381,138 +6710,6 @@
       "has_main": false
     },
     {
-      "path": "src\\az_enterprise\\core\\pipeline_runtime.py",
-      "module": "src.az_enterprise.core.pipeline_runtime",
-      "lines": 599,
-      "classes": [
-        "PipelineRunManager"
-      ],
-      "functions": [
-        "__init__",
-        "_counts",
-        "_emit_subprogress",
-        "_ensure_schema",
-        "_event",
-        "_export_pipeline_graph",
-        "_export_run_report",
-        "_log",
-        "_register_runtime_modules",
-        "_resource_snapshot",
-        "_safe_json",
-        "_step_acceptance",
-        "_step_api_queue",
-        "_step_api_safe_run",
-        "_step_build_shots",
-        "_step_capcut_bridge",
-        "_step_cv_model",
-        "_step_cv_review_board",
-        "_step_director_ai",
-        "_step_director_ai_runtime",
-        "_step_export_all",
-        "_step_final_assembly_pack",
-        "_step_franklin_e2e",
-        "_step_integrations",
-        "_step_live_api_test",
-        "_step_local_autopilot",
-        "_step_montage_workbench",
-        "_step_native_timeline",
-        "_step_native_viewer",
-        "_step_native_viewer_pro",
-        "_step_operator_console",
-        "_step_preflight",
-        "_step_production_state",
-        "_step_quality",
-        "_step_readiness_gate",
-        "_step_scan_assets",
-        "_step_story_runtime",
-        "_step_test_center",
-        "_step_timeline_package",
-        "_step_timeline_viewer_2",
-        "_step_visual_intelligence",
-        "_step_working_state_audit",
-        "_steps",
-        "_update_graph",
-        "count",
-        "module_registry_snapshot",
-        "retry_failed_tasks",
-        "run"
-      ],
-      "imports": [
-        ".acceptance_center",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".dependency_resolver_alpha31",
-        ".director_ai",
-        ".director_ai_runtime",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".franklin_e2e_runtime",
-        ".integrations",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".module_registry_alpha31",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_pro",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".story_engine_runtime",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".workflow",
-        ".working_state_auditor",
-        "__future__",
-        "datetime",
-        "json",
-        "os",
-        "pathlib",
-        "time",
-        "traceback",
-        "typing",
-        "uuid"
-      ],
-      "states": [
-        "AZ_ALLOW_PAID_CALLS",
-        "AZ_ENABLE_LIVE_API",
-        "ERROR",
-        "INFO",
-        "WARN"
-      ],
-      "json_literals": [
-        "pipeline_graph.json",
-        "pipeline_run_report.json",
-        "pipeline_task_events.json",
-        "pipeline_task_queue.json"
-      ],
-      "pipeline_hints": [
-        "asset",
-        "visual",
-        "event",
-        "story",
-        "timeline",
-        "audio",
-        "quality",
-        "director"
-      ],
-      "writes_json": true,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
-      "has_main": false
-    },
-    {
       "path": "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
       "module": "src.az_enterprise.core.postproduction_quality_rc2",
       "lines": 430,
@@ -6612,7 +6809,7 @@
     {
       "path": "src\\az_enterprise\\core\\production_director.py",
       "module": "src.az_enterprise.core.production_director",
-      "lines": 229,
+      "lines": 537,
       "classes": [
         "ProductionDirector"
       ],
@@ -6620,14 +6817,22 @@
         "__init__",
         "_build_brief",
         "_build_status",
+        "_count_timeline_media",
         "_decide_next_step",
+        "_discover_voice_path",
+        "_extract_timeline_rows",
         "_read_csv_rows",
         "_read_json",
+        "_render_duration",
+        "_script_ready",
         "_stage_name",
+        "_timeline_duration",
+        "_write_json",
         "run"
       ],
       "imports": [
         ".paths",
+        ".project_config_rc2",
         "__future__",
         "csv",
         "json",
@@ -6635,15 +6840,14 @@
         "typing"
       ],
       "states": [
-        "RENDERED"
+        "RENDERED_VERIFIED"
       ],
       "json_literals": [
-        "asset_inventory.json",
         "missing_story_requirements.json",
         "production_director_status.json",
-        "production_state.json",
-        "render_manifest.json",
-        "render_report.json"
+        "render_model_rc2.json",
+        "render_report_rc2.json",
+        "render_validation_rc2.json"
       ],
       "pipeline_hints": [
         "asset",
@@ -6745,43 +6949,6 @@
       "has_main": false
     },
     {
-      "path": "src\\az_enterprise\\core\\production_state.py",
-      "module": "src.az_enterprise.core.production_state",
-      "lines": 89,
-      "classes": [
-        "ProductionState"
-      ],
-      "functions": [
-        "__init__",
-        "_count",
-        "_scalar",
-        "blockers",
-        "next_actions",
-        "summarize"
-      ],
-      "imports": [
-        ".database",
-        ".events",
-        "__future__",
-        "json"
-      ],
-      "states": [
-        "PRODUCTION_STATE_SUMMARIZED"
-      ],
-      "json_literals": [],
-      "pipeline_hints": [
-        "asset",
-        "visual",
-        "event",
-        "quality"
-      ],
-      "writes_json": false,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
-      "has_main": false
-    },
-    {
       "path": "src\\az_enterprise\\core\\production_state_rc2.py",
       "module": "src.az_enterprise.core.production_state_rc2",
       "lines": 135,
@@ -6875,30 +7042,31 @@
     {
       "path": "src\\az_enterprise\\core\\project_config_rc2.py",
       "module": "src.az_enterprise.core.project_config_rc2",
-      "lines": 118,
+      "lines": 142,
       "classes": [
         "ProjectConfigRC2"
       ],
       "functions": [
         "canonical_render_path",
         "effective_media_source_dir",
+        "event_discovery_result_path",
         "export_dir",
-        "franklin_legacy_render_path",
         "governance_path",
-        "legacy_master_audio_path",
-        "legacy_render_path",
-        "legacy_timeline_path",
         "master_audio_path",
         "native_timeline_model_path",
+        "preview_render_path",
         "project_dir",
         "quality_report_path",
         "rc2_dir",
+        "render_dir",
+        "render_preflight_report_path",
         "run_lock_path",
         "state_path",
         "story_strategy_result_path",
         "temporal_summary_path",
         "timeline_dir",
         "timeline_path",
+        "visual_semantic_report_path",
         "workspace_dir"
       ],
       "imports": [
@@ -6909,17 +7077,22 @@
       ],
       "states": [],
       "json_literals": [
+        "event_discovery_result.json",
         "native_timeline_model.json",
         "production_state.json",
         "quality_report.json",
+        "render_preflight_rc2.json",
         "runtime_governance.json",
         "story_strategy_result.json",
         "temporal_assignment_summary.json",
-        "timeline.json"
+        "timeline.json",
+        "visual_semantic_report.json"
       ],
       "pipeline_hints": [
         "asset",
+        "visual",
         "semantic",
+        "event",
         "story_strategy",
         "story",
         "assignment",
@@ -7063,93 +7236,9 @@
       "has_main": false
     },
     {
-      "path": "src\\az_enterprise\\core\\project_state.py",
-      "module": "src.az_enterprise.core.project_state",
-      "lines": 101,
-      "classes": [
-        "ProjectState"
-      ],
-      "functions": [
-        "__init__",
-        "_ensure_project",
-        "_ensure_step",
-        "advance",
-        "current_state",
-        "get_step_status",
-        "mark_step"
-      ],
-      "imports": [
-        ".database",
-        "__future__",
-        "json",
-        "typing"
-      ],
-      "states": [
-        "ANALYTICS",
-        "FAILED",
-        "IDEA",
-        "PACKAGED",
-        "PROJECT_STATE",
-        "PUBLISHED",
-        "RESEARCH",
-        "SCRIPT_READY",
-        "VIDEO_READY",
-        "VISUAL_READY",
-        "VOICE_READY"
-      ],
-      "json_literals": [],
-      "pipeline_hints": [
-        "visual",
-        "event",
-        "voice"
-      ],
-      "writes_json": false,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
-      "has_main": false
-    },
-    {
-      "path": "src\\az_enterprise\\core\\quality.py",
-      "module": "src.az_enterprise.core.quality",
-      "lines": 60,
-      "classes": [
-        "QualityCenter"
-      ],
-      "functions": [
-        "__init__",
-        "evaluate",
-        "readiness_gate"
-      ],
-      "imports": [
-        ".database",
-        ".events",
-        "__future__",
-        "json"
-      ],
-      "states": [
-        "QUALITY_EVALUATED",
-        "RC1_READINESS_CHECKED"
-      ],
-      "json_literals": [],
-      "pipeline_hints": [
-        "asset",
-        "visual",
-        "event",
-        "timeline",
-        "quality",
-        "director"
-      ],
-      "writes_json": false,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
-      "has_main": false
-    },
-    {
       "path": "src\\az_enterprise\\core\\quality_gate_rc2.py",
       "module": "src.az_enterprise.core.quality_gate_rc2",
-      "lines": 176,
+      "lines": 205,
       "classes": [
         "QualityGateRC2"
       ],
@@ -7180,7 +7269,11 @@
         "OPENING_HOOK_ACCEPTABLE",
         "PASSED",
         "POSTPRODUCTION_ANALYZED",
+        "PRODUCTION_BLOCKED",
+        "PRODUCTION_READY",
         "RENDER_EXISTS",
+        "RENDER_PREFLIGHT_EXISTS",
+        "RENDER_PREFLIGHT_READY",
         "RENDER_VALID",
         "STATIC_IMAGE_DURATION_ACCEPTABLE",
         "TEMPORALLY_VALIDATED",
@@ -7325,7 +7418,7 @@
     {
       "path": "src\\az_enterprise\\core\\render_engine_rc2.py",
       "module": "src.az_enterprise.core.render_engine_rc2",
-      "lines": 1404,
+      "lines": 2419,
       "classes": [
         "RenderClipRC2",
         "RenderEngineRC2",
@@ -7333,21 +7426,27 @@
       ],
       "functions": [
         "__init__",
+        "_alternative_fits_clip",
         "_as_bool",
         "_as_float",
         "_as_int",
+        "_asset_identity",
         "_clip_skip_reason",
         "_compose_phase4_audio",
         "_discover_music_path",
         "_discover_voice_path",
+        "_editor_pass",
         "_emit",
+        "_event_category",
         "_extract_video_rows",
         "_first_existing_file",
+        "_natural_sound_priority",
         "_normalize_camera_motion",
         "_normalize_clip",
         "_normalize_quality_flags",
         "_normalize_transition",
         "_optional_text",
+        "_parse_alternative_assets",
         "_parse_natural_sound_windows",
         "_run_ffmpeg",
         "_run_native_visual_backend",
@@ -7360,14 +7459,15 @@
         "_write_json",
         "build_render_model",
         "load_timeline",
+        "prepare",
         "probe",
         "probe_source",
         "run",
+        "source_has_audio",
         "to_dict",
         "validate_render_model"
       ],
       "imports": [
-        ".audio_composer_rc2",
         ".project_config_rc2",
         ".visual_renderer_rc2",
         "__future__",
@@ -7382,16 +7482,25 @@
       "states": [
         "BACKEND_COMPLETE",
         "BACKEND_START",
+        "BLOCKED_NO_USABLE_VERIFIED_ALTERNATIVE",
+        "EDITOR_PASS_COMPLETE",
         "INVALID",
         "MISSING",
         "MODEL_READY",
         "NEEDS_CREATION",
         "PHASE4_AUDIO_MUX_COMPLETE",
         "PHASE4_AUDIO_MUX_START",
+        "PHASE4_FFMPEG_COMMAND_SAVED",
         "PHASE_7_NATIVE_AUDIO_COMPOSER",
         "RENDERED_VERIFIED",
         "RENDER_COMPLETE",
+        "RENDER_PREFLIGHT_BLOCKED",
+        "RENDER_PREFLIGHT_COMPLETE",
+        "RENDER_PREFLIGHT_READY",
+        "RENDER_PREFLIGHT_START",
+        "RENDER_PREVIEW_VERIFIED",
         "RENDER_START",
+        "REPLACED_VERIFIED_ALTERNATIVE",
         "TIMELINE_LOADED",
         "VALID",
         "VERIFY_COPY",
@@ -7399,7 +7508,7 @@
         "VISUAL_RENDERED"
       ],
       "json_literals": [
-        "native_timeline_model.json",
+        "editor_pass_report_rc2.json",
         "render_model_rc2.json",
         "render_report_rc2.json",
         "render_validation_rc2.json",
@@ -7410,6 +7519,7 @@
         "visual",
         "event",
         "story",
+        "assignment",
         "timeline",
         "voice",
         "audio",
@@ -7451,55 +7561,43 @@
       "has_main": false
     },
     {
-      "path": "src\\az_enterprise\\core\\story_engine_runtime.py",
-      "module": "src.az_enterprise.core.story_engine_runtime",
-      "lines": 361,
+      "path": "src\\az_enterprise\\core\\story_engine.py",
+      "module": "src.az_enterprise.core.story_engine",
+      "lines": 501,
       "classes": [
-        "StoryEngineRuntime"
+        "SceneBlueprint",
+        "StoryEngine"
       ],
       "functions": [
         "__init__",
+        "_allocate_shots",
+        "_blueprint_duration",
         "_ensure_schema",
-        "_export",
-        "_fallback_scenes_from_shots",
-        "_map_shots_to_scenes",
-        "_missing_requirement",
-        "_montage_item",
-        "_narration_cue",
-        "_recommendations",
-        "_risk_text",
-        "_scene_report",
-        "_write_csv",
-        "_write_html",
-        "_write_missing_md",
-        "build",
-        "write_json"
+        "_transition_for",
+        "build_from_strategy",
+        "build_shots"
       ],
       "imports": [
         ".database",
-        ".paths",
+        ".events",
         "__future__",
-        "collections",
-        "csv",
+        "dataclasses",
         "json",
-        "pathlib",
         "typing"
       ],
       "states": [
-        "UNASSIGNED"
+        "ACT00",
+        "STORY_SCENES_BUILT",
+        "STORY_SCENES_BUILT_FROM_STRATEGY"
       ],
-      "json_literals": [
-        "missing_story_requirements.json",
-        "montage_sheet.json",
-        "story_engine_2_3_report.json",
-        "story_engine_runtime.json",
-        "story_scenes.json"
-      ],
+      "json_literals": [],
       "pipeline_hints": [
         "asset",
         "visual",
+        "semantic",
+        "event",
         "story",
-        "quality",
+        "timeline",
         "director"
       ],
       "writes_json": true,
@@ -7589,6 +7687,241 @@
       "has_main": false
     },
     {
+      "path": "src\\az_enterprise\\core\\system_governance_cli_rc2.py",
+      "module": "src.az_enterprise.core.system_governance_cli_rc2",
+      "lines": 109,
+      "classes": [],
+      "functions": [
+        "locate_project_root",
+        "main",
+        "parse_args"
+      ],
+      "imports": [
+        ".system_governance_gate_rc2",
+        "__future__",
+        "argparse",
+        "json",
+        "pathlib",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
+      "module": "src.az_enterprise.core.system_governance_gate_rc2",
+      "lines": 388,
+      "classes": [
+        "GovernanceBlockedError",
+        "GovernanceDecision",
+        "GovernanceError",
+        "GovernancePolicy",
+        "GovernanceResult",
+        "SystemGovernanceGateRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_atomic_json_dump",
+        "_evaluate_health",
+        "_load_health",
+        "_persist",
+        "_utc_now",
+        "decorator",
+        "enforce",
+        "evaluate",
+        "from_json",
+        "from_mapping",
+        "gate_from_environment",
+        "governed",
+        "protect",
+        "refresh",
+        "to_dict",
+        "wrapped"
+      ],
+      "imports": [
+        ".system_registry_rc2",
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "enum",
+        "json",
+        "os",
+        "pathlib",
+        "threading",
+        "typing"
+      ],
+      "states": [
+        "ATLAS_ZERO_GOVERNANCE_POLICY"
+      ],
+      "json_literals": [
+        "architecture_score.json",
+        "critical_nodes.json",
+        "decision_{stamp}.json",
+        "governance_decision.json",
+        "knowledge_graph.json",
+        "node_health.json",
+        "system_health.json"
+      ],
+      "pipeline_hints": [
+        "story",
+        "render",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "src\\az_enterprise\\core\\system_registry_rc2.py",
+      "module": "src.az_enterprise.core.system_registry_rc2",
+      "lines": 2721,
+      "classes": [
+        "ArtifactReference",
+        "ClassRecord",
+        "DependencyIntelligenceRC2",
+        "FunctionRecord",
+        "ImportRecord",
+        "ModuleRecord",
+        "ProjectKnowledgeGraphRC2",
+        "PythonAstCollector",
+        "ScanProblem",
+        "SystemHealthRC2",
+        "SystemRegistryRC2"
+      ],
+      "functions": [
+        "__init__",
+        "_architecture_score",
+        "_build_artifact_nodes",
+        "_build_class_nodes",
+        "_build_director_chains",
+        "_build_import_edges",
+        "_build_inheritance_edges",
+        "_build_knowledge_paths",
+        "_build_module_nodes",
+        "_build_node_health",
+        "_build_rankings",
+        "_build_role_nodes",
+        "_build_similarity_graph",
+        "_build_statistics",
+        "_build_topology",
+        "_edge",
+        "_find_dead_modules",
+        "_find_duplicate_candidates",
+        "_markdown_report",
+        "_optional_json",
+        "_path_record",
+        "_validate_layers",
+        "argument_names",
+        "build",
+        "build_artifact_registry",
+        "build_class_registry",
+        "build_dependency_registry",
+        "build_module_registry",
+        "build_runtime_registry",
+        "call_operation",
+        "classify_module_state",
+        "decorator_names",
+        "deduplicate_artifacts",
+        "detect_roles",
+        "discover_python_files",
+        "expr_text",
+        "extract_strings",
+        "find_dependency_cycles",
+        "function_record",
+        "git_tracked_python_files",
+        "infer_internal_prefixes",
+        "jaccard_similarity",
+        "json_dump",
+        "load_json_object",
+        "locate_project_root",
+        "main",
+        "markdown_report",
+        "module_is_entrypoint",
+        "module_layer",
+        "normalize_artifact_key",
+        "parse_args",
+        "path_to_module",
+        "percentile",
+        "print_dependency_summary",
+        "print_knowledge_summary",
+        "print_registry_summary",
+        "resolve_known_module",
+        "resolve_relative_import",
+        "risk_band",
+        "safe_read_text",
+        "scan_python_module",
+        "sha256_file",
+        "stable_node_id",
+        "utc_iso",
+        "visit",
+        "visit_AsyncFunctionDef",
+        "visit_Call",
+        "visit_ClassDef",
+        "visit_FunctionDef",
+        "visit_Import",
+        "visit_ImportFrom"
+      ],
+      "imports": [
+        "__future__",
+        "argparse",
+        "ast",
+        "dataclasses",
+        "datetime",
+        "hashlib",
+        "json",
+        "os",
+        "pathlib",
+        "re",
+        "subprocess",
+        "sys",
+        "typing"
+      ],
+      "states": [],
+      "json_literals": [
+        "architecture_score.json",
+        "artifact_registry.json",
+        "class_registry.json",
+        "critical_nodes.json",
+        "dead_modules.json",
+        "dependency_heatmap.json",
+        "dependency_intelligence.json",
+        "dependency_registry.json",
+        "director_chains.json",
+        "duplicate_candidates.json",
+        "graph_statistics.json",
+        "knowledge_edges.json",
+        "knowledge_graph.json",
+        "knowledge_nodes.json",
+        "knowledge_paths.json",
+        "layer_validation.json",
+        "module_registry.json",
+        "node_health.json",
+        "project_knowledge_graph.json",
+        "project_topology.json",
+        "runtime_registry.json",
+        "similarity_graph.json",
+        "system_health.json",
+        "system_registry.json"
+      ],
+      "pipeline_hints": [
+        "render",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": true
+    },
+    {
       "path": "src\\az_enterprise\\core\\test_center.py",
       "module": "src.az_enterprise.core.test_center",
       "lines": 135,
@@ -7631,7 +7964,7 @@
     {
       "path": "src\\az_enterprise\\core\\timeline_engine_rc2.py",
       "module": "src.az_enterprise.core.timeline_engine_rc2",
-      "lines": 798,
+      "lines": 939,
       "classes": [
         "TimelineEngineRC2"
       ],
@@ -7640,6 +7973,7 @@
         "_camera_motion",
         "_discover_production_script_path",
         "_load_rows",
+        "_parse_alternative_assets",
         "_resolve_assets",
         "_write_csv",
         "_write_json",
@@ -7669,13 +8003,15 @@
         "asset",
         "visual",
         "story",
+        "assignment",
         "timeline",
         "voice",
+        "audio",
         "quality",
         "director"
       ],
       "writes_json": true,
-      "reads_json": true,
+      "reads_json": false,
       "uses_database": true,
       "uses_subprocess": false,
       "has_main": false
@@ -7995,7 +8331,7 @@
     {
       "path": "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
       "module": "src.az_enterprise.core.visual_semantic_analyzer_rc2",
-      "lines": 858,
+      "lines": 1447,
       "classes": [
         "HuggingFaceClipBackendRC2",
         "SemanticBackendRC2",
@@ -8006,14 +8342,29 @@
         "__init__",
         "_actions_for_event",
         "_analyze_asset",
+        "_asset_signature",
+        "_atomic_write_json",
+        "_build_report",
+        "_classify_failure",
+        "_cleanup_after_asset",
+        "_cleanup_memory",
+        "_env_flag",
         "_extract_images",
         "_load_assets",
+        "_load_checkpoint",
         "_objects_for_event",
+        "_persist_semantic_payload",
+        "_persist_semantic_result",
         "_relevance_status",
+        "_remove_progress_files",
+        "_restore_results",
+        "_safe_unlink",
+        "_save_progress",
         "_story_value",
         "_timestamp_from_filename",
         "analyze",
-        "classify"
+        "classify",
+        "cleanup"
       ],
       "imports": [
         ".database",
@@ -8023,21 +8374,50 @@
         "cv2",
         "dataclasses",
         "datetime",
+        "gc",
         "json",
         "math",
         "numpy",
+        "os",
         "pathlib",
         "re",
+        "time",
         "torch",
+        "traceback",
         "transformers",
         "typing"
       ],
       "states": [
+        "ATLAS_ZERO_CLIP_DEVICE",
+        "ATLAS_ZERO_SEMANTIC_CHECKPOINT_PATH",
+        "ATLAS_ZERO_SEMANTIC_PARTIAL_REPORT_PATH",
+        "ATLAS_ZERO_SEMANTIC_REPORT_PATH",
+        "ATLAS_ZERO_SEMANTIC_RESET",
+        "ATLAS_ZERO_SEMANTIC_STORY_DIR",
+        "ATLAS_ZERO_TORCH_THREADS",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "CRITICAL",
+        "DECODE_ERROR",
+        "ERROR",
+        "MEDIA_ERROR",
+        "MODEL_ERROR",
         "OFF_TOPIC",
+        "OOM_ERROR",
+        "READ_ERROR",
         "RELEVANT",
-        "UNCERTAIN"
+        "RUNNING",
+        "RUNTIME_ERROR",
+        "SOURCE_MISSING",
+        "TIMEOUT_ERROR",
+        "UNCERTAIN",
+        "UNKNOWN_ERROR"
       ],
-      "json_literals": [],
+      "json_literals": [
+        "visual_semantic_checkpoint.json",
+        "visual_semantic_report.json",
+        "visual_semantic_report.partial.json"
+      ],
       "pipeline_hints": [
         "asset",
         "visual",
@@ -8046,8 +8426,8 @@
         "story",
         "quality"
       ],
-      "writes_json": false,
-      "reads_json": false,
+      "writes_json": true,
+      "reads_json": true,
       "uses_database": true,
       "uses_subprocess": false,
       "has_main": false
@@ -8100,20 +8480,23 @@
     {
       "path": "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
       "module": "src.az_enterprise.core.voice_production_engine_rc2",
-      "lines": 557,
+      "lines": 636,
       "classes": [
         "VoiceProductionEngineRC2"
       ],
       "functions": [
         "__init__",
+        "_concat_entry",
         "_discover_production_script",
         "_probe_duration",
         "_read_json",
         "_render_scene",
         "_run_command",
+        "_scene_text",
         "run"
       ],
       "imports": [
+        ".elevenlabs_voice_provider_rc2",
         ".project_config_rc2",
         "__future__",
         "json",
@@ -8123,6 +8506,7 @@
         "typing"
       ],
       "states": [
+        "UNKNOWN",
         "VOICE_READY"
       ],
       "json_literals": [
@@ -8139,102 +8523,6 @@
       "reads_json": true,
       "uses_database": false,
       "uses_subprocess": true,
-      "has_main": false
-    },
-    {
-      "path": "src\\az_enterprise\\core\\workflow.py",
-      "module": "src.az_enterprise.core.workflow",
-      "lines": 182,
-      "classes": [
-        "WorkflowEngine"
-      ],
-      "functions": [
-        "__init__",
-        "_job",
-        "_write_command_center_html",
-        "export_all",
-        "run_pipeline"
-      ],
-      "imports": [
-        ".acceptance_center",
-        ".api_gateway",
-        ".asset_intelligence",
-        ".capcut_bridge",
-        ".control_layer_rc2",
-        ".cv_model",
-        ".cv_review_board",
-        ".database",
-        ".director_ai",
-        ".events",
-        ".final_assembly_pack",
-        ".final_timeline_viewer",
-        ".integrations",
-        ".live_api_layer",
-        ".live_api_test_suite",
-        ".live_connectors",
-        ".local_autopilot",
-        ".montage_workbench",
-        ".native_timeline",
-        ".native_viewer_rc",
-        ".operator_console",
-        ".paths",
-        ".preflight",
-        ".production_state",
-        ".quality",
-        ".release_gate",
-        ".story_engine",
-        ".test_center",
-        ".timeline_studio",
-        ".timeline_viewer_2",
-        ".visual_intelligence",
-        ".working_state_auditor",
-        "__future__",
-        "csv",
-        "pathlib"
-      ],
-      "states": [
-        "FINAL_ASSEMBLY_PACK",
-        "PIPELINE_FINISHED",
-        "PIPELINE_STARTED"
-      ],
-      "json_literals": [
-        "api_готовность.json",
-        "api_запуски.json",
-        "cv_model_report.json",
-        "export_validation.json",
-        "franklin_acceptance_report.json",
-        "live_api_layer_report.json",
-        "live_api_test_suite.json",
-        "live_connectors_report.json",
-        "local_autopilot_report.json",
-        "montage_workbench.json",
-        "native_timeline_model.json",
-        "native_viewer_model_rc.json",
-        "preflight_report.json",
-        "production_state.json",
-        "rc1_completion_plan.json",
-        "rc1_test_report.json",
-        "timeline_operator_view.json",
-        "timeline_viewer_2_model.json",
-        "working_state_audit.json",
-        "готовность_rc1.json",
-        "интеграции.json",
-        "очередь_api.json",
-        "решения_режиссера.json"
-      ],
-      "pipeline_hints": [
-        "asset",
-        "visual",
-        "event",
-        "story",
-        "timeline",
-        "quality",
-        "director"
-      ],
-      "writes_json": true,
-      "reads_json": false,
-      "uses_database": true,
-      "uses_subprocess": false,
       "has_main": false
     },
     {
@@ -9629,6 +9917,30 @@
       "has_main": false
     },
     {
+      "path": "tests\\test_rc2_state_authority.py",
+      "module": "tests.test_rc2_state_authority",
+      "lines": 33,
+      "classes": [],
+      "functions": [
+        "test_director_core_rc2_owns_canonical_state_store",
+        "test_rc2_assignment_does_not_use_director_ai_state_authority"
+      ],
+      "imports": [
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "assignment",
+        "director"
+      ],
+      "writes_json": false,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
       "path": "tests\\test_rc2_timeline_authority.py",
       "module": "tests.test_rc2_timeline_authority",
       "lines": 139,
@@ -9890,6 +10202,36 @@
       "has_main": false
     },
     {
+      "path": "tests\\test_system_governance_gate_rc2.py",
+      "module": "tests.test_system_governance_gate_rc2",
+      "lines": 83,
+      "classes": [],
+      "functions": [
+        "test_allows_healthy_system",
+        "test_blocks_syntax_errors",
+        "test_fail_closed_when_health_missing",
+        "test_warns_on_layer_violations",
+        "write_health"
+      ],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.system_governance_gate_rc2",
+        "json",
+        "pathlib",
+        "pytest"
+      ],
+      "states": [],
+      "json_literals": [
+        "system_health.json"
+      ],
+      "pipeline_hints": [],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
       "path": "tests\\test_transition_engine_rc2.py",
       "module": "tests.test_transition_engine_rc2",
       "lines": 64,
@@ -10070,6 +10412,202 @@
       "has_main": false
     },
     {
+      "path": "tools\\audit_multimedia_assets.py",
+      "module": "tools.audit_multimedia_assets",
+      "lines": 197,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.database",
+        "collections",
+        "json",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [
+        "timeline.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "timeline"
+      ],
+      "writes_json": false,
+      "reads_json": true,
+      "uses_database": true,
+      "uses_subprocess": false,
+      "has_main": false
+    },
+    {
+      "path": "tools\\autonomy_audit_rc2.py",
+      "module": "tools.autonomy_audit_rc2",
+      "lines": 836,
+      "classes": [],
+      "functions": [
+        "build_recommendations",
+        "find_duplicate_function_names",
+        "find_orchestrators",
+        "identify_tools_to_promote",
+        "iter_python_files",
+        "main",
+        "parse_python",
+        "relative",
+        "scan_state_files",
+        "write_markdown"
+      ],
+      "imports": [
+        "__future__",
+        "ast",
+        "collections",
+        "datetime",
+        "json",
+        "pathlib",
+        "re",
+        "typing"
+      ],
+      "states": [
+        "ASSET_SUFFICIENCY_GATE",
+        "ONE_ORCHESTRATOR",
+        "PROJECT_CONFIG",
+        "PROMOTE_TO_CORE",
+        "RELEASE_GATE",
+        "RENDER_ATOMICITY",
+        "SINGLE_SOURCE_OF_TRUTH",
+        "SUPERVISED_YOUTUBE",
+        "UNIFIED_SERVICE_INTERFACES"
+      ],
+      "json_literals": [
+        "*.json",
+        "architecture_audit.json",
+        "report\\.json",
+        "state\\.json",
+        "timeline\\.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "assignment",
+        "timeline",
+        "voice",
+        "audio",
+        "render",
+        "quality",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "tools\\build_asset_contact_sheets.py",
+      "module": "tools.build_asset_contact_sheets",
+      "lines": 305,
+      "classes": [],
+      "functions": [
+        "main",
+        "safe_font",
+        "wrap_text"
+      ],
+      "imports": [
+        "PIL",
+        "__future__",
+        "json",
+        "math",
+        "pathlib"
+      ],
+      "states": [],
+      "json_literals": [
+        "asset_contact_manifest.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic",
+        "quality"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": false,
+      "has_main": true
+    },
+    {
+      "path": "tools\\patch_render_nostdin.py",
+      "module": "tools.patch_render_nostdin",
+      "lines": 75,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "sys"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "tools\\patch_semantic_director_clip.py",
+      "module": "tools.patch_semantic_director_clip",
+      "lines": 118,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "sys"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "semantic",
+        "director"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
+      "path": "tools\\recover_franklin_multimedia_render.py",
+      "module": "tools.recover_franklin_multimedia_render",
+      "lines": 243,
+      "classes": [],
+      "functions": [],
+      "imports": [
+        "__future__",
+        "pathlib",
+        "shutil",
+        "subprocess"
+      ],
+      "states": [],
+      "json_literals": [],
+      "pipeline_hints": [
+        "asset",
+        "voice",
+        "audio",
+        "render"
+      ],
+      "writes_json": true,
+      "reads_json": false,
+      "uses_database": false,
+      "uses_subprocess": true,
+      "has_main": false
+    },
+    {
       "path": "tools\\smoke_test.py",
       "module": "tools.smoke_test",
       "lines": 28,
@@ -10107,13 +10645,59 @@
       "uses_database": true,
       "uses_subprocess": false,
       "has_main": false
+    },
+    {
+      "path": "tools\\visual_intelligence_v1_1_multimedia.py",
+      "module": "tools.visual_intelligence_v1_1_multimedia",
+      "lines": 728,
+      "classes": [],
+      "functions": [
+        "aggregate_classification",
+        "extract_frames",
+        "find_tool",
+        "load_visual_intelligence_module",
+        "main",
+        "probe_duration",
+        "run_command",
+        "sample_times"
+      ],
+      "imports": [
+        "__future__",
+        "az_enterprise.core.database",
+        "collections",
+        "importlib.util",
+        "json",
+        "pathlib",
+        "shutil",
+        "subprocess",
+        "sys",
+        "typing"
+      ],
+      "states": [
+        "MULTIMEDIA_ANALYZED"
+      ],
+      "json_literals": [
+        "asset_semantic_catalog.json",
+        "multimedia_intelligence_report.json",
+        "multimedia_semantic_catalog.json"
+      ],
+      "pipeline_hints": [
+        "asset",
+        "visual",
+        "semantic"
+      ],
+      "writes_json": true,
+      "reads_json": true,
+      "uses_database": true,
+      "uses_subprocess": true,
+      "has_main": true
     }
   ],
   "duplicates": [
     {
       "kind": "function",
       "name": "run",
-      "count": 58,
+      "count": 59,
       "locations": [
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\visual_renderer_rc2.py",
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\visual_renderer_rc2.py",
@@ -10153,14 +10737,15 @@
         "src\\az_enterprise\\core\\assignment_policy_rc2.py",
         "src\\az_enterprise\\core\\audio_composer_rc2.py",
         "src\\az_enterprise\\core\\audio_renderer_rc2.py",
+        "src\\az_enterprise\\core\\control_layer_rc2.py",
         "src\\az_enterprise\\core\\director_core_rc2.py",
         "src\\az_enterprise\\core\\director_supervisor_alpha292.py",
         "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
         "src\\az_enterprise\\core\\execution_graph_alpha29.py",
         "src\\az_enterprise\\core\\live_api_test_suite.py",
         "src\\az_enterprise\\core\\mux_engine_rc2.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\preflight.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\production_script_regenerator_rc2.py",
@@ -10178,9 +10763,13 @@
     {
       "kind": "function",
       "name": "main",
-      "count": 38,
+      "count": 47,
       "locations": [
         "APPLY_PHASE5.py",
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_atlas_zero_alpha_28.py",
         "apply_atlas_zero_alpha_29.py",
         "apply_atlas_zero_alpha_291.py",
@@ -10196,6 +10785,7 @@
         "apply_director_ai_alpha_273.py",
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase5_native_camera_motion\\APPLY_PHASE5.py",
         "atlas_zero_phase6_native_transition_engine\\APPLY_PHASE6.py",
@@ -10213,17 +10803,21 @@
         "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
         "atlas_zero_rc2_stage2_patch\\APPLY_RC2_STAGE2.py",
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\rc2_cli.py",
-        "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
-        "atlas_zero_remove_rc1\\VERIFY_REMOVE_RC1.py",
         "src\\az_enterprise\\cli.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\rc2_cli.py",
-        "src\\az_enterprise\\timeline_viewer_app.py"
+        "src\\az_enterprise\\core\\system_governance_cli_rc2.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py",
+        "src\\az_enterprise\\timeline_viewer_app.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\build_asset_contact_sheets.py",
+        "tools\\visual_intelligence_v1_1_multimedia.py"
       ]
     },
     {
       "kind": "function",
       "name": "build",
-      "count": 22,
+      "count": 23,
       "locations": [
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\transition_engine_rc2.py",
@@ -10236,6 +10830,7 @@
         "src\\az_enterprise\\core\\capcut_bridge.py",
         "src\\az_enterprise\\core\\cv_review_board.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
+        "src\\az_enterprise\\core\\external_script_importer_rc2.py",
         "src\\az_enterprise\\core\\final_assembly_pack.py",
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\local_autopilot.py",
@@ -10244,7 +10839,7 @@
         "src\\az_enterprise\\core\\native_viewer_pro.py",
         "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
         "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py",
         "src\\az_enterprise\\core\\timeline_viewer_2.py",
         "src\\az_enterprise\\core\\transition_engine_rc2.py"
       ]
@@ -10252,7 +10847,7 @@
     {
       "kind": "function",
       "name": "to_dict",
-      "count": 20,
+      "count": 21,
       "locations": [
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\transition_engine_rc2.py",
@@ -10272,6 +10867,7 @@
         "src\\az_enterprise\\core\\project_model_alpha301.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
         "src\\az_enterprise\\core\\transition_engine_rc2.py",
         "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py"
       ]
@@ -10300,7 +10896,7 @@
     {
       "kind": "function",
       "name": "find_repo_root",
-      "count": 10,
+      "count": 8,
       "locations": [
         "atlas_zero_phase6_native_transition_engine\\APPLY_PHASE6.py",
         "atlas_zero_phase7_native_audio_composer\\APPLY_PHASE7.py",
@@ -10309,9 +10905,7 @@
         "atlas_zero_rc2_finalization\\APPLY_RC2_FINALIZATION.py",
         "atlas_zero_rc2_finalization\\VERIFY_RC2_FINALIZATION.py",
         "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
-        "atlas_zero_rc2_production_audit\\RUN_RC2_PRODUCTION_AUDIT.py",
-        "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
-        "atlas_zero_remove_rc1\\VERIFY_REMOVE_RC1.py"
+        "atlas_zero_rc2_production_audit\\RUN_RC2_PRODUCTION_AUDIT.py"
       ]
     },
     {
@@ -10331,8 +10925,9 @@
     {
       "kind": "function",
       "name": "analyze",
-      "count": 6,
+      "count": 7,
       "locations": [
+        "atlas_zero_execution_chain_audit.py",
         "audit_rc2_production\\target_files\\postproduction_quality_rc2.py",
         "postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\cv_model.py",
@@ -10352,6 +10947,19 @@
         "apply_director_ai_alpha_272_v2.py",
         "apply_director_ai_alpha_272_v3.py",
         "apply_director_ai_alpha_273.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "replace_once",
+      "count": 6,
+      "locations": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+        "apply_atlas_zero_alpha_311.py",
+        "apply_director_ai_alpha_271.py",
+        "apply_director_ai_alpha_272.py",
+        "apply_director_ai_supervisor_alpha26.py"
       ]
     },
     {
@@ -10400,7 +11008,7 @@
         "src\\az_enterprise\\core\\control_layer_rc2.py",
         "src\\az_enterprise\\core\\director_policy_alpha293.py",
         "src\\az_enterprise\\core\\franklin_e2e_runtime.py",
-        "src\\az_enterprise\\core\\quality.py"
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py"
       ]
     },
     {
@@ -10594,28 +11202,6 @@
     },
     {
       "kind": "function",
-      "name": "franklin_legacy_render_path",
-      "count": 4,
-      "locations": [
-        "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "atlas_zero_rc2_2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "src\\az_enterprise\\core\\project_config_rc2.py"
-      ]
-    },
-    {
-      "kind": "function",
-      "name": "legacy_render_path",
-      "count": 4,
-      "locations": [
-        "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "atlas_zero_rc2_2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
-        "src\\az_enterprise\\core\\project_config_rc2.py"
-      ]
-    },
-    {
-      "kind": "function",
       "name": "load",
       "count": 4,
       "locations": [
@@ -10649,17 +11235,6 @@
     },
     {
       "kind": "function",
-      "name": "progress",
-      "count": 4,
-      "locations": [
-        "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
-        "phase5_payload\\camera_motion_rc2.py",
-        "src\\az_enterprise\\cli.py",
-        "src\\az_enterprise\\core\\camera_motion_rc2.py"
-      ]
-    },
-    {
-      "kind": "function",
       "name": "project_dir",
       "count": 4,
       "locations": [
@@ -10682,13 +11257,13 @@
     },
     {
       "kind": "function",
-      "name": "replace_once",
+      "name": "rel",
       "count": 4,
       "locations": [
-        "apply_atlas_zero_alpha_311.py",
-        "apply_director_ai_alpha_271.py",
-        "apply_director_ai_alpha_272.py",
-        "apply_director_ai_supervisor_alpha26.py"
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
+        "atlas_zero_full_audit.py",
+        "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
+        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py"
       ]
     },
     {
@@ -10769,6 +11344,17 @@
       ]
     },
     {
+      "kind": "function",
+      "name": "write_markdown",
+      "count": 4,
+      "locations": [
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
+        "atlas_zero_rc2_final_audit\\RC2_DEPENDENCY_AUDIT.py",
+        "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
+        "tools\\autonomy_audit_rc2.py"
+      ]
+    },
+    {
       "kind": "class",
       "name": "AssignmentPolicyRC2",
       "count": 3,
@@ -10796,6 +11382,16 @@
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
         "phase5_payload\\camera_motion_rc2.py",
         "src\\az_enterprise\\core\\camera_motion_rc2.py"
+      ]
+    },
+    {
+      "kind": "class",
+      "name": "ModuleRecord",
+      "count": 3,
+      "locations": [
+        "atlas_zero_full_audit.py",
+        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
       ]
     },
     {
@@ -10870,12 +11466,52 @@
     },
     {
       "kind": "function",
+      "name": "franklin_legacy_render_path",
+      "count": 3,
+      "locations": [
+        "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
+        "atlas_zero_rc2_2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
+        "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "get",
+      "count": 3,
+      "locations": [
+        "src\\az_enterprise\\core\\module_registry_alpha29.py",
+        "src\\az_enterprise\\core\\module_registry_alpha31.py",
+        "src\\az_enterprise\\core\\project_context_alpha29.py"
+      ]
+    },
+    {
+      "kind": "function",
       "name": "interpolate",
       "count": 3,
       "locations": [
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
         "phase5_payload\\camera_motion_rc2.py",
         "src\\az_enterprise\\core\\camera_motion_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "iter_python_files",
+      "count": 3,
+      "locations": [
+        "atlas_zero_full_audit.py",
+        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
+        "tools\\autonomy_audit_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "legacy_render_path",
+      "count": 3,
+      "locations": [
+        "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
+        "atlas_zero_rc2_2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
+        "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py"
       ]
     },
     {
@@ -10910,12 +11546,22 @@
     },
     {
       "kind": "function",
-      "name": "rel",
+      "name": "progress",
       "count": 3,
       "locations": [
-        "atlas_zero_full_audit.py",
-        "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
-        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py"
+        "atlas_zero_phase5_native_camera_motion\\phase5_payload\\camera_motion_rc2.py",
+        "phase5_payload\\camera_motion_rc2.py",
+        "src\\az_enterprise\\core\\camera_motion_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "register",
+      "count": 3,
+      "locations": [
+        "src\\az_enterprise\\core\\agents\\agent_registry.py",
+        "src\\az_enterprise\\core\\module_registry_alpha29.py",
+        "src\\az_enterprise\\core\\module_registry_alpha31.py"
       ]
     },
     {
@@ -10936,6 +11582,16 @@
         "apply_director_ai_alpha_272.py",
         "apply_director_ai_alpha_272_v2.py",
         "apply_director_ai_alpha_272_v3.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "run_command",
+      "count": 3,
+      "locations": [
+        "atlas_zero_full_audit.py",
+        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
+        "tools\\visual_intelligence_v1_1_multimedia.py"
       ]
     },
     {
@@ -11060,15 +11716,6 @@
     },
     {
       "kind": "class",
-      "name": "ModuleRecord",
-      "count": 2,
-      "locations": [
-        "atlas_zero_full_audit.py",
-        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py"
-      ]
-    },
-    {
-      "kind": "class",
       "name": "MuxEngineRC2",
       "count": 2,
       "locations": [
@@ -11150,15 +11797,6 @@
     },
     {
       "kind": "class",
-      "name": "StoryEngineRuntime",
-      "count": 2,
-      "locations": [
-        "audit_rc2_production\\target_files\\story_engine_runtime.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py"
-      ]
-    },
-    {
-      "kind": "class",
       "name": "SyntaxErrorRecord",
       "count": 2,
       "locations": [
@@ -11200,6 +11838,15 @@
       "locations": [
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\transition_engine_rc2.py",
         "src\\az_enterprise\\core\\transition_engine_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "all",
+      "count": 2,
+      "locations": [
+        "src\\az_enterprise\\core\\module_registry_alpha29.py",
+        "src\\az_enterprise\\core\\module_registry_alpha31.py"
       ]
     },
     {
@@ -11339,20 +11986,20 @@
     },
     {
       "kind": "function",
+      "name": "from_json",
+      "count": 2,
+      "locations": [
+        "src\\az_enterprise\\core\\project_model_alpha301.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
       "name": "generate_text",
       "count": 2,
       "locations": [
         "src\\az_enterprise\\core\\openai_adapter_rc2.py",
         "tests\\test_narrative_writer_openai_rc2.py"
-      ]
-    },
-    {
-      "kind": "function",
-      "name": "get",
-      "count": 2,
-      "locations": [
-        "src\\az_enterprise\\core\\module_registry_alpha29.py",
-        "src\\az_enterprise\\core\\project_context_alpha29.py"
       ]
     },
     {
@@ -11384,11 +12031,20 @@
     },
     {
       "kind": "function",
-      "name": "iter_python_files",
+      "name": "is_excluded",
       "count": 2,
       "locations": [
-        "atlas_zero_full_audit.py",
-        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py"
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
+        "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "locate_project_root",
+      "count": 2,
+      "locations": [
+        "src\\az_enterprise\\core\\system_governance_cli_rc2.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
       ]
     },
     {
@@ -11429,6 +12085,15 @@
     },
     {
       "kind": "function",
+      "name": "parse_args",
+      "count": 2,
+      "locations": [
+        "src\\az_enterprise\\core\\system_governance_cli_rc2.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
       "name": "patch_render_engine",
       "count": 2,
       "locations": [
@@ -11465,11 +12130,11 @@
     },
     {
       "kind": "function",
-      "name": "register",
+      "name": "refresh",
       "count": 2,
       "locations": [
-        "src\\az_enterprise\\core\\agents\\agent_registry.py",
-        "src\\az_enterprise\\core\\module_registry_alpha29.py"
+        "src\\az_enterprise\\core\\integrations.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py"
       ]
     },
     {
@@ -11501,15 +12166,6 @@
     },
     {
       "kind": "function",
-      "name": "run_command",
-      "count": 2,
-      "locations": [
-        "atlas_zero_full_audit.py",
-        "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py"
-      ]
-    },
-    {
-      "kind": "function",
       "name": "run_from_production_script",
       "count": 2,
       "locations": [
@@ -11533,24 +12189,6 @@
       "locations": [
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_config_rc2.py"
-      ]
-    },
-    {
-      "kind": "function",
-      "name": "run_pipeline",
-      "count": 2,
-      "locations": [
-        "src\\az_enterprise\\core\\workflow.py",
-        "src\\az_enterprise\\ui\\app.py"
-      ]
-    },
-    {
-      "kind": "function",
-      "name": "run_project",
-      "count": 2,
-      "locations": [
-        "src\\az_enterprise\\core\\director_supervisor_alpha292.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py"
       ]
     },
     {
@@ -11726,26 +12364,56 @@
     },
     {
       "kind": "function",
-      "name": "write_json",
+      "name": "visit_Call",
       "count": 2,
       "locations": [
-        "audit_rc2_production\\target_files\\story_engine_runtime.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py"
+        "atlas_zero_execution_chain_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
       ]
     },
     {
       "kind": "function",
-      "name": "write_markdown",
+      "name": "visit_ClassDef",
       "count": 2,
       "locations": [
-        "atlas_zero_rc2_final_audit\\RC2_DEPENDENCY_AUDIT.py",
-        "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py"
+        "atlas_zero_execution_chain_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "visit_FunctionDef",
+      "count": 2,
+      "locations": [
+        "atlas_zero_execution_chain_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "visit_Import",
+      "count": 2,
+      "locations": [
+        "atlas_zero_execution_chain_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
+      ]
+    },
+    {
+      "kind": "function",
+      "name": "visit_ImportFrom",
+      "count": 2,
+      "locations": [
+        "atlas_zero_execution_chain_audit.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py"
       ]
     }
   ],
   "pipeline": {
     "stage_modules": {
       "asset": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
         "apply_atlas_zero_alpha_28.py",
         "apply_atlas_zero_alpha_291.py",
         "apply_atlas_zero_alpha_301.py",
@@ -11759,6 +12427,7 @@
         "apply_director_ai_alpha_273.py",
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\visual_renderer_rc2.py",
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\visual_renderer_rc2.py",
@@ -11816,6 +12485,7 @@
         "src\\az_enterprise\\core\\director_core_rc2.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
         "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
+        "src\\az_enterprise\\core\\external_script_importer_rc2.py",
         "src\\az_enterprise\\core\\final_assembly_pack.py",
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\franklin_e2e_runtime.py",
@@ -11823,26 +12493,24 @@
         "src\\az_enterprise\\core\\live_api_layer.py",
         "src\\az_enterprise\\core\\local_autopilot.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\native_timeline.py",
         "src\\az_enterprise\\core\\native_viewer_pro.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
         "src\\az_enterprise\\core\\operator_console.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\preflight.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
-        "src\\az_enterprise\\core\\production_state.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_context_alpha29.py",
         "src\\az_enterprise\\core\\project_model_alpha301.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
         "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
         "src\\az_enterprise\\core\\release_gate.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
         "src\\az_enterprise\\core\\test_center.py",
@@ -11855,7 +12523,6 @@
         "src\\az_enterprise\\core\\visual_renderer_rc2.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
         "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\core\\working_state_auditor.py",
         "src\\az_enterprise\\ui\\app.py",
         "test_postproduction_quality_rc2.py",
@@ -11891,12 +12558,21 @@
         "tests\\test_story_strategy_engine_rc2.py",
         "tests\\test_visual_asset_registrar.py",
         "tests\\test_visual_semantic_analyzer_rc2.py",
-        "tests\\test_visual_understanding_contract_rc2.py"
+        "tests\\test_visual_understanding_contract_rc2.py",
+        "tools\\audit_multimedia_assets.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\build_asset_contact_sheets.py",
+        "tools\\recover_franklin_multimedia_render.py",
+        "tools\\visual_intelligence_v1_1_multimedia.py"
       ],
       "assignment": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\assignment_engine_rc2.py",
         "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\director_core_rc2.py",
@@ -11918,15 +12594,22 @@
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
+        "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\visual_asset_registrar.py",
         "tests\\test_director_ai_supervisor_alpha26.py",
         "tests\\test_director_knowledge_base_rc2.py",
         "tests\\test_rc2_assignment_authority.py",
-        "tests\\test_rc2_director_ai_authority.py"
+        "tests\\test_rc2_director_ai_authority.py",
+        "tests\\test_rc2_state_authority.py",
+        "tools\\autonomy_audit_rc2.py"
       ],
       "audio": [
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_director_ai_alpha_26.py",
         "apply_director_ai_alpha_271.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase7_native_audio_composer\\APPLY_PHASE7.py",
         "atlas_zero_phase7_native_audio_composer\\phase7_payload\\audio_composer_rc2.py",
@@ -11944,27 +12627,35 @@
         "audit_rc2_production\\target_files\\postproduction_quality_rc2.py",
         "audit_rc2_production\\target_files\\render_engine_rc1.py",
         "postproduction_quality_rc2.py",
+        "src\\az_enterprise\\cli.py",
         "src\\az_enterprise\\core\\acceptance_center.py",
         "src\\az_enterprise\\core\\asset_intelligence.py",
         "src\\az_enterprise\\core\\audio_composer_rc2.py",
         "src\\az_enterprise\\core\\audio_renderer_rc2.py",
         "src\\az_enterprise\\core\\audio_timeline_rc2.py",
+        "src\\az_enterprise\\core\\control_layer_rc2.py",
+        "src\\az_enterprise\\core\\elevenlabs_voice_provider_rc2.py",
         "src\\az_enterprise\\core\\mux_engine_rc2.py",
         "src\\az_enterprise\\core\\native_timeline.py",
         "src\\az_enterprise\\core\\paths.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\preflight.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
         "tests\\test_audio_phase7_rc2.py",
         "tests\\test_production_director.py",
-        "tests\\test_rc2_timeline_authority.py"
+        "tests\\test_rc2_timeline_authority.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\recover_franklin_multimedia_render.py"
       ],
       "director": [
         "APPLY_PHASE5.py",
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_atlas_zero_alpha_28.py",
         "apply_atlas_zero_alpha_29.py",
         "apply_atlas_zero_alpha_291.py",
@@ -11982,6 +12673,7 @@
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase5_native_camera_motion\\APPLY_PHASE5.py",
         "atlas_zero_phase8_rc2_control_layer\\APPLY_PHASE8.py",
@@ -12004,7 +12696,6 @@
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\rc2_cli.py",
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\runtime_governance_rc2.py",
         "atlas_zero_rc2_stage2_patch\\tests\\test_rc2_stage2_unified_runtime.py",
-        "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
         "audit_rc2_production\\target_files\\asset_engine_rc2.py",
         "audit_rc2_production\\target_files\\assignment_engine_rc2.py",
         "audit_rc2_production\\target_files\\assignment_policy_rc2.py",
@@ -12030,18 +12721,18 @@
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\integrations.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\native_timeline.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\rc2_cli.py",
         "src\\az_enterprise\\core\\runtime_governance_rc2.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "src\\az_enterprise\\core\\story_engine.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_studio.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\ui\\app.py",
         "tests\\test_director_ai_alpha25.py",
         "tests\\test_director_ai_supervisor_alpha26.py",
@@ -12056,12 +12747,16 @@
         "tests\\test_rc2_assignment_authority.py",
         "tests\\test_rc2_director_ai_authority.py",
         "tests\\test_rc2_stage2_unified_runtime.py",
+        "tests\\test_rc2_state_authority.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\patch_semantic_director_clip.py",
         "tools\\smoke_test.py"
       ],
       "event": [
         "apply_atlas_zero_alpha_291.py",
         "apply_atlas_zero_alpha_292.py",
         "apply_director_ai_alpha_273.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase7_native_audio_composer\\phase7_payload\\audio_composer_rc2.py",
         "atlas_zero_phase7_native_audio_composer\\phase7_payload\\audio_renderer_rc2.py",
@@ -12086,6 +12781,7 @@
         "src\\az_enterprise\\core\\database.py",
         "src\\az_enterprise\\core\\director_ai.py",
         "src\\az_enterprise\\core\\director_ai_runtime.py",
+        "src\\az_enterprise\\core\\director_core_rc2.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
         "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
         "src\\az_enterprise\\core\\events.py",
@@ -12094,27 +12790,24 @@
         "src\\az_enterprise\\core\\live_api_layer.py",
         "src\\az_enterprise\\core\\live_connectors.py",
         "src\\az_enterprise\\core\\local_autopilot.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
         "src\\az_enterprise\\core\\operator_console.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\preflight.py",
-        "src\\az_enterprise\\core\\production_state.py",
+        "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_context_alpha29.py",
         "src\\az_enterprise\\core\\project_profiles_alpha273.py",
-        "src\\az_enterprise\\core\\project_state.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\release_gate.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_studio.py",
         "src\\az_enterprise\\core\\visual_intelligence.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
         "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\core\\working_state_auditor.py",
         "src\\az_enterprise\\ui\\app.py",
         "tests\\test_audio_phase7_rc2.py",
@@ -12129,6 +12822,8 @@
         "tools\\smoke_test.py"
       ],
       "quality": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
         "apply_atlas_zero_alpha_28.py",
         "apply_atlas_zero_alpha_29.py",
         "apply_atlas_zero_alpha_291.py",
@@ -12145,6 +12840,7 @@
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\director_core_rc2.py",
         "atlas_zero_rc2_1_patch\\src\\az_enterprise\\core\\production_state_rc2.py",
@@ -12182,23 +12878,18 @@
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\integrations.py",
         "src\\az_enterprise\\core\\native_timeline.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
-        "src\\az_enterprise\\core\\production_state.py",
         "src\\az_enterprise\\core\\production_state_rc2.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
         "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
         "src\\az_enterprise\\core\\runtime_governance_rc2.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
         "src\\az_enterprise\\core\\test_center.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\visual_asset_registrar.py",
         "src\\az_enterprise\\core\\visual_intelligence.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\ui\\app.py",
         "test_postproduction_quality_rc2.py",
         "tests\\test_director_ai_alpha25.py",
@@ -12214,12 +12905,19 @@
         "tests\\test_rc2_timeline_production_script.py",
         "tests\\test_rc2_timeline_project_discovery.py",
         "tests\\test_recommendation_engine_alpha28.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\build_asset_contact_sheets.py",
         "tools\\smoke_test.py"
       ],
       "render": [
         "APPLY_PHASE5.py",
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_director_ai_25.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase5_native_camera_motion\\APPLY_PHASE5.py",
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\visual_renderer_rc2.py",
@@ -12255,8 +12953,6 @@
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\quality_gate_rc2.py",
         "atlas_zero_rc2_stage2_patch\\tests\\test_rc2_stage2_unified_runtime.py",
-        "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
-        "atlas_zero_remove_rc1\\VERIFY_REMOVE_RC1.py",
         "audit_rc2_production\\target_files\\quality_gate_rc2.py",
         "audit_rc2_production\\target_files\\render_engine_rc1.py",
         "phase5_payload\\visual_renderer_rc2.py",
@@ -12266,7 +12962,6 @@
         "src\\az_enterprise\\core\\control_layer_rc2.py",
         "src\\az_enterprise\\core\\cv_model.py",
         "src\\az_enterprise\\core\\director_core_rc2.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py",
         "src\\az_enterprise\\core\\mux_engine_rc2.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
         "src\\az_enterprise\\core\\preflight.py",
@@ -12274,6 +12969,8 @@
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
+        "src\\az_enterprise\\core\\system_registry_rc2.py",
         "src\\az_enterprise\\core\\visual_renderer_rc2.py",
         "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
         "src\\az_enterprise\\ui\\app.py",
@@ -12281,10 +12978,14 @@
         "tests\\test_production_director.py",
         "tests\\test_rc2_foundation.py",
         "tests\\test_rc2_render_authority.py",
-        "tests\\test_rc2_stage2_unified_runtime.py"
+        "tests\\test_rc2_stage2_unified_runtime.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\patch_render_nostdin.py",
+        "tools\\recover_franklin_multimedia_render.py"
       ],
       "semantic": [
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_rc2_finalization\\APPLY_RC2_FINALIZATION.py",
         "atlas_zero_rc2_finalization\\VERIFY_RC2_FINALIZATION.py",
@@ -12300,21 +13001,31 @@
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
         "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
         "src\\az_enterprise\\core\\generated_asset_store_rc2.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
+        "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
         "tests\\test_editorial_package_rc2.py",
         "tests\\test_generated_asset_store_rc2.py",
         "tests\\test_rc2_asset_schema_migration.py",
         "tests\\test_story_engine_semantic_rc26.py",
-        "tests\\test_visual_semantic_analyzer_rc2.py"
+        "tests\\test_visual_semantic_analyzer_rc2.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\build_asset_contact_sheets.py",
+        "tools\\patch_semantic_director_clip.py",
+        "tools\\visual_intelligence_v1_1_multimedia.py"
       ],
       "story": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
         "apply_atlas_zero_alpha_292.py",
         "apply_atlas_zero_alpha_311.py",
         "apply_director_ai_alpha_273.py",
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
         "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
@@ -12336,30 +13047,31 @@
         "src\\az_enterprise\\core\\director_supervisor_alpha292.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
         "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
+        "src\\az_enterprise\\core\\external_script_importer_rc2.py",
         "src\\az_enterprise\\core\\final_assembly_pack.py",
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
         "src\\az_enterprise\\core\\franklin_e2e_runtime.py",
         "src\\az_enterprise\\core\\integrations.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\native_timeline.py",
         "src\\az_enterprise\\core\\native_viewer_pro.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_profiles_alpha273.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
         "src\\az_enterprise\\core\\runtime_governance_rc2.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
+        "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_studio.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
         "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\ui\\app.py",
         "tests\\test_director_ai_alpha25.py",
         "tests\\test_director_ai_supervisor_alpha26.py",
@@ -12375,11 +13087,15 @@
         "tools\\smoke_test.py"
       ],
       "story_strategy": [
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_rc2_production_audit\\RC2_PRODUCTION_AUDIT.py",
         "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
         "src\\az_enterprise\\core\\director_core_rc2.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
+        "src\\az_enterprise\\core\\external_script_importer_rc2.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
+        "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
@@ -12388,6 +13104,10 @@
         "tests\\test_story_strategy_engine_rc2.py"
       ],
       "timeline": [
+        "APPLY_RC2_RENDER_INTEGRATION.py",
+        "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+        "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
         "apply_atlas_zero_alpha_28.py",
         "apply_atlas_zero_alpha_291.py",
         "apply_atlas_zero_alpha_292.py",
@@ -12402,6 +13122,7 @@
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase6_native_transition_engine\\phase6_payload\\transition_engine_rc2.py",
         "atlas_zero_phase7_native_audio_composer\\APPLY_PHASE7.py",
@@ -12430,12 +13151,13 @@
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\director_core_rc2.py",
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\project_config_rc2.py",
         "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\quality_gate_rc2.py",
-        "atlas_zero_remove_rc1\\VERIFY_REMOVE_RC1.py",
         "audit_rc2_production\\target_files\\postproduction_quality_rc2.py",
         "audit_rc2_production\\target_files\\quality_gate_rc2.py",
         "audit_rc2_production\\target_files\\render_engine_rc1.py",
         "audit_rc2_production\\target_files\\timeline_engine_rc2.py",
         "postproduction_quality_rc2.py",
+        "src\\az_enterprise\\cli.py",
+        "src\\az_enterprise\\core\\assignment_policy_rc2.py",
         "src\\az_enterprise\\core\\audio_composer_rc2.py",
         "src\\az_enterprise\\core\\audio_renderer_rc2.py",
         "src\\az_enterprise\\core\\audio_timeline_rc2.py",
@@ -12445,29 +13167,26 @@
         "src\\az_enterprise\\core\\director_core_rc2.py",
         "src\\az_enterprise\\core\\final_assembly_pack.py",
         "src\\az_enterprise\\core\\final_timeline_viewer.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
         "src\\az_enterprise\\core\\native_timeline.py",
         "src\\az_enterprise\\core\\native_viewer_pro.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
         "src\\az_enterprise\\core\\operator_console.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_context_alpha29.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\quality_gate_rc2.py",
         "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
         "src\\az_enterprise\\core\\release_gate.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\test_center.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_studio.py",
         "src\\az_enterprise\\core\\timeline_viewer_2.py",
         "src\\az_enterprise\\core\\transition_engine_rc2.py",
         "src\\az_enterprise\\core\\visual_dynamics_alpha272.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\core\\working_state_auditor.py",
         "src\\az_enterprise\\timeline_viewer_app.py",
         "src\\az_enterprise\\ui\\app.py",
@@ -12487,6 +13206,8 @@
         "tests\\test_rc2_timeline_production_script.py",
         "tests\\test_rc2_timeline_project_discovery.py",
         "tests\\test_recommendation_engine_alpha28.py",
+        "tools\\audit_multimedia_assets.py",
+        "tools\\autonomy_audit_rc2.py",
         "tools\\smoke_test.py"
       ],
       "visual": [
@@ -12505,6 +13226,7 @@
         "apply_director_ai_supervisor_alpha26.py",
         "apply_director_knowledge_base_rc2.py",
         "apply_director_supervisor_rc2_fix.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase5_native_camera_motion\\APPLY_PHASE5.py",
         "atlas_zero_phase5_native_camera_motion\\phase5_payload\\visual_renderer_rc2.py",
@@ -12532,6 +13254,7 @@
         "src\\az_enterprise\\core\\assignment_policy_rc2.py",
         "src\\az_enterprise\\core\\audio_composer_rc2.py",
         "src\\az_enterprise\\core\\capcut_bridge.py",
+        "src\\az_enterprise\\core\\control_layer_rc2.py",
         "src\\az_enterprise\\core\\cv_model.py",
         "src\\az_enterprise\\core\\cv_review_board.py",
         "src\\az_enterprise\\core\\database.py",
@@ -12545,27 +13268,24 @@
         "src\\az_enterprise\\core\\generated_asset_store_rc2.py",
         "src\\az_enterprise\\core\\integrations.py",
         "src\\az_enterprise\\core\\local_autopilot.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py",
         "src\\az_enterprise\\core\\montage_workbench.py",
         "src\\az_enterprise\\core\\mux_engine_rc2.py",
+        "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\native_timeline.py",
         "src\\az_enterprise\\core\\native_viewer_pro.py",
         "src\\az_enterprise\\core\\native_viewer_rc.py",
         "src\\az_enterprise\\core\\operator_console.py",
-        "src\\az_enterprise\\core\\pipeline_runtime.py",
         "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
-        "src\\az_enterprise\\core\\production_state.py",
         "src\\az_enterprise\\core\\production_visual_manager.py",
+        "src\\az_enterprise\\core\\project_config_rc2.py",
         "src\\az_enterprise\\core\\project_profiles_alpha273.py",
-        "src\\az_enterprise\\core\\project_state.py",
-        "src\\az_enterprise\\core\\quality.py",
         "src\\az_enterprise\\core\\recommendation_engine_alpha28.py",
         "src\\az_enterprise\\core\\release_gate.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
-        "src\\az_enterprise\\core\\story_engine_runtime.py",
+        "src\\az_enterprise\\core\\story_engine.py",
         "src\\az_enterprise\\core\\story_strategy_contract_rc2.py",
         "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
@@ -12577,7 +13297,6 @@
         "src\\az_enterprise\\core\\visual_renderer_rc2.py",
         "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
         "src\\az_enterprise\\core\\visual_understanding_contract_rc2.py",
-        "src\\az_enterprise\\core\\workflow.py",
         "src\\az_enterprise\\ui\\app.py",
         "tests\\test_director_ai_alpha25.py",
         "tests\\test_director_ai_supervisor_alpha26.py",
@@ -12601,9 +13320,14 @@
         "tests\\test_story_strategy_engine_rc2.py",
         "tests\\test_visual_asset_registrar.py",
         "tests\\test_visual_semantic_analyzer_rc2.py",
-        "tests\\test_visual_understanding_contract_rc2.py"
+        "tests\\test_visual_understanding_contract_rc2.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\build_asset_contact_sheets.py",
+        "tools\\visual_intelligence_v1_1_multimedia.py"
       ],
       "voice": [
+        "AUDIT_VOICE_INTEGRATION_RC2.py",
+        "atlas_zero_execution_chain_audit.py",
         "atlas_zero_full_audit.py",
         "atlas_zero_phase7_native_audio_composer\\phase7_payload\\audio_renderer_rc2.py",
         "atlas_zero_phase7_native_audio_composer\\phase7_payload\\audio_timeline_rc2.py",
@@ -12617,21 +13341,23 @@
         "audit_rc2_production\\target_files\\production_script_regenerator_rc2.py",
         "audit_rc2_production\\target_files\\render_engine_rc1.py",
         "audit_rc2_production\\target_files\\timeline_engine_rc2.py",
+        "src\\az_enterprise\\cli.py",
         "src\\az_enterprise\\core\\agents\\agent_registry.py",
         "src\\az_enterprise\\core\\asset_intelligence.py",
         "src\\az_enterprise\\core\\audio_renderer_rc2.py",
         "src\\az_enterprise\\core\\audio_timeline_rc2.py",
+        "src\\az_enterprise\\core\\control_layer_rc2.py",
         "src\\az_enterprise\\core\\director_ai.py",
         "src\\az_enterprise\\core\\ducking_engine_rc2.py",
         "src\\az_enterprise\\core\\editorial_package_rc2.py",
+        "src\\az_enterprise\\core\\elevenlabs_voice_provider_rc2.py",
+        "src\\az_enterprise\\core\\external_script_importer_rc2.py",
         "src\\az_enterprise\\core\\integrations.py",
-        "src\\az_enterprise\\core\\media_orchestrator.py",
         "src\\az_enterprise\\core\\narrative_writer_rc2.py",
         "src\\az_enterprise\\core\\production_director.py",
         "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
         "src\\az_enterprise\\core\\production_script_regenerator_rc2.py",
         "src\\az_enterprise\\core\\project_config_rc2.py",
-        "src\\az_enterprise\\core\\project_state.py",
         "src\\az_enterprise\\core\\render_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_engine_rc2.py",
         "src\\az_enterprise\\core\\timeline_viewer_2.py",
@@ -12640,11 +13366,17 @@
         "tests\\test_director_ai_alpha25.py",
         "tests\\test_rc2_timeline_production_script.py",
         "tests\\test_rc2_timeline_project_discovery.py",
-        "tests\\test_voice_production_engine_rc2.py"
+        "tests\\test_voice_production_engine_rc2.py",
+        "tools\\autonomy_audit_rc2.py",
+        "tools\\recover_franklin_multimedia_render.py"
       ]
     },
     "json_writers": [
       "APPLY_PHASE5.py",
+      "APPLY_RC2_RENDER_INTEGRATION.py",
+      "APPLY_RC2_RENDER_INTEGRATION_V2.py",
+      "APPLY_RC2_TIMELINE_NATURAL_SOUND.py",
+      "AUDIT_VOICE_INTEGRATION_RC2.py",
       "apply_atlas_zero_alpha_28.py",
       "apply_atlas_zero_alpha_29.py",
       "apply_atlas_zero_alpha_291.py",
@@ -12661,6 +13393,7 @@
       "apply_director_ai_supervisor_alpha26.py",
       "apply_director_knowledge_base_rc2.py",
       "apply_director_supervisor_rc2_fix.py",
+      "atlas_zero_execution_chain_audit.py",
       "atlas_zero_full_audit.py",
       "atlas_zero_phase5_native_camera_motion\\APPLY_PHASE5.py",
       "atlas_zero_phase5_native_camera_motion\\phase5_payload\\visual_renderer_rc2.py",
@@ -12684,7 +13417,6 @@
       "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\director_core_rc2.py",
       "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\production_state_rc2.py",
       "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\quality_gate_rc2.py",
-      "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
       "audit_rc2_production\\target_files\\assignment_policy_rc2.py",
       "audit_rc2_production\\target_files\\production_script_assembler_rc2.py",
       "audit_rc2_production\\target_files\\quality_gate_rc2.py",
@@ -12703,6 +13435,7 @@
       "src\\az_enterprise\\core\\director_ai.py",
       "src\\az_enterprise\\core\\director_ai_runtime.py",
       "src\\az_enterprise\\core\\director_core_rc2.py",
+      "src\\az_enterprise\\core\\elevenlabs_voice_provider_rc2.py",
       "src\\az_enterprise\\core\\final_assembly_pack.py",
       "src\\az_enterprise\\core\\final_timeline_viewer.py",
       "src\\az_enterprise\\core\\franklin_e2e_runtime.py",
@@ -12710,14 +13443,14 @@
       "src\\az_enterprise\\core\\live_api_test_suite.py",
       "src\\az_enterprise\\core\\live_connectors.py",
       "src\\az_enterprise\\core\\local_autopilot.py",
-      "src\\az_enterprise\\core\\media_orchestrator.py",
       "src\\az_enterprise\\core\\montage_workbench.py",
       "src\\az_enterprise\\core\\mux_engine_rc2.py",
+      "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
+      "src\\az_enterprise\\core\\narrative_writer_rc2.py",
       "src\\az_enterprise\\core\\native_timeline.py",
       "src\\az_enterprise\\core\\native_viewer_pro.py",
       "src\\az_enterprise\\core\\native_viewer_rc.py",
       "src\\az_enterprise\\core\\operator_console.py",
-      "src\\az_enterprise\\core\\pipeline_runtime.py",
       "src\\az_enterprise\\core\\preflight.py",
       "src\\az_enterprise\\core\\production_director.py",
       "src\\az_enterprise\\core\\production_script_assembler_rc2.py",
@@ -12725,7 +13458,9 @@
       "src\\az_enterprise\\core\\production_visual_manager.py",
       "src\\az_enterprise\\core\\quality_gate_rc2.py",
       "src\\az_enterprise\\core\\render_engine_rc2.py",
-      "src\\az_enterprise\\core\\story_engine_runtime.py",
+      "src\\az_enterprise\\core\\story_engine.py",
+      "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
+      "src\\az_enterprise\\core\\system_registry_rc2.py",
       "src\\az_enterprise\\core\\test_center.py",
       "src\\az_enterprise\\core\\timeline_engine_rc2.py",
       "src\\az_enterprise\\core\\timeline_studio.py",
@@ -12733,8 +13468,8 @@
       "src\\az_enterprise\\core\\visual_asset_registrar.py",
       "src\\az_enterprise\\core\\visual_intelligence.py",
       "src\\az_enterprise\\core\\visual_renderer_rc2.py",
+      "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
       "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
-      "src\\az_enterprise\\core\\workflow.py",
       "src\\az_enterprise\\core\\working_state_auditor.py",
       "test_postproduction_quality_rc2.py",
       "tests\\test_postproduction_quality_rc2.py",
@@ -12745,8 +13480,15 @@
       "tests\\test_production_visual_manager.py",
       "tests\\test_project_profiles_alpha273.py",
       "tests\\test_rc2_timeline_project_discovery.py",
+      "tests\\test_system_governance_gate_rc2.py",
       "tests\\test_visual_asset_registrar.py",
-      "tests\\test_voice_production_engine_rc2.py"
+      "tests\\test_voice_production_engine_rc2.py",
+      "tools\\autonomy_audit_rc2.py",
+      "tools\\build_asset_contact_sheets.py",
+      "tools\\patch_render_nostdin.py",
+      "tools\\patch_semantic_director_clip.py",
+      "tools\\recover_franklin_multimedia_render.py",
+      "tools\\visual_intelligence_v1_1_multimedia.py"
     ],
     "json_readers": [
       "apply_atlas_zero_alpha_301.py",
@@ -12767,7 +13509,6 @@
       "atlas_zero_rc2_production_audit\\atlas_zero_full_audit.py",
       "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\production_state_rc2.py",
       "atlas_zero_rc2_stage2_patch\\src\\az_enterprise\\core\\quality_gate_rc2.py",
-      "atlas_zero_remove_rc1\\APPLY_REMOVE_RC1.py",
       "audit_rc2_production\\target_files\\postproduction_quality_rc2.py",
       "audit_rc2_production\\target_files\\production_script_regenerator_rc2.py",
       "audit_rc2_production\\target_files\\quality_gate_rc2.py",
@@ -12776,6 +13517,8 @@
       "postproduction_quality_rc2.py",
       "src\\az_enterprise\\core\\director_core_rc2.py",
       "src\\az_enterprise\\core\\event_discovery_engine_rc2.py",
+      "src\\az_enterprise\\core\\external_script_importer_rc2.py",
+      "src\\az_enterprise\\core\\narrative_runtime_rc2.py",
       "src\\az_enterprise\\core\\postproduction_quality_rc2.py",
       "src\\az_enterprise\\core\\production_director.py",
       "src\\az_enterprise\\core\\production_script_regenerator_rc2.py",
@@ -12783,9 +13526,11 @@
       "src\\az_enterprise\\core\\quality_gate_rc2.py",
       "src\\az_enterprise\\core\\render_engine_rc2.py",
       "src\\az_enterprise\\core\\story_strategy_engine_rc2.py",
-      "src\\az_enterprise\\core\\timeline_engine_rc2.py",
+      "src\\az_enterprise\\core\\system_governance_gate_rc2.py",
+      "src\\az_enterprise\\core\\system_registry_rc2.py",
       "src\\az_enterprise\\core\\visual_asset_registrar.py",
       "src\\az_enterprise\\core\\visual_dynamics_alpha272.py",
+      "src\\az_enterprise\\core\\visual_semantic_analyzer_rc2.py",
       "src\\az_enterprise\\core\\voice_production_engine_rc2.py",
       "src\\az_enterprise\\timeline_viewer_app.py",
       "tests\\test_production_director.py",
@@ -12794,7 +13539,9 @@
       "tests\\test_rc2_timeline_authority.py",
       "tests\\test_rc2_timeline_production_script.py",
       "tests\\test_visual_asset_registrar.py",
-      "tools\\smoke_test.py"
+      "tools\\audit_multimedia_assets.py",
+      "tools\\smoke_test.py",
+      "tools\\visual_intelligence_v1_1_multimedia.py"
     ],
     "suspicious_findings": [
       "DirectorCoreRC2 does not import visual_semantic_analyzer_rc2; upstream RC2 chain may be disconnected.",
@@ -12803,18 +13550,19 @@
     ]
   },
   "compileall": {
-    "returncode": 1,
-    "output": "*** Error compiling 'C:\\\\Users\\\\3dtool\\\\OneDrive\\\\���������\\\\GitHub\\\\atlas_zero1\\\\rcaz_enterprisecoredirector_ai.py'...\nSorry: IndentationError: unexpected indent (rcaz_enterprisecoredirector_ai.py, line 2)\n\nC:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_rc2_finalization\\APPLY_RC2_FINALIZATION.py:155: SyntaxWarning: invalid escape sequence '\\s'\n  print(r\"$env:PYTHONPATH = \"\"$PWD\\src\"\"\")"
+    "returncode": null,
+    "output": "",
+    "timeout": true
   },
   "pytest": {
-    "state": "PASSED",
-    "returncode": 0,
-    "output": ""
+    "state": "FAILED",
+    "returncode": 2,
+    "output": "=================================== ERRORS ====================================\n____ ERROR collecting atlas_zero_rc2_2_patch/tests/test_rc2_foundation.py _____\nimport file mismatch:\nimported module 'test_rc2_foundation' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_rc2_1_patch\\tests\\test_rc2_foundation.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_rc2_2_patch\\tests\\test_rc2_foundation.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n_______________ ERROR collecting tests/test_audio_phase7_rc2.py _______________\nimport file mismatch:\nimported module 'test_audio_phase7_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_phase7_native_audio_composer\\test_audio_phase7_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_audio_phase7_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n______________ ERROR collecting tests/test_media_orchestrator.py ______________\nImportError while importing test module 'C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_media_orchestrator.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests\\test_media_orchestrator.py:4: in <module>\n    from az_enterprise.core.media_orchestrator import run_project\nE   ModuleNotFoundError: No module named 'az_enterprise.core.media_orchestrator'\n___________ ERROR collecting tests/test_phase8_control_layer_rc2.py ___________\nimport file mismatch:\nimported module 'test_phase8_control_layer_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_phase8_rc2_control_layer\\tests\\test_phase8_control_layer_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_phase8_control_layer_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n__________ ERROR collecting tests/test_postproduction_quality_rc2.py __________\nimport file mismatch:\nimported module 'test_postproduction_quality_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\test_postproduction_quality_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_postproduction_quality_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n________________ ERROR collecting tests/test_rc2_foundation.py ________________\nimport file mismatch:\nimported module 'test_rc2_foundation' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_rc2_1_patch\\tests\\test_rc2_foundation.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_rc2_foundation.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n__________ ERROR collecting tests/test_rc2_stage2_unified_runtime.py __________\nimport file mismatch:\nimported module 'test_rc2_stage2_unified_runtime' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_rc2_stage2_patch\\tests\\test_rc2_stage2_unified_runtime.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_rc2_stage2_unified_runtime.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n____________ ERROR collecting tests/test_transition_engine_rc2.py _____________\nimport file mismatch:\nimported module 'test_transition_engine_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\atlas_zero_phase6_native_transition_engine\\test_transition_engine_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_transition_engine_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n____________________ ERROR collecting tools/smoke_test.py _____________________\nImportError while importing test module 'C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tools\\smoke_test.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntools\\smoke_test.py:6: in <module>\n    from az_enterprise.core.pipeline_runtime import PipelineRunManager\nE   ModuleNotFoundError: No module named 'az_enterprise.core.pipeline_runtime'\n_ ERROR collecting workspace/backups/rc2_5_assignment_authority_20260714_184539/test_director_ai_alpha25.py _\nimport file mismatch:\nimported module 'test_director_ai_alpha25' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_director_ai_alpha25.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\workspace\\backups\\rc2_5_assignment_authority_20260714_184539\\test_director_ai_alpha25.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n_ ERROR collecting workspace/backups/rc2_6_story_strategy_test_utf8_fix_20260715_171628/test_story_strategy_engine_rc2.py _\nimport file mismatch:\nimported module 'test_story_strategy_engine_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_story_strategy_engine_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\workspace\\backups\\rc2_6_story_strategy_test_utf8_fix_20260715_171628\\test_story_strategy_engine_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n_ ERROR collecting workspace/backups/system_governance_integration_20260725_004640/tests/test_system_governance_gate_rc2.py _\nimport file mismatch:\nimported module 'test_system_governance_gate_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_system_governance_gate_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\workspace\\backups\\system_governance_integration_20260725_004640\\tests\\test_system_governance_gate_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n_ ERROR collecting workspace/backups/utf8_bom_cleanup_20260725_005339/tests/test_rc2_state_authority.py _\nimport file mismatch:\nimported module 'test_rc2_state_authority' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_rc2_state_authority.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\workspace\\backups\\utf8_bom_cleanup_20260725_005339\\tests\\test_rc2_state_authority.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n_ ERROR collecting workspace/installers/system_governance_rc2/tests/test_system_governance_gate_rc2.py _\nimport file mismatch:\nimported module 'test_system_governance_gate_rc2' has this __file__ attribute:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\tests\\test_system_governance_gate_rc2.py\nwhich is not the same as the test file we want to collect:\n  C:\\Users\\3dtool\\OneDrive\\���������\\GitHub\\atlas_zero1\\workspace\\installers\\system_governance_rc2\\tests\\test_system_governance_gate_rc2.py\nHINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules\n=========================== short test summary info ===========================\nERROR atlas_zero_rc2_2_patch/tests/test_rc2_foundation.py\nERROR tests/test_audio_phase7_rc2.py\nERROR tests/test_media_orchestrator.py\nERROR tests/test_phase8_control_layer_rc2.py\nERROR tests/test_postproduction_quality_rc2.py\nERROR tests/test_rc2_foundation.py\nERROR tests/test_rc2_stage2_unified_runtime.py\nERROR tests/test_transition_engine_rc2.py\nERROR tools/smoke_test.py\nERROR workspace/backups/rc2_5_assignment_authority_20260714_184539/test_director_ai_alpha25.py\nERROR workspace/backups/rc2_6_story_strategy_test_utf8_fix_20260715_171628/test_story_strategy_engine_rc2.py\nERROR workspace/backups/system_governance_integration_20260725_004640/tests/test_system_governance_gate_rc2.py\nERROR workspace/backups/utf8_bom_cleanup_20260725_005339/tests/test_rc2_state_authority.py\nERROR workspace/installers/system_governance_rc2/tests/test_system_governance_gate_rc2.py\n!!!!!!!!!!!!!!!!!! Interrupted: 14 errors during collection !!!!!!!!!!!!!!!!!!!\n1 warning, 14 errors in 6.00s"
   },
   "git": {
-    "branch": "feature/rc2-duration-authority-2.6",
-    "head": "daa0440d5508f9129aa15e15000e77763f439fad",
-    "status": "D ATLAS_ZERO_RC1_ALPHA_3_1.patch\n D paceexportsfranklinmovie_runtime_rc1manual_edit_package.md\n M src/az_enterprise/cli.py\n M src/az_enterprise/core/asset_intelligence.py\n M src/az_enterprise/core/assignment_policy_rc2.py\n M src/az_enterprise/core/cv_model.py\n M src/az_enterprise/core/director_core_rc2.py\n M src/az_enterprise/core/director_policy_evaluator_alpha293.py\n M src/az_enterprise/core/director_supervisor_alpha292.py\n M src/az_enterprise/core/media_orchestrator.py\n D src/az_enterprise/core/movie_runtime_rc1.py\n D src/az_enterprise/core/movie_runtime_rc1.py.backup_duration_shots_20260712_202102\n D src/az_enterprise/core/movie_runtime_rc1.py.backup_shot_mode_20260712_201034\n M src/az_enterprise/core/narrative_writer_rc2.py\n M src/az_enterprise/core/pipeline_runtime.py\n M src/az_enterprise/core/project_config_rc2.py\n D src/az_enterprise/core/rc1_completion_planner.py\n M src/az_enterprise/core/release_gate.py\n D src/az_enterprise/core/render_engine_rc1.py\n D src/az_enterprise/core/render_engine_rc1.py.backup_before_master_audio\n D src/az_enterprise/core/render_engine_rc1.py.backup_before_nostdin\n M src/az_enterprise/core/render_engine_rc2.py\n M src/az_enterprise/core/timeline_engine_rc2.py\n M src/az_enterprise/core/workflow.py\n M src/az_enterprise/ui/__pycache__/app.cpython-313.pyc\n M src/az_enterprise/ui/app.py\n D tests/test_movie_runtime_rc1.py\n D tests/test_movie_runtime_rc1_assets.py\n D tests/test_render_engine_rc1.py\n D tools/franklin_autopilot.py\n D tools/media_factory_rc1.py\n D tools/render_franklin_roughcut.py\n D tools/repair_semantic_asset_ids.py\n D tools/semantic_director_v1.py\n D tools/semantic_director_v1_1_multimedia.py\n D tools/semantic_director_v1_2_temporal.py\n D tools/visual_intelligence_v1.py\n?? APPLY_PHASE5.py\n?? alpha26_full_pytest.txt\n?? apply_director_knowledge_base_rc2.py\n?? apply_director_supervisor_rc2_fix.py\n?? atlas_zero_full_audit.py\n?? atlas_zero_phase5_native_camera_motion/\n?? atlas_zero_phase6_native_transition_engine/\n?? atlas_zero_phase7_native_audio_composer/\n?? atlas_zero_phase8_rc2_control_layer/\n?? atlas_zero_phase9_production_cleanup/\n?? atlas_zero_rc2_final_audit/\n?? atlas_zero_rc2_finalization/\n?? atlas_zero_rc2_production_audit/\n?? atlas_zero_remove_rc1/\n?? audit_rc2_production.zip\n?? audit_rc2_production/\n?? audit_rc2_production_contour.ps1\n?? collect_diagnostic.txt\n?? collect_errors.txt\n?? collect_stderr.txt\n?? collect_stdout.txt\n?? editorial_intelligence_source.txt\n?? hogueras_duration_audit.txt\n?? phase5_payload/\n?? src/az_enterprise/core/audio_composer_rc2.py\n?? src/az_enterprise/core/audio_renderer_rc2.py\n?? src/az_enterprise/core/audio_timeline_rc2.py\n?? src/az_enterprise/core/camera_motion_rc2.py\n?? src/az_enterprise/core/control_layer_rc2.py\n?? src/az_enterprise/core/director_knowledge_base_rc2.py\n?? src/az_enterprise/core/director_policy_evaluator_alpha293.py.before_knowledge_base\n?? src/az_enterprise/core/ducking_engine_rc2.py\n?? src/az_enterprise/core/loudness_engine_rc2.py\n?? src/az_enterprise/core/mux_engine_rc2.py\n?? src/az_enterprise/core/transition_engine_rc2.py\n?? src/az_enterprise/core/visual_renderer_rc2.py\n?? tests/test_audio_phase7_rc2.py\n?? tests/test_director_knowledge_base_rc2.py\n?? tests/test_phase8_control_layer_rc2.py\n?? tests/test_transition_engine_rc2.py\n?? timeline_code_search.txt",
+    "branch": "main",
+    "head": "1def4b0d836c185b636c296cc6439053993ee794",
+    "status": "M src/az_enterprise/cli.py\n M src/az_enterprise/core/assignment_policy_rc2.py\n M src/az_enterprise/core/control_layer_rc2.py\n M src/az_enterprise/core/director_core_rc2.py\n M src/az_enterprise/core/narrative_writer_rc2.py\n M src/az_enterprise/core/render_engine_rc2.py\n M src/az_enterprise/core/timeline_engine_rc2.py\n M src/az_enterprise/core/voice_production_engine_rc2.py\n M src/az_enterprise/ui/__pycache__/app.cpython-313.pyc\n?? APPLY_RC2_RENDER_INTEGRATION.py\n?? APPLY_RC2_RENDER_INTEGRATION_V2.py\n?? APPLY_RC2_SELECTIVE_SOURCE_AUDIO.py\n?? APPLY_RC2_TIMELINE_NATURAL_SOUND.py\n?? AUDIT_HOGUERAS_RC2_OUTPUT.py\n?? AUDIT_RC2_TIMELINE_SOURCE_AUDIO_CODE.py\n?? AUDIT_RC2_TIMELINE_SOURCE_AUDIO_CODE.txt\n?? AUDIT_VOICE_INTEGRATION_RC2.py\n?? AUDIT_VOICE_PRODUCTION_RC2_ASCII_V2.ps1\n?? DIAG_RC2_NATURAL_SOUND.py\n?? DIAG_RC2_SELECTED_AUDIO_RANGES.py\n?? EXTRACT_RC2_SOURCE_AUDIO_CODE.py\n?? EXTRACT_RC2_SOURCE_AUDIO_CODE.txt\n?? src/az_enterprise/core/director_core_rc2.py.backup_before_preview_render_20260727_160951\n?? src/az_enterprise/core/director_core_rc2.py.backup_before_preview_render_20260727_161443\n?? src/az_enterprise/core/director_core_rc2.py.backup_before_preview_render_20260727_161455\n?? src/az_enterprise/core/director_core_rc2.py.backup_before_preview_render_20260727_161816\n?? src/az_enterprise/core/elevenlabs_voice_provider_rc2.py\n?? src/az_enterprise/core/external_script_importer_rc2.py\n?? src/az_enterprise/core/narrative_runtime_rc2.py\n?? src/az_enterprise/core/render_engine_rc2.py.backup_before_source_audio_20260727_203658\n?? src/az_enterprise/core/timeline_engine_rc2.py.backup_before_canonical_natural_sound_20260728_002636",
     "remote": "origin\thttps://github.com/skorikgrigorii-pixel/atlas_zero1.git (fetch)\norigin\thttps://github.com/skorikgrigorii-pixel/atlas_zero1.git (push)"
   }
 }
